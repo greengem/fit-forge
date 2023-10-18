@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Exercise {
+  id                  String                @id
+  name                String
+  aliases             String[]
+  primary_muscles     Muscle[]
+  secondary_muscles   Muscle[]
+  force               ForceType?
+  level               LevelType
+  mechanic            MechanicType?
+  equipment           EquipmentType?
+  category            CategoryType
+  instructions        String[]
+  description         String?
+  tips                String[]
+  date_created        DateTime              @default(now())
+  date_updated        DateTime?             @default(now())
+  imagePath           String?
+  WorkoutLogExercise  WorkoutLogExercise[]
+  WorkoutPlanExercise WorkoutPlanExercise[]
+}
+
+model Key {
+  id              String  @id
+  user_id         String
+  hashed_password String?
+  User            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id             String @id
+  active_expires BigInt
+  idle_expires   BigInt
+  user_id        String
+  username       String
+  User           User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model SetLog {
+  id                   String             @id
+  workoutLogExerciseId String
+  weight               Float
+  reps                 Int
+  order                Int?
+  WorkoutLogExercise   WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id          String        @id
+  username    String
+  Key         Key[]
+  Session     Session[]
+  WorkoutLog  WorkoutLog[]
+  WorkoutPlan WorkoutPlan[]
+}
+
+model WorkoutLog {
+  id                 String               @id
+  userId             String
+  date               DateTime
+  createdAt          DateTime             @default(now())
+  duration           Int?
+  name               String
+  workoutPlanId      String?
+  date_updated       DateTime?            @default(now())
+  User               User                 @relation(fields: [userId], references: [id])
+  WorkoutPlan        WorkoutPlan?         @relation(fields: [workoutPlanId], references: [id])
+  WorkoutLogExercise WorkoutLogExercise[]
+}
+
+model WorkoutLogExercise {
+  id           String     @id
+  workoutLogId String
+  exerciseId   String
+  SetLog       SetLog[]
+  Exercise     Exercise   @relation(fields: [exerciseId], references: [id])
+  WorkoutLog   WorkoutLog @relation(fields: [workoutLogId], references: [id], onDelete: Cascade)
+}
+
+model WorkoutPlan {
+  id                  String                @id
+  name                String
+  userId              String
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now())
+  notes               String?
+  WorkoutLog          WorkoutLog[]
+  User                User                  @relation(fields: [userId], references: [id])
+  WorkoutPlanExercise WorkoutPlanExercise[]
+}
+
+model WorkoutPlanExercise {
+  workoutPlanId String
+  exerciseId    String
+  sets          Int
+  reps          Int
+  duration      Int?
+  order         Int?
+  Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
+  WorkoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+
+  @@id([workoutPlanId, exerciseId])
+}
+
+enum CategoryType {
+  strength
+  stretching
+  plyometrics
+  strongman
+  powerlifting
+  cardio
+  olympic_weightlifting @map("olympic weightlifting")
+}
+
+enum EquipmentType {
+  body_only     @map("body only")
+  machine
+  other
+  foam_roll     @map("foam roll")
+  kettlebells
+  dumbbell
+  cable
+  barbell
+  bands
+  medicine_ball @map("medicine ball")
+  exercise_ball @map("exercise ball")
+  e_z_curl_bar  @map("e-z curl bar")
+}
+
+enum ForceType {
+  pull
+  push
+  static
+}
+
+enum LevelType {
+  beginner
+  intermediate
+  expert
+}
+
+enum MechanicType {
+  compound
+  isolation
+}
+
+enum Muscle {
+  abdominals
+  hamstrings
+  adductors
+  quadriceps
+  biceps
+  shoulders
+  chest
+  middle_back @map("middle back")
+  calves
+  glutes
+  lower_back  @map("lower back")
+  lats
+  triceps
+  traps
+  forearms
+  neck
+  abductors
+}
