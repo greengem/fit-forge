@@ -45,7 +45,7 @@ model Session {
 }
 
 model SetLog {
-  id                   String             @id
+  id            String   @id @default(uuid())
   workoutLogExerciseId String
   weight               Float
   reps                 Int
@@ -63,7 +63,7 @@ model User {
 }
 
 model WorkoutLog {
-  id                 String               @id
+  id            String   @id @default(uuid())
   userId             String
   date               DateTime
   createdAt          DateTime             @default(now())
@@ -77,7 +77,7 @@ model WorkoutLog {
 }
 
 model WorkoutLogExercise {
-  id           String     @id
+  id            String   @id @default(uuid())
   workoutLogId String
   exerciseId   String
   SetLog       SetLog[]
@@ -86,7 +86,7 @@ model WorkoutLogExercise {
 }
 
 model WorkoutPlan {
-  id                  String                @id
+  id                  String                @id @default(uuid())
   name                String
   userId              String
   createdAt           DateTime              @default(now())
