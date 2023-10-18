@@ -1,7 +1,7 @@
 import PageHeading from '@/components/PageHeading/PageHeading';
 
-export default function HomePage() {
+export default function DashboardPage() {
   return (
-    <PageHeading title="Landing Page" />
+    <PageHeading title="Dashboard" />
   )
 }
