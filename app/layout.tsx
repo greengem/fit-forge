@@ -1,6 +1,7 @@
 import './globals.css';
-import { Toaster } from 'react-hot-toast';
+import {Providers} from "./providers";
 import Sidebar from '@/components/Sidebar/Sidebar';
+import { Toaster } from 'react-hot-toast';
 
 export default function RootLayout({
   children,
@@ -8,19 +9,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className='dark'>
       <body>
           <Toaster />
-          <main className="flex flex-col min-h-screen">
-            <div className='flex flex-grow'>
-              <div className="fixed top-0 left-0 h-full w-64 bg-gray-800 text-white">
-                <Sidebar />
+          <Providers>
+            <main className="flex flex-col min-h-screen">
+              <div className='flex flex-grow'>
+                <div className="fixed top-0 left-0 h-full w-64 bg-gray-800 text-white">
+                  <Sidebar />
+                </div>
+                <div className="ml-64 flex-1 p-5">
+                  {children}
+                </div>
               </div>
-              <div className="ml-64 flex-1 p-5">
-                {children}
-              </div>
-            </div>
-          </main>
+            </main>
+          </Providers>
       </body>
     </html>
   )
