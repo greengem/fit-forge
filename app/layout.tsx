@@ -1,7 +1,7 @@
-import './globals.css';
 import {Providers} from "./providers";
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { Toaster } from 'react-hot-toast';
+import './globals.css';
 
 export default function RootLayout({
   children,
