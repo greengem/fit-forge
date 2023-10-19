@@ -1,6 +1,7 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from '@/db/prisma';
 import { redirect } from "next/navigation";
-
 import PageHeading from '@/components/PageHeading/PageHeading'
 import CardGrid from "@/components/Grid/CardGrid";
 import DeleteButton from "./DeleteButton";
@@ -20,7 +21,6 @@ async function getWorkouts(userId) {
 				SetLog: true,
 			}
 			},
-			User: true,
 			WorkoutPlan: true,
 		}
 	});
@@ -34,10 +34,8 @@ function formatDuration(seconds) {
 }
 
 export default async function DashboardPage() {
-	const authRequest = auth.handleRequest("GET", context);
-	const session = await authRequest.validate();
-	if (!session) redirect("/login");
-	const workouts = await getWorkouts(session.user.userId)
+	const session = await getServerSession(authOptions);
+	const workouts = await getWorkouts(session.user.id)
 
 	return (
 		<>

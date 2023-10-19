@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 import prisma from '@/db/prisma';
 import { redirect } from "next/navigation";
 import PageHeading from '@/components/PageHeading/PageHeading'
@@ -25,7 +27,7 @@ async function getRoutines(userId){
 }
 
 export default async function RoutinesPage() {
-  if (!session) redirect("/login");  
+  const session = await getServerSession(authOptions);
   const routines = await getRoutines(session.user.userId)
 
   return (

@@ -7,6 +7,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  timer Timer?
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  workoutLogs  WorkoutLog[]
+  workoutPlans WorkoutPlan[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model Exercise {
   id                  String                @id
   name                String
@@ -21,72 +69,11 @@ model Exercise {
   instructions        String[]
   description         String?
   tips                String[]
+  imagePath String?
   date_created        DateTime              @default(now())
   date_updated        DateTime?             @default(now())
-  imagePath           String?
-  WorkoutLogExercise  WorkoutLogExercise[]
   WorkoutPlanExercise WorkoutPlanExercise[]
-}
-
-model Key {
-  id              String  @id @unique
-  user_id         String
-  hashed_password String?
-  user            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@index([user_id])
-}
-
-model Session {
-  id             String @id @unique
-  active_expires BigInt
-  idle_expires   BigInt
-  user_id        String
-  username       String
-  user           User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@index([user_id])
-}
-
-model User {
-  id          String        @id @unique
-  username    String
-  key         Key[]
-  session     Session[]
-  WorkoutLog  WorkoutLog[]
-  WorkoutPlan WorkoutPlan[]
-}
-
-model SetLog {
-  id            String   @id @default(uuid())
-  workoutLogExerciseId String
-  weight               Float
-  reps                 Int
-  order                Int?
-  WorkoutLogExercise   WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
-}
-
-model WorkoutLog {
-  id            String   @id @default(uuid())
-  userId             String
-  date               DateTime
-  createdAt          DateTime             @default(now())
-  duration           Int?
-  name               String
-  workoutPlanId      String?
-  date_updated       DateTime?            @default(now())
-  User               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  WorkoutPlan        WorkoutPlan?         @relation(fields: [workoutPlanId], references: [id])
-  WorkoutLogExercise WorkoutLogExercise[]
-}
-
-model WorkoutLogExercise {
-  id            String   @id @default(uuid())
-  workoutLogId String
-  exerciseId   String
-  SetLog       SetLog[]
-  Exercise     Exercise   @relation(fields: [exerciseId], references: [id])
-  WorkoutLog   WorkoutLog @relation(fields: [workoutLogId], references: [id], onDelete: Cascade)
+  logExercises  WorkoutLogExercise[]
 }
 
 model WorkoutPlan {
@@ -94,10 +81,10 @@ model WorkoutPlan {
   name                String
   userId              String
   createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
   notes               String?
-  WorkoutLog          WorkoutLog[]
-  User                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User                User                  @relation(fields: [userId], references: [id])
+  logs          WorkoutLog[]
   WorkoutPlanExercise WorkoutPlanExercise[]
 }
 
@@ -107,11 +94,59 @@ model WorkoutPlanExercise {
   sets          Int
   reps          Int
   duration      Int?
-  order         Int?
+  order         Int
   Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
   WorkoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 
   @@id([workoutPlanId, exerciseId])
+}
+
+model WorkoutLog {
+  id            String @id @default(uuid())
+  userId       String
+  workoutPlanId String?
+  name         String
+  date         DateTime
+  duration     Int?
+  createdAt    DateTime @default(now())
+  date_updated DateTime? @default(now())
+  User         User     @relation(fields: [userId], references: [id])
+  WorkoutPlan  WorkoutPlan? @relation(fields: [workoutPlanId], references: [id])
+  exercises    WorkoutLogExercise[]
+}
+
+model WorkoutLogExercise {
+  id            String @id @default(uuid())
+  workoutLogId  String
+  exerciseId    String
+  Exercise      Exercise   @relation(fields: [exerciseId], references: [id])
+  WorkoutLog    WorkoutLog @relation(fields: [workoutLogId], references: [id], onDelete: Cascade)
+  sets          SetLog[]
+}
+
+model SetLog {
+  id            String @id @default(uuid())
+  workoutLogExerciseId String
+  weight              Float
+  reps                Int
+  order               Int?
+  WorkoutLogExercise  WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
+}
+
+model Timer {
+  id             String   @id @default(cuid())
+  sessionId      String   @unique
+  startTime      DateTime @default(now())
+  pauseTime      DateTime?
+  pausedDuration Int      @default(0) // store duration in seconds
+  status         TimerStatus
+  session        Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+enum TimerStatus {
+  RUNNING
+  PAUSED
+  STOPPED
 }
 
 enum CategoryType {

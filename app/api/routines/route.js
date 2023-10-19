@@ -1,12 +1,11 @@
-import { auth } from "@/auth/lucia";
-import * as context from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from '@/db/prisma';
 import { NextResponse } from 'next/server';
 
 // POST
 export async function POST(request) {
-    const authRequest = auth.handleRequest("GET", context);
-    const session = await authRequest.validate();
+    const session = await getServerSession(authOptions);
 
     try {
         const data = JSON.parse(await request.text());
@@ -19,7 +18,7 @@ export async function POST(request) {
         const newWorkoutPlan = await prisma.workoutPlan.create({
             data: {
                 name: routineName,
-                userId: session.user.userId,
+                userId: session.user.id,
                 notes: notes,
                 WorkoutPlanExercise: {
                     create: exercises.map((exercise) => ({
