@@ -29,19 +29,32 @@ model Exercise {
 }
 
 model Key {
-  id              String  @id
+  id              String  @id @unique
   user_id         String
   hashed_password String?
-  User            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
 }
 
 model Session {
-  id             String @id
+  id             String @id @unique
   active_expires BigInt
   idle_expires   BigInt
   user_id        String
   username       String
-  User           User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user           User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model User {
+  id          String        @id @unique
+  username    String
+  key         Key[]
+  session     Session[]
+  WorkoutLog  WorkoutLog[]
+  WorkoutPlan WorkoutPlan[]
 }
 
 model SetLog {
@@ -53,15 +66,6 @@ model SetLog {
   WorkoutLogExercise   WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id          String        @id
-  username    String
-  Key         Key[]
-  Session     Session[]
-  WorkoutLog  WorkoutLog[]
-  WorkoutPlan WorkoutPlan[]
-}
-
 model WorkoutLog {
   id            String   @id @default(uuid())
   userId             String
@@ -71,7 +75,7 @@ model WorkoutLog {
   name               String
   workoutPlanId      String?
   date_updated       DateTime?            @default(now())
-  User               User                 @relation(fields: [userId], references: [id])
+  User               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   WorkoutPlan        WorkoutPlan?         @relation(fields: [workoutPlanId], references: [id])
   WorkoutLogExercise WorkoutLogExercise[]
 }
@@ -93,7 +97,7 @@ model WorkoutPlan {
   updatedAt           DateTime              @default(now())
   notes               String?
   WorkoutLog          WorkoutLog[]
-  User                User                  @relation(fields: [userId], references: [id])
+  User                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   WorkoutPlanExercise WorkoutPlanExercise[]
 }
 

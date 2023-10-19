@@ -50,7 +50,7 @@ export const GET = async (request: NextRequest) => {
 		});
 	} catch (e) {
 		if (e instanceof OAuthRequestError) {
-			// invalid code
+			console.error('Authentication Error:', e);
 			return new Response(null, {
 				status: 400
 			});

@@ -8,12 +8,12 @@ import { PrismaClient } from "@prisma/client";
 const client = new PrismaClient();
 
 export const auth = lucia({
+	adapter: prisma(client),
 	env: "DEV", // "PROD" if deployed to HTTPS
 	middleware: nextjs_future(),
 	sessionCookie: {
 		expires: false
 	},
-	adapter: prisma(client),
 
 	getUserAttributes: (data) => {
 		return {
