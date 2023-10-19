@@ -73,56 +73,49 @@ export async function DELETE(req, context) {
   }
 }
 
-
 // PUT
 export async function PUT(request, { params }) {
-  const { id } = params;
-  const { routineName, exercises, notes } = request.body;
-
   try {
-    // Start a transaction to handle multiple operations
-    await prisma.$transaction(async (prisma) => {
-      // 1. Update the workoutPlan's primary details
-      await prisma.workoutPlan.update({
-        where: { id: id },
-        data: {
-          name: routineName,
-          notes: notes,
-        },
-      });
+      const data = JSON.parse(await request.text());
+      const { routineName, exercises, notes } = data;
 
-      // 2. Delete previous associated exercises for the routine
-      await prisma.workoutPlanExercise.deleteMany({
-        where: {
-          workoutPlanId: id,
-        },
-      });
-
-      // 3. Create new associated exercises for the routine
-      for (let exercise of exercises) {
-        await prisma.workoutPlanExercise.create({
-          data: {
-            sets: exercise.sets,
-            reps: exercise.reps,
-            order: exercise.order,
-            Exercise: {
-              connect: {
-                id: exercise.id,
-              },
-            },
-            WorkoutPlan: {
-              connect: {
-                id: id,
-              },
-            },
-          },
-        });
+      if (!routineName || !Array.isArray(exercises)) {
+          return new Response(JSON.stringify({ error: "Invalid data format." }), {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+          });
       }
-    });
 
-    return NextResponse.json({ success: true });
+      const routineId = params.id;
+
+      const updatedWorkoutPlan = await prisma.workoutPlan.update({
+          where: { id: routineId },
+          data: {
+              name: routineName,
+              notes: notes,
+              WorkoutPlanExercise: {
+                  deleteMany: { workoutPlanId: routineId },
+                  create: exercises.map((exercise) => ({
+                      exerciseId: exercise.id,
+                      sets: exercise.sets,
+                      reps: exercise.reps,
+                      duration: exercise.duration,
+                      order: exercise.order,
+                  })),
+              },
+          },
+      });
+
+      return new Response(JSON.stringify({ success: true }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+      });
+
   } catch (error) {
-    console.error("Error:", error);
-    return NextResponse.json({ error: "An error occurred updating the routine." }, { status: 500 });
+      console.error("Error while updating the routine:", error);
+      return new Response(JSON.stringify({ error: "An error occurred updating the routine." }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+      });
   }
 }

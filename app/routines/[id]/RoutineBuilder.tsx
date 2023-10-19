@@ -9,7 +9,7 @@ import { SearchResults } from './SearchResults';
 import ExerciseTable from './ExerciseTable';
 import { SaveButton } from './SaveButton';
 
-export interface Exercise {
+interface Exercise {
   id: string;
   name: string;
   sets: number;
@@ -120,21 +120,34 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
 
   const handleSave = async () => {
     if (!validateForm()) return;
-
+  
     const exercisesWithOrder = selectedExercises.map((exercise, index) => ({
       ...exercise,
       order: index + 1,
     }));
-
-    const response = await fetch('/api/routines', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
-    });
-
+  
+    let response;
+    
+    if (routineId === 'new') { // New Routine
+      response = await fetch('/api/routines', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
+      });
+    } else { // Update existing Routine
+      response = await fetch(`/api/routines/${routineId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
+      });
+    }
+  
     const data = await response.json();
+  
     if (data.success) {
       toast.success('Routine saved successfully!');
       router.push('/routines');
@@ -144,6 +157,8 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
       toast.error('Error saving routine.');
     }
   };
+  
+  
 
   return (
     <div className="space-y-4">
