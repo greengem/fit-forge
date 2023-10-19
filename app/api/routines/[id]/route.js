@@ -80,10 +80,7 @@ export async function PUT(request, { params }) {
       const { routineName, exercises, notes } = data;
 
       if (!routineName || !Array.isArray(exercises)) {
-          return new Response(JSON.stringify({ error: "Invalid data format." }), {
-              status: 400,
-              headers: { 'Content-Type': 'application/json' },
-          });
+          return NextResponse.json({ error: "Invalid data format." }, { status: 400 });
       }
 
       const routineId = params.id;
@@ -106,16 +103,11 @@ export async function PUT(request, { params }) {
           },
       });
 
-      return new Response(JSON.stringify({ success: true }), {
-          status: 200,
-          headers: { 'Content-Type': 'application/json' },
-      });
+      return NextResponse.json({ success: true }, { status: 200 });
 
   } catch (error) {
       console.error("Error while updating the routine:", error);
-      return new Response(JSON.stringify({ error: "An error occurred updating the routine." }), {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' },
-      });
+      return NextResponse.json({ error: "An error occurred updating the routine." }, { status: 500 });
   }
 }
+
