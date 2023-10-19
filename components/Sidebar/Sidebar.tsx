@@ -1,5 +1,4 @@
 import SidebarNav from './SidebarNav';
-import SidebarUserInfo from './SidebarUserInfo';
 
 export default function Sidebar() {
     return (
@@ -9,7 +8,7 @@ export default function Sidebar() {
                     <SidebarNav />
                 </div>
                 <div className='absolute bottom-0 left-0 right-0'>
-                    <SidebarUserInfo />
+
                 </div>
             </div>
         </>

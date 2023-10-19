@@ -1,5 +1,3 @@
-import { auth } from "@/auth/lucia";
-import * as context from "next/headers";
 import prisma from '@/db/prisma';
 import { redirect } from "next/navigation";
 
@@ -9,8 +7,6 @@ import DeleteButton from "./DeleteButton";
 import DashboardExerciseTable from "./DashboardExerciseTable";
 import Image from "next/image";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell} from "@nextui-org/table";
-
 
 async function getWorkouts(userId) {
 	const workouts = await prisma.workoutLog.findMany({
