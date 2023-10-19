@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useCallback } from 'react';
 
+import {Input} from "@nextui-org/input";
 interface SearchBarProps {
     searchTerm: string;
     setSearchTerm: (term: string) => void;
@@ -29,15 +30,12 @@ export const SearchBar: FC<SearchBarProps> = ({ searchTerm, setSearchTerm, handl
     };    
 
     return (
-      <div className="flex items-center space-x-2">
-          <input
-              type="search"
-              name="search"
-              placeholder="search"
-              value={searchTerm}
-              onChange={handleChange}
-              className="p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 w-full"
-          />
-      </div>
+        <Input
+            type="search"
+            name="search"
+            placeholder="Search for Exercises"
+            value={searchTerm}
+            onChange={handleChange}
+        />
     );
 }

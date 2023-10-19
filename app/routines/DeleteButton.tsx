@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
+import { Button } from "@nextui-org/button";
 
 export default function DeleteButton({ id }: { id: string }) {
     const router = useRouter()
@@ -29,6 +30,6 @@ export default function DeleteButton({ id }: { id: string }) {
     }
 
     return (
-        <button onClick={handleDelete} className="bg-red-500 p-2">Delete</button>
+        <Button onClick={handleDelete} className="bg-red-500 p-2">Delete</Button>
     )
 }

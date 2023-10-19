@@ -4,6 +4,10 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import ProgressBar from './ProgressBar';
 
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/table";
+import { Button } from "@nextui-org/button";
+import {Input} from "@nextui-org/input";
+
 export default function WorkoutManager({ workout }) {
 
     // Hook & Router Initializations
@@ -182,12 +186,12 @@ export default function WorkoutManager({ workout }) {
 
     return (
         <>
-            <button 
+            <Button 
                 onClick={startWorkout} 
                 disabled={!!workoutStartTime}
             >
                 {workoutStartTime ? "Workout In Progress" : "Start Workout"}
-            </button>
+            </Button>
 
             <div>Duration: {formatDuration(workoutDuration)}</div>
             <ProgressBar percentage={progressPercentage} />
@@ -195,53 +199,53 @@ export default function WorkoutManager({ workout }) {
             {workout.WorkoutPlanExercise.map((exerciseDetail, index) => (
                 <div key={exerciseDetail.Exercise.id} className='my-10'>
                     <h3 className="text-semibold text-2xl">{exerciseDetail.Exercise.name}</h3>
-                    <table className="min-w-full table-auto mb-3">
-                        <thead>
-                            <tr>
-                                <th className="px-4 py-2">SET</th>
-                                <th className="px-4 py-2">KG</th>
-                                <th className="px-4 py-2">REPS</th>
-                                <th className="px-4 py-2">COMPLETE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Table className="min-w-full table-auto mb-3">
+                        <TableHeader>
+                                <TableColumn>SET</TableColumn>
+                                <TableColumn>KG</TableColumn>
+                                <TableColumn>REPS</TableColumn>
+                                <TableColumn>COMPLETE</TableColumn>
+                        </TableHeader>
+                        <TableBody>
                             {Array.from({ length: exercises[index].sets }).map((_, setIndex) => (
-                                <tr key={setIndex}>
-                                    <td className="border px-4 py-2">
+                                <TableRow key={setIndex}>
+                                    <TableCell>
                                         {setIndex + 1}
-                                    </td>
-                                    <td className="border px-4 py-2">
-                                    <input 
-                                        type='number' 
-                                        value={weights[index][setIndex]}
-                                        onChange={e => handleWeightChange(index, setIndex, Number(e.target.value))}
+                                    </TableCell>
+                                    <TableCell>
+                                        <Input 
+                                            type='number' 
+                                            value={weights[index][setIndex]}
+                                            onChange={e => handleWeightChange(index, setIndex, Number(e.target.value))}
 
-                                        disabled={exercises[index].completedSets[setIndex]} 
-                                    />
-                                                                        </td>
-                                                                        <td className="border px-4 py-2">
-                                                                        <input 
-                                        type="number" 
-                                        value={reps[index][setIndex]}
-                                        onChange={e => handleRepChange(index, setIndex, Number(e.target.value))}
-                                        className="w-full p-1" 
-                                        disabled={exercises[index].completedSets[setIndex]} 
-                                    />
-                                    </td>
-                                    <td className='border px-4 py-2'>
-                                        <button onClick={() => handleCompletion(index, setIndex, exerciseDetail.Exercise.name)}>
+                                            disabled={exercises[index].completedSets[setIndex]} 
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        <Input 
+                                            type="number" 
+                                            value={reps[index][setIndex]}
+                                            onChange={e => handleRepChange(index, setIndex, Number(e.target.value))}
+                                            className="w-full p-1" 
+                                            disabled={exercises[index].completedSets[setIndex]} 
+                                        />
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button color='success' onClick={() => handleCompletion(index, setIndex, exerciseDetail.Exercise.name)}>
                                             {exercises[index].completedSets[setIndex] ? "Completed" : "Mark as Completed"}
-                                        </button>
-                                    </td>
-                                </tr>
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
                             ))}
-                        </tbody>
-                    </table>
-                    <button className="mr-2" onClick={() => addSet(index, exerciseDetail.Exercise.name)}>Add Set</button>
-                    <button onClick={() => removeSet(index, exerciseDetail.Exercise.name)}>Remove Set</button>
+                        </TableBody>
+                    </Table>
+                    <div className='flex gap-2'>
+                        <Button onClick={() => addSet(index, exerciseDetail.Exercise.name)}>Add Set</Button>
+                        <Button onClick={() => removeSet(index, exerciseDetail.Exercise.name)}>Remove Set</Button>
+                    </div>
                 </div>
             ))}
-            <button onClick={completeWorkout}>Save workout</button>
+            <Button color='success' onClick={completeWorkout}>Save workout</Button>
         </>
     );
 }

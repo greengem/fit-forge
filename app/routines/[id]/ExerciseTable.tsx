@@ -1,6 +1,10 @@
+"use client";
 import { ChangeEvent, FC } from 'react';
-
-export interface Exercise {
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/table";
+import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/button";
+import { IconArrowUp, IconArrowDown, IconTrash } from '@tabler/icons-react';
+interface Exercise {
     id: string;
     name: string;
     sets: number;
@@ -18,21 +22,19 @@ type ExerciseTableProps = {
 
 const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExercise, moveUp, moveDown, deleteExercise }) => {
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Exercise</th>
-                    <th>Sets</th>
-                    <th>Reps</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+        <Table>
+            <TableHeader>
+                <TableColumn>EXERCISE</TableColumn>
+                <TableColumn>SETS</TableColumn>
+                <TableColumn>REPS</TableColumn>
+                <TableColumn>ACTIONS</TableColumn>
+            </TableHeader>
+            <TableBody>
                 {selectedExercises.map((exercise, index) => (
-                    <tr key={index}>
-                        <td>{exercise.name}</td>
-                        <td>
-                            <input 
+                    <TableRow key={index}>
+                        <TableCell>{exercise.name}</TableCell>
+                        <TableCell>
+                            <Input 
                                 type="number" 
                                 value={exercise.sets} 
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -43,9 +45,9 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                                 }}
 
                             />
-                        </td>
-                        <td>
-                            <input 
+                        </TableCell>
+                        <TableCell>
+                            <Input 
                                 type="number" 
                                 value={exercise.reps} 
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -56,16 +58,16 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                                 }}
 
                             />
-                        </td>
-                        <td>
-                            <button className='mr-2' onClick={() => moveUp(index)}>Up</button>
-                            <button className='mr-2' onClick={() => moveDown(index)}>Down</button>
-                            <button onClick={() => deleteExercise(index)}>Remove</button>
-                        </td>
-                    </tr>
+                        </TableCell>
+                        <TableCell className='flex gap-2'>
+                            <Button isIconOnly onClick={() => moveUp(index)}><IconArrowUp /></Button>
+                            <Button isIconOnly onClick={() => moveDown(index)}><IconArrowDown /></Button>
+                            <Button color='danger' isIconOnly onClick={() => deleteExercise(index)}><IconTrash /></Button>
+                        </TableCell>
+                    </TableRow>
                 ))}
-            </tbody>
-        </table>
+            </TableBody>
+        </Table>
     );
 }
 

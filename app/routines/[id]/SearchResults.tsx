@@ -1,4 +1,10 @@
-import { Exercise } from '@/types';
+interface Exercise {
+    id: string;
+    name: string;
+    sets: number;
+    reps: number;
+    order?: number;
+}
 
 type SearchResultsProps = {
     searchResults: Exercise[];
@@ -9,7 +15,6 @@ type SearchResultsProps = {
 export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, addExerciseToRoutine, selectedExercises }) => {
     return (
         <div className="space-y-2">
-            <h3 className="text-xl font-semibold">Search Results:</h3>
             <ul className="space-y-1">
             {searchResults.map(exercise => (
                 <li key={exercise.id} className="flex items-center justify-between">

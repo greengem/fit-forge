@@ -1,11 +1,13 @@
+import { Button } from "@nextui-org/button";
+
 type SaveButtonProps = {
     handleSave: () => void;
 };
 
 export const SaveButton: React.FC<SaveButtonProps> = ({ handleSave }) => {
     return (
-        <button onClick={handleSave}>
+        <Button color="success" onClick={handleSave}>
             Save Routine
-        </button>
+        </Button>
     );
 }

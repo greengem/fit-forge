@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import {Input} from "@nextui-org/input";
 
 type RoutineDetailsProps = {
     routineName: string;
@@ -9,18 +10,18 @@ type RoutineDetailsProps = {
 
 export const RoutineDetails: React.FC<RoutineDetailsProps> = ({ routineName, setRoutineName, notes, setNotes }) => {
     return (
-        <div>
-            <input 
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+            <Input 
                 name='routineName' 
                 placeholder='Routine Name' 
                 value={routineName} 
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setRoutineName(e.target.value)}
             />
-            <textarea 
+            <Input 
                 name='routineNotes' 
                 placeholder='Notes' 
                 value={notes} 
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setNotes(e.target.value)}
             />
         </div>
     );

@@ -4,8 +4,10 @@ import prisma from '@/db/prisma';
 import { redirect } from "next/navigation";
 
 import PageHeading from '@/components/PageHeading/PageHeading'
+import CardGrid from "@/components/Grid/CardGrid";
 import DeleteButton from "./DeleteButton";
 import Form from "@/components/form";
+import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
 
 async function getWorkouts(userId) {
 	const workouts = await prisma.workoutLog.findMany({
@@ -46,14 +48,15 @@ export default async function DashboardPage() {
 		  <Form action="/api/logout">
 			<input type="submit" value="Sign out" />
 		  </Form>
-		  <div className="bg-gray-300 p-5 my-10">
-			<h4 className="text-xl font-semibold">RAW DATA</h4>
-			<hr />
+		  <CardGrid>
 			{workouts.map((workout) => (
-			  <div key={workout.id}>
-				<strong>Workout Name:</strong> {workout.name}
-				<strong>Date and Time:</strong> {new Date(workout.date).toLocaleString()}
-				<strong>Duration:</strong> {formatDuration(workout.duration)}
+			  <Card key={workout.id}>
+				<CardHeader>
+					<div><strong>Workout Name:</strong> {workout.name}</div>
+					<div><strong>Date and Time:</strong> {new Date(workout.date).toLocaleString()}</div>
+					<div><strong>Duration:</strong> {formatDuration(workout.duration)}</div>
+				</CardHeader>
+				<CardBody>
 				<ul>
 				  {workout.WorkoutLogExercise.map(wle => (
 					<li key={wle.id}>
@@ -69,24 +72,28 @@ export default async function DashboardPage() {
 					</li>
 				  ))}
 				</ul>
+				</CardBody>
+				<CardFooter>
 				<DeleteButton id={workout.id} />
-				<hr className="my-5" />
-			  </div>
+				</CardFooter>
+			  </Card>
 			))}
-			</div>
+			</CardGrid>
+			<hr className="my-10" />
 
-			<div className="bg-gray-300 p-5 my-10">
-				<h4 className="text-xl font-semibold">BEST SET STYLE</h4>
-				<hr />
+			<CardGrid>
 				{workouts.map((workout) => {
 					const totalWeightLifted = workout.WorkoutLogExercise.reduce((acc, wle) => {
 						return acc + wle.SetLog.reduce((acc, set) => acc + set.weight, 0);
 					}, 0);
 
 					return (
-						<div key={workout.id}>
+						<Card key={workout.id}>
+							<CardHeader>
 							<h5>{workout.name}</h5>
 							<p>{formatDuration(workout.duration)} | {totalWeightLifted} KG</p>
+							</CardHeader>
+							<CardBody>
 							<table className="min-w-full divide-y divide-gray-200 mt-4">
 								<thead>
 									<tr>
@@ -110,12 +117,14 @@ export default async function DashboardPage() {
 									})}
 								</tbody>
 							</table>
-							<DeleteButton id={workout.id} />
-							<hr className="my-5" />
-						</div>
+							</CardBody>
+							<CardFooter>
+								<DeleteButton id={workout.id} />
+							</CardFooter>
+						</Card>
 					);
 				})}
-			</div>
+			</CardGrid>
 		</>
 	);
 }
