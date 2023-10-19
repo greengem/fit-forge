@@ -6,8 +6,9 @@ import { redirect } from "next/navigation";
 import PageHeading from '@/components/PageHeading/PageHeading'
 import CardGrid from "@/components/Grid/CardGrid";
 import DeleteButton from "./DeleteButton";
-import Form from "@/components/form";
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
+
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { User } from "@nextui-org/user";
 
 async function getWorkouts(userId) {
 	const workouts = await prisma.workoutLog.findMany({
@@ -37,49 +38,18 @@ function formatDuration(seconds) {
 export default async function DashboardPage() {
 	const authRequest = auth.handleRequest("GET", context);
 	const session = await authRequest.validate();
+
 	if (!session) redirect("/login");
 	const workouts = await getWorkouts(session.user.userId)
 
 	return (
 		<>
-		  <PageHeading title="Dashboard" />
-		  <p>User id: {session.user.userId}</p>
-		  <p>Username: {session.user.username}</p>
-		  <Form action="/api/logout">
-			<input type="submit" value="Sign out" />
-		  </Form>
-		  <CardGrid>
-			{workouts.map((workout) => (
-			  <Card key={workout.id}>
-				<CardHeader>
-					<div><strong>Workout Name:</strong> {workout.name}</div>
-					<div><strong>Date and Time:</strong> {new Date(workout.date).toLocaleString()}</div>
-					<div><strong>Duration:</strong> {formatDuration(workout.duration)}</div>
-				</CardHeader>
-				<CardBody>
-				<ul>
-				  {workout.WorkoutLogExercise.map(wle => (
-					<li key={wle.id}>
-					  <strong>Exercise:</strong> {wle.Exercise.name}
-					  <ul>
-						{wle.SetLog.map(set => (
-						  <li key={set.id}>
-							<strong>Weight:</strong> {set.weight} 
-							<strong>, Reps:</strong> {set.reps}
-						  </li>
-						))}
-					  </ul>
-					</li>
-				  ))}
-				</ul>
-				</CardBody>
-				<CardFooter>
-				<DeleteButton id={workout.id} />
-				</CardFooter>
-			  </Card>
-			))}
-			</CardGrid>
-			<hr className="my-10" />
+			<PageHeading title="Dashboard" />
+			<User   
+				name={session.user.githubUsername}
+				description="todo"
+				avatarProps
+			/>
 
 			<CardGrid>
 				{workouts.map((workout) => {
