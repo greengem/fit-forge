@@ -30,6 +30,6 @@ export default function DeleteButton({ id }: { id: string }) {
     }
 
     return (
-        <Button onClick={handleDelete} className="bg-red-500 p-2">Delete</Button>
+        <Button size="sm" color="danger" onClick={handleDelete}>Delete</Button>
     )
 }

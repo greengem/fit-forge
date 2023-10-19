@@ -9,7 +9,7 @@ interface ExerciseProps {
 }
 
 const ExerciseTable: React.FC<ExerciseProps> = ({ exercises }) => (
-    <Table>
+    <Table aria-label="Table of Exercises">
         <TableHeader>
             <TableColumn>NAME</TableColumn>
             <TableColumn>Muscles</TableColumn>

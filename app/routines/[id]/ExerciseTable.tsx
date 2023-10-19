@@ -22,14 +22,14 @@ type ExerciseTableProps = {
 
 const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExercise, moveUp, moveDown, deleteExercise }) => {
     return (
-        <Table>
+        <Table aria-label='Table of selected exercises'>
             <TableHeader>
                 <TableColumn>EXERCISE</TableColumn>
                 <TableColumn>SETS</TableColumn>
                 <TableColumn>REPS</TableColumn>
                 <TableColumn>ACTIONS</TableColumn>
             </TableHeader>
-            <TableBody>
+            <TableBody emptyContent={"Start searching to add exercises."}>
                 {selectedExercises.map((exercise, index) => (
                     <TableRow key={index}>
                         <TableCell>{exercise.name}</TableCell>
@@ -43,7 +43,6 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                                         updateExercise(index, 'sets', intValue);
                                     }
                                 }}
-
                             />
                         </TableCell>
                         <TableCell>
@@ -56,7 +55,6 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                                         updateExercise(index, 'reps', intValue);
                                     }
                                 }}
-
                             />
                         </TableCell>
                         <TableCell className='flex gap-2'>

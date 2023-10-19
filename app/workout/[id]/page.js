@@ -33,7 +33,7 @@ export default async function StartWorkout({ params }) {
     const workout = await fetchRoutine(params.id);
     return (
         <>
-            <PageHeading pageTitle={`Workout: ${workout.name}`} />
+            <PageHeading title={`Workout: ${workout.name}`} />
             <WorkoutManager workout={workout} />
         </>
     );

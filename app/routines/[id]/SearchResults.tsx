@@ -1,3 +1,6 @@
+import { Button } from '@nextui-org/button'
+import { IconPlus } from '@tabler/icons-react';
+
 interface Exercise {
     id: string;
     name: string;
@@ -14,18 +17,19 @@ type SearchResultsProps = {
 
 export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, addExerciseToRoutine, selectedExercises }) => {
     return (
-        <div className="space-y-2">
+        <div className="max-h-72 overflow-y-auto">
             <ul className="space-y-1">
             {searchResults.map(exercise => (
-                <li key={exercise.id} className="flex items-center justify-between">
-                    {exercise.name}
-                    <button 
+                <li key={exercise.id} className="flex items-center gap-2">
+                    <Button 
+                        isIconOnly
                         onClick={() => addExerciseToRoutine(exercise)} 
-                        className="px-3 py-1 bg-green-500 text-white rounded shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200"
-                        disabled={selectedExercises.some(e => e.id === exercise.id)}
+                        isDisabled={selectedExercises.some(e => e.id === exercise.id)}
+                        size='sm'
                     >
-                        Add
-                    </button>
+                        <IconPlus size={12} />
+                    </Button>
+                    {exercise.name}
                 </li>
             ))}
             </ul>

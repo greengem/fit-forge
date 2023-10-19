@@ -9,7 +9,9 @@ import DeleteButton from './DeleteButton';
 import Link from 'next/link';
 
 import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
+import Image from "next/image";
 import { Button } from "@nextui-org/button";
+import { IconPlus } from "@tabler/icons-react";
 
 async function getRoutines(userId){
   const routines = await prisma.workoutPlan.findMany({
@@ -24,7 +26,6 @@ async function getRoutines(userId){
         }
     }
 });
-
   return routines;
 }
 
@@ -37,17 +38,27 @@ export default async function RoutinesPage() {
   return (
     <>
       <PageHeading title="Routines" />
-      <Button className="mb-5">
-        <Link href="/routines/new">New Routine</Link>
+      <Button color="primary" className="mb-5">
+        <Link href="/routines/new"> New Routine</Link>
       </Button>
       <CardGrid>
         {routines.map((routine) => (
           <Card key={routine.id}>
-            <CardHeader>
-              <p className='font-bold'>{routine.name}</p>
-              {routine.notes && <p>{routine.notes}</p>}
+            <CardHeader className="flex gap-3">
+              <Image
+                alt="nextui logo"
+                height={40}
+                radius="sm"
+                src="/icons/barbell.svg"
+                width={40}
+              />
+              <div className="flex flex-col">
+                <p className="text-md">{routine.name}</p>
+                <p className="text-small text-default-500">Updated: {new Date(routine.updatedAt).toLocaleDateString()}</p>
+              </div>
             </CardHeader>
             <CardBody>
+            {routine.notes && <p>{routine.notes}</p>}
             {routine.WorkoutPlanExercise.map((exerciseDetail) => (
               <ul key={exerciseDetail.Exercise.id} className='flex'>
                 {exerciseDetail.Exercise.name && <li>{exerciseDetail.Exercise.name}</li>}
@@ -58,7 +69,7 @@ export default async function RoutinesPage() {
             ))}
             </CardBody>
             <CardFooter className="gap-2">
-              <Button>
+              <Button size="sm" color="secondary">
                 <Link href={`/routines/${routine.id}`}>Edit</Link>
               </Button>
               <DeleteButton id={routine.id} />

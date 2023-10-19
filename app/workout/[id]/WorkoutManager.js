@@ -199,7 +199,7 @@ export default function WorkoutManager({ workout }) {
             {workout.WorkoutPlanExercise.map((exerciseDetail, index) => (
                 <div key={exerciseDetail.Exercise.id} className='my-10'>
                     <h3 className="text-semibold text-2xl">{exerciseDetail.Exercise.name}</h3>
-                    <Table className="min-w-full table-auto mb-3">
+                    <Table aria-label={`Table for exercise ${exerciseDetail.Exercise.name}`} className="min-w-full table-auto mb-3">
                         <TableHeader>
                                 <TableColumn>SET</TableColumn>
                                 <TableColumn>KG</TableColumn>
