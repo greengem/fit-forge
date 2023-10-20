@@ -62,7 +62,7 @@ export default async function RoutinesPage() {
       <CardGrid>
         {routines.map((routine) => (
           <Card key={routine.id}>
-            <CardHeader className="flex gap-3">
+            <CardHeader className="flex gap-3 px-5">
               <Image
                 alt="nextui logo"
                 height={40}
@@ -75,18 +75,17 @@ export default async function RoutinesPage() {
                 <p className="text-small text-default-500">Updated: {new Date(routine.updatedAt).toLocaleDateString()}</p>
               </div>
             </CardHeader>
-            <CardBody>
+            <CardBody className="py-0 pb-2">
               {routine.notes && <p className="text-default-500 text-sm mb-2">Notes: {routine.notes}</p>}
+              <ul className="space-y-1">
               {routine.WorkoutPlanExercise.sort((a, b) => a.order - b.order).map((exerciseDetail) => (
-                <ul key={exerciseDetail.Exercise.id} className='flex'>
-                  <li>
+                  <li key={exerciseDetail.Exercise.id}>
                     {exerciseDetail.reps && exerciseDetail.reps} x {exerciseDetail.sets && exerciseDetail.sets} {exerciseDetail.Exercise.name}
                   </li>
-                </ul>
               ))}
-              
+              </ul>
             </CardBody>
-            <CardFooter className="gap-2">
+            <CardFooter className="gap-2 px-5">
               <Button size="sm" color="secondary">
                 <Link href={`/routines/${routine.id}`}>Edit</Link>
               </Button>
