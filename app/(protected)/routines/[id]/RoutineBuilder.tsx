@@ -24,7 +24,8 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
   const [routineName, setRoutineName] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
-  const searchInputRef = useRef(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
 
   useEffect(() => {
     if (routineId !== 'new') {

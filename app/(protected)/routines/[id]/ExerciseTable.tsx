@@ -36,7 +36,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                         <TableCell>
                             <Input 
                                 type="number" 
-                                value={exercise.sets} 
+                                value={exercise.sets.toString()}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     const intValue = parseInt(e.target.value, 10);
                                     if (!isNaN(intValue)) {
@@ -44,11 +44,12 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                                     }
                                 }}
                             />
+
                         </TableCell>
                         <TableCell>
                             <Input 
                                 type="number" 
-                                value={exercise.reps} 
+                                value={exercise.reps.toString()}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     const intValue = parseInt(e.target.value, 10);
                                     if (!isNaN(intValue)) {
