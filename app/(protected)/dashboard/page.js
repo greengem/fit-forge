@@ -22,6 +22,7 @@ async function getWorkouts(userId) {
 			id: true,
 			name: true,
 			duration: true,
+			createdAt: true,
 			exercises: {
 				select: {
 					id: true,
@@ -68,7 +69,7 @@ export default async function DashboardPage() {
 						<Card key={workout.id}>
 							<CardHeader className="flex gap-3">
 								<Image
-									alt="nextui logo"
+									alt="Barbell Icon"
 									height={40}
 									radius="sm"
 									src="/icons/barbell.svg"
@@ -80,7 +81,7 @@ export default async function DashboardPage() {
 								</div>
 							</CardHeader>
 							<CardBody>
-								<DashboardExerciseTable workoutLogExercises={workout.exercises} />
+								<DashboardExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} />
 							</CardBody>
 							<CardFooter>
 								<DeleteButton id={workout.id} />

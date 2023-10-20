@@ -16,18 +16,24 @@ interface WorkoutLogExercise {
 
 interface WorkoutTableProps {
     workoutLogExercises: WorkoutLogExercise[];
+    workoutName: string;
+    workoutDate: string;
 }
 
-const DashboardExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercises }) => {
+const DashboardExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercises, workoutName, workoutDate }) => {
+    const dateObject = new Date(workoutDate);
+    const formattedDate = `${dateObject.getDate()}/${dateObject.getMonth() + 1}/${dateObject.getFullYear()}`;
+
+
     return (
-        <Table removeWrapper>
+        <Table removeWrapper aria-label={`Exercise sets for ${workoutName} on ${formattedDate}`}>
             <TableHeader>
                 <TableColumn>EXERCISE</TableColumn>
                 <TableColumn>BEST SET</TableColumn>
             </TableHeader>
             <TableBody>
             {workoutLogExercises.map(wle => {
-                const bestSet = wle.sets.reduce((best, set) => {  // <-- changed from SetLog to sets
+                const bestSet = wle.sets.reduce((best, set) => {
                     return set.weight > best.weight ? set : best;
                 }, { weight: 0, reps: 0 });
 
