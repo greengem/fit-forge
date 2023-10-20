@@ -83,7 +83,7 @@ model WorkoutPlan {
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   notes               String?
-  User                User                  @relation(fields: [userId], references: [id])
+  User                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   logs          WorkoutLog[]
   WorkoutPlanExercise WorkoutPlanExercise[]
 }
@@ -111,7 +111,7 @@ model WorkoutLog {
   createdAt    DateTime @default(now())
   date_updated DateTime? @default(now())
   User         User     @relation(fields: [userId], references: [id])
-  WorkoutPlan  WorkoutPlan? @relation(fields: [workoutPlanId], references: [id])
+  WorkoutPlan  WorkoutPlan? @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
   exercises    WorkoutLogExercise[]
 }
 

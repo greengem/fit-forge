@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from '@/db/prisma';
-import { redirect } from "next/navigation";
 import PageHeading from '@/components/PageHeading/PageHeading'
 import CardGrid from "@/components/Grid/CardGrid";
 import DeleteButton from "./DeleteButton";
@@ -10,22 +9,40 @@ import Image from "next/image";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 
 async function getWorkouts(userId) {
+
+	if (!userId || typeof userId !== 'string') {
+		return [];
+	}
+
 	const workouts = await prisma.workoutLog.findMany({
 		where: {
 			userId: userId,
-		  },
-		include: {
-			WorkoutLogExercise: {
-			include: {
-				Exercise: true,
-				SetLog: true,
+		},
+		select: {
+			id: true,
+			name: true,
+			duration: true,
+			exercises: {
+				select: {
+					id: true,
+					Exercise: {
+						select: {
+							name: true
+						}
+					},
+					sets: {
+						select: {
+							weight: true,
+							reps: true
+						}
+					}
+				}
 			}
-			},
-			WorkoutPlan: true,
 		}
 	});
 	return workouts;
 }
+
 
 function formatDuration(seconds) {
 	const minutes = Math.floor(seconds / 60);
@@ -42,9 +59,10 @@ export default async function DashboardPage() {
 			<PageHeading title="Dashboard" />
 			<CardGrid>
 				{workouts.map((workout) => {
-					const totalWeightLifted = workout.WorkoutLogExercise.reduce((acc, wle) => {
-						return acc + wle.SetLog.reduce((acc, set) => acc + set.weight, 0);
+					const totalWeightLifted = workout.exercises.reduce((acc, exercise) => {
+						return acc + exercise.sets.reduce((acc, set) => acc + set.weight, 0);
 					}, 0);
+					  
 
 					return (
 						<Card key={workout.id}>
@@ -62,7 +80,7 @@ export default async function DashboardPage() {
 								</div>
 							</CardHeader>
 							<CardBody>
-								<DashboardExerciseTable workoutLogExercises={workout.WorkoutLogExercise} />
+								<DashboardExerciseTable workoutLogExercises={workout.exercises} />
 							</CardBody>
 							<CardFooter>
 								<DeleteButton id={workout.id} />

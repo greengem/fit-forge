@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from '@/db/prisma';
-import { redirect } from "next/navigation";
 
 import PageHeading from '@/components/PageHeading/PageHeading';
 import CardGrid from "@/components/Grid/CardGrid";
@@ -13,25 +12,46 @@ import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import { IconPlus } from "@tabler/icons-react";
 
-async function getRoutines(userId){
+async function getRoutines(userId) {
+  
+  if (!userId || typeof userId !== 'string') {
+    return [];
+  }
+
   const routines = await prisma.workoutPlan.findMany({
     where: {
       userId: userId,
     },
-    include: {
-        WorkoutPlanExercise: {
-            include: {
-                Exercise: true
+    select: {
+      id: true,
+      name: true,
+      notes: true,
+      updatedAt: true,
+      WorkoutPlanExercise: {
+        select: {
+          sets: true,
+          reps: true,
+          duration: true,
+          order: true,
+          Exercise: {
+            select: {
+              id: true,
+              name: true,
             }
+          }
         }
+      }
     }
-});
+  });
+
   return routines;
 }
 
+
+
 export default async function RoutinesPage() {
   const session = await getServerSession(authOptions);
-  const routines = await getRoutines(session.user.id)
+  const routines = await getRoutines(session.user.id);
 
   return (
     <>
@@ -56,27 +76,25 @@ export default async function RoutinesPage() {
               </div>
             </CardHeader>
             <CardBody>
-            {routine.notes && <p>{routine.notes}</p>}
-            {routine.WorkoutPlanExercise.map((exerciseDetail) => (
-              <ul key={exerciseDetail.Exercise.id} className='flex'>
-                {exerciseDetail.Exercise.name && <li>{exerciseDetail.Exercise.name}</li>}
-                {exerciseDetail.sets && <li>{exerciseDetail.sets} Sets</li>}
-                {exerciseDetail.reps && <li>{exerciseDetail.reps} Reps</li>}
-                {exerciseDetail.duration && <li>{exerciseDetail.duration} Duration</li>}
-              </ul>
-            ))}
+              {routine.notes && <p className="text-default-500 text-sm mb-2">Notes: {routine.notes}</p>}
+              {routine.WorkoutPlanExercise.sort((a, b) => a.order - b.order).map((exerciseDetail) => (
+                <ul key={exerciseDetail.Exercise.id} className='flex'>
+                  <li>
+                    {exerciseDetail.reps && exerciseDetail.reps} x {exerciseDetail.sets && exerciseDetail.sets} {exerciseDetail.Exercise.name}
+                  </li>
+                </ul>
+              ))}
+              
             </CardBody>
             <CardFooter className="gap-2">
               <Button size="sm" color="secondary">
                 <Link href={`/routines/${routine.id}`}>Edit</Link>
               </Button>
               <DeleteButton id={routine.id} />
-              
             </CardFooter>
           </Card>
         ))}
-        </CardGrid>
+      </CardGrid>
     </>
   )
 }
-

@@ -1,7 +1,7 @@
 "use client";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 
-interface SetLog {
+interface Set {
     weight: number;
     reps: number;
 }
@@ -11,7 +11,7 @@ interface WorkoutLogExercise {
     Exercise: {
         name: string;
     };
-    SetLog: SetLog[];
+    sets: Set[];
 }
 
 interface WorkoutTableProps {
@@ -26,18 +26,18 @@ const DashboardExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercis
                 <TableColumn>BEST SET</TableColumn>
             </TableHeader>
             <TableBody>
-                {workoutLogExercises.map(wle => {
-                    const bestSet = wle.SetLog.reduce((best, set) => {
-                        return set.weight > best.weight ? set : best;
-                    }, { weight: 0, reps: 0 });
+            {workoutLogExercises.map(wle => {
+                const bestSet = wle.sets.reduce((best, set) => {  // <-- changed from SetLog to sets
+                    return set.weight > best.weight ? set : best;
+                }, { weight: 0, reps: 0 });
 
-                    return (
-                        <TableRow key={wle.id}>
-                            <TableCell>{wle.Exercise.name}</TableCell>
-                            <TableCell>{bestSet.reps} X {bestSet.weight} KG</TableCell>
-                        </TableRow>
-                    );
-                })}
+                return (
+                    <TableRow key={wle.id}>
+                        <TableCell>{wle.Exercise.name}</TableCell>
+                        <TableCell>{bestSet.reps} X {bestSet.weight} KG</TableCell>
+                    </TableRow>
+                );
+            })}
             </TableBody>
         </Table>
     );
