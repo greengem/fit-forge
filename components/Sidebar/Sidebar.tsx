@@ -3,7 +3,7 @@ import UserDetails from './UserDetails';
 
 export default function Sidebar() {
     return (
-        <div className="fixed top-0 left-0 h-full w-64 bg-custom-gray hidden md:block">
+        <div className="fixed top-0 left-0 h-full w-64 dark:bg-custom-gray hidden md:block">
             <div className='p-3'>
                 <SidebarNav />
             </div>
