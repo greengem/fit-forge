@@ -4,7 +4,7 @@ import ExerciseTable from './ExerciseTable';
 
 async function getExercises(){
   const exercises = await prisma.exercise.findMany({
-    take: 10,
+    take: 100,
     select: {
       id: true,
       name: true,
@@ -18,7 +18,7 @@ async function getExercises(){
       category: true,
       instructions: true,
       tips: true,
-      imagePath: true
+      image: true
     }
   });  
   return exercises;

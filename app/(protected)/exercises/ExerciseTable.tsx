@@ -24,17 +24,19 @@ const ExerciseTable: React.FC<ExerciseProps> = ({ exercises }) => (
                     name={exercise.name}
                     description={exercise.category}
                     avatarProps={{
-                        src: "https://i.pravatar.cc/150?u=a04258114e29026702d"
+                        src: `/images/exercises/${exercise.image}/images/0.jpg`
                     }}
+                    className="capitalize"
                 />
+
                 </TableCell>
                 <TableCell>
                 <div>
-                    <p>{exercise.primary_muscles.join(', ')}</p>
-                    <p>{exercise.secondary_muscles.join(', ')}</p>
+                    <p className="capitalize">{exercise.primary_muscles.join(', ')}</p>
+                    <p className="capitalize">{exercise.secondary_muscles.join(', ')}</p>
                 </div>
                 </TableCell>
-                <TableCell>{exercise.level}</TableCell>
+                <TableCell className="capitalize">{exercise.level}</TableCell>
                 <TableCell><Button isIconOnly><IconInfoCircle /></Button></TableCell>
             </TableRow>
         ))}
