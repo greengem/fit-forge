@@ -1,31 +1,39 @@
-import { ChangeEvent, FC, useCallback } from 'react';
+import { ChangeEvent, FC, useState } from 'react';  // Remove useCallback, add useState
+import { Input } from "@nextui-org/input";
 
-import {Input} from "@nextui-org/input";
 interface SearchBarProps {
     searchTerm: string;
     setSearchTerm: (term: string) => void;
     handleSearch: () => void;
     setSearchResults: (results: any[]) => void;
+    forwardedRef: React.RefObject<HTMLInputElement>;
 }
 
-function debounce(fn: (...args: any[]) => void, delay: number): (...args: any[]) => void {
-    let timeout: ReturnType<typeof setTimeout>;
-    return function(...args: any[]) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => fn(...args), delay);
-    }
-}
+export const SearchBar: FC<SearchBarProps> = ({ 
+    searchTerm, 
+    setSearchTerm, 
+    handleSearch, 
+    setSearchResults, 
+    forwardedRef 
+}) => {
 
-export const SearchBar: FC<SearchBarProps> = ({ searchTerm, setSearchTerm, handleSearch, setSearchResults, forwardedRef }) => {
-    const debouncedSearch = useCallback(debounce(handleSearch, 300), [handleSearch]);
-  
+    const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
+
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const term = e.target.value;
         setSearchTerm(term);
+        
+        // Clear any previous timeout
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
         if (!term.trim()) {
             setSearchResults([]);
         } else {
-            debouncedSearch();
+            // Set a new timeout for the search
+            const id = setTimeout(handleSearch, 300);
+            setTimeoutId(id);
         }
     };    
 
