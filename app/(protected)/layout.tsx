@@ -1,4 +1,5 @@
 import Sidebar from '@/components/Sidebar/Sidebar';
+import Navbar from '@/components/Navbar/Navbar';
 import { Toaster } from 'react-hot-toast';
 
 export default function ProtectedLayout({
@@ -9,11 +10,10 @@ export default function ProtectedLayout({
     return (
         <main className="flex flex-col min-h-screen">
             <Toaster />
+            <Navbar />
             <div className='flex flex-grow'>
-                <div className="fixed top-0 left-0 h-full w-64 bg-custom-gray">
-                    <Sidebar />
-                </div>
-                <div className="ml-64 flex-1 p-5">
+                <Sidebar />
+                <div className="md:ml-64 flex-1 p-5">
                     {children}
                 </div>
             </div>
