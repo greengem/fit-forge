@@ -256,7 +256,7 @@ export default function WorkoutManager({ workout }) {
                     </Card>
             ))}
 
-            <div className='fixed bottom-0 right-0 left-64 p-5 bg-custom-gray z-10'>
+            <div className='fixed bottom-0 right-0 left-0 md:left-64 p-5 bg-custom-gray z-10'>
                 <div className='flex justify-between mb-5'>
                     <div className='flex justify-start gap-2'>
                         <Button 
@@ -281,7 +281,7 @@ export default function WorkoutManager({ workout }) {
                                 )
                             }
                         </Button>
-                        <Button color='success' onClick={completeWorkout}><IconDeviceFloppy />Finish workout</Button>
+                        <Button color='success' onClick={completeWorkout}><IconDeviceFloppy />Complete</Button>
                     </div>
                     <p className={`text-3xl ${isPaused ? 'text-warning' : ''}`}>{formatDuration(workoutDuration)}</p>
                 </div>
