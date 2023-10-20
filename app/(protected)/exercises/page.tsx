@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import prisma from '@/db/prisma';
 import PageHeading from '@/components/PageHeading/PageHeading';
 import ExerciseTable from './ExerciseTable';
@@ -27,7 +25,6 @@ async function getExercises(){
 }
 
 export default async function ExercisesPage() {
-  const session = await getServerSession(authOptions);
   const exercises = await getExercises()
 
   return (
