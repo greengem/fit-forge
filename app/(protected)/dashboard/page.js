@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import prisma from '@/db/prisma';
+import getWorkouts from '@/utils/getWorkouts';
 import PageHeading from '@/components/PageHeading/PageHeading'
 import CardGrid from "@/components/Grid/CardGrid";
 import DeleteButton from "./DeleteButton";
@@ -8,48 +8,10 @@ import DashboardExerciseTable from "./DashboardExerciseTable";
 import Image from "next/image";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 
-async function getWorkouts(userId) {
-
-	if (!userId || typeof userId !== 'string') {
-		return [];
-	}
-
-	const workouts = await prisma.workoutLog.findMany({
-		where: {
-			userId: userId,
-		},
-		select: {
-			id: true,
-			name: true,
-			duration: true,
-			createdAt: true,
-			exercises: {
-				select: {
-					id: true,
-					Exercise: {
-						select: {
-							name: true
-						}
-					},
-					sets: {
-						select: {
-							weight: true,
-							reps: true
-						}
-					}
-				}
-			}
-		}
-	});
-	return workouts;
-}
-
-
 function formatDuration(seconds) {
     const minutes = Math.floor(seconds / 60);
     return `${minutes}m`;
 }
-
 
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);

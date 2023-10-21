@@ -1,46 +1,12 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import prisma from '@/db/prisma';
+import getRoutines from "@/utils/getRoutines";
 import PageHeading from '@/components/PageHeading/PageHeading'
 import CardGrid from "@/components/Grid/CardGrid";
 import Link from 'next/link';
 import Image from "next/image";
 import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-
-async function getRoutines(userId){
-
-  if (!userId || typeof userId !== 'string') {
-    return [];
-  }
-
-  const routines = await prisma.workoutPlan.findMany({
-    where: {
-      userId: userId,
-    },
-    select: {
-      id: true,
-      name: true,
-      notes: true,
-      updatedAt: true,
-      WorkoutPlanExercise: {
-        select: {
-          sets: true,
-          reps: true,
-          duration: true,
-          order: true,
-          Exercise: {
-            select: {
-              id: true,
-              name: true,
-            }
-          }
-        }
-      }
-    }
-  });  
-  return routines;
-}
 
 export default async function WorkoutPage() {
   const session = await getServerSession(authOptions);

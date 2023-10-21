@@ -1,28 +1,6 @@
-import prisma from '@/db/prisma';
+import getExercises from '@/utils/getExercises';
 import PageHeading from '@/components/PageHeading/PageHeading';
 import ExerciseTable from './ExerciseTable';
-
-async function getExercises(){
-  const exercises = await prisma.exercise.findMany({
-    take: 100,
-    select: {
-      id: true,
-      name: true,
-      aliases: true,
-      primary_muscles: true,
-      secondary_muscles: true,
-      force: true,
-      level: true,
-      mechanic: true,
-      equipment: true,
-      category: true,
-      instructions: true,
-      tips: true,
-      image: true
-    }
-  });  
-  return exercises;
-}
 
 export default async function ExercisesPage() {
   const exercises = await getExercises()
