@@ -204,6 +204,7 @@ export default function WorkoutManager({ workout }) {
             {workout.notes && <p>Notes: {workout.notes}</p>}
             {workout.WorkoutPlanExercise.map((exerciseDetail, index) => (
                  <ExerciseCard 
+                 key={exerciseDetail.Exercise.id}
                  exerciseDetail={exerciseDetail} 
                  index={index}
                  exercises={exercises}

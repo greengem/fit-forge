@@ -4,7 +4,7 @@ import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 
 export default function ExerciseCard({ exerciseDetail, index, exercises, weights, reps, handleCompletion, handleWeightChange, handleRepChange, addSet, removeSet }) {
     return (
-        <Card key={exerciseDetail.Exercise.id} className='mb-10'>
+        <Card className='mb-10'>
             <CardHeader className='font-semibold text-xl'>{exerciseDetail.order + ". " + exerciseDetail.Exercise.name}</CardHeader>
             <CardBody>
             <ExerciseTable 
