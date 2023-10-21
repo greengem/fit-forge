@@ -1,0 +1,2 @@
+// types/exercise.ts
+
