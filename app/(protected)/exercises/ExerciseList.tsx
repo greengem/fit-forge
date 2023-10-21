@@ -146,12 +146,12 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
                 <ExerciseFilters onFilterChange={setFilters} />
             </div>
 
-            <div className="overflow-x-auto">
+            <div>
                 <Table aria-label="Exercise Table" className="mb-5">
                     <TableHeader>
                         <TableColumn>NAME</TableColumn>
-                        <TableColumn>MUSCLES</TableColumn>
-                        <TableColumn>LEVEL</TableColumn>
+                        <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
+                        <TableColumn className="hidden lg:table-cell">LEVEL</TableColumn>
                         <TableColumn><></></TableColumn>
                     </TableHeader>
                     <TableBody>
@@ -164,13 +164,13 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
                             name={exercise.name}
                             />
                             </TableCell>
-                        <TableCell className="capitalize">
+                        <TableCell className="capitalize hidden lg:table-cell">
                         <div className="flex flex-col">
-                            <p className="text-bold text-small capitalize">{exercise.primary_muscles.join(', ')}</p>
-                            <p className="text-bold text-tiny capitalize text-default-400">{exercise.secondary_muscles.join(', ')}</p>
+                            <p className="text-bold text-small">{exercise.primary_muscles.join(', ')}</p>
+                            <p className="text-bold text-tiny text-default-400">{exercise.secondary_muscles.join(', ')}</p>
                         </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="hidden lg:table-cell">
                             <Chip radius="sm" className="capitalize" color={levelColorMap[exercise.level]} size="sm" variant="flat">
                             {exercise.level}
                             </Chip>
