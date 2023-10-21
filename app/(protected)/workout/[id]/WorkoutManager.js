@@ -2,13 +2,8 @@
 import { useState, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import ProgressBar from './ProgressBar';
-
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/table";
-import { Button } from "@nextui-org/button";
-import {Input} from "@nextui-org/input";
-import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
-import { IconSquare, IconSquareCheck, IconPlayerPlay, IconPlayerPause, IconDeviceFloppy } from '@tabler/icons-react';
+import ExerciseCard from './ExerciseCard';
+import StatusBar from './StatusBar';
 
 export default function WorkoutManager({ workout }) {
 
@@ -24,6 +19,7 @@ export default function WorkoutManager({ workout }) {
     const [reps, setReps] = useState(workout.WorkoutPlanExercise.map(exercise => Array(exercise.sets).fill(exercise.reps)));
     const durationInterval = useRef(null);
     const [isPaused, setIsPaused] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
     
     // Utility & Helper Functions
     const formatDuration = (seconds) => {
@@ -152,6 +148,7 @@ export default function WorkoutManager({ workout }) {
     }, [workoutStartTime, isPaused]);    
 
     const completeWorkout = async () => {
+        setIsSaving(true);
         const workoutPlanId = workout.id;
         const workoutExercises = exercises.map((exerciseState, index) => {
             const exerciseDetail = workout.WorkoutPlanExercise[index];
@@ -191,6 +188,8 @@ export default function WorkoutManager({ workout }) {
             }
         } catch (error) {
             toast.error('An error occurred while saving the workout: ' + error.message);
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -202,91 +201,31 @@ export default function WorkoutManager({ workout }) {
 
     return (
         <div className='pb-64'>            
-            {workout.notes && <Card className='mb-5'><CardBody>Notes: {workout.notes}</CardBody></Card>}
+            {workout.notes && <p>Notes: {workout.notes}</p>}
             {workout.WorkoutPlanExercise.map((exerciseDetail, index) => (
-                    <Card key={exerciseDetail.Exercise.id} className='mb-10'>
-                        <CardHeader className='font-semibold text-xl'>{exerciseDetail.order + ". " + exerciseDetail.Exercise.name}</CardHeader>
-                        <CardBody>
-                            <Table removeWrapper aria-label={`Table for exercise ${exerciseDetail.Exercise.name}`} className="min-w-full table-auto mb-3">
-                                <TableHeader>
-                                        <TableColumn>SET</TableColumn>
-                                        <TableColumn>KG</TableColumn>
-                                        <TableColumn>REPS</TableColumn>
-                                        <TableColumn>COMPLETED</TableColumn>
-                                </TableHeader>
-                                <TableBody>
-                                    {Array.from({ length: exercises[index].sets }).map((_, setIndex) => (
-                                        <TableRow key={setIndex}>
-                                            <TableCell>
-                                                {setIndex + 1}
-                                            </TableCell>
-                                            <TableCell>
-                                                <Input 
-                                                    type='number' 
-                                                    value={weights[index][setIndex]}
-                                                    onChange={e => handleWeightChange(index, setIndex, Number(e.target.value))}
-
-                                                    disabled={exercises[index].completedSets[setIndex]} 
-                                                />
-                                            </TableCell>
-                                            <TableCell>
-                                                <Input 
-                                                    type="number" 
-                                                    value={reps[index][setIndex]}
-                                                    onChange={e => handleRepChange(index, setIndex, Number(e.target.value))}
-                                                    className="w-full p-1" 
-                                                    disabled={exercises[index].completedSets[setIndex]} 
-                                                />
-                                            </TableCell>
-                                            <TableCell>
-                                            <Button isIconOnly color={exercises[index].completedSets[setIndex] ? 'success' : 'default'} onClick={() => handleCompletion(index, setIndex, exerciseDetail.Exercise.name)}>
-                                                {exercises[index].completedSets[setIndex] ? <IconSquareCheck /> : <IconSquare />}
-                                            </Button>
-
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </CardBody>
-                    <CardFooter className='gap-2'>
-                        <Button onClick={() => addSet(index, exerciseDetail.Exercise.name)}>Add Set</Button>
-                        <Button onClick={() => removeSet(index, exerciseDetail.Exercise.name)}>Remove Set</Button>
-                    </CardFooter>
-                    </Card>
+                 <ExerciseCard 
+                 exerciseDetail={exerciseDetail} 
+                 index={index}
+                 exercises={exercises}
+                 weights={weights}
+                 reps={reps}
+                 handleCompletion={handleCompletion}
+                 handleWeightChange={handleWeightChange}
+                 handleRepChange={handleRepChange}
+                 addSet={addSet}
+                 removeSet={removeSet}
+             />
             ))}
-
-            <div className='fixed bottom-0 right-0 left-0 md:left-64 p-5 bg-custom-gray z-10'>
-                <div className='flex justify-between mb-5'>
-                    <div className='flex justify-start gap-2'>
-                        <Button 
-                            color={workoutStartTime ? (isPaused ? 'primary' : 'warning') : 'primary'} 
-                            onClick={togglePause} 
-                            disabled={!workoutStartTime && isPaused}
-                        >
-                            {!workoutStartTime 
-                                ? <> 
-                                    <IconPlayerPlay /> 
-                                    Start Workout
-                                </>
-                                : (isPaused 
-                                    ? <>
-                                        <IconPlayerPlay /> 
-                                        Resume Workout 
-                                    </>
-                                    : <>
-                                        <IconPlayerPause />
-                                        Pause Workout
-                                    </>
-                                )
-                            }
-                        </Button>
-                        <Button color='success' onClick={completeWorkout}><IconDeviceFloppy />Complete</Button>
-                    </div>
-                    <p className={`text-3xl ${isPaused ? 'text-warning' : ''}`}>{formatDuration(workoutDuration)}</p>
-                </div>
-                <ProgressBar percentage={progressPercentage} />
-            </div>
+            <StatusBar 
+                workoutStartTime={workoutStartTime}
+                isPaused={isPaused}
+                togglePause={togglePause}
+                completeWorkout={completeWorkout}
+                formatDuration={formatDuration}
+                workoutDuration={workoutDuration}
+                progressPercentage={progressPercentage}
+                isSaving={isSaving}
+            />
         </div>
     );
 }
