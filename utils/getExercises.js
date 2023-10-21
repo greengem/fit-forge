@@ -5,7 +5,6 @@ import prisma from '@/db/prisma';
 async function fetchExercisesFromDB() {
     console.log("Fetching exercises from database...");
     return await prisma.exercise.findMany({
-        take: 10,
         select: {
             id: true,
             name: true,
