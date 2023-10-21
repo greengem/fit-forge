@@ -206,13 +206,13 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
                             <ModalBody>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <Image 
-                                        src={`${selectedExercise.image}0.jpg`} 
+                                        src={`/images/exercises/${selectedExercise.image}/images/0.jpg`} 
                                         width={750}
                                         height={500} 
                                         alt="Exercise photo 1"
                                     />
                                     <Image 
-                                        src={`${selectedExercise.image}1.jpg`} 
+                                        src={`/images/exercises/${selectedExercise.image}/images/1.jpg`} 
                                         width={750}
                                         height={500} 
                                         alt="Exercise photo 2"
