@@ -2,9 +2,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getWorkouts from '@/utils/getWorkouts';
 import PageHeading from '@/components/PageHeading/PageHeading'
+import DashboardExerciseTable from "./DashboardExerciseTable";
 import CardGrid from "@/components/Grid/CardGrid";
 import DeleteButton from "./DeleteButton";
-import DashboardExerciseTable from "./DashboardExerciseTable";
+
 import Image from "next/image";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 
@@ -32,10 +33,12 @@ export default async function DashboardPage() {
 				<Card><CardHeader className="px-5">Workouts Completed</CardHeader><CardBody className="text-5xl pt-0">{workouts.length}</CardBody></Card>
 				<Card><CardHeader className="px-5">Total Weight Lifted (kg)</CardHeader><CardBody className="text-5xl pt-0">{totalWeightLifted}</CardBody></Card>
 				<Card><CardHeader className="px-5">Average Workout Duration</CardHeader><CardBody className="text-5xl pt-0">{formattedAverageDuration}</CardBody></Card>
-				<Card><CardHeader className="px-5">TODO</CardHeader><CardBody className="text-3xl pt-0">TODO</CardBody></Card>
+				<Card>
+					<CardHeader className="px-5">TODO</CardHeader>
+					<CardBody className="text-3xl pt-0">TODO</CardBody>
+				</Card>
 			</div>
 
-			<Card className="mb-10"><CardHeader>Workouts Over Time</CardHeader><CardBody className="text-3xl pt-0">CHART</CardBody></Card>
 
 			<PageHeading title="History" />
 			<CardGrid>
