@@ -2,11 +2,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getWorkouts from '@/utils/getWorkouts';
 import PageHeading from '@/components/PageHeading/PageHeading'
-import DashboardExerciseTable from "./DashboardExerciseTable";
+import WorkoutCards from './WorkoutCards';
 import CardGrid from "@/components/Grid/CardGrid";
-import DeleteButton from "./DeleteButton";
-
-import Image from "next/image";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 
 function formatDuration(seconds) {
@@ -39,37 +36,9 @@ export default async function DashboardPage() {
 				</Card>
 			</div>
 
-
 			<PageHeading title="History" />
 			<CardGrid>
-				{workouts.map((workout) => {
-					const totalWeightLifted = workout.exercises.reduce((acc, exercise) => {
-						return acc + exercise.sets.reduce((acc, set) => acc + set.weight, 0);
-					}, 0);
-					return (
-						<Card key={workout.id}>
-							<CardHeader className="flex gap-3 px-5">
-								<Image
-									alt="Barbell Icon"
-									height={40}
-									radius="sm"
-									src="/icons/barbell.svg"
-									width={40}
-								/>
-								<div className="flex flex-col">
-									<p className="text-md">{workout.name}</p>
-									<p className="text-small text-default-500">{formatDuration(workout.duration)} | {totalWeightLifted} KG</p>
-								</div>
-							</CardHeader>
-							<CardBody className="py-0 pb-2">
-								<DashboardExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} />
-							</CardBody>
-							<CardFooter className="px-5">
-								<DeleteButton id={workout.id} />
-							</CardFooter>
-						</Card>
-					);
-				})}
+				<WorkoutCards workouts={workouts} />
 			</CardGrid>
 		</>
 	);

@@ -1,23 +1,10 @@
 "use client";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
-
-interface Set {
-    weight: number;
-    reps: number;
-}
-
-interface WorkoutLogExercise {
-    id: string | number;
-    Exercise: {
-        name: string;
-    };
-    sets: Set[];
-}
-
+import { Exercise } from '@/types/workout';
 interface WorkoutTableProps {
-    workoutLogExercises: WorkoutLogExercise[];
+    workoutLogExercises: Exercise[];
     workoutName: string;
-    workoutDate: string;
+    workoutDate: Date;
 }
 
 const DashboardExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercises, workoutName, workoutDate }) => {
