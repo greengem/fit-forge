@@ -25,7 +25,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   const [routineName, setRoutineName] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const searchInputRef = useRef<HTMLInputElement>(null);
-
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (routineId !== 'new') {
@@ -125,45 +125,52 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
 
   const handleSave = async () => {
     if (!validateForm()) return;
-  
+    
+    setIsSaving(true);
+
     const exercisesWithOrder = selectedExercises.map((exercise, index) => ({
       ...exercise,
       order: index + 1,
     }));
-  
-    let response;
     
-    if (routineId === 'new') { // New Routine
-      response = await fetch('/api/routines', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
-      });
-    } else { // Update existing Routine
-      response = await fetch(`/api/routines/${routineId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
-      });
-    }
-  
-    const data = await response.json();
-  
-    if (data.success) {
-      toast.success('Routine saved successfully!');
-      router.push('/routines');
-      router.refresh();
-    } else {
-      console.error("Server responded with error:", data.error);
-      toast.error('Error saving routine.');
+    try {
+      let response;
+      
+      if (routineId === 'new') {
+        response = await fetch('/api/routines', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
+        });
+      } else { 
+        response = await fetch(`/api/routines/${routineId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
+        });
+      }
+    
+      const data = await response.json();
+    
+      if (data.success) {
+        toast.success('Routine saved successfully!');
+        router.push('/routines');
+        router.refresh();
+      } else {
+        console.error("Server responded with error:", data.error);
+        toast.error('Error saving routine.');
+      }
+    } catch (error) {
+      console.error("Error during save:", error);
+      toast.error('Unexpected error while saving routine.');
+    } finally {
+      setIsSaving(false);
     }
   };
-  
-  
 
   return (
     <div className="space-y-4">
@@ -192,7 +199,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
         moveDown={moveDown}
         deleteExercise={deleteExercise}
       />
-      <SaveButton handleSave={handleSave} />
+      <SaveButton handleSave={handleSave} isLoading={isSaving} />
     </div>
   );
 }
