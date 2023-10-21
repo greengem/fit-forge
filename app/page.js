@@ -12,9 +12,7 @@ export default async function HomePage() {
         <p className="text-xl text-center mb-8">
           Your ultimate fitness companion. Stay on track, stay active with Tracktive.
         </p>
-        <Link href="/dashboard" className="mb-10">
-          <Button size="lg">Get Started</Button>
-        </Link>
+        <Button as={Link} href="/dashboard" size="lg" className="mb-10">Get Started</Button>
         <div className="flex space-x-10">
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 rounded-full mb-2">

@@ -47,9 +47,7 @@ export default async function RoutinesPage() {
               </ul>
             </CardBody>
             <CardFooter className="gap-2 px-5">
-              <Button size="sm" color="secondary">
-                <Link href={`/routines/${routine.id}`}>Edit</Link>
-              </Button>
+              <Button as={Link} href={`/routines/${routine.id}`} size="sm" color="secondary">Edit</Button>
               <DeleteButton id={routine.id} />
             </CardFooter>
           </Card>
