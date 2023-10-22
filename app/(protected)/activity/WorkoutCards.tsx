@@ -25,7 +25,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton 
                     return acc + exercise.sets.reduce((acc, set) => acc + set.weight, 0);
                 }, 0);
                 return (
-                        <Card className='h-full'>
+                        <Card key={workout.id} className='h-full'>
                             <CardHeader className="flex gap-3 px-5">
                                 <Image
                                     as={NextImage}
