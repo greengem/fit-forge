@@ -1,6 +1,4 @@
 import {Providers} from "./providers";
-import { getServerSession } from "next-auth";
-import SessionProvider from "@/components/SessionProvider";
 import type { Metadata } from 'next'
 import './globals.css';
 
@@ -10,21 +8,18 @@ export const metadata: Metadata = {
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const session = await getServerSession();
 
   return (
     <html lang="en">
       <body>
-        <SessionProvider session={session}>
           <Providers>
             {children}
           </Providers>
-        </SessionProvider>
       </body>
     </html>
   )
