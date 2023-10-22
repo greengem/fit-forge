@@ -15,7 +15,6 @@ import {  Modal,   ModalContent,   ModalHeader,   ModalBody,   ModalFooter} from
 import { Chip } from "@nextui-org/chip";
 import { Pagination, User, Button, useDisclosure } from "@nextui-org/react"
 import {Image} from "@nextui-org/react";
-import NextImage from "next/image";
 
 interface Exercise {
   id: string;

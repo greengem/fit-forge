@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from 'next/navigation'
 import Link from "next/link";
-import { IconHome, IconDashboard, IconJumpRope, IconList, IconStretching } from '@tabler/icons-react';
+import { IconHome, IconDashboard, IconJumpRope, IconList, IconStretching, IconUser } from '@tabler/icons-react';
 
 export default function SidebarNav() {
     const pathname = usePathname();
@@ -42,6 +42,13 @@ export default function SidebarNav() {
                 href="/exercises"
                 active={pathname === "/exercises"}
                 subtext="View all exercises"
+            />
+            <NavItem
+                icon={<IconUser className="h-6 w-6" />}
+                label="Profile"
+                href="/profile"
+                active={pathname === "/profile"}
+                subtext="View your profile"
             />
         </ul>
     );
