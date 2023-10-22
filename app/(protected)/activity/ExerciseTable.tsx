@@ -7,7 +7,7 @@ interface WorkoutTableProps {
     workoutDate: Date;
 }
 
-const DashboardExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercises, workoutName, workoutDate }) => {
+const ExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercises, workoutName, workoutDate }) => {
     const dateObject = new Date(workoutDate);
     const formattedDate = `${dateObject.getDate()}/${dateObject.getMonth() + 1}/${dateObject.getFullYear()}`;
 
@@ -36,4 +36,4 @@ const DashboardExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercis
     );
 };
 
-export default DashboardExerciseTable;
+export default ExerciseTable;

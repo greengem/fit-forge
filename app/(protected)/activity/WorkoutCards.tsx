@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Image } from '@nextui-org/react';
 import NextImage from "next/image";
-import DashboardExerciseTable from "@/app/(protected)/activity/DashboardExerciseTable";
+import ExerciseTable from "@/app/(protected)/activity/ExerciseTable";
 import DeleteButton from "@/app/(protected)/activity/DeleteButton";
 import { Workout } from '@/types';
 
@@ -32,7 +32,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton 
                                     alt="Barbell Icon"
                                     height={40}
                                     radius="sm"
-                                    src="/icons/barbell.svg"
+                                    src="/icons/barbell-darkmode.svg"
                                     width={40}
                                 />
                                 <div className="flex flex-col">
@@ -41,7 +41,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton 
                                 </div>
                             </CardHeader>
                             <CardBody className="py-0 pb-2">
-                                <DashboardExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} />
+                                <ExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} />
                             </CardBody>
                             {showDeleteButton && (
                             <CardFooter className="px-5">

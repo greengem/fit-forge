@@ -28,7 +28,7 @@ export default async function RoutinesPage() {
                 alt="nextui logo"
                 height={40}
                 radius="sm"
-                src="/icons/barbell.svg"
+                src="/icons/barbell-darkmode.svg"
                 width={40}
               />
               <div className="flex flex-col">
