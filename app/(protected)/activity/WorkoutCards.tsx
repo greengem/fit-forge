@@ -3,10 +3,9 @@ import React from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Image } from '@nextui-org/react';
 import NextImage from "next/image";
-import DashboardExerciseTable from "./DashboardExerciseTable";
-import DeleteButton from "./DeleteButton";
+import DashboardExerciseTable from "@/app/(protected)/activity/DashboardExerciseTable";
+import DeleteButton from "@/app/(protected)/activity/DeleteButton";
 import { Workout } from '@/types';
-import { motion } from 'framer-motion';
 
 function formatDuration(seconds: number): string {
     const minutes = Math.floor(seconds / 60);
@@ -15,9 +14,10 @@ function formatDuration(seconds: number): string {
 
 interface WorkoutCardsProps {
     workouts: Workout[];
+    showDeleteButton: boolean;
 }
 
-const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts }) => {
+const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton }) => {
     return (
         <>
             {workouts.map((workout) => {
@@ -25,7 +25,6 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts }) => {
                     return acc + exercise.sets.reduce((acc, set) => acc + set.weight, 0);
                 }, 0);
                 return (
-                    <motion.div layout key={workout.id}>
                         <Card className='h-full'>
                             <CardHeader className="flex gap-3 px-5">
                                 <Image
@@ -44,11 +43,12 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts }) => {
                             <CardBody className="py-0 pb-2">
                                 <DashboardExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} />
                             </CardBody>
+                            {showDeleteButton && (
                             <CardFooter className="px-5">
                                 <DeleteButton id={workout.id} />
                             </CardFooter>
+                            )}
                         </Card>
-                    </motion.div>
                 );
             })}
         </>

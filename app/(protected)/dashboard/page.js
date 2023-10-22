@@ -2,9 +2,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getWorkouts from '@/utils/getWorkouts';
 import PageHeading from '@/components/PageHeading/PageHeading'
-import WorkoutCards from './WorkoutCards';
+import WorkoutCards from '@/app/(protected)/activity/WorkoutCards';
 import CardGrid from "@/components/Grid/CardGrid";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Card, CardHeader, CardBody } from "@nextui-org/card";
 
 function formatDuration(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -13,7 +13,7 @@ function formatDuration(seconds) {
 
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);
-	const workouts = await getWorkouts(session.user.id)
+	const workouts = await getWorkouts(session.user.id, 2)
 	const totalWeightLifted = workouts.reduce((totalWeight, workout) => {
 		return totalWeight + workout.exercises.reduce((exerciseWeight, exercise) => {
 			return exerciseWeight + exercise.sets.reduce((setWeight, set) => setWeight + set.weight, 0);
@@ -36,9 +36,9 @@ export default async function DashboardPage() {
 				</Card>
 			</div>
 
-			<PageHeading title="History" />
+			<PageHeading title="Recent Activity" />
 			<CardGrid>
-				<WorkoutCards workouts={workouts} />
+				<WorkoutCards workouts={workouts} showDeleteButton={false} />
 			</CardGrid>
 		</>
 	);

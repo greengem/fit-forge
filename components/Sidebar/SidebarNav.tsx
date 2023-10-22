@@ -30,6 +30,13 @@ export default function SidebarNav() {
                 subtext="Kick off a session"
             />
             <NavItem
+                icon={<IconJumpRope className="h-6 w-6" />}
+                label="Activity"
+                href="/activity"
+                active={pathname === "/activity"}
+                subtext="View workout logs"
+            />
+            <NavItem
                 icon={<IconList className="h-6 w-6" />}
                 label="Routines"
                 href="/routines"

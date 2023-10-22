@@ -1,18 +1,17 @@
 import prisma from '@/db/prisma';
 
-export default async function getWorkouts(userId) {
-
+export default async function getWorkouts(userId, limit = null) {
 	if (!userId || typeof userId !== 'string') {
 		return [];
 	}
 
-	const workouts = await prisma.workoutLog.findMany({
+	const queryOptions = {
 		where: {
 			userId: userId,
 		},
-        orderBy: {
-            createdAt: 'desc'
-        },
+		orderBy: {
+			createdAt: 'desc'
+		},
 		select: {
 			id: true,
 			name: true,
@@ -35,6 +34,12 @@ export default async function getWorkouts(userId) {
 				}
 			}
 		}
-	});
+	};
+
+	if (limit) {
+		queryOptions.take = limit;
+	}
+
+	const workouts = await prisma.workoutLog.findMany(queryOptions);
 	return workouts;
 }
