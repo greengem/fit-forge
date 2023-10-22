@@ -1,7 +1,8 @@
 "use client";
 import React from 'react';
 import { Select, SelectItem } from '@nextui-org/select';
-
+import {Checkbox} from "@nextui-org/checkbox";
+import Link from 'next/link';
 interface ExerciseFiltersProps {
   onFilterChange: (value: any) => void;
 }
@@ -51,8 +52,9 @@ export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps
   };
 
   return (
+    <>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-      <Select label="Filter by Category" onChange={handleCategoryChange}>
+      <Select label="Category" placeholder="All" onChange={handleCategoryChange}>
         {categories.map((category) => (
           <SelectItem key={category.value} value={category.value}>
             {category.label}
@@ -60,7 +62,7 @@ export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps
         ))}
       </Select>
 
-      <Select label="Filter by Muscle Group" onChange={handleMuscleGroupChange}>
+      <Select label="Muscle Group" placeholder='All' onChange={handleMuscleGroupChange}>
         {muscleGroups.map((muscle) => (
           <SelectItem key={muscle.value} value={muscle.value}>
             {muscle.label}
@@ -68,5 +70,8 @@ export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps
         ))}
       </Select>
     </div>
+    <Checkbox>Filter exercises by my equipment.</Checkbox>
+    
+    </>
   );
 }
