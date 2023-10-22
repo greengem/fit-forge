@@ -45,6 +45,7 @@ model User {
   sessions      Session[]
   workoutLogs  WorkoutLog[]
   workoutPlans WorkoutPlan[]
+  equipment UserEquipment[]
 }
 
 model VerificationToken {
@@ -53,6 +54,14 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model UserEquipment {
+  userId       String
+  equipmentType EquipmentType
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@id([userId, equipmentType])
 }
 
 model Exercise {
