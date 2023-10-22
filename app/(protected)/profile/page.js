@@ -1,14 +1,23 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import PageHeading from '@/components/PageHeading/PageHeading';
+import getEquipment from "@/utils/getEquipment";
+import ProfileHero from "./ProfileHero";
+import ProfileStats from "./ProfileStats";
+import ProfileEquipment from "./ProfileEquipment";
+import ProfileDetails from "./ProfileDetails";
 
 export default async function ProfilePage() {
     const session = await getServerSession(authOptions);
+    const equipment = await getEquipment(session.user.id); 
 
     return (
         <>
-            <PageHeading title="Profile" />
-            <p>Logged in as {session.user.name}</p>
+            <ProfileHero session={session} />
+            <ProfileStats />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <ProfileEquipment equipment={equipment} session={session} />
+                <ProfileDetails session={session} />
+            </div>
         </>
-  )
+    )
 }
