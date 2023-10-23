@@ -24,13 +24,6 @@ export default async function RoutinesPage() {
         {routines.map((routine) => (
           <Card key={routine.id}>
             <CardHeader className="flex gap-3 px-5">
-              <Image
-                alt="nextui logo"
-                height={40}
-                radius="sm"
-                src="/icons/barbell-darkmode.svg"
-                width={40}
-              />
               <div className="flex flex-col">
                 <p className="text-md">{routine.name}</p>
                 <p className="text-small text-default-500">Updated: {new Date(routine.updatedAt).toLocaleDateString()}</p>

@@ -27,14 +27,6 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton 
                 return (
                         <Card key={workout.id} className='h-full'>
                             <CardHeader className="flex gap-3 px-5">
-                                <Image
-                                    as={NextImage}
-                                    alt="Barbell Icon"
-                                    height={40}
-                                    radius="sm"
-                                    src="/icons/barbell-darkmode.svg"
-                                    width={40}
-                                />
                                 <div className="flex flex-col">
                                     <p className="text-md">{workout.name}</p>
                                     <p className="text-small text-default-500">{formatDuration(workout.duration)} | {totalWeightLifted} KG</p>
