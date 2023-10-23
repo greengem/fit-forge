@@ -23,7 +23,7 @@ export default async function WorkoutPage() {
             <Card key={routine.id}>
               <CardHeader className="flex gap-3 px-5">
                 <div className="flex flex-col">
-                  <p className="text-md font-semibold">{routine.name}</p>
+                  <p className="text-md font-semibold text-success">{routine.name}</p>
                   <p className="text-small text-default-500">Updated: {new Date(routine.updatedAt).toLocaleDateString()}</p>
                 </div>
               </CardHeader>
@@ -38,7 +38,7 @@ export default async function WorkoutPage() {
                 </ul>
               </CardBody>
               <CardFooter className="px-5">
-                <Button as={Link} href={`/workout/${routine.id}`} size="sm" color="success" className="gap-unit-1">
+                <Button variant="ghost" as={Link} href={`/workout/${routine.id}`} size="sm" color="success" className="gap-unit-1">
                   <IconPlayerPlayFilled size={16} />
                   Start Workout
                 </Button>

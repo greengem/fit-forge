@@ -23,7 +23,7 @@ export default async function DashboardPage() {
 				<WorkoutCards workouts={workouts} showDeleteButton={false} />
 			</CardGrid>
 			<div className="text-center mt-5">
-				<Button as={Link} href="/activity">View all activity</Button>
+				<Button variant="ghost" as={Link} href="/activity">View all activity</Button>
 			</div>
 		</>
 	);
