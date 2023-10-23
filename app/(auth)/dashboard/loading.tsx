@@ -6,7 +6,7 @@ export default function Loading() {
         <>
             <PageHeading title="Dashboard" />
             <div className="flex justify-center items-center h-screen w-full">
-                <Spinner label="Loading..." color="primary" />
+                <Spinner label="Loading..." color="success" />
             </div>
         </>
     )

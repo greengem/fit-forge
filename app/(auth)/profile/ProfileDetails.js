@@ -104,7 +104,7 @@ export default function ProfileDetails({ session, expandedProfile }) {
 
                 </CardBody>
             <CardFooter className="px-5">
-                <Button color="primary" onClick={handleSubmit}>
+                <Button color="success" onClick={handleSubmit}>
                     <IconDeviceFloppy />Save
                 </Button>
             </CardFooter>

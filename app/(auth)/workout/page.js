@@ -3,10 +3,10 @@ import { authOptions } from "@/utils/authOptions"
 import getRoutines from "@/utils/getRoutines";
 import PageHeading from '@/components/PageHeading/PageHeading'
 import CardGrid from "@/components/Grid/CardGrid";
-import Image from "next/image";
 import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
+import { IconPlayerPlayFilled } from "@tabler/icons-react";
 
 export default async function WorkoutPage() {
   const session = await getServerSession(authOptions);
@@ -38,7 +38,10 @@ export default async function WorkoutPage() {
                 </ul>
               </CardBody>
               <CardFooter className="px-5">
-                <Button as={Link} href={`/workout/${routine.id}`} size="sm" color="primary">Start Workout</Button>
+                <Button as={Link} href={`/workout/${routine.id}`} size="sm" color="success" className="gap-unit-1">
+                  <IconPlayerPlayFilled size={16} />
+                  Start Workout
+                </Button>
               </CardFooter>
             </Card>
           ))
