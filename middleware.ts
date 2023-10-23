@@ -7,5 +7,6 @@ export const config = {
         "/workouts", 
         "/profile", 
         "/exercises", 
+        "/profile", 
     ],
 };
