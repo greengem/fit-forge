@@ -5,6 +5,7 @@ import PageHeading from '@/components/PageHeading/PageHeading'
 import DashboardCards from './DashboardCards';
 import WorkoutCards from '@/app/(auth)/activity/WorkoutCards';
 import CardGrid from "@/components/Grid/CardGrid";
+import Link from "next/link";
 
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);
@@ -18,6 +19,10 @@ export default async function DashboardPage() {
 			<CardGrid>
 				<WorkoutCards workouts={workouts} showDeleteButton={false} />
 			</CardGrid>
+			<div className="text-center mt-5">
+			<Link className="text-primary" href="/activity">View all activity</Link>
+			</div>
+			
 		</>
 	);
 }
