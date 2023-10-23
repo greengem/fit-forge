@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from 'next/navigation'
 import Link from "next/link";
-import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser } from '@tabler/icons-react';
+import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity } from '@tabler/icons-react';
 
 export default function SidebarNav() {
     const pathname = usePathname();
@@ -23,7 +23,7 @@ export default function SidebarNav() {
                 subtext="View your progress"
             />
             <NavItem
-                icon={<IconJumpRope className="h-6 w-6" />}
+                icon={<IconActivity className="h-6 w-6" />}
                 label="Activity"
                 href="/activity"
                 active={pathname === "/activity"}
