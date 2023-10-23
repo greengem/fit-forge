@@ -10,8 +10,6 @@ export async function PATCH(request, { params }) {
             data: data,
         });
 
-        console.log("Updated user:", updatedUser);
-
         return NextResponse.json({ success: true, user: updatedUser }, { status: 200 });
     } catch (error) {
         console.error("Error while updating the user:", error.message);
