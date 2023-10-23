@@ -9,11 +9,11 @@ export default function SidebarNav() {
     return (
         <ul className="space-y-4">
             <NavItem
-                icon={<IconHome className="h-6 w-6" />}
-                label="Home"
-                href="/"
-                active={pathname === "/"}
-                subtext="Your starting point"
+                icon={<IconUser className="h-6 w-6" />}
+                label="Profile"
+                href="/profile"
+                active={pathname === "/profile"}
+                subtext="View your profile"
             />
             <NavItem
                 icon={<IconDashboard className="h-6 w-6" />}
@@ -24,17 +24,17 @@ export default function SidebarNav() {
             />
             <NavItem
                 icon={<IconJumpRope className="h-6 w-6" />}
-                label="Start Workout"
-                href="/workout"
-                active={pathname === "/workout"}
-                subtext="Kick off a session"
-            />
-            <NavItem
-                icon={<IconJumpRope className="h-6 w-6" />}
                 label="Activity"
                 href="/activity"
                 active={pathname === "/activity"}
                 subtext="View workout logs"
+            />
+            <NavItem
+                icon={<IconJumpRope className="h-6 w-6" />}
+                label="Start Workout"
+                href="/workout"
+                active={pathname === "/workout"}
+                subtext="Kick off a session"
             />
             <NavItem
                 icon={<IconList className="h-6 w-6" />}
@@ -49,13 +49,6 @@ export default function SidebarNav() {
                 href="/exercises"
                 active={pathname === "/exercises"}
                 subtext="View all exercises"
-            />
-            <NavItem
-                icon={<IconUser className="h-6 w-6" />}
-                label="Profile"
-                href="/profile"
-                active={pathname === "/profile"}
-                subtext="View your profile"
             />
         </ul>
     );
