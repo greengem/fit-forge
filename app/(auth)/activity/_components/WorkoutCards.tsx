@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
+import { format } from 'date-fns';
 import ExerciseTable from "./ExerciseTable";
 import { Workout } from '@/types';
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
@@ -61,7 +62,9 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton 
                         <Card key={workout.id}>
                             <CardHeader className="flex gap-3 px-5">
                                 <div className="flex flex-col flex-grow">
-                                    <p className="text-md font-semibold">{new Date(workout.createdAt).toLocaleDateString()}: {workout.name}</p>
+                                    <p className="text-md font-semibold text-success">
+                                        {format(new Date(workout.createdAt), 'MM/dd/yyyy')}: {workout.name}
+                                    </p>
                                     <p className="text-small text-default-500">{formatDuration(workout.duration)} | {totalWeightLifted} KG</p>
                                 </div>
                                 {showDeleteButton && (
