@@ -70,7 +70,7 @@ export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps
         ))}
       </Select>
     </div>
-    <Checkbox>Filter exercises by my equipment.</Checkbox>
+    <Checkbox color='success'>Filter exercises by my equipment.</Checkbox>
     
     </>
   );

@@ -98,9 +98,9 @@ interface ExerciseListProps {
   exercises: Exercise[];
 }
 
-const levelColorMap: { [key in LevelType]: "success" | "warning" | "danger" } = {
-  beginner: "success",
-  intermediate: "warning",
+const levelColorMap: { [key in LevelType]: "primary" | "secondary" | "danger" } = {
+  beginner: "primary",
+  intermediate: "secondary",
   expert: "danger",
 };
 

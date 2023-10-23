@@ -29,7 +29,7 @@ export default function Navbar() {
     const pathname = usePathname();
 
     return (
-        <div className="px-5 py-3 bg-white dark:bg-content1 block md:hidden shadow-md">
+        <div className="px-5 py-4 bg-white dark:bg-content1 block md:hidden shadow-md">
             <ul className="flex space-x-2">
                 {NAVBAR_ITEMS.map(item => (
                     <NavbarItem

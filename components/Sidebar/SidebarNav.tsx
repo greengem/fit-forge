@@ -7,7 +7,7 @@ export default function SidebarNav() {
     const pathname = usePathname();
 
     return (
-        <ul className="space-y-4">
+        <ul className="space-y-2">
             <NavItem
                 icon={<IconUser className="h-6 w-6" />}
                 label="Profile"
@@ -64,7 +64,7 @@ interface NavItemProps {
 
 function NavItem({ icon, label, href, active, subtext }: NavItemProps) {
     return (
-        <li className={`p-2 rounded-lg ${active ? 'bg-success text-black' : 'hover:bg-default-100 hover:text-white'}`}>
+        <li className={`px-2 py-1 rounded-lg ${active ? 'bg-success text-black' : 'hover:bg-default-100 hover:text-white'}`}>
             <Link href={href} className="flex items-center space-x-2">
                 {icon}
                 <div>
