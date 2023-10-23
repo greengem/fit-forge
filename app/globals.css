@@ -5,6 +5,11 @@
 html.dark{
     background-color: rgb(17, 17, 19);
 }
+
 html.light{
     background-color: rgb(238, 237, 242);
+}
+
+nav [data-active=true] a{
+    color: #a6ff00;
 }
