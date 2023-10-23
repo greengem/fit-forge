@@ -1,5 +1,6 @@
 "use client";
 import { usePathname } from 'next/navigation'
+import { ThemeSwitcher } from '@/components/ThemeSwitcher/ThemeSwitcher';
 import Link from "next/link";
 
 const NAVBAR_ITEMS = [
@@ -30,17 +31,21 @@ export default function Navbar() {
 
     return (
         <div className="px-5 py-4 bg-white dark:bg-content1 block md:hidden shadow-md">
-            <ul className="flex space-x-2">
-                {NAVBAR_ITEMS.map(item => (
-                    <NavbarItem
-                        key={item.href}
-                        label={item.label}
-                        href={item.href}
-                        active={pathname === item.href}
-                    />
-                ))}
-            </ul>
+            <div className='flex justify-between items-center'>
+                <ul className="flex space-x-2 text-sm">
+                    {NAVBAR_ITEMS.map(item => (
+                        <NavbarItem
+                            key={item.href}
+                            label={item.label}
+                            href={item.href}
+                            active={pathname === item.href}
+                        />
+                    ))}
+                </ul>
+                <ThemeSwitcher />
+            </div>
         </div>
+
     );
 }
 

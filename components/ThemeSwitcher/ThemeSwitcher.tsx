@@ -19,11 +19,8 @@ export function ThemeSwitcher() {
 
   const isDarkMode = theme === "dark";
 
-  return (
-    <div className="py-5 flex flex-col items-center justify-center">
-      
+  return (    
       <Switch
-        className="mb-3"
         isSelected={isDarkMode}
         size="lg"
         color="success"
@@ -39,7 +36,5 @@ export function ThemeSwitcher() {
         }}
       >
       </Switch>
-      <p className="text-xs mr-2 text-gray-500">Theme Switcher</p>
-    </div>
   );
 }

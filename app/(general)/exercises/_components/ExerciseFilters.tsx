@@ -53,7 +53,7 @@ export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps
 
   return (
     <>
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-2">
       <Select label="Category" placeholder="All" onChange={handleCategoryChange}>
         {categories.map((category) => (
           <SelectItem key={category.value} value={category.value}>
@@ -70,7 +70,7 @@ export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps
         ))}
       </Select>
     </div>
-    <Checkbox color='success'>Filter exercises by my equipment.</Checkbox>
+    <Checkbox color='success' className='pl-3'>Filter exercises by my equipment.</Checkbox>
     
     </>
   );

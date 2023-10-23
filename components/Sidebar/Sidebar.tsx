@@ -16,7 +16,10 @@ export default function Sidebar() {
 
             <div className='absolute bottom-0 left-0 right-0'>
                 <Divider />
-                <ThemeSwitcher />
+                <div className="py-5 flex flex-col items-center justify-center">
+                    <ThemeSwitcher />
+                    <p className="text-xs mr-2 text-gray-500">Theme Switcher</p>
+                </div>
             </div>
         </div>
     )

@@ -138,7 +138,7 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
 
     return (
         <>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-2 mb-3">
                 <ExerciseSearch setSearchQuery={setSearchQuery} />
                 <ExerciseFilters onFilterChange={setFilters} />
             </div>
