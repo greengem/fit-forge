@@ -1,6 +1,8 @@
+import { Divider } from '@nextui-org/divider';
 import SidebarNav from './SidebarNav';
 //import UserDetails from './UserDetails';
-import { ThemeSwitcher } from '../ThemeSwitcher';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher/ThemeSwitcher';
+
 export default function Sidebar() {
     return (
         <div className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-content1 hidden md:block">
@@ -9,8 +11,8 @@ export default function Sidebar() {
             </div>
 
             <div className='absolute bottom-0 left-0 right-0'>
+                <Divider />
                 <ThemeSwitcher />
-
             </div>
         </div>
     )

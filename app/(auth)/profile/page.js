@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/authOptions"
 import getEquipment from "@/utils/getEquipment";
 import ProfileHero from "./ProfileHero";
 import ProfileStats from "./ProfileStats";

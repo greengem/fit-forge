@@ -31,8 +31,6 @@ interface Exercise {
   description?: string;
   image?: string;
   tips: string[];
-  date_created: Date;
-  date_updated?: Date;
 }
 
 enum Muscle {

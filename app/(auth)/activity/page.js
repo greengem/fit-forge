@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/authOptions";
 import getWorkouts from '@/utils/getWorkouts';
 import PageHeading from '@/components/PageHeading/PageHeading'
 import WorkoutCards from './WorkoutCards';

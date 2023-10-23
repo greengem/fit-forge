@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/authOptions"
 import getWorkouts from '@/utils/getWorkouts';
 import PageHeading from '@/components/PageHeading/PageHeading'
 import DashboardCards from './DashboardCards';
-import WorkoutCards from '@/app/(protected)/activity/WorkoutCards';
+import WorkoutCards from '@/app/(auth)/activity/WorkoutCards';
 import CardGrid from "@/components/Grid/CardGrid";
 
 export default async function DashboardPage() {

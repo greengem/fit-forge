@@ -1,9 +1,9 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+"use client";
+import { useSession } from "next-auth/react";
 import {User} from "@nextui-org/user";
 
-export default async function UserDetails() {
-    const session = await getServerSession(authOptions);
+export default function UserDetails() {
+    const { data: session } = useSession();
     return (
         <div className="px-4 pt-4 pb-3">
             <User   

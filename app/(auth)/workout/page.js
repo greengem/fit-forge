@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/authOptions"
 import getRoutines from "@/utils/getRoutines";
 import PageHeading from '@/components/PageHeading/PageHeading'
 import CardGrid from "@/components/Grid/CardGrid";

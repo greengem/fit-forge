@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@nextui-org/button"
 import { IconSearch, IconFilePlus, IconNotebook } from "@tabler/icons-react"
 
-export default async function HomePage() {
+export default function HomePage() {
   return (
     <div className="relative h-screen bg-gradient-to-b from-teal-500 to-blue-600">
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-white">

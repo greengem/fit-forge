@@ -3,8 +3,8 @@ import React from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Image } from '@nextui-org/react';
 import NextImage from "next/image";
-import ExerciseTable from "@/app/(protected)/activity/ExerciseTable";
-import DeleteButton from "@/app/(protected)/activity/DeleteButton";
+import ExerciseTable from "@/app/(auth)/activity/ExerciseTable";
+import DeleteButton from "@/app/(auth)/activity/DeleteButton";
 import { Workout } from '@/types';
 
 function formatDuration(seconds: number): string {
