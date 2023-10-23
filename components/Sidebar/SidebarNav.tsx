@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from 'next/navigation'
 import Link from "next/link";
-import { IconHome, IconDashboard, IconJumpRope, IconList, IconStretching, IconUser } from '@tabler/icons-react';
+import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser } from '@tabler/icons-react';
 
 export default function SidebarNav() {
     const pathname = usePathname();

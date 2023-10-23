@@ -44,7 +44,7 @@ export default function MobileNavbar() {
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 {NAV_CONTENT_ITEMS.map(item => (
                     <NavbarItem key={item.href} isActive={pathname === item.href}>
-                        <Link color="foreground" href={item.href}>
+                        <Link as={NextLink} color="foreground" href={item.href}>
                             {item.label}
                         </Link>
                     </NavbarItem>

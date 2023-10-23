@@ -17,24 +17,24 @@ export default function DashboardCards({ workouts }) {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
-            <Card className="bg-success text-black">
+            <Card>
                 <CardHeader className="px-5">Workouts Completed</CardHeader>
-                <CardBody className="text-5xl pt-0">{workouts.length}</CardBody>
+                <CardBody className="text-5xl pt-0 text-success">{workouts.length}</CardBody>
             </Card>
 
-            <Card className="bg-primary">
+            <Card >
                 <CardHeader className="px-5">Total Weight Lifted (kg)</CardHeader>
-                <CardBody className="text-5xl pt-0">{totalWeightLifted}</CardBody>
+                <CardBody className="text-5xl pt-0 text-success">{totalWeightLifted}</CardBody>
             </Card>
 
-            <Card className="bg-secondary">
+            <Card >
                 <CardHeader className="px-5">Average Workout Duration</CardHeader>
-                <CardBody className="text-5xl pt-0">{formattedAverageDuration}</CardBody>
+                <CardBody className="text-5xl pt-0 text-success">{formattedAverageDuration}</CardBody>
             </Card>
 
-            <Card className="bg-danger">
+            <Card >
                 <CardHeader className="px-5">TODO</CardHeader>
-                <CardBody className="text-3xl pt-0">TODO</CardBody>
+                <CardBody className="text-3xl pt-0 text-success">TODO</CardBody>
             </Card>
         </div>
     )

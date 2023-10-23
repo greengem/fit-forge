@@ -61,7 +61,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton 
                         <Card key={workout.id}>
                             <CardHeader className="flex gap-3 px-5">
                                 <div className="flex flex-col flex-grow">
-                                    <p className="text-md font-semibold">{workout.name}</p>
+                                    <p className="text-md font-semibold">{new Date(workout.createdAt).toLocaleDateString()}: {workout.name}</p>
                                     <p className="text-small text-default-500">{formatDuration(workout.duration)} | {totalWeightLifted} KG</p>
                                 </div>
                                 {showDeleteButton && (

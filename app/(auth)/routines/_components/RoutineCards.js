@@ -63,7 +63,7 @@ export default function RoutineCards({ routines }) {
             </CardHeader>
 
             <CardBody className="pt-0">
-              {routine.notes && <p className="text-default-500 text-sm mb-2">Notes: {routine.notes}</p>}
+              
               <ul className="space-y-1">
               {routine.WorkoutPlanExercise.sort((a, b) => a.order - b.order).map((exerciseDetail) => (
                   <li key={exerciseDetail.Exercise.id}>
@@ -71,6 +71,7 @@ export default function RoutineCards({ routines }) {
                   </li>
               ))}
               </ul>
+              {/*routine.notes && <p className="text-default-500 mt-2">Notes: {routine.notes}</p>*/}
             </CardBody>
           </Card>
         ))}
