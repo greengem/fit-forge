@@ -5,7 +5,6 @@ import CardGrid from "@/components/Grid/CardGrid";
 import {Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/dropdown";
 import { Button } from "@nextui-org/button";
-import Link from 'next/link';
 import { IconMenu2 } from "@tabler/icons-react";
 
 export default function RoutineCards({ routines }) {
@@ -49,7 +48,7 @@ export default function RoutineCards({ routines }) {
 
             <CardHeader className="flex gap-3 px-5">
                 <div className="flex flex-col flex-grow">
-                    <p className="text-md">{routine.name}</p>
+                    <p className="text-md font-semibold">{routine.name}</p>
                     <p className="text-small text-default-500">Updated: {new Date(routine.updatedAt).toLocaleDateString()}</p>
                 </div>
                 <Dropdown>

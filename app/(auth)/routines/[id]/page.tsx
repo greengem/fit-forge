@@ -1,5 +1,5 @@
-import PageHeading from '@/components/PageHeading/PageHeading'
-import RoutineBuilder from './RoutineBuilder'
+import PageHeading from '@/components/PageHeading/PageHeading';
+import RoutineBuilder from './_components/RoutineBuilder';
 
 export default async function NewRoutinePage({ params }: { params: { id: string } }) {
 

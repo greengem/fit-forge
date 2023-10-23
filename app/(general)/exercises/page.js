@@ -1,6 +1,6 @@
 import getExercises from '@/utils/getExercises';
 import PageHeading from '@/components/PageHeading/PageHeading';
-import ExerciseList from './ExerciseList';
+import ExerciseList from './_components/ExerciseList';
 
 export default async function ExercisesPage() {
   const exercises = await getExercises()

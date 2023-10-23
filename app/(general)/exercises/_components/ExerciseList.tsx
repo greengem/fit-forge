@@ -187,7 +187,7 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
                     isCompact
                     showControls
                     showShadow
-                    color="primary"
+                    color="success"
                     page={page}
                     total={Math.ceil(filteredExercises.length / rowsPerPage)}
                     onChange={(newPage) => setPage(newPage)}
@@ -218,28 +218,28 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
 
                                 <ul className="space-y-2">
                                 {selectedExercise.category && 
-                                    <li className="capitalize"><strong className="text-primary">Category:</strong> {selectedExercise.category}</li>}
+                                    <li className="capitalize"><strong className="text-success">Category:</strong> {selectedExercise.category}</li>}
                                 
                                 {selectedExercise.primary_muscles && selectedExercise.primary_muscles.length > 0 && 
-                                    <li className="capitalize"><strong className="text-primary">Primary Muscles:</strong> {selectedExercise.primary_muscles.join(', ')}</li>}
+                                    <li className="capitalize"><strong className="text-success">Primary Muscles:</strong> {selectedExercise.primary_muscles.join(', ')}</li>}
                                 
                                 {selectedExercise.secondary_muscles && selectedExercise.secondary_muscles.length > 0 &&
-                                    <li className="capitalize"><strong className="text-primary">Secondary Muscles:</strong> {selectedExercise.secondary_muscles.join(', ')}</li>}
+                                    <li className="capitalize"><strong className="text-success">Secondary Muscles:</strong> {selectedExercise.secondary_muscles.join(', ')}</li>}
                                 
                                 {selectedExercise.force && 
-                                    <li className="capitalize"><strong className="text-primary">Force:</strong> {selectedExercise.force}</li>}
+                                    <li className="capitalize"><strong className="text-success">Force:</strong> {selectedExercise.force}</li>}
                                 
                                 {selectedExercise.mechanic &&
-                                    <li className="capitalize"><strong className="text-primary">Mechanic:</strong> {selectedExercise.mechanic}</li>}
+                                    <li className="capitalize"><strong className="text-success">Mechanic:</strong> {selectedExercise.mechanic}</li>}
                                 
                                 {selectedExercise.equipment && 
-                                    <li className="capitalize"><strong className="text-primary">Equipment:</strong> {selectedExercise.equipment}</li>}
+                                    <li className="capitalize"><strong className="text-success">Equipment:</strong> {selectedExercise.equipment}</li>}
                                 
                                 {selectedExercise.instructions &&
-                                    <li><strong className="text-primary">Instructions:</strong> {selectedExercise.instructions}</li>}
+                                    <li><strong className="text-success">Instructions:</strong> {selectedExercise.instructions}</li>}
                                 
                                 {selectedExercise.tips && selectedExercise.tips.length > 0 && 
-                                    <li className="capitalize"><strong className="text-primary">Tips:</strong> {selectedExercise.tips.join(', ')}</li>}
+                                    <li className="capitalize"><strong className="text-success">Tips:</strong> {selectedExercise.tips.join(', ')}</li>}
                                 </ul>
                             </ModalBody>
                             <ModalFooter>

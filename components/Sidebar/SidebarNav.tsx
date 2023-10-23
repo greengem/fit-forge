@@ -64,12 +64,13 @@ interface NavItemProps {
 
 function NavItem({ icon, label, href, active, subtext }: NavItemProps) {
     return (
-        <li className={`p-2 rounded-lg ${active ? 'bg-blue-500 text-white' : 'hover:bg-gray-700 hover:text-white'}`}>
+        <li className={`p-2 rounded-lg ${active ? 'bg-success text-black' : 'hover:bg-default-100 hover:text-white'}`}>
             <Link href={href} className="flex items-center space-x-2">
                 {icon}
                 <div>
                     <div>{label}</div>
-                    <div className="text-sm text-gray-400">{subtext}</div>
+                    <div className={`text-sm ${active ? 'text-gray-800' : 'text-gray-500'}`}>{subtext}</div>
+
                 </div>
             </Link>
         </li>

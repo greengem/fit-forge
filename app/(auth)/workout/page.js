@@ -23,7 +23,7 @@ export default async function WorkoutPage() {
             <Card key={routine.id}>
               <CardHeader className="flex gap-3 px-5">
                 <div className="flex flex-col">
-                  <p className="text-md">{routine.name}</p>
+                  <p className="text-md font-semibold">{routine.name}</p>
                   <p className="text-small text-default-500">Updated: {new Date(routine.updatedAt).toLocaleDateString()}</p>
                 </div>
               </CardHeader>

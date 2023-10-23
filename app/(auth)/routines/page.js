@@ -5,6 +5,7 @@ import RoutineCards from './_components/RoutineCards';
 import PageHeading from '@/components/PageHeading/PageHeading';
 import Link from 'next/link';
 import { Button } from "@nextui-org/button";
+import { IconPlus } from "@tabler/icons-react";
 
 export default async function RoutinesPage() {
   const session = await getServerSession(authOptions);
@@ -13,7 +14,9 @@ export default async function RoutinesPage() {
   return (
     <>
       <PageHeading title="Routines" />
-      <Button as={Link} href="/routines/new" color="success" className="mb-5">New Routine</Button>
+      <Button as={Link} href="/routines/new" color="success" className="gap-unit-1 mb-5">
+        <IconPlus size={16} />New Routine
+      </Button>
       <RoutineCards routines={routines} />
     </>
   )

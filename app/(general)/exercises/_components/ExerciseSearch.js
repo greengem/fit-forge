@@ -4,7 +4,7 @@ import { IconSearch } from "@tabler/icons-react";
 export default function ExerciseSearch({ setSearchQuery }) {
   const handleSearchChange = (event) => {
     const query = event.target.value;
-    setSearchQuery(query); // Call setSearchQuery to update the search query state
+    setSearchQuery(query);
   };
 
   return (
@@ -15,7 +15,7 @@ export default function ExerciseSearch({ setSearchQuery }) {
         startContent={
           <IconSearch className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
         }
-        onChange={handleSearchChange} // Add the onChange event handler
+        onChange={handleSearchChange}
       />
     </div>
   );
