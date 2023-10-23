@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser } from '@tabler/icons-react';
 
-export default function() {
+export default function DashboardLinks() {
     return (
         <div className="flex flex-wrap gap-x-3 gap-y-2">
             <Button color="success" as={Link} href="/workout" className="gap-unit-1">
