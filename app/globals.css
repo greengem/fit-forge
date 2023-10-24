@@ -13,3 +13,7 @@ html.light{
 nav [data-active=true] a{
     color: #a6ff00;
 }
+
+.dashboard-chart{
+    height: 300px;
+}

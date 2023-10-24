@@ -8,14 +8,14 @@ import WorkoutCards from '@/app/(auth)/activity/_components/WorkoutCards';
 import CardGrid from "@/components/Grid/CardGrid";
 import DashboardLinks from "./_components/DashboardLinks";
 import DashboardGreeting from "./_components/DashBoardGreeting";
-import DashboardChart from "./_components/DashboardChart";
+import DashboardChartWorkouts from "./_components/DashboardChartWorkouts";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);
 	const userId = session.user.id;
-	const workouts = await getWorkouts(userId, 2)
+	const workouts = await getWorkouts(userId)
 	const personalBests = await getPbs(userId)
 
 	return (
@@ -24,10 +24,7 @@ export default async function DashboardPage() {
 			<DashboardGreeting userName={session.user.name} />
 			<DashboardCards workouts={workouts} />
 			<DashboardLinks />
-			<div className="grid grid-cols-2 gap-5">
-				<DashboardChart />
-				<DashboardChart />
-			</div>
+				<DashboardChartWorkouts workouts={workouts} />
 			<PageHeading title="Recent Activity" />
 			<CardGrid>
 				<WorkoutCards workouts={workouts} personalBests={personalBests} showDeleteButton={false} />
