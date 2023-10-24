@@ -155,6 +155,7 @@ model UserExercisePB {
   reps       Int
   user       User      @relation(fields: [userId], references: [id])
   exercise   Exercise  @relation(fields: [exerciseId], references: [id])
+  createdAt           DateTime              @default(now())
 
   @@id([userId, exerciseId])
 }
