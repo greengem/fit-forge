@@ -85,7 +85,7 @@ export default function DashboardCards({ workouts, numberOfPBsLastWeek }) {
             </Card>
 
             <Card>
-                <CardHeader className="px-5">Weekly PB's</CardHeader>
+                <CardHeader className="px-5">Weekly PBs</CardHeader>
                 <CardBody className="text-3xl pt-0">
                     <div className="flex gap-x-2 text-success">
                         {Array.from({ length: numberOfPBsLastWeek }).map((_, index) => (
