@@ -15,19 +15,22 @@ import { Button } from "@nextui-org/button";
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);
 	const userId = session.user.id;
-	const workouts = await getWorkouts(userId)
-	const personalBests = await getPbs(userId)
+	const twoWorkouts = await getWorkouts(userId, 2, 'desc');
+	const workouts = await getWorkouts(userId, null, 'asc');
+	const personalBests = await getPbs(userId);
+	const personalBestsLastWeek = await getPbs(userId, true);
+	const numberOfPBsLastWeek = personalBestsLastWeek.length;
 
 	return (
 		<>
 			<PageHeading title="Dashboard" />
 			<DashboardGreeting userName={session.user.name} />
-			<DashboardCards workouts={workouts} />
+			<DashboardCards workouts={workouts} numberOfPBsLastWeek={numberOfPBsLastWeek} />
 			<DashboardLinks />
 				<DashboardChartWorkouts workouts={workouts} />
 			<PageHeading title="Recent Activity" />
 			<CardGrid>
-				<WorkoutCards workouts={workouts} personalBests={personalBests} showDeleteButton={false} />
+				<WorkoutCards workouts={twoWorkouts} personalBests={personalBests} showDeleteButton={false} />
 			</CardGrid>
 			<div className="text-center mt-5">
 				<Button variant="ghost" as={Link} href="/activity">View all activity</Button>
