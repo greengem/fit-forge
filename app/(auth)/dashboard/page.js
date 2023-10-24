@@ -24,7 +24,10 @@ export default async function DashboardPage() {
 			<DashboardGreeting userName={session.user.name} />
 			<DashboardCards workouts={workouts} />
 			<DashboardLinks />
-			<DashboardChart />
+			<div className="grid grid-cols-2 gap-5">
+				<DashboardChart />
+				<DashboardChart />
+			</div>
 			<PageHeading title="Recent Activity" />
 			<CardGrid>
 				<WorkoutCards workouts={workouts} personalBests={personalBests} showDeleteButton={false} />
