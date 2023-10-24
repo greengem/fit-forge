@@ -5,6 +5,7 @@ import getPbs from '@/utils/getPbs';
 import PageHeading from '@/components/PageHeading/PageHeading'
 import WorkoutCards from './_components/WorkoutCards';
 import CardGrid from "@/components/Grid/CardGrid";
+import Link from "next/link";
 
 export default async function ActivityPage() {
 	const session = await getServerSession(authOptions);
@@ -16,8 +17,13 @@ export default async function ActivityPage() {
 		<>
 			<PageHeading title="Activity" />
 			<CardGrid>
-				<WorkoutCards workouts={workouts} personalBests={personalBests} showDeleteButton={true} />
+				{workouts.length > 0 ? (
+					<WorkoutCards workouts={workouts} personalBests={personalBests} showDeleteButton={true} />
+				) : (
+					<p>No workouts have been completed. <Link className="text-success" href="/workout">Click here to start one</Link>.</p>
+				)}
 			</CardGrid>
+
 		</>
 	);
 }
