@@ -31,7 +31,6 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  timer Timer?
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -44,11 +43,14 @@ model User {
   age           Int?
   height        Int?
   weight        Int?
+  workoutsGoal  Int?
+  durationGoal  Int?
   accounts      Account[]
   sessions      Session[]
   workoutLogs  WorkoutLog[]
   workoutPlans WorkoutPlan[]
   equipment UserEquipment[]
+  exercisePBs UserExercisePB[]
 }
 
 model VerificationToken {
@@ -86,6 +88,7 @@ model Exercise {
   date_updated        DateTime?             @default(now())
   WorkoutPlanExercise WorkoutPlanExercise[]
   logExercises  WorkoutLogExercise[]
+  userPBs UserExercisePB[]
 }
 
 model WorkoutPlan {
@@ -145,20 +148,15 @@ model SetLog {
   WorkoutLogExercise  WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
 }
 
-model Timer {
-  id             String   @id @default(cuid())
-  sessionId      String   @unique
-  startTime      DateTime @default(now())
-  pauseTime      DateTime?
-  pausedDuration Int      @default(0) // store duration in seconds
-  status         TimerStatus
-  session        Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-}
+model UserExercisePB {
+  userId     String
+  exerciseId String
+  weight     Float
+  reps       Int
+  user       User      @relation(fields: [userId], references: [id])
+  exercise   Exercise  @relation(fields: [exerciseId], references: [id])
 
-enum TimerStatus {
-  RUNNING
-  PAUSED
-  STOPPED
+  @@id([userId, exerciseId])
 }
 
 enum CategoryType {

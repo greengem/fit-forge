@@ -6,7 +6,6 @@ import ExerciseCard from './ExerciseCard';
 import StatusBar from './StatusBar';
 
 export default function WorkoutManager({ workout }) {
-
     // Hook & Router Initializations
     const router = useRouter();
     const [exercises, setExercises] = useState(workout.WorkoutPlanExercise.map(exercise => ({
@@ -26,7 +25,6 @@ export default function WorkoutManager({ workout }) {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds - hours * 3600) / 60);
         const remainingSeconds = seconds - hours * 3600 - minutes * 60;
-        
         return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
     };
 
@@ -40,7 +38,6 @@ export default function WorkoutManager({ workout }) {
         }
     };
     
-
     // State Update Functions
     const addSet = (index, exerciseName) => {
         setExercises(prevExercises => {
@@ -92,7 +89,6 @@ export default function WorkoutManager({ workout }) {
         }
     };
     
-
     const handleCompletion = (exerciseIndex, setIndex, exerciseName) => {
         if (!workoutStartTime) {
             startWorkout();
@@ -107,8 +103,6 @@ export default function WorkoutManager({ workout }) {
             return updatedExercises;
         });
     };
-
-
     
     const handleWeightChange = (exerciseIndex, setIndex, newValue) => {
         const updatedWeights = [...weights];
@@ -121,7 +115,6 @@ export default function WorkoutManager({ workout }) {
         updatedReps[exerciseIndex][setIndex] = newValue;
         setReps(updatedReps);
     };  
-
 
     // Async & Side Effect Functions
     const startWorkout = () => {
@@ -147,6 +140,45 @@ export default function WorkoutManager({ workout }) {
         };
     }, [workoutStartTime, isPaused]);    
 
+    async function fetchPBForExercise(exerciseId) {
+        try {
+            const response = await fetch(`/api/pbs/${exerciseId}`);
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.error);
+            }
+        } catch (error) {
+            console.error(`Error fetching PB for exercise ${exerciseId}:`, error.message);
+            return null;
+        }
+    }
+    
+    async function saveNewPB(exerciseId, weight, reps) {
+        try {
+            const response = await fetch('/api/pbs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    exerciseId,
+                    weight,
+                    reps
+                })
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error);
+            }
+        } catch (error) {
+            console.error(`Error saving PB for exercise ${exerciseId}:`, error.message);
+        }
+    }
+
     const completeWorkout = async () => {
         setIsSaving(true);
         const workoutPlanId = workout.id;
@@ -161,7 +193,7 @@ export default function WorkoutManager({ workout }) {
                 completed: exerciseState.completedSets
             };
         });
-
+    
         try {
             const response = await fetch('/api/workouts/', {
                 method: 'POST',
@@ -176,11 +208,42 @@ export default function WorkoutManager({ workout }) {
                     exercises: workoutExercises
                 })
             });
-
+    
             const responseData = await response.json();
-
+    
             if (response.ok) {
                 toast.success('Workout saved successfully!');
+                
+                // Check and save any new PBs
+                for (let i = 0; i < workoutExercises.length; i++) {
+                    const exercise = workoutExercises[i];
+                    const maxWeight = Math.max(...exercise.weight);
+                    const validReps = exercise.reps.filter(Number.isFinite);
+                    const maxReps = Math.max(...validReps);
+    
+                    // Debug: Log the exercise and max weight
+                    console.log(`Fetching PB for exercise: ${exercise.exerciseId}, Max Weight: ${maxWeight}, Max Reps: ${maxReps}`);
+    
+                    const existingPB = await fetchPBForExercise(exercise.exerciseId);
+    
+                    // Debug: Log the existing PB
+                    console.log(`Existing PB:`, existingPB);
+    
+                    if (existingPB === null || typeof existingPB.weight === 'undefined' || typeof existingPB.reps === 'undefined') {
+                        // Save new PB if existing PB is not present or incomplete
+                        await saveNewPB(exercise.exerciseId, maxWeight, maxReps);
+                        console.log(`New PB saved for exercise ${exercise.exerciseId} with max weight: ${maxWeight} and max reps: ${maxReps}`);
+                    } else {
+                        // Compare and update PB if the new weight or reps are higher
+                        if (maxWeight > existingPB.weight || maxReps > existingPB.reps) {
+                            await saveNewPB(exercise.exerciseId, maxWeight, maxReps);
+                            console.log(`Updated PB for exercise ${exercise.exerciseId} with new max weight: ${maxWeight} or new max reps: ${maxReps}`);
+                        } else {
+                            console.log(`Not a new PB for exercise ${exercise.exerciseId}, skipping save.`);
+                        }
+                    }
+                }
+    
                 router.push("/dashboard");
                 router.refresh();
             } else {
@@ -192,7 +255,7 @@ export default function WorkoutManager({ workout }) {
             setIsSaving(false);
         }
     };
-
+    
     // Render-Related Calculations
     const workoutName = workout.name;
     const totalSets = exercises.reduce((acc, curr) => acc + curr.sets, 0);
@@ -200,22 +263,22 @@ export default function WorkoutManager({ workout }) {
     const progressPercentage = Math.round((completedSets / totalSets) * 100);
 
     return (
-        <div className='pb-64'>            
+        <div className='pb-20'>            
             {workout.notes && <p>Notes: {workout.notes}</p>}
             {workout.WorkoutPlanExercise.map((exerciseDetail, index) => (
-                 <ExerciseCard 
-                 key={exerciseDetail.Exercise.id}
-                 exerciseDetail={exerciseDetail} 
-                 index={index}
-                 exercises={exercises}
-                 weights={weights}
-                 reps={reps}
-                 handleCompletion={handleCompletion}
-                 handleWeightChange={handleWeightChange}
-                 handleRepChange={handleRepChange}
-                 addSet={addSet}
-                 removeSet={removeSet}
-             />
+                <ExerciseCard 
+                    key={exerciseDetail.Exercise.id}
+                    exerciseDetail={exerciseDetail} 
+                    index={index}
+                    exercises={exercises}
+                    weights={weights}
+                    reps={reps}
+                    handleCompletion={handleCompletion}
+                    handleWeightChange={handleWeightChange}
+                    handleRepChange={handleRepChange}
+                    addSet={addSet}
+                    removeSet={removeSet}
+                />
             ))}
             <StatusBar 
                 workoutStartTime={workoutStartTime}
