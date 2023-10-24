@@ -1,7 +1,9 @@
 "use client";
 import { usePathname } from 'next/navigation'
+import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
-import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity } from '@tabler/icons-react';
+import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout } from '@tabler/icons-react';
+import { Button } from '@nextui-org/button';
 
 export default function SidebarNav() {
     const pathname = usePathname();
@@ -50,6 +52,13 @@ export default function SidebarNav() {
                 active={pathname === "/exercises"}
                 subtext="View all exercises"
             />
+            <NavItem
+                icon={<IconLogout className="h-6 w-6" />}
+                label="Sign Out"
+                active={false}
+                subtext="Logout from account"
+                onClick={() => signOut()}
+            />
         </ul>
     );
 }
@@ -57,22 +66,30 @@ export default function SidebarNav() {
 interface NavItemProps {
     icon: JSX.Element;
     label: string;
-    href: string;
+    href?: string;
     active: boolean;
     subtext: string;
+    onClick?: () => void;
 }
 
-function NavItem({ icon, label, href, active, subtext }: NavItemProps) {
+function NavItem({ icon, label, href, active, subtext, onClick }: NavItemProps) {
+    const content = (
+        <div className="flex items-center space-x-2">
+            {icon}
+            <div>
+                <div>{label}</div>
+                <div className={`text-sm ${active ? 'text-gray-800' : 'text-gray-500'}`}>{subtext}</div>
+            </div>
+        </div>
+    );
+
     return (
         <li className={`px-2 py-1 rounded-lg ${active ? 'bg-success text-black' : 'hover:bg-default-100 hover:text-white'}`}>
-            <Link href={href} className="flex items-center space-x-2">
-                {icon}
-                <div>
-                    <div>{label}</div>
-                    <div className={`text-sm ${active ? 'text-gray-800' : 'text-gray-500'}`}>{subtext}</div>
-
-                </div>
-            </Link>
+            {onClick ? (
+                <button className='text-left' onClick={onClick}>{content}</button>
+            ) : (
+                <Link href={href || '#'}>{content}</Link>
+            )}
         </li>
     );
 }
