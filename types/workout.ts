@@ -7,6 +7,7 @@ export interface Set {
 
 export interface Exercise {
   id: string;
+  exerciseId: string;
   Exercise: {
     name: string;
   };

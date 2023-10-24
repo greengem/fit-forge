@@ -20,6 +20,7 @@ export default async function getWorkouts(userId, limit = null) {
 			exercises: {
 				select: {
 					id: true,
+					exerciseId: true,
 					Exercise: {
 						select: {
 							name: true
@@ -35,6 +36,7 @@ export default async function getWorkouts(userId, limit = null) {
 			}
 		}
 	};
+	
 
 	if (limit) {
 		queryOptions.take = limit;

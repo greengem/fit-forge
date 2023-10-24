@@ -14,12 +14,19 @@ function formatDuration(seconds: number): string {
     return `${minutes}m`;
 }
 
+interface PersonalBest {
+    exerciseId: string;
+    weight: number;
+    reps: number;
+}
+
 interface WorkoutCardsProps {
     workouts: Workout[];
     showDeleteButton: boolean;
-}
+    personalBests: PersonalBest[];
+} 
 
-const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton }) => {
+const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, showDeleteButton }) => {
     const router = useRouter()
 
     const handleAction = (key: string, workout: Workout) => {
@@ -79,7 +86,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, showDeleteButton 
                                  )}
                             </CardHeader>
                             <CardBody className="py-0 pb-2">
-                                <ExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} />
+                                <ExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} personalBests={personalBests} />
                             </CardBody>
                         </Card>
                 );

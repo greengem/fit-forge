@@ -220,26 +220,15 @@ export default function WorkoutManager({ workout }) {
                     const maxWeight = Math.max(...exercise.weight);
                     const validReps = exercise.reps.filter(Number.isFinite);
                     const maxReps = Math.max(...validReps);
-    
-                    // Debug: Log the exercise and max weight
-                    console.log(`Fetching PB for exercise: ${exercise.exerciseId}, Max Weight: ${maxWeight}, Max Reps: ${maxReps}`);
-    
                     const existingPB = await fetchPBForExercise(exercise.exerciseId);
-    
-                    // Debug: Log the existing PB
-                    console.log(`Existing PB:`, existingPB);
     
                     if (existingPB === null || typeof existingPB.weight === 'undefined' || typeof existingPB.reps === 'undefined') {
                         // Save new PB if existing PB is not present or incomplete
                         await saveNewPB(exercise.exerciseId, maxWeight, maxReps);
-                        console.log(`New PB saved for exercise ${exercise.exerciseId} with max weight: ${maxWeight} and max reps: ${maxReps}`);
                     } else {
                         // Compare and update PB if the new weight or reps are higher
                         if (maxWeight > existingPB.weight || maxReps > existingPB.reps) {
                             await saveNewPB(exercise.exerciseId, maxWeight, maxReps);
-                            console.log(`Updated PB for exercise ${exercise.exerciseId} with new max weight: ${maxWeight} or new max reps: ${maxReps}`);
-                        } else {
-                            console.log(`Not a new PB for exercise ${exercise.exerciseId}, skipping save.`);
                         }
                     }
                 }
