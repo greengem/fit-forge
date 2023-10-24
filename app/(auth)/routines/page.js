@@ -13,11 +13,16 @@ export default async function RoutinesPage() {
 
   return (
     <>
-      <PageHeading title="Routines" />
+      <PageHeading title="My Routines" />
       <Button as={Link} href="/routines/new" color="success" className="gap-unit-1 mb-5">
         <IconPlus size={16} />New Routine
       </Button>
-      <RoutineCards routines={routines} />
+      {routines.length > 0 ? (
+        <RoutineCards routines={routines} />
+      ) : (
+        <p>No routines found.</p>
+      )}
+      <PageHeading title="Suggested Routines" />
     </>
   )
 }

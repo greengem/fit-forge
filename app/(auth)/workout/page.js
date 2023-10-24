@@ -17,7 +17,7 @@ export default async function WorkoutPage() {
       <PageHeading title="Start a Workout" />
       <CardGrid>
         {routines.length === 0 ? (
-          <p>No routines available. Please <Link className="text-primary" href="/routines/new">add one</Link>.</p>
+          <p>No routines available. Please <Link className="text-success" href="/routines/new">add one</Link>.</p>
         ) : (
           routines.map((routine) => (
             <Card key={routine.id}>
