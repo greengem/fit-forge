@@ -86,7 +86,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, sh
                                         <Button color="success" variant="light" isIconOnly size="sm"><IconMenu2 /></Button>
                                     </DropdownTrigger>
                                     <DropdownMenu color="success" aria-label="Workout Actions" onAction={(key) => handleAction(String(key), workout)}>
-                                        <DropdownItem key="delete" className="text-danger" color="danger">Delete Routine</DropdownItem>
+                                        <DropdownItem key="delete" className="text-danger" color="danger">Delete Activity</DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
                                  )}
