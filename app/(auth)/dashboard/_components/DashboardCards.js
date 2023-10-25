@@ -30,7 +30,7 @@ function getCurrentStreak(workouts) {
     return streak;
 }
 
-export default function DashboardCards({ workouts, numberOfPBsLastWeek }) {
+export default function DashboardCards({ workouts, personalBests }) {
     const totalWeightLifted = workouts.reduce((totalWeight, workout) => {
 		return totalWeight + workout.exercises.reduce((exerciseWeight, exercise) => {
 			return exerciseWeight + exercise.sets.reduce((setWeight, set) => setWeight + set.weight, 0);
@@ -44,7 +44,6 @@ export default function DashboardCards({ workouts, numberOfPBsLastWeek }) {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
-
             <Card>
                 <CardHeader className="px-5">Weekly Workouts</CardHeader>
                 <CardBody className="text-5xl pt-0 text-success gap-y-3">
@@ -86,15 +85,11 @@ export default function DashboardCards({ workouts, numberOfPBsLastWeek }) {
 
             <Card>
                 <CardHeader className="px-5">Weekly PBs</CardHeader>
-                <CardBody className="text-3xl pt-0">
-                    <div className="flex gap-x-2 text-success">
-                        {Array.from({ length: numberOfPBsLastWeek }).map((_, index) => (
-                            <IconTrophy key={index} size={48} />
-                        ))}
-                    </div>
+                <CardBody className="text-5xl pt-0 flex gap-x-2 text-success flex-row">
+                    <IconTrophy size={48} />
+                    <div>{personalBests}</div>
                 </CardBody>
             </Card>
-
         </div>
     )
 }
