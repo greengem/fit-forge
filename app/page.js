@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@nextui-org/button"
-import { IconSearch, IconFilePlus, IconNotebook } from "@tabler/icons-react"
+import { IconBarbell } from "@tabler/icons-react"
 
 export default function HomePage() {
   return (
@@ -12,7 +12,9 @@ export default function HomePage() {
         <p className="text-xl text-center mb-8">
           Your ultimate fitness companion. Stay on track, stay active with Tracktive.
         </p>
-        <Button color="success" as={Link} href="/dashboard" size="lg" className="mb-10">Get Started</Button>
+        <Button color="success" as={Link} href="/dashboard" size="lg" className="mb-10 gap-unit-1">
+          <IconBarbell />Get Started 
+        </Button>
       </div>
     </div>
   )
