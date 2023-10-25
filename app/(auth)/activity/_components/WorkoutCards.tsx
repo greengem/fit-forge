@@ -30,7 +30,9 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, sh
     const router = useRouter()
 
     const handleAction = (key: string, workout: Workout) => {
-        if (key === "delete") {
+        if (key === "edit") {
+            router.push(`/activity/edit/${workout.id}`);
+        } else if (key === "delete") {
             handleDelete(workout.id);
         }
     }
@@ -86,6 +88,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, sh
                                         <Button color="success" variant="light" isIconOnly size="sm"><IconMenu2 /></Button>
                                     </DropdownTrigger>
                                     <DropdownMenu color="success" aria-label="Workout Actions" onAction={(key) => handleAction(String(key), workout)}>
+                                        <DropdownItem key="edit" color="danger">Edit Activity</DropdownItem>
                                         <DropdownItem key="delete" className="text-danger" color="danger">Delete Activity</DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
