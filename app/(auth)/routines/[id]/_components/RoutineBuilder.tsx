@@ -173,7 +173,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <RoutineDetails 
         routineName={routineName} 
         setRoutineName={setRoutineName}

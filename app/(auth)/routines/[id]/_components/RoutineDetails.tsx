@@ -10,7 +10,7 @@ type RoutineDetailsProps = {
 
 export const RoutineDetails: React.FC<RoutineDetailsProps> = ({ routineName, setRoutineName, notes, setNotes }) => {
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
             <Input 
                 name='routineName' 
                 placeholder='Routine Name' 

@@ -20,7 +20,8 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, add
         <div className="max-h-72 overflow-y-auto">
             <ul className="space-y-1">
             {searchResults.map(exercise => (
-                <li key={exercise.id} className="flex items-center gap-2">
+                <li key={exercise.id}>
+                    <div className='flex items-center gap-2'>
                     <Button 
                         isIconOnly
                         onClick={() => addExerciseToRoutine(exercise)} 
@@ -30,6 +31,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, add
                         <IconPlus size={12} />
                     </Button>
                     {exercise.name}
+                    </div>
                 </li>
             ))}
             </ul>

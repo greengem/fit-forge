@@ -20,7 +20,7 @@ export default async function ActivityPage() {
 				{workouts.length > 0 ? (
 					<WorkoutCards workouts={workouts} personalBests={personalBests} showDeleteButton={true} />
 				) : (
-					<p>No workouts have been completed. <Link className="text-success" href="/workout">Click here to start one</Link>.</p>
+					<p className="w-full">No workouts have been completed. <Link className="text-success" href="/workout">Click here to start one</Link>.</p>
 				)}
 			</CardGrid>
 
