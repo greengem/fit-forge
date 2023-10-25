@@ -145,7 +145,8 @@ model SetLog {
   id            String @id @default(uuid())
   workoutLogExerciseId String
   weight              Float
-  reps                Int
+  reps                Int?
+  duration            Int?
   order               Int?
   WorkoutLogExercise  WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
 }
