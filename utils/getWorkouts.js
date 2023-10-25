@@ -1,6 +1,6 @@
 import prisma from '@/db/prisma';
 
-export default async function getWorkouts(userId, limit = null, order = 'desc') {
+export default async function getWorkouts(userId, limit = null) {
 	if (!userId || typeof userId !== 'string') {
 		return [];
 	}
@@ -10,7 +10,7 @@ export default async function getWorkouts(userId, limit = null, order = 'desc') 
 			userId: userId,
 		},
 		orderBy: {
-			createdAt: order,
+			createdAt: "desc",
 		},
 		select: {
 			id: true,

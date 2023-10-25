@@ -13,11 +13,21 @@ import Link from "next/link";
 import { Button } from "@nextui-org/button";
 
 export default async function DashboardPage() {
+	//Get user id
 	const session = await getServerSession(authOptions);
 	const userId = session.user.id;
-	const twoWorkouts = await getWorkouts(userId, 2, 'desc');
-	const workouts = await getWorkouts(userId, null, 'asc');
+
+	//Set 2 Recent Activities
+	const recentActivity = await getWorkouts(userId, 4);
+
+	//Set Chart Activity
+	const workouts = await getWorkouts(userId);
+	const workoutsChart = [...workouts].reverse();
+
+	//Set All Personal Bests
 	const personalBests = await getPbs(userId);
+
+	//Set Weekly Personal Bests
 	const personalBestsLastWeek = await getPbs(userId, true);
 	const numberOfPBsLastWeek = personalBestsLastWeek.length;
 
@@ -25,12 +35,12 @@ export default async function DashboardPage() {
 		<>
 			<PageHeading title="Dashboard" />
 			<DashboardGreeting userName={session.user.name} />
-			<DashboardCards workouts={workouts} numberOfPBsLastWeek={numberOfPBsLastWeek} />
+			<DashboardCards workouts={workouts} personalBests={numberOfPBsLastWeek} />
 			<DashboardLinks />
-				<DashboardChartWorkouts workouts={workouts} />
+			<DashboardChartWorkouts workouts={workoutsChart} />
 			<PageHeading title="Recent Activity" />
 			<CardGrid>
-				<WorkoutCards workouts={twoWorkouts} personalBests={personalBests} showDeleteButton={false} />
+				<WorkoutCards workouts={recentActivity} personalBests={personalBests} showDeleteButton={false} />
 			</CardGrid>
 			<div className="text-center mt-5">
 				<Button variant="ghost" as={Link} href="/activity">View all activity</Button>
