@@ -37,6 +37,7 @@ export default async function getRoutines(userId) {
             select: {
               id: true,
               name: true,
+              category: true,
             }
           }
         }
