@@ -6,6 +6,7 @@ import ProfileHero from "./_components/ProfileHero";
 import ProfileStats from "./_components/ProfileStats";
 import ProfileEquipment from "./_components/ProfileEquipment";
 import ProfileDetails from "./_components/ProfileDetails";
+import ProfileActions from "./_components/ProfileActions";
 
 export default async function ProfilePage() {
     const session = await getServerSession(authOptions);
@@ -17,10 +18,11 @@ export default async function ProfilePage() {
         <>
             <ProfileHero session={session} />
             <ProfileStats expandedProfile={expandedProfile} />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-20">
                 <ProfileDetails session={session} expandedProfile={expandedProfile} />
                 <ProfileEquipment equipment={equipment} session={session} />
             </div>
+            <ProfileActions userId={session.user.id} />
         </>
     )
 }

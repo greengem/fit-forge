@@ -1,6 +1,7 @@
 import prisma from '@/db/prisma';
 import { NextResponse } from 'next/server';
 
+// PATCH
 export async function PATCH(request, { params }) {
     try {
         const userId = params.id;
