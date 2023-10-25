@@ -252,8 +252,9 @@ export default function WorkoutManager({ workout }) {
     const progressPercentage = Math.round((completedSets / totalSets) * 100);
 
     return (
-        <div className='pb-20'>            
+        <div className='pb-20'>
             {workout.notes && <p className='mb-2'>Notes: {workout.notes}</p>}
+            <div className='space-y-5'>
             {workout.WorkoutPlanExercise.map((exerciseDetail, index) => (
                 <ExerciseCard 
                     key={exerciseDetail.Exercise.id}
@@ -269,6 +270,7 @@ export default function WorkoutManager({ workout }) {
                     removeSet={removeSet}
                 />
             ))}
+            </div>
             <StatusBar 
                 workoutStartTime={workoutStartTime}
                 isPaused={isPaused}
