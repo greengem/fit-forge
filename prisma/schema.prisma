@@ -128,6 +128,7 @@ model WorkoutLog {
   User         User     @relation(fields: [userId], references: [id])
   WorkoutPlan  WorkoutPlan? @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
   exercises    WorkoutLogExercise[]
+  UserExercisePB  UserExercisePB[] @relation("WorkoutLogToUserExercisePB")
 }
 
 model WorkoutLogExercise {
@@ -156,6 +157,8 @@ model UserExercisePB {
   user       User      @relation(fields: [userId], references: [id])
   exercise   Exercise  @relation(fields: [exerciseId], references: [id])
   createdAt           DateTime              @default(now())
+  workoutLogId String?
+  WorkoutLog      WorkoutLog? @relation("WorkoutLogToUserExercisePB", fields: [workoutLogId], references: [id], onDelete: Cascade)
 
   @@id([userId, exerciseId])
 }
