@@ -102,10 +102,10 @@ const DashboardChartWorkout = ({ workouts }) => {
 
     return (
         <Card>
-            <CardBody className='h-64'>
-                <Line options={options} data={chartData} />
+            <CardBody className='h-64 pb-2'>
+                <Line options={options} data={chartData} className='max-w-full' />
             </CardBody>
-            <CardFooter>
+            <CardFooter className='pt-0'>
                 <CheckboxGroup 
                     orientation="horizontal"
                     defaultValue={["exercises", "workouts"]}
