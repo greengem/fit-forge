@@ -94,11 +94,11 @@ model Exercise {
 model WorkoutPlan {
   id                  String                @id @default(uuid())
   name                String
-  userId              String
+  userId              String?
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   notes               String?
-  User                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User                User?                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   logs          WorkoutLog[]
   WorkoutPlanExercise WorkoutPlanExercise[]
 }
@@ -110,6 +110,7 @@ model WorkoutPlanExercise {
   reps          Int
   duration      Int?
   order         Int
+  isSystemRoutine     Boolean               @default(false)
   Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
   WorkoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 
