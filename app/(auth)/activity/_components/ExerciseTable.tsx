@@ -20,7 +20,7 @@ const ExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercises, worko
     const formattedDate = `${workoutDate.getDate()}/${workoutDate.getMonth() + 1}/${workoutDate.getFullYear()}`;
 
     return (
-        <Table removeWrapper aria-label={`Exercise sets for ${workoutName} on ${formattedDate}`}>
+        <Table hideHeader removeWrapper aria-label={`Exercise sets for ${workoutName} on ${formattedDate}`}>
             <TableHeader>
                 <TableColumn>EXERCISE</TableColumn>
                 <TableColumn>BEST SET</TableColumn>
@@ -36,9 +36,9 @@ const ExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercises, worko
 
                 return (
                     <TableRow key={wle.id}>
-                        <TableCell>{wle.Exercise.name}</TableCell>
-                        <TableCell>{`${bestSet.reps} X ${bestSet.weight} KG`}</TableCell>
-                        <TableCell className="text-success">{isPersonalBest && <IconTrophy />}</TableCell>
+                        <TableCell className="truncate whitespace-nowrap max-w-[164px] py-0 px-0">{wle.Exercise.name}</TableCell>
+                        <TableCell className="py-0">{`${bestSet.reps} X ${bestSet.weight}`}</TableCell>
+                        <TableCell className="text-success py-0 px-0">{isPersonalBest && <IconTrophy />}</TableCell>
                     </TableRow>
                 );
             })}

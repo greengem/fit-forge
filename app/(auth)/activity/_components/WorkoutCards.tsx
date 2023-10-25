@@ -67,12 +67,18 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, sh
                 }, 0);
                 return (
                         <Card key={workout.id}>
-                            <CardHeader className="flex gap-3 px-5">
+                            <CardHeader className="flex justify-between items-start gap-3 px-5">
                                 <div className="flex flex-col flex-grow">
-                                    <p className="text-md font-semibold text-success">
-                                        {format(new Date(workout.createdAt), 'MM/dd/yyyy')}: {workout.name}
+                                    <p className="text-md font-semibold text-success mb-1">{workout.name}</p>
+                                    <p className="text-sm text-default-500">
+                                        <span className="flex space-x-1">
+                                            <time>{format(new Date(workout.createdAt), 'MM/dd/yyyy')}</time>
+                                            <span className="text-gray-400">|</span>
+                                            <span>{formatDuration(workout.duration)}</span>
+                                            <span className="text-gray-400">|</span>
+                                            <span>{totalWeightLifted} KG</span>
+                                        </span>
                                     </p>
-                                    <p className="text-small text-default-500">{formatDuration(workout.duration)} | {totalWeightLifted} KG</p>
                                 </div>
                                 {showDeleteButton && (
                                 <Dropdown>
@@ -85,7 +91,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, sh
                                 </Dropdown>
                                  )}
                             </CardHeader>
-                            <CardBody className="py-0 pb-2">
+                            <CardBody className="py-0 pb-4">
                                 <ExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} personalBests={personalBests} />
                             </CardBody>
                         </Card>
