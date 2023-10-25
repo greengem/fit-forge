@@ -64,14 +64,13 @@ export default function RoutineCards({ routines }) {
 
             <CardBody className="pt-0">
               
-              <ul className="space-y-1">
+              <ul className="space-y-1 text-sm">
               {routine.WorkoutPlanExercise.sort((a, b) => a.order - b.order).map((exerciseDetail) => (
                   <li key={exerciseDetail.Exercise.id}>
                     {exerciseDetail.reps && exerciseDetail.reps} x {exerciseDetail.sets && exerciseDetail.sets} {exerciseDetail.Exercise.name}
                   </li>
               ))}
               </ul>
-              {/*routine.notes && <p className="text-default-500 mt-2">Notes: {routine.notes}</p>*/}
             </CardBody>
           </Card>
         ))}

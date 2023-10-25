@@ -22,7 +22,7 @@ export default async function RoutinesPage() {
       ) : (
         <p>No routines found.</p>
       )}
-      <PageHeading title="Suggested Routines" />
+      <PageHeading title="Example Routines" />
     </>
   )
 }

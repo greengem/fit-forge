@@ -28,8 +28,7 @@ export default async function WorkoutPage() {
                 </div>
               </CardHeader>
               <CardBody className="py-0 pb-2">
-                {routine.notes && <p className="text-default-500 text-sm mb-2">Notes: {routine.notes}</p>}
-                <ul className="space-y-1">
+                <ul className="space-y-1 text-sm">
                   {routine.WorkoutPlanExercise.sort((a, b) => a.order - b.order).map((exerciseDetail) => (
                     <li key={exerciseDetail.Exercise.id}>
                       {exerciseDetail.reps && exerciseDetail.reps} x {exerciseDetail.sets && exerciseDetail.sets} {exerciseDetail.Exercise.name}
