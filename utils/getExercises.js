@@ -20,6 +20,9 @@ async function fetchExercisesFromDB() {
             tips: true,
             image: true,
         },
+        orderBy: {
+            name: 'asc',
+        },
     });
 }
 

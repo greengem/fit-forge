@@ -12,6 +12,7 @@ export default function ExerciseSearch({ setSearchQuery }) {
       <Input
         type="search"
         label="Search"
+        size="sm"
         startContent={
           <IconSearch className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
         }
