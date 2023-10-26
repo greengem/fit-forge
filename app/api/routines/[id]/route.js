@@ -26,6 +26,7 @@ export async function GET(request, { params }) {
             reps: true,
             duration: true,
             order: true,
+            trackingType: true
           }
         },
         updatedAt: true,
@@ -94,6 +95,7 @@ export async function PUT(request, { params }) {
                   deleteMany: { workoutPlanId: routineId },
                   create: exercises.map((exercise) => ({
                       exerciseId: exercise.id,
+                      trackingType: exercise.trackingType,
                       sets: exercise.sets,
                       reps: exercise.reps,
                       duration: exercise.duration,

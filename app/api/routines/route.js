@@ -24,6 +24,7 @@ export async function POST(request) {
                     create: exercises.map((exercise) => ({
                         exerciseId: exercise.id,
                         sets: exercise.sets,
+                        trackingType: exercise.trackingType,
                         reps: exercise.reps,
                         duration: exercise.duration,
                         order: exercise.order,

@@ -42,10 +42,11 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
                 <ul className="space-y-1 text-sm">
                     {displayedExercises.sort((a, b) => a.order - b.order).map((exerciseDetail) => (
                         <li key={exerciseDetail.Exercise.id}>
-                            {exerciseDetail.reps && exerciseDetail.reps} x {exerciseDetail.sets && exerciseDetail.sets} {exerciseDetail.Exercise.name}
+                            {exerciseDetail.sets && exerciseDetail.sets} x {exerciseDetail.Exercise.name}
                         </li>
                     ))}
                 </ul>
+
                 {routine.WorkoutPlanExercise.length > 5 && (
                     <button 
                         className='text-left text-success'

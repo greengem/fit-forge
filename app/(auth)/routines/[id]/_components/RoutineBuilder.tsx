@@ -82,10 +82,21 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   };
 
   const updateExercise = (index: number, field: ExerciseField, value: number | 'reps' | 'duration') => {
-    const updatedExercises = [...selectedExercises];
-    (updatedExercises[index][field] as number | 'reps' | 'duration') = value;
-    setSelectedExercises(updatedExercises);
-};
+      const updatedExercises = [...selectedExercises];
+
+      if (field === 'trackingType') {
+          if (value === 'reps') {
+              updatedExercises[index]['duration'] = undefined;
+          } else if (value === 'duration') {
+              updatedExercises[index]['reps'] = undefined;
+          }
+      }
+
+      (updatedExercises[index][field] as any) = value;
+      setSelectedExercises(updatedExercises);
+  };
+
+
 
   
 
@@ -154,7 +165,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
     setIsSaving(true);
 
     const exercisesWithOrder = selectedExercises.map((exercise, index) => {
-      let { reps, duration } = exercise;
+      let { reps, duration, trackingType } = exercise;
     
       if (exercise.trackingType === 'reps') {
         duration = exercise.duration !== 0 ? exercise.duration as number : undefined;
@@ -168,6 +179,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
         ...exercise,
         reps,
         duration,
+        trackingType,
         order: index + 1,
       };
     });

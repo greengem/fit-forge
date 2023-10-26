@@ -111,6 +111,7 @@ model WorkoutPlanExercise {
   reps          Int?
   duration      Int?
   order         Int
+  trackingType  TrackingType
   Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
   WorkoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 
@@ -163,6 +164,11 @@ model UserExercisePB {
   WorkoutLog      WorkoutLog? @relation("WorkoutLogToUserExercisePB", fields: [workoutLogId], references: [id], onDelete: Cascade)
 
   @@id([userId, exerciseId])
+}
+
+enum TrackingType {
+  reps
+  duration
 }
 
 enum CategoryType {
