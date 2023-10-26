@@ -10,7 +10,7 @@ export default function UserDetails() {
                 name={session?.user?.name}
                 description="Signed in"
                 avatarProps={{
-                    src: session?.user?.image
+                    src: session?.user?.image ?? ''
                 }}
             />
         </div>
