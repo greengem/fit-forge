@@ -10,11 +10,11 @@ export async function POST(request) {
     try {
         const data = JSON.parse(await request.text());
         const { routineName, exercises, notes } = data;
-
+        console.log(data);
         if (!routineName || !Array.isArray(exercises)) {
             return NextResponse.json({ error: "Invalid data format." }, { status: 400 });
         }
-
+        
         const newWorkoutPlan = await prisma.workoutPlan.create({
             data: {
                 name: routineName,

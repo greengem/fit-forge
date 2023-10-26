@@ -57,7 +57,7 @@ export default function SidebarNav() {
                 label="Sign Out"
                 active={false}
                 subtext="Logout from account"
-                onClick={() => signOut()}
+                onClick={() => signOut({ callbackUrl: '/' })}
             />
         </ul>
     );

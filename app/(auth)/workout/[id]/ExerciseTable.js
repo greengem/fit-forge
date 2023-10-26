@@ -19,6 +19,7 @@ export default function ExerciseTable({ exerciseDetail, index, exercises, weight
                         <TableCell>{setIndex + 1}</TableCell>
                         <TableCell>
                             <Input 
+                                size="sm"
                                 type='number' 
                                 value={weights[index][setIndex]}
                                 onChange={e => handleWeightChange(index, setIndex, Number(e.target.value))}
@@ -28,6 +29,7 @@ export default function ExerciseTable({ exerciseDetail, index, exercises, weight
                         </TableCell>
                         <TableCell>
                             <Input 
+                                size="sm"
                                 type="number" 
                                 value={reps[index][setIndex]}
                                 onChange={e => handleRepChange(index, setIndex, Number(e.target.value))}
@@ -36,8 +38,8 @@ export default function ExerciseTable({ exerciseDetail, index, exercises, weight
                             />
                         </TableCell>
                         <TableCell className="text-center">
-                            <Button isIconOnly color={exercises[index].completedSets[setIndex] ? 'success' : 'danger'} onClick={() => handleCompletion(index, setIndex, exerciseDetail.Exercise.name)}>
-                                {exercises[index].completedSets[setIndex] ? <IconSquareCheck /> : <IconSquare />}
+                            <Button size="sm" isIconOnly color={exercises[index].completedSets[setIndex] ? 'success' : 'danger'} onClick={() => handleCompletion(index, setIndex, exerciseDetail.Exercise.name)}>
+                                {exercises[index].completedSets[setIndex] ? <IconSquareCheck size={20} /> : <IconSquare size={20} />}
                             </Button>
                         </TableCell>
                     </TableRow>

@@ -5,8 +5,10 @@ interface Exercise {
     id: string;
     name: string;
     sets: number;
-    reps: number;
+    reps?: number;
+    duration?: number;
     order?: number;
+    trackingType: 'reps' | 'duration';
 }
 
 type SearchResultsProps = {

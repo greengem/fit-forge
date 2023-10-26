@@ -13,9 +13,13 @@ interface Exercise {
   id: string;
   name: string;
   sets: number;
-  reps: number;
+  reps?: number;
+  duration?: number;
   order?: number;
+  trackingType: 'reps' | 'duration';
 }
+
+  type ExerciseField = 'sets' | 'reps' | 'duration' | 'trackingType';
 
 const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   const router = useRouter();
@@ -59,21 +63,31 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
 
   const addExerciseToRoutine = (exercise: Exercise) => {
     if (selectedExercises.some(e => e.id === exercise.id)) return;
-    setSelectedExercises([...selectedExercises, {
-      ...exercise,
-      sets: 3,
-      reps: 8,
-    }]);
+    
+    const { id, name, trackingType } = exercise;
+    
+    const newExercise: Exercise = {
+      id,
+      name,
+      sets: 1,
+      reps: trackingType === 'reps' ? 0 : undefined,
+      duration: trackingType === 'duration' ? 0 : undefined,
+      trackingType: 'reps',
+    };
+  
+    setSelectedExercises([...selectedExercises, newExercise]);
     setSearchTerm('');
     setSearchResults([]);
     searchInputRef.current?.focus();
   };
 
-  const updateExercise = (index: number, field: keyof Exercise, value: number) => {
+  const updateExercise = (index: number, field: ExerciseField, value: number | 'reps' | 'duration') => {
     const updatedExercises = [...selectedExercises];
-    updatedExercises[index] = { ...updatedExercises[index], [field]: value };
+    (updatedExercises[index][field] as number | 'reps' | 'duration') = value;
     setSelectedExercises(updatedExercises);
 };
+
+  
 
   const moveUp = (index: number) => {
     if (index === 0) return;
@@ -107,31 +121,59 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
       toast.error('Routine Name is required.');
       return false;
     }
-
+  
     if (selectedExercises.length === 0) {
       toast.error('At least one exercise is required.');
       return false;
     }
-
+  
     for (let exercise of selectedExercises) {
-      if (exercise.sets < 1 || exercise.reps < 1) {
-        toast.error(`${exercise.name} should have at least 1 set and 1 rep.`);
+      if (exercise.sets < 1) {
+        toast.error(`${exercise.name} should have at least 1 set.`);
         return false;
       }
+      
+      if (exercise.trackingType === 'reps' && (exercise.reps ?? 0) < 1) {
+        toast.error(`${exercise.name} should have at least 1 rep.`);
+        return false;
+      }
+      
+      if (exercise.trackingType === 'duration' && (exercise.duration ?? 0) <= 0) {
+        toast.error(`${exercise.name} should have a duration greater than zero.`);
+        return false;
+      }    
     }
-
+  
     return true;
   };
+  
 
   const handleSave = async () => {
     if (!validateForm()) return;
     
     setIsSaving(true);
 
-    const exercisesWithOrder = selectedExercises.map((exercise, index) => ({
-      ...exercise,
-      order: index + 1,
-    }));
+    const exercisesWithOrder = selectedExercises.map((exercise, index) => {
+      let { reps, duration } = exercise;
+    
+      if (exercise.trackingType === 'reps') {
+        duration = exercise.duration !== 0 ? exercise.duration as number : undefined;
+      } else if (exercise.trackingType === 'duration') {
+        reps = exercise.reps !== 0 ? exercise.reps as number : undefined;
+      }
+      
+      
+    
+      return {
+        ...exercise,
+        reps,
+        duration,
+        order: index + 1,
+      };
+    });
+    
+
+    
     
     try {
       let response;

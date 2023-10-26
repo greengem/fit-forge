@@ -108,7 +108,7 @@ model WorkoutPlanExercise {
   workoutPlanId String
   exerciseId    String
   sets          Int
-  reps          Int
+  reps          Int?
   duration      Int?
   order         Int
   Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
