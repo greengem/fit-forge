@@ -2,7 +2,7 @@
 import { ChangeEvent, FC } from 'react';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/table";
 import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
+import {Button, ButtonGroup} from "@nextui-org/button";
 import { IconArrowUp, IconArrowDown, IconTrash } from '@tabler/icons-react';
 interface Exercise {
     id: string;
@@ -22,7 +22,7 @@ type ExerciseTableProps = {
 
 const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExercise, moveUp, moveDown, deleteExercise }) => {
     return (
-        <Table aria-label='Table of selected exercises'>
+        <Table aria-label='Table of selected exercises' shadow="none">
             <TableHeader>
                 <TableColumn>EXERCISE</TableColumn>
                 <TableColumn>SETS</TableColumn>
@@ -35,6 +35,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                         <TableCell>{exercise.name}</TableCell>
                         <TableCell>
                             <Input 
+                                size='sm'
                                 type="number" 
                                 value={exercise.sets.toString()}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +49,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                         </TableCell>
                         <TableCell>
                             <Input 
+                                size='sm'
                                 type="number" 
                                 value={exercise.reps.toString()}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -59,9 +61,11 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                             />
                         </TableCell>
                         <TableCell className='flex gap-2'>
-                            <Button isIconOnly onClick={() => moveUp(index)}><IconArrowUp /></Button>
-                            <Button isIconOnly onClick={() => moveDown(index)}><IconArrowDown /></Button>
-                            <Button color='danger' isIconOnly onClick={() => deleteExercise(index)}><IconTrash /></Button>
+                            <ButtonGroup>
+                                <Button size='sm' isIconOnly onClick={() => moveUp(index)}><IconArrowUp size={16} /></Button>
+                                <Button size='sm' isIconOnly onClick={() => moveDown(index)}><IconArrowDown size={16} /></Button>
+                            </ButtonGroup>
+                            <Button size='sm' color='danger' isIconOnly onClick={() => deleteExercise(index)}><IconTrash size={16} /></Button>
                         </TableCell>
                     </TableRow>
                 ))}

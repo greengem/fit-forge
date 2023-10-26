@@ -5,7 +5,7 @@ import { IconPlus, IconX } from '@tabler/icons-react';
 
 export default function RoutineCard({ exercise }) {
     return (
-      <Card>
+      <Card shadow='none'>
         <CardHeader className="font-semibold text-xl px-5">{exercise.Exercise.name}</CardHeader>
         <CardBody>
           <RoutineTable exercise={exercise} />

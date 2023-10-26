@@ -45,7 +45,7 @@ function ExerciseList({ exercises }) {
             </div>
 
             <div>
-                <Table aria-label="Exercise Table" className="mb-5">
+                <Table aria-label="Exercise Table" className="mb-5" shadow="none">
                     <TableHeader>
                         <TableColumn>NAME</TableColumn>
                         <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>

@@ -50,7 +50,7 @@ export default function ProfileEquipment({ equipment, session }) {
     };
 
     return (
-        <Card>
+        <Card shadow="none">
             <CardHeader className='text-xl font-semibold px-5 pb-0'><IconBarbell className='mr-1' />Equipment</CardHeader>
             <CardBody>
                 <CheckboxGroup

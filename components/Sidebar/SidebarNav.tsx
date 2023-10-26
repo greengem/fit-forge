@@ -78,13 +78,13 @@ function NavItem({ icon, label, href, active, subtext, onClick }: NavItemProps) 
             {icon}
             <div>
                 <div>{label}</div>
-                <div className={`text-sm ${active ? 'text-gray-800' : 'text-gray-500'}`}>{subtext}</div>
+                <div className={`text-xs ${active ? 'text-gray-800' : 'text-gray-500'}`}>{subtext}</div>
             </div>
         </div>
     );
 
     return (
-        <li className={`px-2 py-1 rounded-lg ${active ? 'bg-success text-black' : 'hover:bg-default-100 hover:text-white'}`}>
+        <li className={`px-2 py-1 rounded-lg ${active ? 'bg-success text-black' : 'hover:bg-default-200'}`}>
             {onClick ? (
                 <button className='text-left' onClick={onClick}>{content}</button>
             ) : (

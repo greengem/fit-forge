@@ -4,7 +4,7 @@ import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "
 
 export default function RoutineTable({ exercise }) {
   return (
-    <Table removeWrapper aria-label="Example static collection table">
+    <Table removeWrapper aria-label="Example static collection table" shadow="none">
       <TableHeader>
         <TableColumn>SET</TableColumn>
         <TableColumn>KG</TableColumn>

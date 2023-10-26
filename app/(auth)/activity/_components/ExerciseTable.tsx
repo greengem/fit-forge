@@ -20,7 +20,7 @@ const ExerciseTable: React.FC<WorkoutTableProps> = ({ workoutLogExercises, worko
     const formattedDate = `${workoutDate.getDate()}/${workoutDate.getMonth() + 1}/${workoutDate.getFullYear()}`;
 
     return (
-        <Table hideHeader removeWrapper aria-label={`Exercise sets for ${workoutName} on ${formattedDate}`}>
+        <Table shadow="none" hideHeader removeWrapper aria-label={`Exercise sets for ${workoutName} on ${formattedDate}`}>
             <TableHeader>
                 <TableColumn>EXERCISE</TableColumn>
                 <TableColumn>BEST SET</TableColumn>

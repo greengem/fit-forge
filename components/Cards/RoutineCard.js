@@ -19,15 +19,15 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
     const categoryColorMap = {
         'strength': 'success',
         'cardio': 'secondary',
-        'stretching': 'primary',
-        'plyometrics': 'warning',
+        'stretching': 'warning',
+        'plyometrics': 'primary',
         'strongman': 'danger',
         'powerlifting': 'default',
         'olympic_weightlifting': 'secondary'
     };
 
     return (
-        <Card key={routine.id}>
+        <Card key={routine.id} shadow="none">
             <CardHeader className="flex gap-3 px-5">
                 <div className="flex flex-col flex-grow">
                     <p className='text-md font-semibold'>{routine.name}</p>

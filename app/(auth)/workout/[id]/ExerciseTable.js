@@ -6,7 +6,7 @@ import { IconSquare, IconSquareCheck } from '@tabler/icons-react';
 
 export default function ExerciseTable({ exerciseDetail, index, exercises, weights, reps, handleCompletion, handleWeightChange, handleRepChange }) {
     return (
-        <Table removeWrapper aria-label={`Table for exercise ${exerciseDetail.Exercise.name}`} className="min-w-full table-auto">
+        <Table removeWrapper aria-label={`Table for exercise ${exerciseDetail.Exercise.name}`} className="min-w-full table-auto" shadow="none">
             <TableHeader>
                 <TableColumn>SET</TableColumn>
                 <TableColumn>KG</TableColumn>

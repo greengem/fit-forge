@@ -16,14 +16,13 @@ export default async function ActivityPage() {
 	return (
 		<>
 			<PageHeading title="Activity" />
-			<CardGrid>
-				{workouts.length > 0 ? (
+			{workouts.length > 0 ? (
+				<CardGrid>
 					<WorkoutCards workouts={workouts} personalBests={personalBests} showDeleteButton={true} />
-				) : (
-					<p className="w-full">No workouts have been completed. <Link className="text-success" href="/workout">Click here to start one</Link>.</p>
-				)}
-			</CardGrid>
-
+				</CardGrid>
+			) : (
+				<p>No workouts have been completed. <Link className="text-success" href="/workout">Click here to start one</Link>.</p>
+			)}
 		</>
 	);
 }

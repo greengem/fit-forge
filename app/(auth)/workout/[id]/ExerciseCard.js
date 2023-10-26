@@ -5,7 +5,7 @@ import { IconPlus, IconX } from '@tabler/icons-react';
 
 export default function ExerciseCard({ exerciseDetail, index, exercises, weights, reps, handleCompletion, handleWeightChange, handleRepChange, addSet, removeSet }) {
     return (
-        <Card>
+        <Card shadow="none">
             <CardHeader className='font-semibold text-xl px-5'>
                 {exerciseDetail.order + ". " + exerciseDetail.Exercise.name}
             </CardHeader>

@@ -68,7 +68,7 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, sh
                     return acc + exercise.sets.reduce((acc, set) => acc + set.weight, 0);
                 }, 0);
                 return (
-                        <Card key={workout.id}>
+                        <Card shadow="none" key={workout.id}>
                             <CardHeader className="flex justify-between items-start gap-3 px-5">
                                 <div className="flex flex-col flex-grow">
                                     <p className="text-md font-semibold text-success mb-1">{workout.name}</p>

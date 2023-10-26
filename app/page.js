@@ -16,7 +16,7 @@ const fadeInUp = {
 
 export default function HomePage() {
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen hero-container">
       <motion.div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-white"
         initial="hidden"
         animate="visible"

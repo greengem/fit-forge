@@ -17,3 +17,7 @@ nav [data-active=true] a{
 .dashboard-chart{
     height: 300px;
 }
+
+.hero-container{
+    background-color: rgb(17, 17, 19);
+}
