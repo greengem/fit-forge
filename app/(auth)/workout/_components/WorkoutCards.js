@@ -14,6 +14,7 @@ export default function WorkoutCards({ routines, isSystem }) {
         <CardGrid>
             {routines.map((routine) => (
                 <RoutineCard 
+                    key={routine.id}
                     routine={routine}
                     isSystem={isSystem}
                     isExpanded={isExpanded}
