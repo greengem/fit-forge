@@ -1,20 +1,14 @@
-import { getServerSession } from "next-auth";
-import SessionProvider from "@/components/SessionProvider";
-import { authOptions } from "@/utils/authOptions"
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Navbar from '@/components/Navbar/Navbar';
 import { Toaster } from 'react-hot-toast';
 
-export default async function RootLayout({
+export default function RootLayout({
     children,
   }: {
     children: React.ReactNode
   }) {
 
-    const session = await getServerSession(authOptions);
-
     return (
-      <SessionProvider session={session}>
         <main className="flex flex-col min-h-screen">
             <Toaster />
             <Navbar />
@@ -25,6 +19,5 @@ export default async function RootLayout({
                 </div>
             </div>
         </main>
-      </SessionProvider>
     )
   }
