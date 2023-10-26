@@ -21,7 +21,7 @@ export default function ProfileDetails({ session, expandedProfile }) {
         };
       
         try {
-          const response = await fetch(`/api/users/${session.user.id}`, {
+          const response = await fetch(`/api/users`, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json'
