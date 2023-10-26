@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Tracktive: Log, Analyze, and Optimize Your Workouts',
   description: 'Take Control of Your Fitness Goals with Tracktive. The intuitive workout tracking web app designed to optimize your gym sessions and improve your results.',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
-  themeColor: '#111113',
+  themeColor: '#18181b',
 }
 
 export default async function RootLayout({
