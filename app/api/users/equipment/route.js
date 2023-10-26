@@ -9,19 +9,16 @@ export async function POST(request) {
     try {
         const { userId, selectedEquipment } = JSON.parse(await request.text());
 
-        // It's a good idea to ensure the received data is in the expected format
         if (!userId || !Array.isArray(selectedEquipment)) {
             return NextResponse.json({ error: "Invalid data format." }, { status: 400 });
         }
 
-        // Delete the old equipment selections for the user
         await prisma.userEquipment.deleteMany({
             where: {
                 userId: userId
             }
         });
 
-        // Insert the new selections
         for (let item of selectedEquipment) {
             await prisma.userEquipment.create({
                 data: {
