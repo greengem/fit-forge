@@ -17,9 +17,11 @@ export default async function RoutinesPage() {
   return (
       <>
         <PageHeading title="My Routines" />
+
         <Button as={Link} href="/routines/new" color="success" className="gap-unit-1 mb-5">
           <IconPlus size={16} />New Routine
         </Button>
+
         {userRoutines.length > 0 ? (
           <RoutineCards routines={userRoutines} isSystem={false} />
         ) : (
@@ -27,11 +29,7 @@ export default async function RoutinesPage() {
         )}
 
         <PageHeading title="Example Routines" />
-        {systemRoutines.length > 0 ? (
-          <RoutineCards routines={systemRoutines} isSystem={true} />
-        ) : (
-          <p>No system routines found.</p>
-        )}
+        <RoutineCards routines={systemRoutines} isSystem={true} />
       </>
     );
   }
