@@ -27,7 +27,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                 <TableColumn>EXERCISE</TableColumn>
                 <TableColumn>SETS</TableColumn>
                 <TableColumn>REPS</TableColumn>
-                <TableColumn>ACTIONS</TableColumn>
+                <TableColumn className='hidden sm:block'>ACTIONS</TableColumn>
             </TableHeader>
             <TableBody emptyContent={"Start searching to add exercises."}>
                 {selectedExercises.map((exercise, index) => (
@@ -38,6 +38,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                                 size='sm'
                                 type="number" 
                                 value={exercise.sets.toString()}
+                                className="max-w-[80px]"
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     const intValue = parseInt(e.target.value, 10);
                                     if (!isNaN(intValue)) {
@@ -52,6 +53,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                                 size='sm'
                                 type="number" 
                                 value={exercise.reps.toString()}
+                                className="max-w-[80px]"
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     const intValue = parseInt(e.target.value, 10);
                                     if (!isNaN(intValue)) {
@@ -60,12 +62,12 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                                 }}
                             />
                         </TableCell>
-                        <TableCell className='flex gap-2'>
-                            <ButtonGroup>
+                        <TableCell className='hidden sm:block'>
+                            <ButtonGroup className='mr-1'>
                                 <Button size='sm' isIconOnly onClick={() => moveUp(index)}><IconArrowUp size={16} /></Button>
                                 <Button size='sm' isIconOnly onClick={() => moveDown(index)}><IconArrowDown size={16} /></Button>
+                                <Button size='sm' color='danger' isIconOnly onClick={() => deleteExercise(index)}><IconTrash size={16} /></Button>
                             </ButtonGroup>
-                            <Button size='sm' color='danger' isIconOnly onClick={() => deleteExercise(index)}><IconTrash size={16} /></Button>
                         </TableCell>
                     </TableRow>
                 ))}

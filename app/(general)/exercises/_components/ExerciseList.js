@@ -44,39 +44,37 @@ function ExerciseList({ exercises }) {
                 <ExerciseFilters onFilterChange={setFilters} />
             </div>
 
-            <div>
-                <Table aria-label="Exercise Table" className="mb-5" shadow="none">
-                    <TableHeader>
-                        <TableColumn>NAME</TableColumn>
-                        <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
-                        <TableColumn><></></TableColumn>
-                    </TableHeader>
-                    <TableBody>
-                        {displayedExercises.map((exercise) => (
-                            <TableRow key={exercise.id}>
-                                <TableCell className="capitalize">
-                                    <User
-                                        avatarProps={{ radius: "lg", src: `/images/exercises/${exercise.image}/images/0.jpg` }}
-                                        description={exercise.category}
-                                        name={exercise.name}
-                                    />
-                                </TableCell>
-                                <TableCell className="capitalize hidden lg:table-cell">
-                                    <div className="flex flex-col">
-                                        <p className="text-bold text-small">{exercise.primary_muscles.join(', ')}</p>
-                                        <p className="text-bold text-tiny text-default-400">{exercise.secondary_muscles.join(', ')}</p>
-                                    </div>
-                                </TableCell>
-                                <TableCell className="flex justify-end">
-                                    <Button color="success" size="sm" isIconOnly onPress={() => { setSelectedExercise(exercise); onOpen(); }}>
-                                        <IconInfoCircle />
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </div>
+            <Table aria-label="Exercise Table" className="mb-5" shadow="none">
+                <TableHeader>
+                    <TableColumn>NAME</TableColumn>
+                    <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
+                    <TableColumn><></></TableColumn>
+                </TableHeader>
+                <TableBody>
+                    {displayedExercises.map((exercise) => (
+                        <TableRow key={exercise.id}>
+                            <TableCell className="capitalize">
+                                <User
+                                    avatarProps={{ radius: "lg", src: `/images/exercises/${exercise.image}/images/0.jpg` }}
+                                    description={exercise.category}
+                                    name={exercise.name}
+                                />
+                            </TableCell>
+                            <TableCell className="capitalize hidden lg:table-cell">
+                                <div className="flex flex-col">
+                                    <p className="text-bold text-small">{exercise.primary_muscles.join(', ')}</p>
+                                    <p className="text-bold text-tiny text-default-400">{exercise.secondary_muscles.join(', ')}</p>
+                                </div>
+                            </TableCell>
+                            <TableCell className="flex justify-end">
+                                <Button color="default" size="sm" isIconOnly onPress={() => { setSelectedExercise(exercise); onOpen(); }}>
+                                    <IconInfoCircle />
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
 
             <div className="flex w-full justify-center">
                 <Pagination
