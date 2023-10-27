@@ -12,12 +12,12 @@ interface Exercise {
     name: string;
     sets: number;
     reps?: number;
-    duration?: number;
+    exerciseDuration?: number;
     order?: number;
     trackingType: 'reps' | 'duration';
 }
 
-type ExerciseField = 'sets' | 'reps' | 'duration' | 'trackingType';
+type ExerciseField = 'sets' | 'reps' | 'exerciseDuration' | 'trackingType';
 
 type ExerciseTableProps = {
     selectedExercises: Exercise[];
@@ -87,14 +87,14 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
     label="Duration"
     type="number" 
     value={
-      exercise.trackingType === 'duration' && exercise.duration !== undefined && exercise.duration !== null
-        ? exercise.duration.toString()
+      exercise.trackingType === 'duration' && exercise.exerciseDuration !== undefined && exercise.exerciseDuration !== null
+        ? exercise.exerciseDuration.toString()
         : ''
     }
     onChange={(e: ChangeEvent<HTMLInputElement>) => {
       const intValue = parseInt(e.target.value, 10);
       if (!isNaN(intValue)) {
-        updateExercise(index, 'duration', intValue);
+        updateExercise(index, 'exerciseDuration', intValue);
       }
     }}
   />

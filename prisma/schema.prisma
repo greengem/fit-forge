@@ -109,7 +109,7 @@ model WorkoutPlanExercise {
   exerciseId    String
   sets          Int
   reps          Int?
-  duration      Int?
+  exerciseDuration  Int?
   order         Int
   trackingType  TrackingType
   Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
@@ -124,7 +124,7 @@ model WorkoutLog {
   workoutPlanId String?
   name         String
   date         DateTime
-  duration     Int?
+  duration     Int
   createdAt    DateTime @default(now())
   date_updated DateTime? @default(now())
   User         User     @relation(fields: [userId], references: [id])
@@ -147,7 +147,7 @@ model SetLog {
   workoutLogExerciseId String
   weight              Float
   reps                Int?
-  duration            Int?
+  exerciseDuration            Int?
   order               Int?
   WorkoutLogExercise  WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
 }
@@ -156,7 +156,8 @@ model UserExercisePB {
   userId     String
   exerciseId String
   weight     Float
-  reps       Int
+  reps       Int?
+  exerciseDuration Int?
   user       User      @relation(fields: [userId], references: [id])
   exercise   Exercise  @relation(fields: [exerciseId], references: [id])
   createdAt           DateTime              @default(now())

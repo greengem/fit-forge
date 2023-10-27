@@ -15,11 +15,12 @@ interface Exercise {
   sets: number;
   reps?: number;
   duration?: number;
+  exerciseDuration?: number;
   order?: number;
   trackingType: 'reps' | 'duration';
 }
 
-  type ExerciseField = 'sets' | 'reps' | 'duration' | 'trackingType';
+  type ExerciseField = 'sets' | 'reps' | 'exerciseDuration' | 'trackingType';
 
 const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   const router = useRouter();
@@ -71,7 +72,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
       name,
       sets: 1,
       reps: trackingType === 'reps' ? 0 : undefined,
-      duration: trackingType === 'duration' ? 0 : undefined,
+      exerciseDuration: trackingType === 'duration' ? 0 : undefined,
       trackingType: 'reps',
     };
   
@@ -86,7 +87,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
 
       if (field === 'trackingType') {
           if (value === 'reps') {
-              updatedExercises[index]['duration'] = undefined;
+              updatedExercises[index]['exerciseDuration'] = undefined;
           } else if (value === 'duration') {
               updatedExercises[index]['reps'] = undefined;
           }
@@ -149,7 +150,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
         return false;
       }
       
-      if (exercise.trackingType === 'duration' && (exercise.duration ?? 0) <= 0) {
+      if (exercise.trackingType === 'duration' && (exercise.exerciseDuration ?? 0) <= 0) {
         toast.error(`${exercise.name} should have a duration greater than zero.`);
         return false;
       }    
@@ -165,10 +166,10 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
     setIsSaving(true);
 
     const exercisesWithOrder = selectedExercises.map((exercise, index) => {
-      let { reps, duration, trackingType } = exercise;
+      let { reps, exerciseDuration, trackingType } = exercise;
     
       if (exercise.trackingType === 'reps') {
-        duration = exercise.duration !== 0 ? exercise.duration as number : undefined;
+        exerciseDuration = exercise.exerciseDuration !== 0 ? exercise.exerciseDuration as number : undefined;
       } else if (exercise.trackingType === 'duration') {
         reps = exercise.reps !== 0 ? exercise.reps as number : undefined;
       }
@@ -178,7 +179,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
       return {
         ...exercise,
         reps,
-        duration,
+        exerciseDuration,
         trackingType,
         order: index + 1,
       };

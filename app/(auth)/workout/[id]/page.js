@@ -21,7 +21,8 @@ async function fetchRoutine(id) {
                     },
                     sets: true,
                     reps: true,
-                    duration: true,
+                    exerciseDuration: true,
+                    trackingType: true,
                     order: true,
                 }
             },

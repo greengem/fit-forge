@@ -10,7 +10,6 @@ export async function POST(request) {
     try {
         const data = JSON.parse(await request.text());
         const { routineName, exercises, notes } = data;
-        console.log(data);
         if (!routineName || !Array.isArray(exercises)) {
             return NextResponse.json({ error: "Invalid data format." }, { status: 400 });
         }
@@ -26,7 +25,7 @@ export async function POST(request) {
                         sets: exercise.sets,
                         trackingType: exercise.trackingType,
                         reps: exercise.reps,
-                        duration: exercise.duration,
+                        exerciseDuration: exercise.exerciseDuration,
                         order: exercise.order,
                     })),
                 },

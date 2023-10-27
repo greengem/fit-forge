@@ -7,8 +7,10 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
   const session = await getServerSession(authOptions);
   const data = JSON.parse(await request.text());
-  const { name, date, workoutPlanId, exercises, duration } = data;
+  console.log("Parsed data:", JSON.stringify(data, null, 2));
 
+  const { name, date, workoutPlanId, exercises, duration } = data;
+  
   try {
     const newWorkoutLog = await prisma.workoutLog.create({
       data: {
@@ -33,6 +35,7 @@ export async function POST(request) {
           data: {
             weight: parseFloat(exercise.weight || 0),
             reps: parseInt(exercise.reps || 0, 10),
+            exerciseDuration: parseInt(exercise.exerciseDuration || 0, 10),
             order: i + 1,
             WorkoutLogExercise: {
               connect: { id: newLogExercise.id },

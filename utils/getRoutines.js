@@ -31,7 +31,7 @@ export default async function getRoutines(userId) {
         select: {
           sets: true,
           reps: true,
-          duration: true,
+          exerciseDuration: true,
           order: true,
           Exercise: {
             select: {

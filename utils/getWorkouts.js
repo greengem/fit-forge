@@ -29,7 +29,8 @@ export default async function getWorkouts(userId, limit = null) {
 					sets: {
 						select: {
 							weight: true,
-							reps: true
+							reps: true,
+							exerciseDuration: true,
 						}
 					}
 				}

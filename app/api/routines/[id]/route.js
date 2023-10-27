@@ -24,7 +24,7 @@ export async function GET(request, { params }) {
             },
             sets: true,
             reps: true,
-            duration: true,
+            exerciseDuration: true,
             order: true,
             trackingType: true
           }
@@ -98,7 +98,7 @@ export async function PUT(request, { params }) {
                       trackingType: exercise.trackingType,
                       sets: exercise.sets,
                       reps: exercise.reps,
-                      duration: exercise.duration,
+                      exerciseDuration: exercise.exerciseDuration,
                       order: exercise.order,
                   })),
               },
@@ -112,4 +112,3 @@ export async function PUT(request, { params }) {
       return NextResponse.json({ error: "An error occurred updating the routine." }, { status: 500 });
   }
 }
-
