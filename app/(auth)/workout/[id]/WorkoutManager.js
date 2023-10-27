@@ -14,13 +14,14 @@ export default function WorkoutManager({ workout }) {
     })));
     const [workoutStartTime, setWorkoutStartTime] = useState(null);
     const [workoutDuration, setWorkoutDuration] = useState(0);
-    const [weights, setWeights] = useState(workout.WorkoutPlanExercise.map(exercise => Array(exercise.sets).fill(40)));
+    const [weights, setWeights] = useState(workout.WorkoutPlanExercise.map(exercise => Array(exercise.sets).fill(0)));
     const [reps, setReps] = useState(workout.WorkoutPlanExercise.map(exercise => Array(exercise.sets).fill(exercise.reps)));
+    const [durations, setDurations] = useState(workout.WorkoutPlanExercise.map(exercise => Array(exercise.sets).fill(exercise.exerciseDuration)));
     const durationInterval = useRef(null);
     const [isPaused, setIsPaused] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     
-    // Utility & Helper Functions
+    // Format Workout Timer
     const formatDuration = (seconds) => {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds - hours * 3600) / 60);
@@ -28,6 +29,7 @@ export default function WorkoutManager({ workout }) {
         return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
     };
 
+    // Toggle Pausing the Workout Timer
     const togglePause = () => {
         if (!workoutStartTime) {
             setWorkoutStartTime(Date.now());
@@ -38,7 +40,7 @@ export default function WorkoutManager({ workout }) {
         }
     };
     
-    // State Update Functions
+    // Add Sets to exercise
     const addSet = (index, exerciseName) => {
         setExercises(prevExercises => {
             const updatedExercises = [...prevExercises];
@@ -61,6 +63,7 @@ export default function WorkoutManager({ workout }) {
         toast.success(`Set added to ${exerciseName}`);
     };
     
+    //Remove Sets from exercise
     const removeSet = (index, exerciseName) => {
         if (window.confirm('Are you sure you want to delete this set?')) {
             setExercises(prevExercises => {
@@ -89,6 +92,7 @@ export default function WorkoutManager({ workout }) {
         }
     };
     
+    // Handle clicking complete set button
     const handleCompletion = (exerciseIndex, setIndex, exerciseName) => {
         if (!workoutStartTime) {
             startWorkout();
@@ -104,26 +108,34 @@ export default function WorkoutManager({ workout }) {
         });
     };
     
+    // Handle changing weight number for a set
     const handleWeightChange = (exerciseIndex, setIndex, newValue) => {
         const updatedWeights = [...weights];
         updatedWeights[exerciseIndex][setIndex] = newValue;
         setWeights(updatedWeights);
     };
     
+    // Handle changing reps for a set
     const handleRepChange = (exerciseIndex, setIndex, newValue) => {
         const updatedReps = [...reps];
         updatedReps[exerciseIndex][setIndex] = newValue;
         setReps(updatedReps);
-    };  
+    };
 
-    // Async & Side Effect Functions
+    //Handle changing exerciseDuration for a set
+    const handleDurationChange = (exerciseIndex, setIndex, newValue) => {
+        const updatedDurations = [...durations];
+        updatedDurations[exerciseIndex][setIndex] = newValue;
+        setDurations(updatedDurations);
+    };
+
+    //Start workout button / clicking on mark as complete
     const startWorkout = () => {
         if (!workoutStartTime) {
             setWorkoutStartTime(Date.now());
             toast.success('Workout Session Started!');
         }
     };
-
     useEffect(() => {
         if (workoutStartTime && !isPaused) {
             durationInterval.current = setInterval(() => {
@@ -140,6 +152,7 @@ export default function WorkoutManager({ workout }) {
         };
     }, [workoutStartTime, isPaused]);    
 
+    // Fetch personal best for exercise
     async function fetchPBForExercise(exerciseId) {
         try {
             const response = await fetch(`/api/pbs/${exerciseId}`);
@@ -156,6 +169,7 @@ export default function WorkoutManager({ workout }) {
         }
     }
     
+    // Save pb 
     async function saveNewPB(exerciseId, weight, reps) {
         try {
             const response = await fetch('/api/pbs', {
@@ -179,7 +193,23 @@ export default function WorkoutManager({ workout }) {
         }
     }
 
+    // Save the workout!
     const completeWorkout = async () => {
+        const atLeastOneSetCompleted = exercises.some(exercise => exercise.completedSets.some(set => set === true));
+
+        if (!atLeastOneSetCompleted) {
+            toast.error('You need to complete at least one set to save the workout.');
+            return;
+        }
+
+        const incompleteSetsExist = exercises.some(exercise => exercise.completedSets.some(set => set === false));
+
+        if (incompleteSetsExist) {
+            if(!window.confirm('There are incomplete sets. These will not be saved. Do you want to proceed?')) {
+                return;
+            }
+        }
+
         setIsSaving(true);
         const workoutPlanId = workout.id;
         const workoutExercises = exercises.map((exerciseState, index) => {
@@ -189,7 +219,8 @@ export default function WorkoutManager({ workout }) {
                 name: exerciseDetail.Exercise.name,
                 sets: exerciseState.sets,
                 reps: reps[index],
-                weight: weights[index],                
+                weight: weights[index],
+                exerciseDuration: durations[index],          
                 completed: exerciseState.completedSets
             };
         });
@@ -252,7 +283,7 @@ export default function WorkoutManager({ workout }) {
     const progressPercentage = Math.round((completedSets / totalSets) * 100);
 
     return (
-        <div className='pb-20'>
+        <div className='pb-40'>
             {workout.notes && <p className='mb-2'>Notes: {workout.notes}</p>}
             <div className='space-y-5'>
             {workout.WorkoutPlanExercise.map((exerciseDetail, index) => (
@@ -263,9 +294,11 @@ export default function WorkoutManager({ workout }) {
                     exercises={exercises}
                     weights={weights}
                     reps={reps}
+                    durations={durations}
                     handleCompletion={handleCompletion}
                     handleWeightChange={handleWeightChange}
                     handleRepChange={handleRepChange}
+                    handleDurationChange={handleDurationChange}
                     addSet={addSet}
                     removeSet={removeSet}
                 />

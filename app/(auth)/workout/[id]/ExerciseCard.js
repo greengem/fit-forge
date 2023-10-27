@@ -3,7 +3,7 @@ import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 import { IconPlus, IconX } from '@tabler/icons-react';
 
-export default function ExerciseCard({ exerciseDetail, index, exercises, weights, reps, handleCompletion, handleWeightChange, handleRepChange, addSet, removeSet }) {
+export default function ExerciseCard({ exerciseDetail, index, exercises, weights, reps, durations, handleCompletion, handleWeightChange, handleDurationChange, handleRepChange, addSet, removeSet }) {
     return (
         <Card shadow="none">
             <CardHeader className='font-semibold text-xl px-5'>
@@ -16,9 +16,11 @@ export default function ExerciseCard({ exerciseDetail, index, exercises, weights
                 exercises={exercises}
                 weights={weights}
                 reps={reps}
+                durations={durations}
                 handleCompletion={handleCompletion}
                 handleWeightChange={handleWeightChange}
                 handleRepChange={handleRepChange}
+                handleDurationChange={handleDurationChange}
             />
             </CardBody>
             <CardFooter className='gap-2 px-5'>

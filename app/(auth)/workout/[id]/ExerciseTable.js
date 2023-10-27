@@ -4,13 +4,19 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { IconSquare, IconSquareCheck } from '@tabler/icons-react';
 
-export default function ExerciseTable({ exerciseDetail, index, exercises, weights, reps, handleCompletion, handleWeightChange, handleRepChange }) {
+export default function ExerciseTable({ exerciseDetail, index, exercises, weights, reps, durations, handleCompletion, handleWeightChange, handleRepChange, handleDurationChange }) {
     return (
         <Table removeWrapper aria-label={`Table for exercise ${exerciseDetail.Exercise.name}`} className="min-w-full table-auto" shadow="none">
             <TableHeader>
                 <TableColumn>SET</TableColumn>
                 <TableColumn>KG</TableColumn>
-                <TableColumn>REPS</TableColumn>
+                {
+                    exerciseDetail.trackingType === 'duration' ? (
+                        <TableColumn>DURATION</TableColumn>
+                    ) : (
+                        <TableColumn>REPS</TableColumn>
+                    )
+                }
                 <TableColumn className="flex justify-center items-center"><IconSquareCheck /></TableColumn>
             </TableHeader>
             <TableBody>
@@ -18,25 +24,43 @@ export default function ExerciseTable({ exerciseDetail, index, exercises, weight
                     <TableRow key={setIndex}>
                         <TableCell>{setIndex + 1}</TableCell>
                         <TableCell>
-                            <Input 
-                                size="sm"
-                                type='number' 
-                                value={weights[index][setIndex]}
-                                onChange={e => handleWeightChange(index, setIndex, Number(e.target.value))}
-                                isDisabled={exercises[index].completedSets[setIndex]} 
-                                className="max-w-[80px]"
-                            />
+                        <Input 
+  size="sm"
+  type='number' 
+  value={weights[index][setIndex] || ""}
+  onChange={e => handleWeightChange(index, setIndex, Number(e.target.value))}
+  isDisabled={exercises[index].completedSets[setIndex]} 
+  className="max-w-[80px]"
+/>
                         </TableCell>
-                        <TableCell>
-                            <Input 
-                                size="sm"
-                                type="number" 
-                                value={reps[index][setIndex]}
-                                onChange={e => handleRepChange(index, setIndex, Number(e.target.value))}
-                                isDisabled={exercises[index].completedSets[setIndex]}
-                                className="max-w-[80px]"
-                            />
-                        </TableCell>
+                        {
+                            exerciseDetail.trackingType === 'duration' ? (
+                                <TableCell>
+                                <Input 
+  size="sm"
+  type="number" 
+  value={durations[index][setIndex] || ""}
+  onChange={e => handleDurationChange(index, setIndex, Number(e.target.value))}
+  isDisabled={exercises[index].completedSets[setIndex]}
+  className="max-w-[80px]"
+/>
+                            </TableCell>
+                            ) : (
+                                <TableCell>
+                                <Input 
+  size="sm"
+  type="number" 
+  value={reps[index][setIndex] || ""}
+  onChange={e => handleRepChange(index, setIndex, Number(e.target.value))}
+  isDisabled={exercises[index].completedSets[setIndex]}
+  className="max-w-[80px]"
+/>
+                            </TableCell>
+
+                            )
+                        }
+
+
                         <TableCell className="text-center">
                             <Button size="sm" isIconOnly color={exercises[index].completedSets[setIndex] ? 'success' : 'danger'} onClick={() => handleCompletion(index, setIndex, exerciseDetail.Exercise.name)}>
                                 {exercises[index].completedSets[setIndex] ? <IconSquareCheck size={20} /> : <IconSquare size={20} />}
