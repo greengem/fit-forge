@@ -145,7 +145,7 @@ model WorkoutLogExercise {
 model SetLog {
   id            String @id @default(uuid())
   workoutLogExerciseId String
-  weight              Float
+  weight              Float?
   reps                Int?
   exerciseDuration            Int?
   order               Int?
