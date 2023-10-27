@@ -35,14 +35,14 @@ export default function SidebarNav() {
                 icon={<IconJumpRope className="h-6 w-6" />}
                 label="Start Workout"
                 href="/workout"
-                active={pathname === "/workout"}
+                active={pathname.startsWith("/workout")}
                 subtext="Kick off a session"
             />
             <NavItem
                 icon={<IconList className="h-6 w-6" />}
                 label="Routines"
                 href="/routines"
-                active={pathname === "/routines"}
+                active={pathname.startsWith("/routines")}
                 subtext="Manage your plans"
             />
             <NavItem
