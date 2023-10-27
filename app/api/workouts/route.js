@@ -7,7 +7,6 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
   const session = await getServerSession(authOptions);
   const data = JSON.parse(await request.text());
-  console.log("Parsed data:", JSON.stringify(data, null, 2));
 
   const { name, date, workoutPlanId, exercises, duration } = data;
   
@@ -31,17 +30,30 @@ export async function POST(request) {
       });
 
       for (let i = 0; i < exercise.completed.length; i++) {
-        await prisma.setLog.create({
-          data: {
-            weight: parseFloat(exercise.weight || 0),
-            reps: parseInt(exercise.reps || 0, 10),
-            exerciseDuration: parseInt(exercise.exerciseDuration || 0, 10),
+        if (exercise.completed[i]) { 
+          const setData = {
             order: i + 1,
             WorkoutLogExercise: {
               connect: { id: newLogExercise.id },
             },
-          },
-        });
+          };
+      
+          if (exercise.exerciseDuration[i] !== null) {
+            setData.exerciseDuration = parseInt(exercise.exerciseDuration[i], 10);
+          }
+      
+          if (exercise.weight[i] !== null) {
+            setData.weight = parseFloat(exercise.weight[i]);
+          }
+      
+          if (exercise.reps[i] !== null) {
+            setData.reps = parseInt(exercise.reps[i], 10);
+          }
+      
+          await prisma.setLog.create({
+            data: setData,
+          });
+        }
       }
     }
 
