@@ -27,7 +27,7 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
     };
 
     return (
-        <Card key={routine.id} shadow="none">
+        <Card key={routine.id} shadow="none" className="shadow-md">
             <CardHeader className="flex gap-3 px-5">
                 <div className="flex flex-col flex-grow">
                     <p className='text-md font-semibold'>{routine.name}</p>

@@ -39,6 +39,7 @@ export const SearchBar: FC<SearchBarProps> = ({
 
     return (
         <Input
+            
             type="search"
             name="search"
             placeholder="Search for Exercises"

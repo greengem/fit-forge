@@ -44,7 +44,7 @@ export default function DashboardCards({ workouts, personalBests }) {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
-            <Card shadow="none">
+            <Card shadow="none" className="shadow-md">
                 <CardHeader className="px-5">Weekly Workouts</CardHeader>
                 <CardBody className="text-5xl pt-0 text-success gap-y-3">
                     <p>{workouts.length}</p>
@@ -57,7 +57,7 @@ export default function DashboardCards({ workouts, personalBests }) {
                 </CardBody>
             </Card>
 
-            <Card shadow="none">
+            <Card shadow="none" className="shadow-md">
                 <CardHeader className="px-5">Average Workout Duration</CardHeader>
                 <CardBody className="text-5xl pt-0 text-success gap-y-3">
                     <p>{formattedAverageDuration}</p>
@@ -70,7 +70,7 @@ export default function DashboardCards({ workouts, personalBests }) {
                 </CardBody>
             </Card>
 
-            <Card shadow="none">
+            <Card shadow="none" className="shadow-md">
                 <CardHeader className="px-5">Daily Streak</CardHeader>
                 <CardBody className="text-5xl pt-0 text-success gap-y-3">
                     <p>{streak}</p>
@@ -83,7 +83,7 @@ export default function DashboardCards({ workouts, personalBests }) {
                 </CardBody>
             </Card>
 
-            <Card shadow="none">
+            <Card shadow="none" className="shadow-md">
                 <CardHeader className="px-5">Weekly PBs</CardHeader>
                 <CardBody className="text-5xl pt-0 flex gap-x-2 text-success flex-row">
                     <IconTrophy size={48} />

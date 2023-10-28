@@ -44,7 +44,7 @@ function ExerciseList({ exercises }) {
                 <ExerciseFilters onFilterChange={setFilters} />
             </div>
 
-            <Table aria-label="Exercise Table" className="mb-5" shadow="none">
+            <Table aria-label="Exercise Table" className="mb-5 shadow-md" shadow="none">
                 <TableHeader>
                     <TableColumn>NAME</TableColumn>
                     <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>

@@ -1,11 +1,11 @@
 import ExerciseTable from './ExerciseTable';
-import { Button } from "@nextui-org/button";
+import { Button, ButtonGroup } from "@nextui-org/button";
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 import { IconPlus, IconX } from '@tabler/icons-react';
 
 export default function ExerciseCard({ exerciseDetail, index, exercises, weights, reps, durations, handleCompletion, handleWeightChange, handleDurationChange, handleRepChange, addSet, removeSet }) {
     return (
-        <Card shadow="none">
+        <Card shadow="none" className="shadow-md">
             <CardHeader className='font-semibold text-xl px-5'>
                 {exerciseDetail.order + ". " + exerciseDetail.Exercise.name}
             </CardHeader>
@@ -24,12 +24,14 @@ export default function ExerciseCard({ exerciseDetail, index, exercises, weights
             />
             </CardBody>
             <CardFooter className='gap-2 px-5'>
+                <ButtonGroup>
                 <Button className='gap-unit-1' size='sm' onClick={() => addSet(index, exerciseDetail.Exercise.name)}>
                     <IconPlus size={16} />Add Set
                 </Button>
                 <Button className='gap-unit-1' size='sm' onClick={() => removeSet(index, exerciseDetail.Exercise.name)}>
                     <IconX size={16} />Remove Set
                 </Button>
+                </ButtonGroup>
             </CardFooter>
         </Card>
     );

@@ -35,7 +35,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
     return (
         <>
             {selectedExercises.map((exercise, index) => (
-                <Card key={index} shadow='none'>
+                <Card key={index} shadow='none' className='shadow-md'>
                     <CardBody className='p-3'>
                         <p className='mb-3'>{exercise.name}</p>
 

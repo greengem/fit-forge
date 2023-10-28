@@ -30,14 +30,16 @@ export default function MobileNavbar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     return (
-        <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-content1 block md:hidden">
+        <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-content1 block md:hidden shadow-md">
             <NavbarContent>
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     className="sm:hidden"
                 />
                 <NavbarBrand>
-                    <p className="font-bold text-inherit text-success">Tracktive</p>
+                    <Link as={NextLink} href="/dashboard">
+                        <p className="font-bold text-inherit text-success">Tracktive</p>
+                    </Link>
                 </NavbarBrand>
             </NavbarContent>
 

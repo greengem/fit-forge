@@ -101,7 +101,7 @@ const DashboardChartWorkout = ({ workouts }) => {
     }
 
     return (
-        <Card shadow="none">
+        <Card shadow="none" className="shadow-md">
             <CardBody className='h-64 pb-2'>
                 <Line options={options} data={chartData} className='max-w-full' />
             </CardBody>

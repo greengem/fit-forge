@@ -44,7 +44,7 @@ export default function ProfileDetails({ session, expandedProfile }) {
       
 
     return (
-        <Card shadow="none">
+        <Card shadow="none" className='shadow-md'>
             <CardHeader className='text-xl font-semibold px-5 pb-0'>
                 <IconUser className="mr-1" />Details
             </CardHeader>
