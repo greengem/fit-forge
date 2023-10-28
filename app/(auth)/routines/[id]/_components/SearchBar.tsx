@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';  // Remove useCallback, add useState
+import { ChangeEvent, FC, useState } from 'react';
 import { Input } from "@nextui-org/input";
 
 interface SearchBarProps {

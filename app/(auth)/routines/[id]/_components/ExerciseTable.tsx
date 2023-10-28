@@ -37,7 +37,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
             {selectedExercises.map((exercise, index) => (
                 <Card key={index} shadow='none' className='shadow-md'>
                     <CardBody className='p-3'>
-                        <p className='mb-3'>{exercise.name}</p>
+                        <p className='mb-3'>{index + 1}. {exercise.name}</p>
 
                         <RadioGroup 
                             key={`radio-${exercise.id}`}
@@ -51,55 +51,55 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                             }}
                         >
                             <Radio value="reps">Reps</Radio>
-                            <Radio value="duration">Duration</Radio>
+                            <Radio value="duration">Duration (seconds)</Radio>
                         </RadioGroup>
 
 
                         <div className='grid grid-cols-2 gap-x-5 mb-3'>
-    <Input 
-        size="sm"
-        type="number"
-        label="Sets"
-        value={exercise.sets.toString()}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            const intValue = parseInt(e.target.value, 10);
-            if (!isNaN(intValue)) {
-                updateExercise(index, 'sets', intValue);
-            }
-        }}
-    />
-    {exercise.trackingType === 'reps' ? (
-  <Input 
-  size='sm'
-  label="Reps"
-  type="number" 
-  value={exercise.reps !== undefined && exercise.reps !== null ? exercise.reps.toString() : ''}
-  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-    const intValue = parseInt(e.target.value, 10);
-    if (!isNaN(intValue)) {
-      updateExercise(index, 'reps', intValue);
-    }
-  }}
-/>
-    ) : (
-  <Input 
-    size='sm'
-    label="Duration"
-    type="number" 
-    value={
-      exercise.trackingType === 'duration' && exercise.exerciseDuration !== undefined && exercise.exerciseDuration !== null
-        ? exercise.exerciseDuration.toString()
-        : ''
-    }
-    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-      const intValue = parseInt(e.target.value, 10);
-      if (!isNaN(intValue)) {
-        updateExercise(index, 'exerciseDuration', intValue);
-      }
-    }}
-  />
-    )}
-</div>
+                            <Input 
+                                size="sm"
+                                type="number"
+                                label="Sets"
+                                value={exercise.sets.toString()}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                    const intValue = parseInt(e.target.value, 10);
+                                    if (!isNaN(intValue)) {
+                                        updateExercise(index, 'sets', intValue);
+                                    }
+                                }}
+                            />
+                            {exercise.trackingType === 'reps' ? (
+                        <Input 
+                        size='sm'
+                        label="Reps"
+                        type="number" 
+                        value={exercise.reps !== undefined && exercise.reps !== null ? exercise.reps.toString() : ''}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            const intValue = parseInt(e.target.value, 10);
+                            if (!isNaN(intValue)) {
+                            updateExercise(index, 'reps', intValue);
+                            }
+                        }}
+                        />
+                            ) : (
+                        <Input 
+                            size='sm'
+                            label="Duration"
+                            type="number" 
+                            value={
+                            exercise.trackingType === 'duration' && exercise.exerciseDuration !== undefined && exercise.exerciseDuration !== null
+                                ? exercise.exerciseDuration.toString()
+                                : ''
+                            }
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            const intValue = parseInt(e.target.value, 10);
+                            if (!isNaN(intValue)) {
+                                updateExercise(index, 'exerciseDuration', intValue);
+                            }
+                            }}
+                        />
+                            )}
+                        </div>
 
                         <ButtonGroup className='justify-start'>
                             <Button isIconOnly onClick={() => moveUp(index)}><IconArrowUp size={16} /></Button>
