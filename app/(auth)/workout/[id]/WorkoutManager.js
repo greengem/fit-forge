@@ -51,7 +51,7 @@ export default function WorkoutManager({ workout }) {
     
         setWeights(prevWeights => {
             const updatedWeights = [...prevWeights];
-            updatedWeights[index].push(40);
+            updatedWeights[index].push(0);
             return updatedWeights;
         });
         setReps(prevReps => {
