@@ -9,11 +9,14 @@ import { IconUser, IconDeviceFloppy } from '@tabler/icons-react';
 
 export default function ProfileDetails({ session, expandedProfile }) {
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false);
     const [age, setAge] = useState(expandedProfile.age || '');
     const [height, setHeight] = useState(expandedProfile.height || '');
     const [weight, setWeight] = useState(expandedProfile.weight || '');
 
     const handleSubmit = async () => {
+        setIsLoading(true);
+
         const data = {
           age: age ? parseInt(age) : null,
           height: height ? parseInt(height) : null,
@@ -39,6 +42,8 @@ export default function ProfileDetails({ session, expandedProfile }) {
         } catch (error) {
           console.error("Failed to update profile:", error);
           toast.error("Failed to update profile: " + error.message);
+        } finally {
+          setIsLoading(false);
         }
       };
       
@@ -104,7 +109,7 @@ export default function ProfileDetails({ session, expandedProfile }) {
 
                 </CardBody>
             <CardFooter className="px-5">
-                <Button color="success" onClick={handleSubmit}>
+                <Button color="success" onClick={handleSubmit} isLoading={isLoading}>
                     <IconDeviceFloppy />Save
                 </Button>
             </CardFooter>

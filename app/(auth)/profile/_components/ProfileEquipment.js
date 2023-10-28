@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { CheckboxGroup, Checkbox } from "@nextui-org/checkbox";
 import { Button } from "@nextui-org/button";
@@ -29,25 +29,35 @@ const formatText = (text) => {
 
 export default function ProfileEquipment({ equipment, session }) {
     const [selectedEquipment, setSelectedEquipment] = useState(equipment || []);
-
+    const [isLoading, setIsLoading] = useState(false);
     const handleSave = async () => {
-        const response = await fetch('/api/users/equipment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userId: session.user.id,
-                selectedEquipment
-            }),
-        });
-    
-        if (response.ok) {
-            toast.success("Equipment Updated Successfully!");
-        } else {
-            toast.error("Error Updating Equipment");
+        setIsLoading(true);
+        
+        try {
+            const response = await fetch('/api/users/equipment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: session.user.id,
+                    selectedEquipment
+                }),
+            });
+        
+            if (response.ok) {
+                toast.success("Equipment Updated Successfully!");
+            } else {
+                toast.error("Error Updating Equipment");
+            }
+        } catch (error) {
+            toast.error("An unexpected error occurred");
+            console.error("An unexpected error occurred", error);
+        } finally {
+            setIsLoading(false);
         }
     };
+    
 
     return (
         <Card shadow="none" className='shadow-md'>
@@ -66,7 +76,7 @@ export default function ProfileEquipment({ equipment, session }) {
                 </CheckboxGroup>
             </CardBody>
             <CardFooter className='px-5'>
-                <Button color='success' onClick={handleSave}><IconDeviceFloppy />Save</Button>
+                <Button color='success' onClick={handleSave} isLoading={isLoading}><IconDeviceFloppy />Save</Button>
             </CardFooter>
         </Card>
     )
