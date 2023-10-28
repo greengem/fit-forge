@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';
@@ -6,7 +7,8 @@ import ExerciseTable from "./ExerciseTable";
 import { Workout } from '@/types';
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/dropdown";
-import { Button } from "@nextui-org/button";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Divider } from "@nextui-org/react";
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { IconMenu2 } from "@tabler/icons-react";
 
 function formatDuration(seconds: number): string {
@@ -28,12 +30,17 @@ interface WorkoutCardsProps {
 
 const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, showDeleteButton }) => {
     const router = useRouter()
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const [selectedWorkout, setSelectedWorkout] = React.useState<Workout | null>(null);
 
     const handleAction = (key: string, workout: Workout) => {
         if (key === "edit") {
             router.push(`/activity/edit/${workout.id}`);
         } else if (key === "delete") {
             handleDelete(workout.id);
+        } else if (key ==="details") {
+            setSelectedWorkout(workout);
+            onOpen();
         }
     }
 
@@ -88,7 +95,8 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, sh
                                         <Button color="success" variant="light" isIconOnly size="sm"><IconMenu2 /></Button>
                                     </DropdownTrigger>
                                     <DropdownMenu color="success" aria-label="Workout Actions" onAction={(key) => handleAction(String(key), workout)}>
-                                        <DropdownItem key="edit" color="danger">Edit Activity</DropdownItem>
+                                        <DropdownItem key="details">More Details</DropdownItem>
+                                        <DropdownItem key="edit">Edit Activity</DropdownItem>
                                         <DropdownItem key="delete" className="text-danger" color="danger">Delete Activity</DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
@@ -100,6 +108,55 @@ const WorkoutCards: React.FC<WorkoutCardsProps> = ({ workouts, personalBests, sh
                         </Card>
                 );
             })}
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="4xl" scrollBehavior="inside">
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">
+                                {selectedWorkout ? selectedWorkout.name : 'Details'}
+                            </ModalHeader>
+                            <ModalBody>
+    {selectedWorkout && (
+        <>
+            {console.log('Selected Workout:', selectedWorkout)}
+            {console.log('Selected Workout Exercises:', selectedWorkout.exercises)}
+            {selectedWorkout.exercises.map((exercise, exerciseIndex) => (
+                <div key={exerciseIndex}>
+                    <h3>{exercise.Exercise.name}</h3>
+                    <Table removeWrapper aria-label={`Details of ${exercise.Exercise.name} Exercise`}>
+                        <TableHeader>
+                            <TableColumn className=" max-w-[164px]">SET</TableColumn>
+                            <TableColumn>{exercise.sets[0].reps === null ? 'DURATION' : 'REPS'}</TableColumn>
+                            <TableColumn>WEIGHT</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                            {exercise.sets.map((set, setIndex) => (
+                                <TableRow key={`${exerciseIndex}-${setIndex}`}>
+                                    <TableCell className=" max-w-[164px]">{setIndex + 1}</TableCell>
+                                    <TableCell>{set.reps === null ? set.exerciseDuration : set.reps}</TableCell>
+                                    <TableCell>{set.weight} KG</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <Divider />
+                </div>
+            ))}
+        </>
+    )}
+</ModalBody>
+
+
+
+                            <ModalFooter>
+                                <Button color="danger" variant="light" onPress={onClose}>
+                                    Close
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
         </>
     );
 }

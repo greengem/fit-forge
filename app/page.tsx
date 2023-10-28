@@ -16,7 +16,7 @@ const fadeInUp = {
 
 export default function HomePage() {
   return (
-    <div className="relative h-screen hero-container">
+    <div className="relative md:h-[100vh] hero-container pt-20 md:pt-0">
       <motion.div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-white"
         initial="hidden"
         animate="visible"
@@ -25,7 +25,7 @@ export default function HomePage() {
           <IconBarbell size={200} />
         </motion.div>
         <motion.h1 
-          className="text-6xl font-bold text-center mb-2 tracking-tight"
+          className="text-4xl lg:text-6xl font-bold text-center mb-2 tracking-tight"
           variants={fadeInUp}
         >
           Track Every <span className="text-success">Rep</span>. Achieve Every <span className="text-success">Goal</span>.
@@ -34,7 +34,7 @@ export default function HomePage() {
           Your ultimate fitness companion. Stay on track, stay active with Tracktive.
         </motion.p>
         <motion.div variants={fadeInUp}>
-          <Button color="success" as={Link} href="/dashboard" size="lg" className="mb-10 gap-unit-1">
+          <Button color="success" as={Link} href="/dashboard" size="lg" className="gap-unit-1">
             <IconBarbell />Get Started 
           </Button>
         </motion.div>

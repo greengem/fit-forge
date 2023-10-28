@@ -8,7 +8,7 @@ export default function StatusBar({ workoutStartTime, isPaused, togglePause, com
             <div className='flex justify-between mb-5'>
                 <div className='flex justify-start gap-2'>
                     <Button 
-                        color={workoutStartTime ? (isPaused ? 'success' : 'warning') : 'success'} 
+                        color={workoutStartTime ? (isPaused ? 'default' : 'warning') : 'success'} 
                         onClick={togglePause} 
                         disabled={!workoutStartTime && isPaused}
                     >
@@ -30,7 +30,7 @@ export default function StatusBar({ workoutStartTime, isPaused, togglePause, com
                         }
                     </Button>
                     {workoutStartTime && (
-                        <Button color='primary' onClick={completeWorkout} isLoading={isSaving}>
+                        <Button color='success' onClick={completeWorkout} isLoading={isSaving}>
                             <IconDeviceFloppy /><span className='hidden md:block'>Finish Workout</span>
                         </Button>
                     )}

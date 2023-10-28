@@ -43,61 +43,46 @@ const generateDummyData = () => {
         'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'
     ];
 
-    const exercisesData = [100, 120, 105, 160, 140, 200, 210, 240]; // Green line
-    const workoutsData = [80, 90, 85, 110, 120, 105, 130, 150]; // Red line
+    const averageWorkoutDurationData = [30, 50, 45, 60, 50, 75, 65, 95]; // Static data
 
     const dummyData = months.map((month, index) => {
         return {
             month,
-            exercisesCompleted: exercisesData[index],
-            workoutsCompleted: workoutsData[index],
+            averageWorkoutDuration: averageWorkoutDurationData[index],
         };
     });
 
     return dummyData;
 };
 
-
-
 const DashboardChartWorkout = () => {
     const [chartData, setChartData] = useState(null);
-    const [visibility, setVisibility] = useState({ exercises: true, workouts: true });
+    const [visibility, setVisibility] = useState(true);
 
     // Load the chart data
     useEffect(() => {
         const dummyData = generateDummyData();
 
         const labels = dummyData.map((data) => data.month);
-        const dataset1Data = dummyData.map((data) => data.exercisesCompleted);
-        const dataset2Data = dummyData.map((data) => data.workoutsCompleted);
+        const dataset1Data = dummyData.map((data) => data.averageWorkoutDuration);
 
         setChartData({
             labels,
             datasets: [
                 {
-                    label: 'Exercises Completed',
+                    label: 'Average Workout Duration (mins)',
                     data: dataset1Data,
                     borderColor: '#a6ff00',
                     backgroundColor: 'rgba(166, 255, 0, 0.5)',
-                    hidden: !visibility.exercises,
-                },
-                {
-                    label: 'Workouts Completed',
-                    data: dataset2Data,
-                    borderColor: '#f9266b',
-                    backgroundColor: 'rgba(249, 38, 107, 0.5)',
-                    hidden: !visibility.workouts,
+                    hidden: !visibility,
                 },
             ],
         });
 
     }, [visibility]);
 
-    const handleCheckboxChange = (value) => {
-        setVisibility({
-            ...visibility,
-            [value]: !visibility[value],
-        });
+    const handleCheckboxChange = () => {
+        setVisibility(!visibility);
     };
 
     if (!chartData) {
@@ -110,7 +95,7 @@ const DashboardChartWorkout = () => {
                 <Line options={options} data={chartData} className='max-w-full' />
             </CardBody>
             <CardFooter className='pt-0'>
-                <CheckboxGroup 
+            <CheckboxGroup 
                     orientation="horizontal"
                     defaultValue={["exercises", "workouts"]}
                 >
@@ -120,15 +105,7 @@ const DashboardChartWorkout = () => {
                         checked={visibility.exercises}
                         onChange={() => handleCheckboxChange('exercises')}
                     >
-                        Exercises
-                    </Checkbox>
-                    <Checkbox 
-                        color='danger' 
-                        value="workouts"
-                        checked={visibility.workouts}
-                        onChange={() => handleCheckboxChange('workouts')}
-                    >
-                        Workouts
+                        Average Duration
                     </Checkbox>
                 </CheckboxGroup>
             </CardFooter>
