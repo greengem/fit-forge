@@ -1,4 +1,4 @@
-import getExercises from '@/utils/getExercises';
+import getExercises from '@/app/lib/getExercises';
 import PageHeading from '@/components/PageHeading/PageHeading';
 import ExerciseList from './_components/ExerciseList';
 

@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions"
-import getEquipment from "@/utils/getEquipment";
-import getExpandedProfile from "@/utils/getExpandedProfile";
+import { authOptions } from "@/app/lib/authOptions"
+import getEquipment from "@/app/lib/getEquipment";
+import getExpandedProfile from "@/app/lib/getExpandedProfile";
 import ProfileHero from "./_components/ProfileHero";
 import ProfileStats from "./_components/ProfileStats";
 import ProfileEquipment from "./_components/ProfileEquipment";

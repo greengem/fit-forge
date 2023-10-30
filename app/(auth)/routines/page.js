@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions"
-import getRoutines from '@/utils/getRoutines';
+import { authOptions } from "@/app/lib/authOptions"
+import getRoutines from '@/app/lib/getRoutines';
 import RoutineCards from './_components/RoutineCards';
 import PageHeading from '@/components/PageHeading/PageHeading';
 import Link from 'next/link';
