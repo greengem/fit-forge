@@ -9,7 +9,6 @@ import CardGrid from "@/components/Grid/CardGrid";
 import DashboardLinks from "./_components/DashboardLinks";
 import DashboardGreeting from "./_components/DashBoardGreeting";
 import DashboardChartWorkouts from "./_components/DashboardChartWorkouts";
-import DashboardChartDuration from "./_components/DashboardChartDuration";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 
