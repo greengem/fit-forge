@@ -38,38 +38,34 @@ const options = {
     },
 };
 
-const generateDummyData = () => {
-    const months = [
-        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'
-    ];
-
-    const exercisesData = [100, 120, 105, 160, 140, 200, 210, 240]; // Green line
-    const workoutsData = [80, 90, 85, 110, 120, 105, 130, 150]; // Red line
-
-    const dummyData = months.map((month, index) => {
-        return {
-            month,
-            exercisesCompleted: exercisesData[index],
-            workoutsCompleted: workoutsData[index],
-        };
-    });
-
-    return dummyData;
-};
-
-
-
-const DashboardChartWorkout = () => {
+const DashboardChartWorkout = ({ workouts }) => {
     const [chartData, setChartData] = useState(null);
     const [visibility, setVisibility] = useState({ exercises: true, workouts: true });
 
     // Load the chart data
     useEffect(() => {
-        const dummyData = generateDummyData();
+        const monthCounterExercises = {};
+        const monthCounterWorkouts = {};
 
-        const labels = dummyData.map((data) => data.month);
-        const dataset1Data = dummyData.map((data) => data.exercisesCompleted);
-        const dataset2Data = dummyData.map((data) => data.workoutsCompleted);
+        workouts.forEach((workout) => {
+            const date = new Date(workout.createdAt);
+            const month = date.toLocaleString('default', { month: 'long' });
+
+            if (!monthCounterExercises[month]) {
+                monthCounterExercises[month] = 0;
+            }
+            if (!monthCounterWorkouts[month]) {
+                monthCounterWorkouts[month] = 0;
+            }
+
+            monthCounterExercises[month] += workout.exercises.length;
+            monthCounterWorkouts[month]++;
+        });
+
+        const labels = Object.keys(monthCounterExercises);
+        const dataset1Data = Object.values(monthCounterExercises);
+        const dataset2Data = Object.values(monthCounterWorkouts);
+
 
         setChartData({
             labels,
@@ -79,24 +75,24 @@ const DashboardChartWorkout = () => {
                     data: dataset1Data,
                     borderColor: '#a6ff00',
                     backgroundColor: 'rgba(166, 255, 0, 0.5)',
-                    hidden: !visibility.exercises,
+                    hidden: !visibility.exercises
                 },
                 {
                     label: 'Workouts Completed',
                     data: dataset2Data,
                     borderColor: '#f9266b',
                     backgroundColor: 'rgba(249, 38, 107, 0.5)',
-                    hidden: !visibility.workouts,
+                    hidden: !visibility.workouts
                 },
             ],
         });
 
-    }, [visibility]);
+    }, [workouts, visibility]);
 
     const handleCheckboxChange = (value) => {
         setVisibility({
             ...visibility,
-            [value]: !visibility[value],
+            [value]: !visibility[value]
         });
     };
 
