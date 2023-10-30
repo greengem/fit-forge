@@ -1,5 +1,6 @@
 import {Providers} from "./providers";
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google'
 import './globals.css';
 
 export function generateViewport() {
@@ -11,6 +12,8 @@ export function generateViewport() {
     userScalable: 'no'
   };
 }
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   
@@ -26,7 +29,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <Providers>
           {children}
         </Providers>
