@@ -1,10 +1,8 @@
-'use server';
-import { unstable_cache } from 'next/cache';
 import prisma from '@/db/prisma';
+import { Exercise } from '@prisma/client';
 
-async function fetchExercisesFromDB() {
-    console.log("Fetching exercises from database...");
-    return await prisma.exercise.findMany({
+export default async function getExercises(): Promise<Exercise[]> {
+    const exercises = await prisma.exercise.findMany({
         select: {
             id: true,
             name: true,
@@ -19,19 +17,13 @@ async function fetchExercisesFromDB() {
             instructions: true,
             tips: true,
             image: true,
+            description: true,
+            date_created: true,
+            date_updated: true,
         },
         orderBy: {
             name: 'asc',
         },
     });
-}
-
-export default async function getExercises() {
-    const getCachedOrFetchExercises = unstable_cache(
-        fetchExercisesFromDB,
-        'exerciseList',
-        { tags: ['exercises'], revalidate: 6000 }
-    );
-
-    return await getCachedOrFetchExercises();
+    return exercises;
 }

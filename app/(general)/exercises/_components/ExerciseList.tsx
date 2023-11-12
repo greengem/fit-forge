@@ -6,20 +6,26 @@ import ExerciseModal from "./ExerciseModal";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { Pagination, User, Button, useDisclosure } from "@nextui-org/react";
+import { Exercise, Muscle } from '@prisma/client'; // Import Muscle from Prisma
 
-function ExerciseList({ exercises }) {
-    const [page, setPage] = useState(1);
+interface ExerciseListProps {
+  exercises: Exercise[];
+}
+
+const ExerciseList: React.FC<ExerciseListProps> = ({ exercises }) => {
     const rowsPerPage = 10;
-    const [filters, setFilters] = useState({ category: null, muscleGroup: null });
-    const [searchQuery, setSearchQuery] = useState("");
+
+    const [page, setPage] = useState<number>(1);
+    const [filters, setFilters] = useState<{ category: string | null; muscleGroup: Muscle | null }>({ category: null, muscleGroup: null }); // Use Muscle type for muscleGroup
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [selectedExercise, setSelectedExercise] = useState(null);
+    const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
 
     const filteredExercises = useMemo(() => {
         return exercises.filter((exercise) => {
             const { category, primary_muscles, secondary_muscles, name } = exercise;
-            
+
             if (filters.category && category !== filters.category) return false;
             if (
                 filters.muscleGroup &&

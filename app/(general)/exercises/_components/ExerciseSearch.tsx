@@ -1,8 +1,12 @@
 import { Input } from "@nextui-org/input";
 import { IconSearch } from "@tabler/icons-react";
 
-export default function ExerciseSearch({ setSearchQuery }) {
-  const handleSearchChange = (event) => {
+interface ExerciseSearchProps {
+  setSearchQuery: (query: string) => void;
+}
+
+export default function ExerciseSearch({ setSearchQuery }: ExerciseSearchProps) {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchQuery(query);
   };
