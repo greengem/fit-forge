@@ -1,4 +1,10 @@
-export default function ProfileStats({ expandedProfile }) {
+import { ExpandedProfile } from "@/types/ProfileType"
+
+interface ProfileStatsProps {
+    expandedProfile: ExpandedProfile;
+}
+
+const ProfileStats: React.FC<ProfileStatsProps> = ({ expandedProfile }) => {
     return (
         <div className="grid grid-flow-col lg:px-40 mb-20">
             {expandedProfile.weight && (
@@ -33,3 +39,5 @@ export default function ProfileStats({ expandedProfile }) {
         </div>
     )
 }
+
+export default ProfileStats;

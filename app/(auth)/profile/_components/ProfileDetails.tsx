@@ -6,8 +6,15 @@ import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { IconUser, IconDeviceFloppy } from '@tabler/icons-react';
+import { ExpandedProfile } from "@/types/ProfileType";
+import { Session } from 'next-auth';
 
-export default function ProfileDetails({ session, expandedProfile }) {
+interface ProfileDetailsProps {
+  session: Session;
+  expandedProfile: ExpandedProfile;
+}
+
+export default function ProfileDetails({ session, expandedProfile }: ProfileDetailsProps) {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false);
     const [age, setAge] = useState(expandedProfile.age || '');
@@ -18,10 +25,10 @@ export default function ProfileDetails({ session, expandedProfile }) {
         setIsLoading(true);
 
         const data = {
-          age: age ? parseInt(age) : null,
-          height: height ? parseInt(height) : null,
-          weight: weight ? parseInt(weight) : null
-        };
+          age: age ? parseInt(age.toString()) : null,
+          height: height ? parseInt(height.toString()) : null,
+          weight: weight ? parseInt(weight.toString()) : null
+        };        
       
         try {
           const response = await fetch(`/api/users`, {
@@ -40,8 +47,9 @@ export default function ProfileDetails({ session, expandedProfile }) {
             toast.error("Failed to update profile!");
           }
         } catch (error) {
-          console.error("Failed to update profile:", error);
-          toast.error("Failed to update profile: " + error.message);
+          const e = error as Error;
+          console.error("Failed to update profile:", e);
+          toast.error("Failed to update profile: " + e.message);
         } finally {
           setIsLoading(false);
         }
@@ -58,7 +66,7 @@ export default function ProfileDetails({ session, expandedProfile }) {
                   type="text" 
                   label="Name" 
                   placeholder="Enter your name" 
-                  value={session.user.name} 
+                  value={session.user.name || ''}
                   isRequired 
                 />
 
@@ -66,24 +74,24 @@ export default function ProfileDetails({ session, expandedProfile }) {
                     type="email" 
                     label="Email" 
                     placeholder="Enter your email" 
-                    value={session.user.email} 
+                    value={session.user.email || ''} 
                     isRequired 
                     isDisabled 
                 />
 
                 <Input 
-                  type="text" 
+                  type="number" 
                   label="Age" 
                   placeholder="Enter your Age" 
-                  value={age} 
+                  value={age.toString()}
                   onChange={(e) => setAge(e.target.value)} 
                 />
 
                 <Input 
-                  type="text" 
+                  type="number" 
                   label="Height" 
                   placeholder="Enter your Height" 
-                  value={height} 
+                  value={height.toString()}
                   onChange={(e) => setHeight(e.target.value)} 
                   endContent={
                     <div className="pointer-events-none flex items-center">
@@ -93,10 +101,10 @@ export default function ProfileDetails({ session, expandedProfile }) {
                 />
 
                 <Input 
-                  type="text" 
+                  type="number" 
                   label="Weight" 
                   placeholder="Enter your Weight" 
-                  value={weight} 
+                  value={weight.toString()}
                   onChange={(e) => setWeight(e.target.value)} 
                   endContent={
                     <div className="pointer-events-none flex items-center">

@@ -13,7 +13,6 @@ const handleDeleteAccount = async () => {
       if (res.ok) {
         toast.success("Account and data deleted successfully");
         signOut({ callbackUrl: '/' })
-        //router.push('/');
       } else {
         console.error("An error occurred:", await res.text());
       }

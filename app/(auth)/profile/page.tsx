@@ -1,18 +1,31 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
+import { authOptions } from "@/app/lib/authOptions";
 import getEquipment from "@/app/lib/getEquipment";
 import getExpandedProfile from "@/app/lib/getExpandedProfile";
+
 import ProfileHero from "./_components/ProfileHero";
 import ProfileStats from "./_components/ProfileStats";
 import ProfileEquipment from "./_components/ProfileEquipment";
 import ProfileDetails from "./_components/ProfileDetails";
 import ProfileActions from "./_components/ProfileActions";
 
+import { ExpandedProfile } from "@/types/ProfileType";
+import { EquipmentType } from "@prisma/client";
+
 export default async function ProfilePage() {
     const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
-    const equipment = await getEquipment(userId);
-    const expandedProfile = await getExpandedProfile(userId);
+    const userId = session?.user.id;
+
+    if (!userId) {
+        return <div>No user session available</div>;
+    }
+
+    const equipment: EquipmentType[] = await getEquipment(userId);
+    const expandedProfile: ExpandedProfile | null = await getExpandedProfile(userId);
+
+    if (!expandedProfile) {
+        return <div>Profile not found</div>;
+    }
 
     return (
         <>
@@ -22,7 +35,7 @@ export default async function ProfilePage() {
                 <ProfileDetails session={session} expandedProfile={expandedProfile} />
                 <ProfileEquipment equipment={equipment} session={session} />
             </div>
-            <ProfileActions userId={session.user.id} />
+            <ProfileActions />
         </>
     )
 }
