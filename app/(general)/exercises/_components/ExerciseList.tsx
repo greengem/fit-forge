@@ -1,12 +1,13 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import ExerciseSearch from "./ExerciseSearch";
 import ExerciseFilters from "./ExerciseFilters";
 import ExerciseModal from "./ExerciseModal";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { Pagination, User, Button, useDisclosure } from "@nextui-org/react";
-import { Exercise, Muscle } from '@prisma/client'; // Import Muscle from Prisma
+import { Exercise } from '@/types/ExerciseType';
+import { Muscle } from "@prisma/client";
 
 interface ExerciseListProps {
   exercises: Exercise[];

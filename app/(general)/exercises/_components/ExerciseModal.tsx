@@ -1,7 +1,7 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { Button } from "@nextui-org/react";
 import { Image } from "@nextui-org/react";
-import { Exercise } from '@prisma/client';
+import { Exercise } from '@/types/ExerciseType';
 
 interface ExerciseModalProps {
   selectedExercise: Exercise;
