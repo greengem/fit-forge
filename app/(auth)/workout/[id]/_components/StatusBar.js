@@ -1,9 +1,9 @@
 import ProgressBar from './ProgressBar';
 import { Button } from "@nextui-org/button";
-import { IconPlayerPlay, IconPlayerPause, IconDeviceFloppy } from '@tabler/icons-react';
+import { IconPlayerPlay, IconPlayerPause, IconDeviceFloppy, IconX } from '@tabler/icons-react';
 import { useWorkoutControls } from '@/contexts/WorkoutControlsContext';
 
-export default function StatusBar({ completeWorkout, handleCancelWorkout, progressPercentage, activeRoutineId }) {
+export default function StatusBar({ cancelWorkout, progressPercentage, activeRoutineId }) {
     const { 
         workoutStartTime, setWorkoutStartTime,
         workoutDuration, 
@@ -25,31 +25,38 @@ export default function StatusBar({ completeWorkout, handleCancelWorkout, progre
     return (
         <div className='fixed bottom-0 right-0 left-0 md:left-64 p-5 bg-white dark:bg-content1 z-10'>
             <div className='flex justify-between mb-5'>
-                <div className='flex justify-start gap-2'>
                     {!workoutStartTime && (
                         <Button color='success' onClick={handleStartWorkout}>
                             <IconPlayerPlay /> Start Workout
                         </Button>
                     )}
-
-                    {workoutStartTime && (
-                        <Button color={isPaused ? 'default' : 'warning'} onClick={handlePauseToggle}>
-                            {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
-                            {isPaused ? 'Resume Workout' : 'Pause Workout'}
-                        </Button>
-                    )}
-
                     {workoutStartTime && (
                         <>
-                        <Button type='submit' color='success'>
-                            <IconDeviceFloppy /><span className='hidden md:block'>Finish Workout</span>
-                        </Button>
-                        <Button color='danger' onClick={handleCancelWorkout}>
-                            <span className='hidden md:block'>Cancel Workout</span>
-                        </Button>
+                        <div className='hidden md:block justify-start space-x-2'>
+                            <Button color={isPaused ? 'default' : 'warning'} onClick={handlePauseToggle}>
+                                {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
+                                <span>{isPaused ? 'Resume' : 'Pause'}</span>
+                            </Button>
+                            <Button type='submit' color='success'>
+                                <IconDeviceFloppy /><span>Save</span>
+                            </Button>
+                            <Button color='danger' onClick={cancelWorkout}>
+                                <IconX /><span>Cancel</span>
+                            </Button>
+                        </div>
+                        <div className='block md:hidden justify-start space-x-3'>
+                            <Button isIconOnly color={isPaused ? 'default' : 'warning'} onClick={handlePauseToggle}>
+                                {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
+                            </Button>
+                            <Button isIconOnly type='submit' color='success'>
+                                <IconDeviceFloppy />
+                            </Button>
+                            <Button isIconOnly color='danger' onClick={cancelWorkout}>
+                                <IconX />
+                            </Button>
+                        </div>
                         </>
                     )}
-                </div>
                 <p className={`text-3xl ${isPaused ? 'text-warning' : ''}`}>{formatDuration(workoutDuration)}</p>
             </div>
             <ProgressBar percentage={progressPercentage} />

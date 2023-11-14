@@ -24,7 +24,7 @@ export default function SidebarWorkoutControls() {
                         <div className='text-center'>{isPaused ? 'Workout Paused' : 'Active Workout'}</div>
                         <div className={`text-center text-3xl mb-2 tracking-tight ${isPaused ? 'text-warning' : ''}`}>{formatDuration(workoutDuration)}</div>
                         <div className='flex justify-center gap-x-2 mb-2'>
-                            <Button color={isPaused ? 'success' : 'warning'} onClick={handlePauseToggle}>
+                            <Button color={isPaused ? 'default' : 'warning'} onClick={handlePauseToggle}>
                                 {isPaused ? <><IconPlayerPlay />Resume</> : <><IconPlayerPause />Pause</>}
                             </Button>
                         </div>
