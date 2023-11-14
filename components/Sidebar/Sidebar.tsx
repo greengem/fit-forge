@@ -9,10 +9,8 @@ export default function Sidebar() {
     const { isSidebarVisible, toggleSidebar } = useSidebarVisibility();
 
     return (
-        <aside className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-content1 hidden md:block shadow-md">
-            <div>
-                <SidebarBrand />
-            </div>
+        <aside className="flex-none overflow-hidden bg-white dark:bg-content1 shadow-md">
+
             <div className='px-3 pt-3'>
                 <SidebarNav />
             </div>

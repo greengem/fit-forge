@@ -10,25 +10,21 @@ export default function SidebarNav() {
 
     return (
         <ul className="space-y-2">
+            <li className='uppercase text-xs text-gray-500 font-bold hidden md:block'>Data</li>
             <NavItem
-                icon={<IconUser className="h-6 w-6" />}
-                label="Profile"
-                href="/profile"
-                active={pathname === "/profile"}
-            />
-            <NavItem
-                icon={<IconDashboard className="h-6 w-6" />}
+                icon={<IconDashboard className="h-7 w-7" />}
                 label="Dashboard"
                 href="/dashboard"
                 active={pathname === "/dashboard"}
             />
             <NavItem
-                icon={<IconActivity className="h-6 w-6" />}
+                icon={<IconActivity className="h-7 w-7" />}
                 label="Activity"
                 href="/activity"
                 active={pathname === "/activity"}
             />
-            <Divider />
+            <Divider className='hidden md:block' />
+            <li className='uppercase text-xs text-gray-500 font-bold hidden md:block'>Workout</li>
             <NavItem
                 icon={<IconJumpRope className="h-7 w-7" />}
                 label="Start Workout"
@@ -47,7 +43,14 @@ export default function SidebarNav() {
                 href="/exercises"
                 active={pathname === "/exercises"}
             />
-            <Divider />
+            <Divider className='hidden md:block' />
+            <li className='uppercase text-xs text-gray-500 font-bold hidden md:block'>User</li>
+            <NavItem
+                icon={<IconUser className="h-7 w-7" />}
+                label="Profile"
+                href="/profile"
+                active={pathname === "/profile"}
+            />
             <NavItem
                 icon={<IconLogout className="h-7 w-7" />}
                 label="Sign Out"
@@ -70,9 +73,7 @@ function NavItem({ icon, label, href, active, onClick }: NavItemProps) {
     const content = (
         <div className={`flex items-center space-x-3 ${active && 'text-success'} text-foreground`}>
             {icon}
-            <div>
-                <div>{label}</div>
-            </div>
+            <div className='hidden md:block'>{label}</div>
         </div>
     );
 

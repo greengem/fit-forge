@@ -30,7 +30,7 @@ export default function MobileNavbar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     return (
-        <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-content1 block md:hidden shadow-md">
+        <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-content1 hidden shadow-md">
             <NavbarContent>
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
