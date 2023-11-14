@@ -1,5 +1,5 @@
 import prisma from '@/db/prisma';
-import { Exercise } from '@prisma/client';
+import { Exercise } from '@/types/ExerciseType';
 
 export default async function getExercises(): Promise<Exercise[]> {
     const exercises = await prisma.exercise.findMany({
@@ -17,9 +17,6 @@ export default async function getExercises(): Promise<Exercise[]> {
             instructions: true,
             tips: true,
             image: true,
-            description: true,
-            date_created: true,
-            date_updated: true,
         },
         orderBy: {
             name: 'asc',

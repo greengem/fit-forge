@@ -1,6 +1,6 @@
 import prisma from '@/db/prisma';
 
-export default async function getPbs(userId, limitToLastWeek = false) {
+export default async function getPbs(userId: string, limitToLastWeek = false) {
     if (!userId || typeof userId !== 'string') {
         return null;
     }
