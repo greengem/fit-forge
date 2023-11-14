@@ -65,7 +65,7 @@ export default function MobileNavbar() {
             <NavbarMenu>
                 {NAV_ITEMS.map(item => (
                     <NavbarMenuItem key={item.href}>
-                        <Link color="foreground" href={item.href} className="w-full" size="lg">
+                        <Link as={NextLink} color="foreground" href={item.href} className="w-full" size="lg">
                             {item.label}
                         </Link>
                     </NavbarMenuItem>
