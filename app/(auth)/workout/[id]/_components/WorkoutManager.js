@@ -138,6 +138,18 @@ export default function WorkoutManager({ workout }) {
         });
     };
 
+    // Cancel workout and reset states
+    const cancelWorkout = () => {
+        if (window.confirm('Are you sure you want to cancel the workout? No data will be saved.')) {
+            setWorkoutExercises([]);
+            setWorkoutDuration(0);
+            setWorkoutStartTime(null);
+            setActiveWorkoutRoutine(null);
+            toast('Workout cancelled');
+            router.push('/workout');
+        }
+    };
+
     // Save the workout
     const completeWorkout = async (event) => {
         event.preventDefault();
@@ -188,13 +200,13 @@ export default function WorkoutManager({ workout }) {
             console.log("Response from the API:", responseData);
 
             if (response.ok) {
-                toast.success('Workout saved successfully!');
                 router.push("/dashboard");
                 router.refresh();
                 setWorkoutExercises([]);
                 setWorkoutDuration(0);
                 setWorkoutStartTime(null);
                 setActiveWorkoutRoutine(null);
+                toast.success('Workout saved successfully!');
             } else {
                 toast.error('Failed to save workout. ' + responseData.message);
             }
@@ -262,6 +274,7 @@ export default function WorkoutManager({ workout }) {
             completeWorkout={completeWorkout}
             progressPercentage={progressPercentage}
             activeRoutineId={workoutPlanId}
+            cancelWorkout={cancelWorkout}
         />
     </form>
 </div>

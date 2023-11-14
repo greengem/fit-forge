@@ -22,7 +22,7 @@ export default async function RoutinesPage() {
       <>
         <PageHeading title="My Routines" />
 
-        <Button as={Link} href="/routines/new" color="success" className="gap-unit-1 mb-5">
+        <Button as={Link} href="/routines/new" variant="ghost" color="success" className="gap-unit-1 mb-5">
           <IconPlus size={16} />New Routine
         </Button>
 
