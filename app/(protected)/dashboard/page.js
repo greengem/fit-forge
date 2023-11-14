@@ -4,7 +4,7 @@ import getWorkouts from '@/app/lib/getWorkouts';
 import getPbs from '@/app/lib/getPbs';
 import PageHeading from '@/components/PageHeading/PageHeading'
 import DashboardCards from './_components/DashboardCards';
-import WorkoutCards from '@/app/(auth)/activity/_components/WorkoutCards';
+import WorkoutCards from '@/app/(protected)/activity/_components/WorkoutCards';
 import CardGrid from "@/components/Grid/CardGrid";
 import DashboardLinks from "./_components/DashboardLinks";
 import DashboardGreeting from "./_components/DashBoardGreeting";
