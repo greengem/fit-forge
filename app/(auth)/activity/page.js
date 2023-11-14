@@ -7,9 +7,11 @@ import WorkoutCards from './_components/WorkoutCards';
 import CardGrid from "@/components/Grid/CardGrid";
 import Link from "next/link";
 
+
+
 export default async function ActivityPage() {
 	const session = await getServerSession(authOptions);
-	const userId = session.user.id;
+	const userId = session?.user.id;
 	const workouts = await getWorkouts(userId)
 	const personalBests = await getPbs(userId)
 
