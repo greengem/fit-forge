@@ -41,7 +41,7 @@ export default function WorkoutManager({ workout }) {
             setWorkoutExercises(initialWorkoutExercises);
             setIsDataLoaded(true);
         }
-    }, [workout, activeWorkoutRoutine, setWorkoutExercises]);
+    }, [workout, activeWorkoutRoutine, setWorkoutExercises, isDataLoaded]);
 
     // Add Sets to exercise
     const addSet = (exerciseIndex, exerciseName) => {
