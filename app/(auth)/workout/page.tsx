@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default async function WorkoutPage() {
   const session = await getServerSession(authOptions);
-  const routines = await getRoutines(session.user.id)
+  const routines = await getRoutines(session!.user.id)
 
   const userRoutines = routines.filter(routine => !routine.isSystemRoutine);
   const systemRoutines = routines.filter(routine => routine.isSystemRoutine);
