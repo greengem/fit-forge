@@ -5,5 +5,5 @@ import { IconMenu2 } from "@tabler/icons-react";
 
 export default function SidebarToggle() {
     const { toggleSidebar } = useSidebarVisibility();
-    return <Button isIconOnly onClick={toggleSidebar}><IconMenu2 /></Button>;
+    return <Button isIconOnly onPress={toggleSidebar}><IconMenu2 /></Button>;
 }

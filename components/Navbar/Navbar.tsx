@@ -58,7 +58,7 @@ export default function MobileNavbar() {
                     <ThemeSwitcher />
                 </NavbarItem>
                 <NavbarItem>
-                    <Button onClick={() => signOut({ callbackUrl: '/' })} color="success" href="#" variant="flat">Sign Out</Button>
+                    <Button onPress={() => signOut({ callbackUrl: '/' })} color="success" href="#" variant="flat">Sign Out</Button>
                 </NavbarItem>
             </NavbarContent>
 

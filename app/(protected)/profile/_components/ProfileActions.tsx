@@ -24,5 +24,5 @@ const handleDeleteAccount = async () => {
 
 export default function ProfileActions() {
     const router = useRouter();
-    return <Button color="danger" onClick={() => handleDeleteAccount()}>Delete my account and all my data</Button>;
+    return <Button color="danger" onPress={() => handleDeleteAccount()}>Delete my account and all my data</Button>;
 }

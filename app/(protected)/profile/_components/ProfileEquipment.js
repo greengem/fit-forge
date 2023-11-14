@@ -76,7 +76,7 @@ export default function ProfileEquipment({ equipment, session }) {
                 </CheckboxGroup>
             </CardBody>
             <CardFooter className='px-5'>
-                <Button color='success' onClick={handleSave} isLoading={isLoading}><IconDeviceFloppy />Save</Button>
+                <Button color='success' onPress={handleSave} isLoading={isLoading}><IconDeviceFloppy />Save</Button>
             </CardFooter>
         </Card>
     )
