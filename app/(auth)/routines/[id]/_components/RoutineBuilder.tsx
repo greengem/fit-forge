@@ -20,7 +20,7 @@ interface Exercise {
   trackingType: 'reps' | 'duration';
 }
 
-  type ExerciseField = 'sets' | 'reps' | 'exerciseDuration' | 'trackingType';
+type ExerciseField = 'sets' | 'reps' | 'exerciseDuration' | 'trackingType';
 
 const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   const router = useRouter();
@@ -50,7 +50,6 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
       fetchRoutine();
     }
   }, [routineId]);
-  
 
   const executeSearch = async () => {
     if (!searchTerm.trim()) {
@@ -96,10 +95,6 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
       (updatedExercises[index][field] as any) = value;
       setSelectedExercises(updatedExercises);
   };
-
-
-
-  
 
   const moveUp = (index: number) => {
     if (index === 0) return;
@@ -158,7 +153,6 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   
     return true;
   };
-  
 
   const handleSave = async () => {
     if (!validateForm()) return;
@@ -174,8 +168,6 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
         reps = exercise.reps !== 0 ? exercise.reps as number : undefined;
       }
       
-      
-    
       return {
         ...exercise,
         reps,
@@ -184,9 +176,6 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
         order: index + 1,
       };
     });
-    
-
-    
     
     try {
       let response;
