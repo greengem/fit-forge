@@ -1,46 +1,17 @@
+// WorkoutControlsContext.js
 import React, { createContext, useState, useContext, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 
 const WorkoutControlsContext = createContext();
 
 export const WorkoutControlsProvider = ({ children }) => {
-  // Initialize states from session storage
-  const initialState = {
-    isPaused: JSON.parse(sessionStorage.getItem('isPaused')) || false,
-    isSaving: JSON.parse(sessionStorage.getItem('isSaving')) || false,
-    workoutDuration: JSON.parse(sessionStorage.getItem('workoutDuration')) || 0,
-    workoutStartTime: JSON.parse(sessionStorage.getItem('workoutStartTime')) || null,
-    activeWorkoutRoutine: JSON.parse(sessionStorage.getItem('activeWorkoutRoutine')) || null
-  };
-
-  const [isPaused, setIsPaused] = useState(initialState.isPaused);
-  const [isSaving, setIsSaving] = useState(initialState.isSaving);
-  const [workoutDuration, setWorkoutDuration] = useState(initialState.workoutDuration);
-  const [workoutStartTime, setWorkoutStartTime] = useState(initialState.workoutStartTime);
-  const [activeWorkoutRoutine, setActiveWorkoutRoutine] = useState(initialState.activeWorkoutRoutine);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [workoutDuration, setWorkoutDuration] = useState(0);
+  const [workoutStartTime, setWorkoutStartTime] = useState(null);
+  const [activeWorkoutRoutine, setActiveWorkoutRoutine] = useState(null);
 
   const intervalRef = useRef(null);
-
-  // Update session storage on state changes
-  useEffect(() => {
-    sessionStorage.setItem('isPaused', JSON.stringify(isPaused));
-  }, [isPaused]);
-
-  useEffect(() => {
-    sessionStorage.setItem('isSaving', JSON.stringify(isSaving));
-  }, [isSaving]);
-
-  useEffect(() => {
-    sessionStorage.setItem('workoutDuration', JSON.stringify(workoutDuration));
-  }, [workoutDuration]);
-
-  useEffect(() => {
-    sessionStorage.setItem('workoutStartTime', JSON.stringify(workoutStartTime));
-  }, [workoutStartTime]);
-
-  useEffect(() => {
-    sessionStorage.setItem('activeWorkoutRoutine', JSON.stringify(activeWorkoutRoutine));
-  }, [activeWorkoutRoutine]);
 
   useEffect(() => {
     const handleWorkoutTimer = () => {
@@ -87,14 +58,14 @@ export const WorkoutControlsProvider = ({ children }) => {
   };
 
   return (
-    <WorkoutControlsContext.Provider value={{
-      // States
+    <WorkoutControlsContext.Provider value={{ 
+      //States
       isPaused, setIsPaused, 
       isSaving, setIsSaving, 
       workoutDuration, setWorkoutDuration, 
       workoutStartTime, setWorkoutStartTime,
       activeWorkoutRoutine, setActiveWorkoutRoutine,
-      // Functions
+      //Functions
       formatDuration, togglePause, startWorkout,
     }}>
       {children}
@@ -109,3 +80,4 @@ export const useWorkoutControls = () => {
   }
   return context;
 };
+

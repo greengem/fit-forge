@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext } from 'react';
 
 const WorkoutDataContext = createContext({
   workoutExercises: null,
@@ -6,19 +6,7 @@ const WorkoutDataContext = createContext({
 });
 
 export const WorkoutDataProvider = ({ children }) => {
-  // Initialize state from session storage
-  const initialState = JSON.parse(sessionStorage.getItem('workoutExercises')) || null;
-  const [workoutExercises, _setWorkoutExercises] = useState(initialState);
-
-  // Update session storage when state changes
-  useEffect(() => {
-    sessionStorage.setItem('workoutExercises', JSON.stringify(workoutExercises));
-  }, [workoutExercises]);
-
-  // Custom setter function
-  const setWorkoutExercises = (newExercises) => {
-    _setWorkoutExercises(newExercises);
-  };
+  const [workoutExercises, setWorkoutExercises] = useState(null);
 
   return (
     <WorkoutDataContext.Provider value={{ workoutExercises, setWorkoutExercises }}>
