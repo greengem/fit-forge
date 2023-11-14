@@ -44,9 +44,8 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
             if (!response.ok) {
                 throw new Error('Failed to delete the workout');
             }
-
-            toast.success('Workout deleted successfully!');
             router.refresh();
+            toast.success('Workout deleted successfully!');
         } catch (error) {
             toast.error('There was an error deleting the workout:');
         }
