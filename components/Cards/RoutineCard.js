@@ -8,7 +8,9 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
 
-function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction, isRoutine = true }) {
+function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction, isRoutine = true, activeWorkoutRoutine }) {
+    const isAnotherWorkoutInProgress = activeWorkoutRoutine !== null && activeWorkoutRoutine !== routine.id;
+    const isCurrentWorkout = activeWorkoutRoutine === routine.id;
     const uniqueCategories = new Set();
     routine.WorkoutPlanExercise.forEach((exerciseDetail) => {
         uniqueCategories.add(exerciseDetail.Exercise.category);
@@ -38,7 +40,7 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
                 {isRoutine && !isSystem && <ActionDropdown onAction={onAction} routine={routine} />}
             </CardHeader>
 
-            <CardBody className="pt-0">
+            <CardBody className="pt-0 px-5">
                 <ul className="space-y-1 text-sm">
                     {displayedExercises.sort((a, b) => a.order - b.order).map((exerciseDetail) => (
                         <li key={exerciseDetail.Exercise.id}>
@@ -70,9 +72,28 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
                         </Chip>
                     ))
                 ) : (
-                    <Button variant="ghost" as={Link} href={`/workout/${routine.id}`} size="sm" color="success" className="gap-unit-1">
-                        <IconPlayerPlayFilled size={16} />
-                        Start Workout
+                    <Button 
+                        variant="ghost" 
+                        as={Link} 
+                        href={`/workout/${routine.id}`} 
+                        size="sm" 
+                        color={isAnotherWorkoutInProgress ? "danger" : "success"}
+                        className="gap-unit-1"
+                        isDisabled={isAnotherWorkoutInProgress}
+                    >
+                        {isCurrentWorkout ? (
+                            <>
+                                <IconPlayerPlayFilled size={16} />
+                                Continue Workout
+                            </>
+                        ) : isAnotherWorkoutInProgress ? (
+                            "Another Workout is in Progress"
+                        ) : (
+                            <>
+                                <IconPlayerPlayFilled size={16} />
+                                Start Workout
+                            </>
+                        )}
                     </Button>
                 )}
             </CardFooter>
