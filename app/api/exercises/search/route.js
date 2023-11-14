@@ -1,5 +1,5 @@
 import prisma from '@/db/prisma';
-import { NextResponse } from 'next/server';
+//import { NextResponse } from 'next/server';
 
 // GET
 export async function GET(request) {
@@ -17,5 +17,5 @@ export async function GET(request) {
     });
   }
 
-  return NextResponse.json(results);
+  return Response.json(results);
 };
