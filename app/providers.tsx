@@ -3,6 +3,7 @@ import { NextUIProvider } from '@nextui-org/react'
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { WorkoutControlsProvider } from '@/contexts/WorkoutControlsContext';
 import { WorkoutDataProvider } from '@/contexts/WorkoutDataContext';
+import { SidebarProvider } from '@/contexts/SidebarContext'
 
 export function Providers({children}: { children: React.ReactNode }) {
   return (
@@ -10,7 +11,9 @@ export function Providers({children}: { children: React.ReactNode }) {
       <NextThemesProvider attribute="class" defaultTheme="dark">
           <WorkoutControlsProvider>
             <WorkoutDataProvider>
-              {children}
+              <SidebarProvider>
+                {children}
+              </SidebarProvider>
             </WorkoutDataProvider>
           </WorkoutControlsProvider>
       </NextThemesProvider>

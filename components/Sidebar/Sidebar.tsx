@@ -1,11 +1,15 @@
+"use client";
 import SidebarNav from './SidebarNav';
 import SidebarBrand from './SidebarBrand';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher/ThemeSwitcher';
 import SidebarWorkoutControls from './SidebarWorkoutControls';
+import { useSidebarVisibility } from "@/contexts/SidebarContext";
 
 export default function Sidebar() {
+    const { isSidebarVisible, toggleSidebar } = useSidebarVisibility();
+
     return (
-        <div className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-content1 hidden md:block shadow-md">
+        <aside className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-content1 hidden md:block shadow-md">
             <div>
                 <SidebarBrand />
             </div>
@@ -20,6 +24,6 @@ export default function Sidebar() {
                     <p className="text-xs mr-2 text-gray-500 mt-2">Theme Switcher</p>
                 </div>
             </div>
-        </div>
+        </aside>
     )
 }
