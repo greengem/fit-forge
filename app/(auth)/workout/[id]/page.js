@@ -1,6 +1,6 @@
 import prisma from "@/db/prisma";
 import PageHeading from '@/components/PageHeading/PageHeading';
-import WorkoutManager from './WorkoutManager';
+import WorkoutManager from './_components/WorkoutManager';
 
 async function fetchRoutine(id) {
     return await prisma.workoutPlan.findUnique({
