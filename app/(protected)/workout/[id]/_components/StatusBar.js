@@ -26,32 +26,32 @@ export default function StatusBar({ cancelWorkout, progressPercentage, activeRou
         <div className='fixed bottom-0 right-0 left-0 md:left-64 p-5 bg-white dark:bg-content1 z-10'>
             <div className='flex justify-between mb-5'>
                     {!workoutStartTime && (
-                        <Button color='success' onClick={handleStartWorkout}>
+                        <Button color='success' onPress={handleStartWorkout}>
                             <IconPlayerPlay /> Start Workout
                         </Button>
                     )}
                     {workoutStartTime && (
                         <>
                         <div className='hidden md:block justify-start space-x-2'>
-                            <Button color={isPaused ? 'default' : 'warning'} onClick={handlePauseToggle}>
+                            <Button color={isPaused ? 'default' : 'warning'} onPress={handlePauseToggle}>
                                 {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
                                 <span>{isPaused ? 'Resume' : 'Pause'}</span>
                             </Button>
                             <Button type='submit' color='success'>
                                 <IconDeviceFloppy /><span>Save</span>
                             </Button>
-                            <Button color='danger' onClick={cancelWorkout}>
+                            <Button color='danger' onPress={cancelWorkout}>
                                 <IconX /><span>Cancel</span>
                             </Button>
                         </div>
                         <div className='block md:hidden justify-start space-x-3'>
-                            <Button isIconOnly color={isPaused ? 'default' : 'warning'} onClick={handlePauseToggle}>
+                            <Button isIconOnly color={isPaused ? 'default' : 'warning'} onPress={handlePauseToggle}>
                                 {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
                             </Button>
-                            <Button isIconOnly type='submit' color='success'>
+                            <Button isIconOnly onPress={completeWorkout} color='success'>
                                 <IconDeviceFloppy />
                             </Button>
-                            <Button isIconOnly color='danger' onClick={cancelWorkout}>
+                            <Button isIconOnly color='danger' onPress={cancelWorkout}>
                                 <IconX />
                             </Button>
                         </div>

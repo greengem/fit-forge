@@ -237,7 +237,6 @@ export default function WorkoutManager({ workout }) {
 
     return (
 <div className='pb-40'>
-    <form onSubmit={completeWorkout}>
         {workout.notes && <Chip color='success' className='mb-3'>Notes: {workout.notes}</Chip>}
         <div className='space-y-5'>
             {workoutExercises?.map((exercise, index) => (
@@ -259,10 +258,10 @@ export default function WorkoutManager({ workout }) {
                     </CardBody>
                     <CardFooter className='gap-2 px-5 bg-default-100'>
                         <ButtonGroup>
-                            <Button className='gap-unit-1' size='sm' onClick={() => addSet(index, exercise.exerciseName)}>
+                            <Button className='gap-unit-1' size='sm' onPress={() => addSet(index, exercise.exerciseName)}>
                                 <IconPlus size={16} />Add Set
                             </Button>
-                            <Button className='gap-unit-1' size='sm' onClick={() => removeSet(index, exercise.exerciseName)}>
+                            <Button className='gap-unit-1' size='sm' onPress={() => removeSet(index, exercise.exerciseName)}>
                                 <IconX size={16} />Remove Set
                             </Button>
                         </ButtonGroup>
@@ -276,7 +275,6 @@ export default function WorkoutManager({ workout }) {
             activeRoutineId={workoutPlanId}
             cancelWorkout={cancelWorkout}
         />
-    </form>
 </div>
 
     );

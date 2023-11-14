@@ -102,9 +102,9 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                         </div>
 
                         <ButtonGroup className='justify-start'>
-                            <Button isIconOnly onClick={() => moveUp(index)}><IconArrowUp size={16} /></Button>
-                            <Button isIconOnly onClick={() => moveDown(index)}><IconArrowDown size={16} /></Button>
-                            <Button color='danger' isIconOnly onClick={() => deleteExercise(index)}><IconTrash size={16} /></Button>
+                            <Button isIconOnly onPress={() => moveUp(index)}><IconArrowUp size={16} /></Button>
+                            <Button isIconOnly onPress={() => moveDown(index)}><IconArrowDown size={16} /></Button>
+                            <Button color='danger' isIconOnly onPress={() => deleteExercise(index)}><IconTrash size={16} /></Button>
                         </ButtonGroup>
                     </CardBody>
                 </Card>
