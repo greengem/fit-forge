@@ -30,18 +30,18 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
 
     return (
         <Card key={routine.id} shadow="none" className="shadow-md">
-            <CardHeader className="flex gap-3 px-5">
+            <CardHeader className="flex gap-3 px-5 pt-4">
                 <div className="flex flex-col flex-grow">
-                    <p className='text-md font-semibold'>{routine.name}</p>
+                    <p className='text-md  leading-5'>{routine.name}</p>
                     {!isSystem && (
-                        <p className="text-small text-default-500">Updated: {format(new Date(routine.updatedAt), 'MM/dd/yyyy')}</p>
+                        <p className="text-xs text-default-500 leading-5">Updated: {format(new Date(routine.updatedAt), 'MM/dd/yyyy')}</p>
                     )}
                 </div>
                 {isRoutine && !isSystem && <ActionDropdown onAction={onAction} routine={routine} />}
             </CardHeader>
 
             <CardBody className="pt-0 px-5">
-                <ul className="space-y-1 text-sm">
+                <ul className="text-sm">
                     {displayedExercises.sort((a, b) => a.order - b.order).map((exerciseDetail) => (
                         <li key={exerciseDetail.Exercise.id}>
                             {exerciseDetail.sets && exerciseDetail.sets} x {exerciseDetail.Exercise.name}
@@ -51,14 +51,14 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
 
                 {routine.WorkoutPlanExercise.length > 5 && (
                     <button 
-                        className='text-left text-success'
+                        className='text-left text-success text-sm mt-1'
                         onClick={() => onToggleExpanded(routine.id)}
                     >
                         {isExpanded ? 'Show Less' : 'Show More'}
                     </button>
                 )}
             </CardBody>
-            <CardFooter className="gap-x-1 pt-0 px-5">
+            <CardFooter className="gap-x-1 pt-0 px-5 pb-4">
                 {isRoutine ? (
                     Array.from(uniqueCategories).map((category, index) => (
                         <Chip 

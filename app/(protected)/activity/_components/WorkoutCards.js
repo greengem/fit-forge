@@ -31,11 +31,9 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
 
     const handleDelete = async (id) => {
         const isConfirmed = window.confirm('Are you sure you want to delete this workout?');
-
         if (!isConfirmed) {
             return;
         }
-
         try {
             const response = await fetch(`/api/workouts/${id}`, {
                 method: 'DELETE',
@@ -59,10 +57,10 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
                 }, 0);
                 return (
                     <Card shadow="none" key={workout.id} className="shadow-md">
-                        <CardHeader className="flex justify-between items-start gap-3 px-5">
+                        <CardHeader className="flex gap-3 px-5 pt-4">
                             <div className="flex flex-col flex-grow">
-                                <p className="text-md font-semibold text-success mb-1">{workout.name}</p>
-                                <p className="text-sm text-default-500">
+                                <p className="text-md  leading-5">{workout.name}</p>
+                                <p className="text-xs text-default-500 leading-5">
                                     <span className="flex space-x-1">
                                         <time>{format(new Date(workout.createdAt), 'MM/dd/yyyy')}</time>
                                         <span className="text-gray-400">|</span>
@@ -84,7 +82,7 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
                                 </Dropdown>
                             )}
                         </CardHeader>
-                        <CardBody className="pt-0 pb-4 px-5">
+                        <CardBody className="pt-0 px-5">
                             <ExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} personalBests={personalBests} />
                         </CardBody>
                     </Card>

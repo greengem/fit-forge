@@ -38,16 +38,16 @@ const ExerciseTable = ({ workoutLogExercises, workoutName, workoutDate, personal
   const bestSet = exercise.sets.length > 0 ? findBestSet(exercise.sets) : null;
   return (
     <TableRow key={exercise.id}>
-      <TableCell className="truncate whitespace-nowrap max-w-[164px] py-1 pl-0">{exercise.Exercise.name}</TableCell>
+      <TableCell className="truncate whitespace-nowrap max-w-[164px] py-0 pl-0">{exercise.Exercise.name}</TableCell>
       {
         bestSet ? (
           bestSet.exerciseDuration === null ? (
-            <TableCell className="py-1">{`${bestSet.weight}kg x ${bestSet.reps}`} reps</TableCell>
+            <TableCell className="py-0 text-right">{`${bestSet.weight}kg x ${bestSet.reps}`} reps</TableCell>
           ) : (
-            <TableCell className="py-1 pr-0">{`${bestSet.exerciseDuration}`} secs</TableCell>
+            <TableCell className="py-0 pr-0 text-right">{`${bestSet.exerciseDuration}`} secs</TableCell>
           )
         ) : (
-          <TableCell className="py-1">No sets available</TableCell>
+          <TableCell className="py-0 text-right">No sets available</TableCell>
         )
       }
     </TableRow>
