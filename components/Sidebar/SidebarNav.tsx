@@ -9,50 +9,50 @@ export default function SidebarNav() {
     const pathname = usePathname();
 
     return (
-        <ul className="space-y-2">
-            <li className='uppercase text-xs text-gray-500 font-bold hidden md:block'>Data</li>
+        <ul className="space-y-2 text-sm">
+            <li className='uppercase text-xs text-gray-500 font-bold'>Data</li>
             <NavItem
-                icon={<IconDashboard className="h-7 w-7" />}
+                icon={<IconDashboard className="h-5 w-5" />}
                 label="Dashboard"
                 href="/dashboard"
                 active={pathname === "/dashboard"}
             />
             <NavItem
-                icon={<IconActivity className="h-7 w-7" />}
+                icon={<IconActivity className="h-5 w-5" />}
                 label="Activity"
                 href="/activity"
                 active={pathname === "/activity"}
             />
-            <Divider className='hidden md:block' />
-            <li className='uppercase text-xs text-gray-500 font-bold hidden md:block'>Workout</li>
+            <Divider />
+            <li className='uppercase text-xs text-gray-500 font-bold'>Workout</li>
             <NavItem
-                icon={<IconJumpRope className="h-7 w-7" />}
+                icon={<IconJumpRope className="h-5 w-5" />}
                 label="Start Workout"
                 href="/workout"
                 active={pathname.startsWith("/workout")}
             />
             <NavItem
-                icon={<IconList className="h-7 w-7" />}
+                icon={<IconList className="h-5 w-5" />}
                 label="Manage Routines"
                 href="/routines"
                 active={pathname.startsWith("/routines")}
             />
             <NavItem
-                icon={<IconStretching className="h-7 w-7" />}
+                icon={<IconStretching className="h-5 w-5" />}
                 label="Browse Exercises"
                 href="/exercises"
                 active={pathname === "/exercises"}
             />
-            <Divider className='hidden md:block' />
-            <li className='uppercase text-xs text-gray-500 font-bold hidden md:block'>User</li>
+            <Divider />
+            <li className='uppercase text-xs text-gray-500 font-bold'>User</li>
             <NavItem
-                icon={<IconUser className="h-7 w-7" />}
+                icon={<IconUser className="h-5 w-5" />}
                 label="Profile"
                 href="/profile"
                 active={pathname === "/profile"}
             />
             <NavItem
-                icon={<IconLogout className="h-7 w-7" />}
+                icon={<IconLogout className="h-5 w-5" />}
                 label="Sign Out"
                 active={false}
                 onClick={() => signOut({ callbackUrl: '/' })}
@@ -73,7 +73,7 @@ function NavItem({ icon, label, href, active, onClick }: NavItemProps) {
     const content = (
         <div className={`flex items-center space-x-3 ${active && 'text-success'} text-foreground`}>
             {icon}
-            <div className='hidden md:block'>{label}</div>
+            <div>{label}</div>
         </div>
     );
 

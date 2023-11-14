@@ -10,16 +10,16 @@ export default function RootLayout({
   }) {
 
     return (
-        <main className="flex h-screen">
-            <Toaster />
-                <Sidebar />
-                <div className="flex-grow h-screen">
-                    <Navbar />
-                    <ActiveWorkoutWarning />
-                    <div className='p-6'>
-                      {children}
-                    </div>
-                </div>
-        </main>
+      <main className="flex flex-col min-h-screen">
+        <Toaster />
+        <Navbar />
+        <div className='flex flex-grow'>
+          <Sidebar />
+          <div className="md:ml-64 flex-1 p-5">
+              <ActiveWorkoutWarning />
+                {children}
+          </div>
+        </div>
+      </main>
     )
   }
