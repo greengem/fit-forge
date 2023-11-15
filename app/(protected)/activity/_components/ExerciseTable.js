@@ -4,10 +4,11 @@ import { IconTrophy } from "@tabler/icons-react";
 
 
 const ExerciseTable = ({ workoutLogExercises, workoutName, workoutDate, personalBests }) => {
-  const formattedDate = `${workoutDate.getDate()}/${workoutDate.getMonth() + 1}/${workoutDate.getFullYear()}`;
+  const dateObject = new Date(workoutDate);
+  const formattedDate = `${dateObject.getDate()}/${dateObject.getMonth() + 1}/${dateObject.getFullYear()}`;
 
   const findBestSet = (sets) => {
-    let bestSet = sets[0]; // default to the first set
+    let bestSet = sets[0];
     
     sets.forEach((set) => {
       if (set.reps === null) {
