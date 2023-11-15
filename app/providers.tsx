@@ -8,7 +8,16 @@ import { SidebarProvider } from '@/contexts/SidebarContext'
 export function Providers({children}: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
-      <NextThemesProvider attribute="class" defaultTheme="dark">
+      <NextThemesProvider 
+        attribute="class" 
+        defaultTheme="dark"
+        themes={[
+          'light', 'dark', 
+          'light-cyan', 'dark-cyan',
+          'light-hot-pink', 'dark-hot-pink', 
+          'light-bright-orange', 'dark-bright-orange'
+        ]}
+      >
           <WorkoutControlsProvider>
             <WorkoutDataProvider>
               <SidebarProvider>

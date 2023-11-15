@@ -2,11 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-html.dark{
+html.dark,
+html.dark-cyan,
+html.dark-hot-pink, 
+html.dark-bright-orange
+{
     background-color: rgb(17, 17, 19);
 }
 
-html.light{
+html.light,
+html.light-cyan,
+html.light-hot-pink, 
+html.light-bright-orange
+{
     background-color: rgb(238, 237, 242);
 }
 
@@ -30,4 +38,20 @@ nav [data-active=true] a{
 .no-scrollbar {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+}
+
+.dark .group-dark-bg-1, 
+.dark-cyan .group-dark-bg-1,
+.dark-hot-pink .group-dark-bg-1,
+.dark-bright-orange .group-dark-bg-1
+{
+    background-color: rgb(24, 24, 27);
+}
+
+.light .group-light-bg-1,
+.light-cyan .group-light-bg-1,
+.light-hot-pink .group-light-bg-1,
+.light-bright-orange .group-light-bg-1
+{
+    background-color: white;
 }

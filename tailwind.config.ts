@@ -29,7 +29,55 @@ const config: Config = {
             foreground: "#000000",
           }
         }
-      }
+      },
+      "dark-cyan": {
+        extend: "dark",
+        colors: {
+          success: {
+            DEFAULT: "#00FFFF",
+          }
+        }
+      },
+      "light-cyan": {
+        extend: "light",
+        colors: {
+          success: {
+            DEFAULT: "#00FFFF",
+          }
+        }
+      },
+      "dark-hot-pink": {
+        extend: "dark",
+        colors: {
+          success: {
+            DEFAULT: "#FF69B4",
+          }
+        }
+      },
+      "light-hot-pink": {
+        extend: "light",
+        colors: {
+          success: {
+            DEFAULT: "#FF69B4",
+          }
+        }
+      },
+      "dark-bright-orange": {
+        extend: "dark",
+        colors: {
+          success: {
+            DEFAULT: "#FFA500",
+          }
+        }
+      },
+      "light-bright-orange": {
+        extend: "light",
+        colors: {
+          success: {
+            DEFAULT: "#FFA500",
+          }
+        }
+      },
     }
   })],
 }
