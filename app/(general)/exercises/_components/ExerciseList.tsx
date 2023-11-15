@@ -10,18 +10,26 @@ import { Exercise } from '@/types/ExerciseType';
 import { Muscle } from "@prisma/client";
 import toast from "react-hot-toast";
 
+type FavoriteExercise = {
+    exerciseId: string;
+};
 interface ExerciseListProps {
   exercises: Exercise[];
+  favoriteExercises: FavoriteExercise[];
 }
 
-const ExerciseList: React.FC<ExerciseListProps> = ({ exercises }) => {
+const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises }) => {
+    // Pagination
     const rowsPerPage = 10;
-
     const [page, setPage] = useState<number>(1);
-    const [filters, setFilters] = useState<{ category: string | null; muscleGroup: Muscle | null }>({ category: null, muscleGroup: null }); // Use Muscle type for muscleGroup
+
+    // Modal
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+    //Filters
+    const [filters, setFilters] = useState<{ category: string | null; muscleGroup: Muscle | null }>({ category: null, muscleGroup: null });
     const [searchQuery, setSearchQuery] = useState<string>("");
 
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
 
     const filteredExercises = useMemo(() => {

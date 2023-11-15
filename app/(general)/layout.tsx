@@ -1,6 +1,5 @@
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Navbar from '@/components/Navbar/Navbar';
-import { Toaster } from 'react-hot-toast';
 import ActiveWorkoutWarning from '@/components/Notices/ActiveWorkoutWarning';
 
 export default function RootLayout({
