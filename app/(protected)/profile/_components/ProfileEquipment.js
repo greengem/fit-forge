@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from "next/navigation";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { CheckboxGroup, Checkbox } from "@nextui-org/checkbox";
 import { Button } from "@nextui-org/button";
@@ -28,6 +29,7 @@ const formatText = (text) => {
 
 
 export default function ProfileEquipment({ equipment, session }) {
+    const router = useRouter()
     const [selectedEquipment, setSelectedEquipment] = useState(equipment || []);
     const [isLoading, setIsLoading] = useState(false);
     const handleSave = async () => {
@@ -40,13 +42,13 @@ export default function ProfileEquipment({ equipment, session }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userId: session.user.id,
                     selectedEquipment
                 }),
             });
         
             if (response.ok) {
                 toast.success("Equipment Updated Successfully!");
+                router.refresh();
             } else {
                 toast.error("Error Updating Equipment");
             }

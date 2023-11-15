@@ -2,6 +2,7 @@ import prisma from '@/db/prisma';
 import { NextResponse } from 'next/server';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions";
+import { revalidateTag } from 'next/cache'
 
 // PATCH
 export async function PATCH( request ) {
@@ -13,10 +14,9 @@ export async function PATCH( request ) {
             data: data,
         });
 
+        revalidateTag(`profiles_${session.user.id}`);
         return NextResponse.json({ success: true, user: updatedUser }, { status: 200 });
     } catch (error) {
-        console.error("Error while updating the user:", error.message);
-
         return NextResponse.json({ error: "An error occurred updating the user." }, { status: 500 });
     }
 }
@@ -33,9 +33,6 @@ export async function DELETE() {
 
         return NextResponse.json({ success: true, message: 'User deleted successfully' }, { status: 200 });
     } catch (error) {
-        console.error("Error while deleting the user:", error.message);
-        console.error(error);
-
         return NextResponse.json({ error: "An error occurred while deleting the user." }, { status: 500 });
     }
 }
