@@ -54,7 +54,6 @@ export default function ProfileEquipment({ equipment, session }) {
             }
         } catch (error) {
             toast.error("An unexpected error occurred");
-            console.error("An unexpected error occurred", error);
         } finally {
             setIsLoading(false);
         }

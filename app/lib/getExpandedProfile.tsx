@@ -4,7 +4,6 @@ import { unstable_cache } from 'next/cache';
 
 const getCachedExpandedProfile = (userId: string) => unstable_cache(
     async () => {
-        console.log("Fetching expanded profile from database for user:", userId);
         try {
             const expandedProfile = await prisma.user.findUnique({
                 where: {
@@ -21,7 +20,6 @@ const getCachedExpandedProfile = (userId: string) => unstable_cache(
 
             return expandedProfile;
         } catch (error) {
-            console.error("Error in cached query for expanded profile:", error);
             return null;
         }
     },

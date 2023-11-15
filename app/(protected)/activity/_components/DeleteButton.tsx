@@ -24,7 +24,6 @@ export default function DeleteButton({ id }: { id: string }) {
             toast.success('Routine deleted successfully!');
             router.refresh();
         } catch (error) {
-            console.error('There was an error deleting the workout:', error);
             toast.error('There was an error deleting the workout:');
         }
     }

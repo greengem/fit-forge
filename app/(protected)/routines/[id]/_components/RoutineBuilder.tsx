@@ -205,11 +205,9 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
         router.push('/routines');
         router.refresh();
       } else {
-        console.error("Server responded with error:", data.error);
         toast.error('Error saving routine.');
       }
     } catch (error) {
-      console.error("Error during save:", error);
       toast.error('Unexpected error while saving routine.');
     } finally {
       setIsSaving(false);

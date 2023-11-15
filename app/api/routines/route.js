@@ -35,9 +35,7 @@ export async function POST(request) {
 
         revalidateTag(`routines_${session.user.id}`);
         return NextResponse.json({ success: true, id: newWorkoutPlan.id }, { status: 200 });
-
     } catch (error) {
-        console.error("Error while saving the routine:", error);
         return NextResponse.json({ error: "An error occurred saving routine." }, { status: 500 });
     }
 }

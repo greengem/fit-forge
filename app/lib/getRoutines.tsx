@@ -4,7 +4,6 @@ import { unstable_cache } from 'next/cache';
 
 const getCachedRoutines = (userId: string | null) => unstable_cache(
     async () => {
-        console.log("Fetching routines from database for user:", userId); // Log message
         const whereClause: Prisma.WorkoutPlanWhereInput[] = [
             {isSystemRoutine: true},
         ];

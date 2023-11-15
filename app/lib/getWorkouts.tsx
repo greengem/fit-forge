@@ -3,7 +3,6 @@ import { unstable_cache } from 'next/cache';
 
 const getCachedWorkouts = (userId: string) => unstable_cache(
     async () => {
-        console.log("Fetching workouts from database for user:", userId);
         const workouts = await prisma.workoutLog.findMany({
             where: {
                 userId: userId,

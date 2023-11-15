@@ -48,7 +48,6 @@ export default function ProfileDetails({ session, expandedProfile }: ProfileDeta
           }
         } catch (error) {
           const e = error as Error;
-          console.error("Failed to update profile:", e);
           toast.error("Failed to update profile: " + e.message);
         } finally {
           setIsLoading(false);

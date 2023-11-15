@@ -196,7 +196,6 @@ export default function WorkoutManager({ workout }) {
             });
     
             const responseData = await response.json();
-            console.log("Response from the API:", responseData);
 
             if (response.ok) {
                 router.push("/dashboard");
@@ -210,7 +209,6 @@ export default function WorkoutManager({ workout }) {
                 toast.error('Failed to save workout. ' + responseData.message);
             }
         } catch (error) {
-            console.error("Error making the API request:", error);
             toast.error('An error occurred while saving the workout: ' + error.message);
         } finally {
             setIsSaving(false);

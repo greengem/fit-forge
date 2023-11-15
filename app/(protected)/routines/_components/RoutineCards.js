@@ -42,7 +42,6 @@ export default function RoutineCards({ routines, isSystem }) {
             toast.success('Routine deleted successfully!');
             router.refresh();
         } catch (error) {
-            console.error('There was an error deleting the routine:', error);
             toast.error(`There was an error deleting the routine: ${error.message}`);
 
         }

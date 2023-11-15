@@ -46,7 +46,6 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                             className='mb-3'
                             value={exercise.trackingType}
                             onValueChange={(value) => {
-                                console.log(value);
                                 updateTrackingType(index, value as 'reps' | 'duration');
                             }}
                         >

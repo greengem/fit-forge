@@ -27,7 +27,6 @@ export default async function getPbs(userId: string, limitToLastWeek = false) {
 
         return personalBests;
     } catch (error) {
-        console.error("Error fetching personal bests:", error);
         return null;
     }
 }

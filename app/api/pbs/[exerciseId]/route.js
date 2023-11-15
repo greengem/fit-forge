@@ -17,7 +17,6 @@ export async function GET(request, { params }) {
 
         return NextResponse.json(pb);
     } catch (error) {
-        console.error("Error:", error);
         return NextResponse.json({ error: "An error occurred fetching the personal best." }, { status: 500 });
     }
 }

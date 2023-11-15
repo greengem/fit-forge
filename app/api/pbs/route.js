@@ -52,7 +52,6 @@ export async function POST(request) {
 
         return NextResponse.json({ message: "Personal best saved successfully." });
     } catch (error) {
-        console.error("Error:", error);
         return NextResponse.json({ error: "An error occurred saving the personal best." }, { status: 500 });
     }
 }

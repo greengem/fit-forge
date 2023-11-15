@@ -56,7 +56,6 @@ export async function GET(request, { params }) {
     return NextResponse.json(normalizedRoutine);
 
   } catch (error) {
-    console.error("Error:", error);
     return NextResponse.json({ error: "An error occurred fetching the routine." }, { status: 500 });
   }
 }
@@ -118,7 +117,6 @@ export async function PUT(request, { params }) {
       return NextResponse.json({ success: true }, { status: 200 });
 
   } catch (error) {
-      console.error("Error while updating the routine:", error);
       return NextResponse.json({ error: "An error occurred updating the routine." }, { status: 500 });
   }
 }
