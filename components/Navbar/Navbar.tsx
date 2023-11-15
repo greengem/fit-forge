@@ -8,34 +8,23 @@ import { ThemeSwitcher } from '@/components/ThemeSwitcher/ThemeSwitcher';
 import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
-
-const NAV_ITEMS = [
-    { label: 'Profile', href: '/profile' },
-    { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Activity', href: '/activity' },
-    { label: 'Start a Workout', href: '/workout' },
-    { label: 'Routines', href: '/routines' },
-    { label: 'Exercises', href: '/exercises' }
-];
+import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout } from '@tabler/icons-react';
 
 const NAV_CONTENT_ITEMS = [
-    { label: 'Profile', href: '/profile' },
-    { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Workout', href: '/workout' },
-    { label: 'Routines', href: '/routines' },
+    { label: <IconUser />, href: '/profile' },
+    { label: <IconActivity />, href: '/activity' },
+    { label: <IconDashboard />, href: '/dashboard' },
+    { label: <IconJumpRope />, href: '/workout' },
+    { label: <IconList />, href: '/routines' },
+    { label: <IconStretching />, href: '/exercises' },
 ];
 
 export default function MobileNavbar() {
     const pathname = usePathname();
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     return (
-        <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-content1 block md:hidden shadow-md">
+        <Navbar className="bg-content1 block md:hidden shadow-md">
             <NavbarContent>
-                <NavbarMenuToggle
-                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    className="sm:hidden"
-                />
                 <NavbarBrand>
                     <Link as={NextLink} href="/dashboard">
                         <p className="font-bold text-inherit text-success">Tracktive</p>
@@ -43,7 +32,7 @@ export default function MobileNavbar() {
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
+            <NavbarContent className="gap-5">
                 {NAV_CONTENT_ITEMS.map(item => (
                     <NavbarItem key={item.href} isActive={pathname === item.href}>
                         <Link as={NextLink} color="foreground" href={item.href}>
@@ -57,20 +46,7 @@ export default function MobileNavbar() {
                 <NavbarItem>
                     <ThemeSwitcher />
                 </NavbarItem>
-                <NavbarItem>
-                    <Button onPress={() => signOut({ callbackUrl: '/' })} color="success" href="#" variant="flat">Sign Out</Button>
-                </NavbarItem>
             </NavbarContent>
-
-            <NavbarMenu>
-                {NAV_ITEMS.map(item => (
-                    <NavbarMenuItem key={item.href}>
-                        <Link as={NextLink} color="foreground" href={item.href} className="w-full" size="lg">
-                            {item.label}
-                        </Link>
-                    </NavbarMenuItem>
-                ))}
-            </NavbarMenu>
         </Navbar>
     );
 }
