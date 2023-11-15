@@ -89,28 +89,18 @@ export default function ProfileDetails({ session, expandedProfile }: ProfileDeta
 
                 <Input 
                   type="number" 
-                  label="Height" 
+                  label="Height (cm)" 
                   placeholder="Enter your Height" 
                   value={height.toString()}
-                  onChange={(e) => setHeight(e.target.value)} 
-                  endContent={
-                    <div className="pointer-events-none flex items-center">
-                      <span className="text-default-400 text-small">cm</span>
-                    </div>
-                  }
+                  onChange={(e) => setHeight(e.target.value)}
                 />
 
                 <Input 
                   type="number" 
-                  label="Weight" 
+                  label="Weight (kg)" 
                   placeholder="Enter your Weight" 
                   value={weight.toString()}
                   onChange={(e) => setWeight(e.target.value)} 
-                  endContent={
-                    <div className="pointer-events-none flex items-center">
-                      <span className="text-default-400 text-small">kg</span>
-                    </div>
-                  }
                 />
 
                 <p className="text-xs text-gray-500">Your data is secure with us. We only use your information to enhance your user experience and never share it with third parties.</p>

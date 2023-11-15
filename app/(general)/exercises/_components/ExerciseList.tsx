@@ -3,11 +3,12 @@ import { useState, useMemo } from "react";
 import ExerciseSearch from "./ExerciseSearch";
 import ExerciseFilters from "./ExerciseFilters";
 import ExerciseModal from "./ExerciseModal";
-import { IconInfoCircle } from "@tabler/icons-react";
+import { IconInfoCircle, IconPlus, IconStar } from "@tabler/icons-react";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
-import { Pagination, User, Button, useDisclosure } from "@nextui-org/react";
+import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-org/react";
 import { Exercise } from '@/types/ExerciseType';
 import { Muscle } from "@prisma/client";
+import toast from "react-hot-toast";
 
 interface ExerciseListProps {
   exercises: Exercise[];
@@ -44,6 +45,27 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises }) => {
         page * rowsPerPage
     );
 
+    const toggleFavoriteExercise = async (exerciseId: string) => {
+        try {
+            const response = await fetch('/api/users/favorites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ exerciseId }),
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                toast.success(data.message);
+            } else {
+                toast.error(data.error || 'Error toggling favorite exercise');
+            }
+        } catch (error) {
+            toast.error('An error occurred while communicating with the server.');
+        }
+    };
+
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-2 mb-3">
@@ -74,9 +96,14 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises }) => {
                                 </div>
                             </TableCell>
                             <TableCell className="flex justify-end">
-                                <Button color="default" size="sm" isIconOnly onPress={() => { setSelectedExercise(exercise); onOpen(); }}>
-                                    <IconInfoCircle />
-                                </Button>
+                                <ButtonGroup size="sm">
+                                    <Button isIconOnly><IconPlus size={20} /></Button>
+                                    <Button onPress={() => toggleFavoriteExercise(exercise.id)} isIconOnly><IconStar size={20} /></Button>
+                                    
+                                    <Button isIconOnly onPress={() => { setSelectedExercise(exercise); onOpen(); }}>
+                                        <IconInfoCircle size={20} />
+                                    </Button>
+                                </ButtonGroup>
                             </TableCell>
                         </TableRow>
                     ))}
