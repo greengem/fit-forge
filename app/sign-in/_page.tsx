@@ -6,6 +6,7 @@ import SignInGithub from "./SignInGithub";
 import SignInGoogle from "./SignInGoogle";
 import { IconBarbell } from "@tabler/icons-react"
 import { Button } from "@nextui-org/button";
+import { IconMail } from "@tabler/icons-react";
 
 export default async function CustomSignInPage() {
     const session = await getServerSession(authOptions);
@@ -20,15 +21,17 @@ export default async function CustomSignInPage() {
                         <h3 className="text-2xl tracking-tight">Tracktive</h3>
                     </CardHeader>
                     <CardBody className="space-y-4 p-5">
-                        <p className="uppercase text-xs text-gray-500 text-center">- OAuth- </p>
+                        <p className="uppercase text-xs text-gray-500 text-center ">- OAuth- </p>
                         <SignInGoogle />
                         <SignInGithub />
                         <Divider />
                         <p className="uppercase text-xs text-gray-500 text-center">- Email- </p>
-                        <form>
-                            <Input size="sm" label="Email" type="email" />
+                        <form className="flex flex-col space-y-4">
+                            <Input classNames={{ input: "autofill:bg-red-500" }} size="sm" label="Email" type="email" />
                             <Input size="sm" label="Password" type="password" />
-                            <Button size="lg" variant="ghost">Sign In with email</Button>
+                            <Button size="lg" variant="ghost" color="success">
+                                <IconMail />Sign In With Email
+                            </Button>
                         </form>
                     </CardBody>
                 </Card>
