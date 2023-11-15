@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/db/prisma';
+import { revalidateTag } from 'next/cache'
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/authOptions";
 
 // GET
 export async function GET(request, { params }) {
@@ -48,9 +51,10 @@ export async function GET(request, { params }) {
     const normalizedRoutine = {
       ...routine,
       exercises: normalizedExercises
-    }    
+    }
 
     return NextResponse.json(normalizedRoutine);
+
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json({ error: "An error occurred fetching the routine." }, { status: 500 });
@@ -61,6 +65,7 @@ export async function GET(request, { params }) {
 // DELETE
 export async function DELETE(req, context) {
   const params = context.params;
+  const session = await getServerSession(authOptions);
 
   try {
     await prisma.workoutPlan.delete({
@@ -68,6 +73,8 @@ export async function DELETE(req, context) {
         id: params.id,
       },
     });
+
+    revalidateTag(`routines_${session.user.id}`);
     return NextResponse.json({ message: "Routine deleted successfully." });
   } catch (error) {
     return NextResponse.json({ error: "Error deleting the routine." });
@@ -76,6 +83,8 @@ export async function DELETE(req, context) {
 
 // PUT
 export async function PUT(request, { params }) {
+  const session = await getServerSession(authOptions);
+  
   try {
       const data = JSON.parse(await request.text());
       const { routineName, exercises, notes } = data;
@@ -105,6 +114,7 @@ export async function PUT(request, { params }) {
           },
       });
 
+      revalidateTag(`routines_${session.user.id}`);
       return NextResponse.json({ success: true }, { status: 200 });
 
   } catch (error) {

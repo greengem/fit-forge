@@ -1,9 +1,12 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions";
 import prisma from '@/db/prisma';
+import { revalidateTag } from 'next/cache'
 
 // POST
 export async function POST(request) {
+  const session = await getServerSession(authOptions);
+
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
@@ -17,7 +20,6 @@ export async function POST(request) {
 
     const userId = session.user.id;
     const workoutData = await request.json();
-    console.log("Received workout data:", workoutData);
     const { name, date, duration, workoutPlanId, exercises } = workoutData;
 
     // Create a new WorkoutLog record
@@ -30,7 +32,6 @@ export async function POST(request) {
         userId,
       },
     });
-    console.log("New WorkoutLog created:", newWorkoutLog);
 
     // Add WorkoutLogExercises and SetLogs
     for (const exercise of exercises) {
@@ -40,7 +41,6 @@ export async function POST(request) {
           exerciseId: exercise.exerciseId,
         },
       });
-      console.log("New WorkoutLogExercise record:", workoutLogExerciseRecord);
 
       for (const set of exercise.sets) {
         await prisma.setLog.create({
@@ -49,11 +49,13 @@ export async function POST(request) {
             reps: set.reps,
             weight: set.weight,
             exerciseDuration: set.duration,
-            // order: ... if you want to add the order
           },
         });
       }
     }
+
+    revalidateTag(`recentWorkouts_${session.user.id}`);
+    revalidateTag(`workouts_${session.user.id}`);
 
     return new Response(JSON.stringify({ message: 'Workout saved successfully!' }), {
       status: 200,
@@ -62,7 +64,6 @@ export async function POST(request) {
       },
     });
   } catch (error) {
-    console.error('Error saving workout:', error);
     return new Response(JSON.stringify({ message: 'Failed to save workout', error: error.message }), {
       status: 500,
       headers: {

@@ -48,7 +48,7 @@ const ExerciseTable = ({ workoutLogExercises, workoutName, workoutDate, personal
             <TableCell className="py-0 pr-0 text-right">{`${bestSet.exerciseDuration}`} secs</TableCell>
           )
         ) : (
-          <TableCell className="py-0 pr-0 text-right">No sets available</TableCell>
+          <TableCell className="py-0 pr-0 text-right">No sets</TableCell>
         )
       }
     </TableRow>

@@ -119,7 +119,7 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
                                                     </TableBody>
                                                 </Table>
                                             ) : (
-                                                <p>No sets available for this exercise.</p>
+                                                <p>No sets available.</p>
                                             )}
                                         </div>
                                     ))}

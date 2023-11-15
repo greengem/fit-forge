@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions"
 import getWorkouts from '@/app/lib/getWorkouts';
+import getRecentWorkouts from "@/app/lib/getRecentWorkouts";
 import getPbs from '@/app/lib/getPbs';
 import PageHeading from '@/components/PageHeading/PageHeading'
 import DashboardCards from './_components/DashboardCards';
@@ -15,7 +16,7 @@ import { Button } from "@nextui-org/button";
 export default async function DashboardPage() {
 	const session = await getServerSession(authOptions);
 	const userId = session.user.id;
-	const recentActivity = await getWorkouts(userId, 4);
+	const recentActivity = await getRecentWorkouts(userId);
 	const workouts = await getWorkouts(userId);
 	const workoutsChart = [...workouts].reverse();
 	const personalBests = await getPbs(userId);

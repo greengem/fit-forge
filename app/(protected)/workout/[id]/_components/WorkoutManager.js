@@ -151,8 +151,7 @@ export default function WorkoutManager({ workout }) {
     };
 
     // Save the workout
-    const completeWorkout = async (event) => {
-        event.preventDefault();
+    const completeWorkout = async () => {
     
         // Validate if at least one set has been completed.
         const atLeastOneSetCompleted = workoutExercises.some(exercise => 

@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions";
 import prisma from '@/db/prisma';
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache'
 
 // POST
 export async function POST(request) {
@@ -32,6 +33,7 @@ export async function POST(request) {
             },
         });
 
+        revalidateTag(`routines_${session.user.id}`);
         return NextResponse.json({ success: true, id: newWorkoutPlan.id }, { status: 200 });
 
     } catch (error) {
