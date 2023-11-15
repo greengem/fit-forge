@@ -51,6 +51,7 @@ model User {
   workoutPlans WorkoutPlan[]
   equipment UserEquipment[]
   exercisePBs UserExercisePB[]
+  favoriteExercises FavoriteExercise[]
 }
 
 model VerificationToken {
@@ -89,6 +90,18 @@ model Exercise {
   WorkoutPlanExercise WorkoutPlanExercise[]
   logExercises  WorkoutLogExercise[]
   userPBs UserExercisePB[]
+  favoritedBy FavoriteExercise[]
+}
+
+model FavoriteExercise {
+  userId    String
+  exerciseId String
+  favoritedAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@id([userId, exerciseId])
 }
 
 model WorkoutPlan {
