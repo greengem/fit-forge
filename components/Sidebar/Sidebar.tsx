@@ -4,6 +4,7 @@ import SidebarBrand from './SidebarBrand';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher/ThemeSwitcher';
 import SidebarWorkoutControls from './SidebarWorkoutControls';
 import { useSidebarVisibility } from "@/contexts/SidebarContext";
+import { Divider } from '@nextui-org/react';
 
 export default function Sidebar() {
     const { isSidebarVisible, toggleSidebar, isSlim, toggleSlim } = useSidebarVisibility();
@@ -13,7 +14,7 @@ export default function Sidebar() {
             <div>
                 <SidebarBrand />
             </div>
-            <div className='px-5 pt-3'>
+            <div className='px-5 pt-3 mb-2'>
                 <SidebarNav />
             </div>
             <SidebarWorkoutControls />

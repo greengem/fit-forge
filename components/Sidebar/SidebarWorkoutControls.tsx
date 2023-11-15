@@ -18,7 +18,7 @@ export default function SidebarWorkoutControls() {
     return (
         <>
             {workoutStartTime !== null && (
-                <div className='px-3'>
+                <div className='px-5'>
                     <Divider />
                     <div className='px-3 py-3 rounded-lg'>
                         <div className='text-center'>{isPaused ? 'Workout Paused' : 'Active Workout'}</div>

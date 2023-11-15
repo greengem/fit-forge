@@ -12,6 +12,7 @@ export default function SidebarNav() {
 
     return (
         <ul className="space-y-3 text-sm">
+            <Divider />
             <li className='uppercase text-xs text-gray-500 font-bold'>Data</li>
             <NavItem
                 icon={<IconDashboard className="h-5 w-5" />}

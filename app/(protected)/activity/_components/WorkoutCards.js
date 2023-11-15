@@ -82,7 +82,7 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
                                 </Dropdown>
                             )}
                         </CardHeader>
-                        <CardBody className="pt-0 px-5">
+                        <CardBody className="pt-0 px-5 pb-4">
                             <ExerciseTable workoutLogExercises={workout.exercises} workoutName={workout.name} workoutDate={workout.createdAt} personalBests={personalBests} />
                         </CardBody>
                     </Card>
