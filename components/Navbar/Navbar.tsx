@@ -11,12 +11,12 @@ import { Button } from "@nextui-org/button";
 import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout } from '@tabler/icons-react';
 
 const NAV_CONTENT_ITEMS = [
-    { label: <IconUser />, href: '/profile' },
-    { label: <IconActivity />, href: '/activity' },
-    { label: <IconDashboard />, href: '/dashboard' },
-    { label: <IconJumpRope />, href: '/workout' },
-    { label: <IconList />, href: '/routines' },
-    { label: <IconStretching />, href: '/exercises' },
+    { label: <IconUser className="mt-2" />, href: '/profile' },
+    { label: <IconActivity className="mt-2" />, href: '/activity' },
+    { label: <IconDashboard className="mt-2" />, href: '/dashboard' },
+    { label: <IconJumpRope className="mt-2" />, href: '/workout' },
+    { label: <IconList className="mt-2" />, href: '/routines' },
+    { label: <IconStretching className="mt-2" />, href: '/exercises' },
 ];
 
 export default function MobileNavbar() {
