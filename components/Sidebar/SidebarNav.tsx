@@ -4,12 +4,14 @@ import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout } from '@tabler/icons-react';
 import { Button, Divider } from '@nextui-org/react';
+import { useSidebarVisibility } from "@/contexts/SidebarContext";
 
 export default function SidebarNav() {
     const pathname = usePathname();
+    const { isSidebarVisible, toggleSidebar } = useSidebarVisibility();
 
     return (
-        <ul className="space-y-2 text-sm">
+        <ul className="space-y-3 text-sm">
             <li className='uppercase text-xs text-gray-500 font-bold'>Data</li>
             <NavItem
                 icon={<IconDashboard className="h-5 w-5" />}

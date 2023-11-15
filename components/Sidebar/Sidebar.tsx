@@ -6,7 +6,7 @@ import SidebarWorkoutControls from './SidebarWorkoutControls';
 import { useSidebarVisibility } from "@/contexts/SidebarContext";
 
 export default function Sidebar() {
-    const { isSidebarVisible, toggleSidebar } = useSidebarVisibility();
+    const { isSidebarVisible, toggleSidebar, isSlim, toggleSlim } = useSidebarVisibility();
 
     return (
         <aside className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-content1 hidden md:block shadow-md">
