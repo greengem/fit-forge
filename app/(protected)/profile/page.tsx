@@ -8,6 +8,7 @@ import ProfileStats from "./_components/ProfileStats";
 import ProfileEquipment from "./_components/ProfileEquipment";
 import ProfileDetails from "./_components/ProfileDetails";
 import ProfileActions from "./_components/ProfileActions";
+import ProfileThemeSelection from "./_components/ProfileThemeSelection";
 
 import { ExpandedProfile } from "@/types/ProfileType";
 import { EquipmentType } from "@prisma/client";
@@ -31,7 +32,8 @@ export default async function ProfilePage() {
         <>
             <ProfileHero session={session} />
             <ProfileStats expandedProfile={expandedProfile} />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-20">
+            <ProfileThemeSelection />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 <ProfileDetails session={session} expandedProfile={expandedProfile} />
                 <ProfileEquipment equipment={equipment} session={session} />
             </div>

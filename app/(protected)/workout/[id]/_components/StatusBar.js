@@ -3,7 +3,7 @@ import { Button } from "@nextui-org/button";
 import { IconPlayerPlay, IconPlayerPause, IconDeviceFloppy, IconX } from '@tabler/icons-react';
 import { useWorkoutControls } from '@/contexts/WorkoutControlsContext';
 
-export default function StatusBar({ cancelWorkout, progressPercentage, activeRoutineId }) {
+export default function StatusBar({ completeWorkout, cancelWorkout, progressPercentage, activeRoutineId }) {
     const { 
         workoutStartTime, setWorkoutStartTime,
         workoutDuration, 
@@ -37,7 +37,7 @@ export default function StatusBar({ cancelWorkout, progressPercentage, activeRou
                                 {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
                                 <span>{isPaused ? 'Resume' : 'Pause'}</span>
                             </Button>
-                            <Button type='submit' color='success'>
+                            <Button onPress={completeWorkout} color='success'>
                                 <IconDeviceFloppy /><span>Save</span>
                             </Button>
                             <Button color='danger' onPress={cancelWorkout}>

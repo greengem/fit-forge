@@ -61,13 +61,14 @@ export default function ProfileDetails({ session, expandedProfile }: ProfileDeta
             <CardHeader className='text-xl font-semibold px-5 pb-0'>
                 <IconUser className="mr-1" />Details
             </CardHeader>
-            <CardBody className="gap-y-3">
+            <CardBody className="gap-y-3 px-5">
                 <Input 
                   type="text" 
                   label="Name" 
                   placeholder="Enter your name" 
                   value={session.user.name || ''}
                   isRequired 
+                  isDisabled
                 />
 
                 <Input 

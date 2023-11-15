@@ -64,7 +64,7 @@ export default function ProfileEquipment({ equipment, session }) {
     return (
         <Card shadow="none" className='shadow-md'>
             <CardHeader className='text-xl font-semibold px-5 pb-0'><IconBarbell className='mr-1' />Equipment</CardHeader>
-            <CardBody>
+            <CardBody className='px-5'>
                 <CheckboxGroup
                     value={selectedEquipment}
                     onChange={(value) => setSelectedEquipment(value)}
