@@ -42,12 +42,12 @@ const ExerciseTable = ({ workoutLogExercises, workoutName, workoutDate, personal
       {
         bestSet ? (
           bestSet.exerciseDuration === null ? (
-            <TableCell className="py-0 text-right">{`${bestSet.weight}kg x ${bestSet.reps}`} reps</TableCell>
+            <TableCell className="py-0 pr-0 text-right">{`${bestSet.weight}kg x ${bestSet.reps}`} reps</TableCell>
           ) : (
             <TableCell className="py-0 pr-0 text-right">{`${bestSet.exerciseDuration}`} secs</TableCell>
           )
         ) : (
-          <TableCell className="py-0 text-right">No sets available</TableCell>
+          <TableCell className="py-0 pr-0 text-right">No sets available</TableCell>
         )
       }
     </TableRow>
