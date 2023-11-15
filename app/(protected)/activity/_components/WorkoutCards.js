@@ -96,11 +96,12 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
                                 {selectedWorkout ? selectedWorkout.name : 'Details'}
                             </ModalHeader>
                             <ModalBody>
-                                {selectedWorkout && (
-                                    <>
-                                        {selectedWorkout.exercises.map((exercise, exerciseIndex) => (
-                                            <div key={exerciseIndex} className="mb-5">
-                                                <h3 className="text-lg font-semibold mb-2">{exerciseIndex + 1}. {exercise.Exercise.name}</h3>
+                            {selectedWorkout && (
+                                <>
+                                    {selectedWorkout.exercises.map((exercise, exerciseIndex) => (
+                                        <div key={exerciseIndex} className="mb-5">
+                                            <h3 className="text-lg font-semibold mb-2">{exerciseIndex + 1}. {exercise.Exercise.name}</h3>
+                                            {exercise.sets && exercise.sets.length > 0 ? (
                                                 <Table removeWrapper aria-label={`Details of ${exercise.Exercise.name} Exercise`}>
                                                     <TableHeader>
                                                         <TableColumn className=" max-w-[164px]">SET</TableColumn>
@@ -117,10 +118,14 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
                                                         ))}
                                                     </TableBody>
                                                 </Table>
-                                            </div>
-                                        ))}
-                                    </>
-                                )}
+                                            ) : (
+                                                <p>No sets available for this exercise.</p>
+                                            )}
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>
