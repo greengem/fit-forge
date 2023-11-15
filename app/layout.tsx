@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { Inter } from 'next/font/google'
 import './globals.css';
+import { Toaster } from 'react-hot-toast';
 
 export function generateViewport() {
   return {
@@ -32,6 +33,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
+          <Toaster />
           {children}
         </Providers>
         <Analytics />

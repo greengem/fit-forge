@@ -1,6 +1,5 @@
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Navbar from '@/components/Navbar/Navbar';
-import { Toaster } from 'react-hot-toast';
 import ActiveWorkoutWarning from '@/components/Notices/ActiveWorkoutWarning';
 
 export default function RootLayout({
@@ -10,16 +9,15 @@ export default function RootLayout({
   }) {
 
     return (
-      <main className="flex flex-col min-h-screen">
-        <Toaster />
-        <Navbar />
-        <div className='flex flex-grow'>
+      <div className="flex">
           <Sidebar />
-          <div className="md:ml-64 flex-1 p-5">
+          <main className="flex-grow">
+            <Navbar />
+            <div className='p-3 md:p-5 ml-0 md:ml-64'>
               <ActiveWorkoutWarning />
-                {children}
-          </div>
+              {children}
+            </div>
+          </main>
         </div>
-      </main>
     )
   }
