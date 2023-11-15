@@ -24,6 +24,7 @@ export default function MobileNavbar() {
 
     return (
         <Navbar className="bg-content1 block md:hidden shadow-md">
+            {/*
             <NavbarContent>
                 <NavbarBrand>
                     <Link as={NextLink} href="/dashboard">
@@ -31,7 +32,7 @@ export default function MobileNavbar() {
                     </Link>
                 </NavbarBrand>
             </NavbarContent>
-
+    */ }
             <NavbarContent className="gap-5">
                 {NAV_CONTENT_ITEMS.map(item => (
                     <NavbarItem key={item.href} isActive={pathname === item.href}>
