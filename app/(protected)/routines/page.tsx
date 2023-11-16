@@ -21,11 +21,13 @@ export default async function RoutinesPage() {
 
   return (
       <>
+      <div className="flex gap-x-4 items-center justify-between">
         <PageHeading title="Routines" />
-
-        <Button as={Link} href="/routines/new" variant="ghost" color="success" className="hidden gap-unit-1 mb-5">
+        <Button as={Link} href="/routines/new" variant="ghost" color="success" className="gap-unit-1 mb-3">
           <IconPlus size={16} />New Routine
         </Button>
+      </div>
+
 
         <RoutineDisplay userRoutines={userRoutines} systemRoutines={systemRoutines} />
 
