@@ -42,15 +42,8 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
     const [searchQuery, setSearchQuery] = useState<string>("");
 
     const matchesEquipment = (exercise: Exercise) => {
-        if (!filterByEquipment) return true;
-        if (!exercise.equipment) return false;
-    
-        // Ensure equipment is treated as an array, even if it's a single value
-        const equipmentArray = Array.isArray(exercise.equipment) ? exercise.equipment : [exercise.equipment];
-        
-        const result = equipmentArray.some(eq => myEquipment.includes(eq));
-        console.log(`Exercise: ${exercise.name}, Equipment: ${equipmentArray}, Result: ${result}`);
-        return result;
+        if (!filterByEquipment || !exercise.equipment) return true;
+        return myEquipment.includes(exercise.equipment);
     };
 
     const matchesFavorites = (exercise: Exercise) => {
@@ -71,17 +64,15 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
         return query === '' || exercise.name.toLowerCase().includes(query.toLowerCase());
     };
 
-    const toggleEquipmentFilter = () => {
-        setFilterByEquipment(prevState => !prevState);
-    };
-
     const filteredExercises = useMemo(() => exercises.filter(exercise => 
         matchesCategory(exercise, filters.category) &&
         matchesMuscleGroup(exercise, filters.muscleGroup) &&
         matchesSearchQuery(exercise, searchQuery) &&
         matchesEquipment(exercise) &&
         matchesFavorites(exercise)
-    ), [exercises, filters, searchQuery, filterByEquipment, filterByFavorites]);
+    ), [exercises, filters, searchQuery, filterByEquipment, filterByFavorites, myEquipment, favoriteExercises]);
+    
+    
 
     // Pagination
     const rowsPerPage = 10;
@@ -163,7 +154,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
                     <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
                     <TableColumn><></></TableColumn>
                 </TableHeader>
-                <TableBody>
+                <TableBody emptyContent={"No results"}>
                     {displayedExercises.map((exercise) => (
                         <TableRow key={exercise.id}>
                             <TableCell className="capitalize">
