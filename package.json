@@ -13,6 +13,7 @@
     "@auth/prisma-adapter": "^1.0.4",
     "@nextui-org/react": "^2.1.13",
     "@prisma/client": "^5.6.0",
+    "@supabase/supabase-js": "^2.38.4",
     "@tabler/icons-react": "^2.39.0",
     "@vercel/analytics": "^1.1.1",
     "chart.js": "^4.4.0",
