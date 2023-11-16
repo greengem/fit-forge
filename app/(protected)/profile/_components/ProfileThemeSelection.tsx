@@ -6,7 +6,7 @@ import { IconPalette } from "@tabler/icons-react";
 export default function ProfileThemeSelection(){
 
     return (
-        <Card className="mb-5 shadow-lg" shadow="none">
+        <Card className="mb-5 shadow-md" shadow="none">
             <CardHeader className='text-xl font-semibold px-5 pb-0'><IconPalette className='mr-1' />Theme</CardHeader>
             <CardBody className="px-5">
                 <RadioGroup 

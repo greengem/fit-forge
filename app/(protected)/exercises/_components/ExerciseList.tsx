@@ -1,10 +1,12 @@
 "use client";
 import { Exercise } from '@/types/ExerciseType';
+import { EquipmentType } from "@prisma/client";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
-import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-org/react";
+import { Pagination, User, Button, useDisclosure, ButtonGroup, Card, CardBody } from "@nextui-org/react";
+import {CheckboxGroup, Checkbox} from "@nextui-org/react";
 import { IconInfoCircle, IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
 import { Muscle } from "@prisma/client";
 import ExerciseSearch from "./ExerciseSearch";
@@ -14,6 +16,7 @@ import ExerciseModal from "./ExerciseModal";
 interface ExerciseListProps {
   exercises: Exercise[];
   favoriteExercises: FavoriteExercise[];
+  myEquipment: EquipmentType[];
 };
 
 type Filters = {
@@ -25,7 +28,7 @@ type FavoriteExercise = {
     exerciseId: string;
 };
 
-const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises }) => {
+const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises, myEquipment }) => {
     const router = useRouter()
 
     // Modal
@@ -34,7 +37,26 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
 
     //Filters
     const [filters, setFilters] = useState<Filters>({ category: null, muscleGroup: null });
+    const [filterByEquipment, setFilterByEquipment] = useState<boolean>(false);
+    const [filterByFavorites, setFilterByFavorites] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
+
+    const matchesEquipment = (exercise: Exercise) => {
+        if (!filterByEquipment) return true;
+        if (!exercise.equipment) return false;
+    
+        // Ensure equipment is treated as an array, even if it's a single value
+        const equipmentArray = Array.isArray(exercise.equipment) ? exercise.equipment : [exercise.equipment];
+        
+        const result = equipmentArray.some(eq => myEquipment.includes(eq));
+        console.log(`Exercise: ${exercise.name}, Equipment: ${equipmentArray}, Result: ${result}`);
+        return result;
+    };
+
+    const matchesFavorites = (exercise: Exercise) => {
+        if (!filterByFavorites) return true;
+        return favoriteExercises.some(fav => fav.exerciseId === exercise.id);
+    };
 
     const matchesCategory = (exercise: Exercise, category: string | null) => {
         return category === null || exercise.category === category;
@@ -49,11 +71,17 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
         return query === '' || exercise.name.toLowerCase().includes(query.toLowerCase());
     };
 
+    const toggleEquipmentFilter = () => {
+        setFilterByEquipment(prevState => !prevState);
+    };
+
     const filteredExercises = useMemo(() => exercises.filter(exercise => 
         matchesCategory(exercise, filters.category) &&
         matchesMuscleGroup(exercise, filters.muscleGroup) &&
-        matchesSearchQuery(exercise, searchQuery)
-    ), [exercises, filters, searchQuery]);
+        matchesSearchQuery(exercise, searchQuery) &&
+        matchesEquipment(exercise) &&
+        matchesFavorites(exercise)
+    ), [exercises, filters, searchQuery, filterByEquipment, filterByFavorites]);
 
     // Pagination
     const rowsPerPage = 10;
@@ -92,7 +120,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
     
             if (response.ok) {
                 toast.success(data.message);
-                router.refresh(); // Refresh the data to reflect the changes
+                router.refresh();
             } else {
                 toast.error(data.error || 'Error toggling favorite exercise');
             }
@@ -100,9 +128,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
             toast.error('An error occurred while communicating with the server.');
         }
     };
-    
-    
-
 
     return (
         <>
@@ -111,7 +136,28 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
                 <ExerciseFilters onFilterChange={setFilters} />
             </div>
 
-            <Table aria-label="Exercise Table" className="mb-5 shadow-md" shadow="none">
+            <div className='mb-3'>
+                <Card>
+                    <CardBody>
+                        <CheckboxGroup orientation="horizontal" color="success">
+                            <Checkbox 
+                                value="myFavorites"
+                                onValueChange={setFilterByFavorites}
+                            >
+                                Only Favorites
+                            </Checkbox>
+                            <Checkbox 
+                                value="myEquipment"
+                                onValueChange={setFilterByEquipment}
+                            >
+                                Only My Equipment
+                            </Checkbox>
+                        </CheckboxGroup>
+                    </CardBody>
+                </Card>
+            </div>
+
+            <Table aria-label="Exercise Table" className="mb-5" shadow="none">
                 <TableHeader>
                     <TableColumn>NAME</TableColumn>
                     <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>

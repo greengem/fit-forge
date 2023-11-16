@@ -9,7 +9,7 @@ export type Exercise = {
     force: ForceType | null;
     level: LevelType;
     mechanic: MechanicType | null;
-    equipment: EquipmentType | null;
+    equipment: EquipmentType[] | null;
     category: CategoryType;
     instructions: string[];
     tips: string[];

@@ -31,7 +31,7 @@ export async function POST(request) {
         });
 
         revalidateTag(`favoriteExercises_${session.user.id}`);
-        return NextResponse.json({ message: "Favorite exercise saved successfully." });
+        return NextResponse.json({ message: "Favorite exercise saved." });
     } catch (error) {
         return NextResponse.json({ error: "An error occurred saving favorite exercise." }, { status: 500 });
     }
