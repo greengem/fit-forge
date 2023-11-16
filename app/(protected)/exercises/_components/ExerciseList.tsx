@@ -41,16 +41,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
     const [filterByFavorites, setFilterByFavorites] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
-    const matchesEquipment = (exercise: Exercise) => {
-        if (!filterByEquipment || !exercise.equipment) return true;
-        return myEquipment.includes(exercise.equipment);
-    };
-
-    const matchesFavorites = (exercise: Exercise) => {
-        if (!filterByFavorites) return true;
-        return favoriteExercises.some(fav => fav.exerciseId === exercise.id);
-    };
-
     const matchesCategory = (exercise: Exercise, category: string | null) => {
         return category === null || exercise.category === category;
     };
@@ -64,15 +54,25 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
         return query === '' || exercise.name.toLowerCase().includes(query.toLowerCase());
     };
 
-    const filteredExercises = useMemo(() => exercises.filter(exercise => 
-        matchesCategory(exercise, filters.category) &&
-        matchesMuscleGroup(exercise, filters.muscleGroup) &&
-        matchesSearchQuery(exercise, searchQuery) &&
-        matchesEquipment(exercise) &&
-        matchesFavorites(exercise)
-    ), [exercises, filters, searchQuery, filterByEquipment, filterByFavorites, myEquipment, favoriteExercises]);
+    const filteredExercises = useMemo(() => {
+        const matchesEquipment = (exercise: Exercise) => {
+            if (!filterByEquipment || !exercise.equipment) return true;
+            return myEquipment.includes(exercise.equipment);
+        };
     
+        const matchesFavorites = (exercise: Exercise) => {
+            if (!filterByFavorites) return true;
+            return favoriteExercises.some(fav => fav.exerciseId === exercise.id);
+        };
     
+        return exercises.filter(exercise => 
+            matchesCategory(exercise, filters.category) &&
+            matchesMuscleGroup(exercise, filters.muscleGroup) &&
+            matchesSearchQuery(exercise, searchQuery) &&
+            matchesEquipment(exercise) &&
+            matchesFavorites(exercise)
+        );
+    }, [exercises, filters, searchQuery, filterByEquipment, filterByFavorites, myEquipment, favoriteExercises]);
 
     // Pagination
     const rowsPerPage = 10;
