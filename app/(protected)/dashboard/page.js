@@ -30,9 +30,10 @@ export default async function DashboardPage() {
 			
 			<DashboardCards workouts={workouts} personalBests={numberOfPBsLastWeek} />
 			<DashboardLinks />
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 			<DashboardChartWorkouts workouts={workoutsChart} />
-			</div>
+			
+			{workouts.length > 0 && (
+			<>
 			<PageHeading title="Recent Activity" />
 			<CardGrid>
 				<WorkoutCards workouts={recentActivity} personalBests={personalBests} showDeleteButton={false} />
@@ -40,6 +41,8 @@ export default async function DashboardPage() {
 			<div className="text-center mt-5">
 				<Button variant="ghost" as={Link} href="/activity">View all activity</Button>
 			</div>
+			</>
+			)}
 		</>
 	);
 }
