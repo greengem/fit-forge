@@ -30,12 +30,15 @@ type FavoriteExercise = {
 
 const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises, myEquipment }) => {
     const router = useRouter();
+    const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
     const toggleFavoriteExercise = useToggleFavoriteExericse(favoriteExercises);
 
     const handleToggleFavorite = async (exerciseId: string) => {
+        setLoadingFavorite({ ...loadingFavorite, [exerciseId]: true });
         await toggleFavoriteExercise(exerciseId);
         router.refresh();
-    }
+        setLoadingFavorite({ ...loadingFavorite, [exerciseId]: false });
+    };
 
     // Modal
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -147,6 +150,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
                                     <Button 
                                         onPress={() => handleToggleFavorite(exercise.id)}
                                         isIconOnly
+                                        isLoading={loadingFavorite[exercise.id]}
                                     >
                                         {isFavorite(exercise.id) ? <IconStarFilled className="text-warning" size={20} /> : <IconStar size={20} />}
                                     </Button>
