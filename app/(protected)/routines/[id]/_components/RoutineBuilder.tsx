@@ -9,6 +9,15 @@ import { SearchResults } from './SearchResults';
 import ExerciseTable from './ExerciseTable';
 import { SaveButton } from './SaveButton';
 
+interface RoutineBuilderProps {
+  routineId: string;
+  favoriteExercises: FavoriteExercise[];
+}
+
+type FavoriteExercise = {
+  exerciseId: string;
+};
+
 interface Exercise {
   id: string;
   name: string;
@@ -22,7 +31,7 @@ interface Exercise {
 
 type ExerciseField = 'sets' | 'reps' | 'exerciseDuration' | 'trackingType';
 
-const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
+const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises }) => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -117,11 +126,15 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
   };
 
   const deleteExercise = (index: number) => {
-    const updatedExercises = [...selectedExercises];
-    updatedExercises.splice(index, 1);
-    toast.success('Exercise removed');
-    setSelectedExercises(updatedExercises);
-  };
+    const isConfirmed = window.confirm("Are you sure you want to remove this exercise?");
+    if (isConfirmed) {
+        const updatedExercises = [...selectedExercises];
+        updatedExercises.splice(index, 1);
+        toast.success('Exercise removed');
+        setSelectedExercises(updatedExercises);
+    }
+};
+
 
   const validateForm = () => {
     if (!routineName.trim()) {
@@ -240,6 +253,7 @@ const RoutineBuilder: FC<{ routineId: string }> = ({ routineId }) => {
         moveUp={moveUp}
         moveDown={moveDown}
         deleteExercise={deleteExercise}
+        favoriteExercises={favoriteExercises}
       />
       <SaveButton handleSave={handleSave} isLoading={isSaving} />
     </div>

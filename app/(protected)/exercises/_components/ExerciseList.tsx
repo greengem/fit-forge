@@ -3,7 +3,7 @@ import { Exercise } from '@/types/ExerciseType';
 import { EquipmentType } from "@prisma/client";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import useToggleFavoriteExericse from '@/app/hooks/useToggleFavoriteExercise';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { Pagination, User, Button, useDisclosure, ButtonGroup, Card, CardBody } from "@nextui-org/react";
 import {CheckboxGroup, Checkbox} from "@nextui-org/react";
@@ -29,7 +29,13 @@ type FavoriteExercise = {
 };
 
 const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises, myEquipment }) => {
-    const router = useRouter()
+    const router = useRouter();
+    const toggleFavoriteExercise = useToggleFavoriteExericse(favoriteExercises);
+
+    const handleToggleFavorite = async (exerciseId: string) => {
+        await toggleFavoriteExercise(exerciseId);
+        router.refresh();
+    }
 
     // Modal
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -86,40 +92,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
         return favoriteExercises.some(favExercise => favExercise.exerciseId === exerciseId);
     };
 
-    const toggleFavoriteExercise = async (exerciseId: string) => {
-        try {
-            let response;
-    
-            if (isFavorite(exerciseId)) {
-                response = await fetch(`/api/users/favorites/${exerciseId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-            } else {
-                response = await fetch('/api/users/favorites', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ exerciseId }),
-                });
-            }
-    
-            const data = await response.json();
-    
-            if (response.ok) {
-                toast.success(data.message);
-                router.refresh();
-            } else {
-                toast.error(data.error || 'Error toggling favorite exercise');
-            }
-        } catch (error) {
-            toast.error('An error occurred while communicating with the server.');
-        }
-    };
-
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-2 mb-3">
@@ -173,7 +145,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
                             <TableCell className="flex justify-end">
                                 <ButtonGroup size="sm">
                                     <Button 
-                                        onPress={() => toggleFavoriteExercise(exercise.id)}
+                                        onPress={() => handleToggleFavorite(exercise.id)}
                                         isIconOnly
                                     >
                                         {isFavorite(exercise.id) ? <IconStarFilled className="text-warning" size={20} /> : <IconStar size={20} />}
