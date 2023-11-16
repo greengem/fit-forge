@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { Select, SelectItem } from '@nextui-org/select';
 import { CategoryType, Muscle } from '@prisma/client';
 
@@ -11,7 +11,10 @@ interface Filters {
   muscleGroup: Muscle | null;
 }
 
+const allOption = { value: 'all', label: 'All' };
+
 const categories = [
+  allOption,
   { value: CategoryType.strength, label: 'Strength' },
   { value: CategoryType.cardio, label: 'Cardio' },
   { value: CategoryType.stretching, label: 'Stretching' },
@@ -22,6 +25,7 @@ const categories = [
 ];
 
 const muscleGroups = [
+  allOption,
   { value: Muscle.abdominals, label: 'Abdominals' },
   { value: Muscle.hamstrings, label: 'Hamstrings' },
   { value: Muscle.adductors, label: 'Adductors' },
@@ -44,37 +48,35 @@ const muscleGroups = [
 export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps) {
 
   const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    onFilterChange({
-      category: event.target.value as CategoryType,
-      muscleGroup: null,
-    });
+    const newCategory = event.target.value === 'all' ? null : event.target.value as CategoryType;
+    onFilterChange({ category: newCategory, muscleGroup: null });
   };
   
   const handleMuscleGroupChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    onFilterChange({
-      category: null,
-      muscleGroup: event.target.value as Muscle,
-    });
+    const newMuscleGroup = event.target.value === 'all' ? null : event.target.value as Muscle;
+    onFilterChange({ category: null, muscleGroup: newMuscleGroup });
   };
+  
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-2">
-        <Select label="Category" placeholder="All" onChange={handleCategoryChange} size="sm">
-          {categories.map((category) => (
-            <SelectItem key={category.value} value={category.value}>
-              {category.label}
-            </SelectItem>
-          ))}
-        </Select>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-2">
+      <Select label="Category" onChange={handleCategoryChange} size="sm" defaultSelectedKeys={["all"]}>
+        {categories.map((category) => (
+          <SelectItem key={category.value} value={category.value}>
+            {category.label}
+          </SelectItem>
+        ))}
+      </Select>
 
-        <Select label="Muscle Group" placeholder="All" onChange={handleMuscleGroupChange} size="sm">
-          {muscleGroups.map((muscle) => (
-            <SelectItem key={muscle.value} value={muscle.value}>
-              {muscle.label}
-            </SelectItem>
-          ))}
-        </Select>
+      <Select label="Muscle Group" onChange={handleMuscleGroupChange} size="sm" defaultSelectedKeys={["all"]}>
+        {muscleGroups.map((muscle) => (
+          <SelectItem key={muscle.value} value={muscle.value}>
+            {muscle.label}
+          </SelectItem>
+        ))}
+      </Select>
+
       </div>
     </>
   );

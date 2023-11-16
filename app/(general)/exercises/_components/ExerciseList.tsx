@@ -1,71 +1,98 @@
 "use client";
+import { Exercise } from '@/types/ExerciseType';
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
+import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-org/react";
+import { IconInfoCircle, IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
+import { Muscle } from "@prisma/client";
 import ExerciseSearch from "./ExerciseSearch";
 import ExerciseFilters from "./ExerciseFilters";
 import ExerciseModal from "./ExerciseModal";
-import { IconInfoCircle, IconPlus, IconStar } from "@tabler/icons-react";
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
-import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-org/react";
-import { Exercise } from '@/types/ExerciseType';
-import { Muscle } from "@prisma/client";
-import toast from "react-hot-toast";
+
+interface ExerciseListProps {
+  exercises: Exercise[];
+  favoriteExercises: FavoriteExercise[];
+};
+
+type Filters = {
+    category: string | null;
+    muscleGroup: Muscle | null;
+};
 
 type FavoriteExercise = {
     exerciseId: string;
 };
-interface ExerciseListProps {
-  exercises: Exercise[];
-  favoriteExercises: FavoriteExercise[];
-}
 
 const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises }) => {
-    // Pagination
-    const rowsPerPage = 10;
-    const [page, setPage] = useState<number>(1);
+    const router = useRouter()
 
     // Modal
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-    //Filters
-    const [filters, setFilters] = useState<{ category: string | null; muscleGroup: Muscle | null }>({ category: null, muscleGroup: null });
-    const [searchQuery, setSearchQuery] = useState<string>("");
-
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
 
-    const filteredExercises = useMemo(() => {
-        return exercises.filter((exercise) => {
-            const { category, primary_muscles, secondary_muscles, name } = exercise;
+    //Filters
+    const [filters, setFilters] = useState<Filters>({ category: null, muscleGroup: null });
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
-            if (filters.category && category !== filters.category) return false;
-            if (
-                filters.muscleGroup &&
-                !primary_muscles.includes(filters.muscleGroup) &&
-                !secondary_muscles.includes(filters.muscleGroup)
-            ) return false;
+    const matchesCategory = (exercise: Exercise, category: string | null) => {
+        return category === null || exercise.category === category;
+    };
+    
+    const matchesMuscleGroup = (exercise: Exercise, muscleGroup: Muscle | null) => {
+        if (muscleGroup === null || !exercise.primary_muscles || !exercise.secondary_muscles) return true;
+        return exercise.primary_muscles.includes(muscleGroup) || exercise.secondary_muscles.includes(muscleGroup);
+    };
+      
+    const matchesSearchQuery = (exercise: Exercise, query: string) => {
+        return query === '' || exercise.name.toLowerCase().includes(query.toLowerCase());
+    };
 
-            if (searchQuery && !name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-            return true;
-        });
-    }, [exercises, filters, searchQuery]);
+    const filteredExercises = useMemo(() => exercises.filter(exercise => 
+        matchesCategory(exercise, filters.category) &&
+        matchesMuscleGroup(exercise, filters.muscleGroup) &&
+        matchesSearchQuery(exercise, searchQuery)
+    ), [exercises, filters, searchQuery]);
 
+    // Pagination
+    const rowsPerPage = 10;
+    const [page, setPage] = useState<number>(1);
     const displayedExercises = filteredExercises.slice(
         (page - 1) * rowsPerPage,
         page * rowsPerPage
     );
 
+    const isFavorite = (exerciseId: string) => {
+        return favoriteExercises.some(favExercise => favExercise.exerciseId === exerciseId);
+    };
+
     const toggleFavoriteExercise = async (exerciseId: string) => {
         try {
-            const response = await fetch('/api/users/favorites', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ exerciseId }),
-            });
+            let response;
+    
+            if (isFavorite(exerciseId)) {
+                response = await fetch(`/api/users/favorites/${exerciseId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+            } else {
+                response = await fetch('/api/users/favorites', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ exerciseId }),
+                });
+            }
+    
             const data = await response.json();
-
+    
             if (response.ok) {
                 toast.success(data.message);
+                router.refresh(); // Refresh the data to reflect the changes
             } else {
                 toast.error(data.error || 'Error toggling favorite exercise');
             }
@@ -73,10 +100,13 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
             toast.error('An error occurred while communicating with the server.');
         }
     };
+    
+    
+
 
     return (
         <>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-2 mb-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-2 mb-3">
                 <ExerciseSearch setSearchQuery={setSearchQuery} />
                 <ExerciseFilters onFilterChange={setFilters} />
             </div>
@@ -105,8 +135,12 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
                             </TableCell>
                             <TableCell className="flex justify-end">
                                 <ButtonGroup size="sm">
-                                    <Button isIconOnly><IconPlus size={20} /></Button>
-                                    <Button onPress={() => toggleFavoriteExercise(exercise.id)} isIconOnly><IconStar size={20} /></Button>
+                                    <Button 
+                                        onPress={() => toggleFavoriteExercise(exercise.id)}
+                                        isIconOnly
+                                    >
+                                        {isFavorite(exercise.id) ? <IconStarFilled className="text-warning" size={20} /> : <IconStar size={20} />}
+                                    </Button>
                                     
                                     <Button isIconOnly onPress={() => { setSelectedExercise(exercise); onOpen(); }}>
                                         <IconInfoCircle size={20} />
