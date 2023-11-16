@@ -14,7 +14,7 @@ export default async function RoutinesPage() {
   if (session && session.user) {
     routines = await getRoutines(session.user.id);
   }
-
+  
   const userRoutines = routines.filter(routine => !routine.isSystemRoutine);
   const systemRoutines = routines.filter(routine => routine.isSystemRoutine);
 

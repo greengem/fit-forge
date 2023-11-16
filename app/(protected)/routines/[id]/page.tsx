@@ -3,22 +3,32 @@ import { authOptions } from "@/app/lib/authOptions";
 import getUserFavoriteExercises from "@/app/lib/getUserFavoriteExercises";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import RoutineBuilder from './_components/RoutineBuilder';
+import getRoutine from '@/app/lib/getRoutine';
 
 export default async function NewRoutinePage({ params }: { params: { id: string } }) {
+  const routineId = params.id;
   const session = await getServerSession(authOptions);
   
   if (!session) {
     return <div>No user session available</div>;
   }
 
-	const userId = session?.user?.id;
+  const userId = session?.user?.id;
+  let existingRoutine;
+
+  if (routineId !== 'new') {
+    existingRoutine = await getRoutine(routineId);
+  } else {
+    existingRoutine = null;
+  }
+  //console.log(existingRoutine);
+
   const favoriteExercises = await getUserFavoriteExercises(userId);
-  // Todo: Check if we are editing or creating a new routine by checking params
-  // Fetch the routine we wish to edit here and pass it down
+  
   return (
     <>
       <PageHeading title="Create New Routine" />
-      <RoutineBuilder routineId={params.id} favoriteExercises={favoriteExercises} />
+      <RoutineBuilder existingRoutine={existingRoutine} routineId={routineId} favoriteExercises={favoriteExercises} />
     </>
   )
 }

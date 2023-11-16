@@ -1,6 +1,6 @@
 "use client";
-import { FC, useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 import { RoutineDetails } from './RoutineDetails';
@@ -9,36 +9,14 @@ import { SearchResults } from './SearchResults';
 import ExerciseTable from './ExerciseTable';
 import { SaveButton } from './SaveButton';
 
-interface RoutineBuilderProps {
-  routineId: string;
-  favoriteExercises: FavoriteExercise[];
-}
-
-type FavoriteExercise = {
-  exerciseId: string;
-};
-
-interface Exercise {
-  id: string;
-  name: string;
-  sets: number;
-  reps?: number;
-  duration?: number;
-  exerciseDuration?: number;
-  order?: number;
-  trackingType: 'reps' | 'duration';
-}
-
-type ExerciseField = 'sets' | 'reps' | 'exerciseDuration' | 'trackingType';
-
-const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises }) => {
+const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
-  const [routineName, setRoutineName] = useState<string>('');
-  const [notes, setNotes] = useState<string>('');
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedExercises, setSelectedExercises] = useState([]);
+  const [routineName, setRoutineName] = useState('');
+  const [notes, setNotes] = useState('');
+  const searchInputRef = useRef(null);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
@@ -70,12 +48,12 @@ const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises 
     setSearchResults(data);
   };
 
-  const addExerciseToRoutine = (exercise: Exercise) => {
+  const addExerciseToRoutine = (exercise) => {
     if (selectedExercises.some(e => e.id === exercise.id)) return;
     
     const { id, name, trackingType } = exercise;
     
-    const newExercise: Exercise = {
+    const newExercise = {
       id,
       name,
       sets: 1,
@@ -90,7 +68,7 @@ const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises 
     searchInputRef.current?.focus();
   };
 
-  const updateExercise = (index: number, field: ExerciseField, value: number | 'reps' | 'duration') => {
+  const updateExercise = (index, field, value) => {
       const updatedExercises = [...selectedExercises];
 
       if (field === 'trackingType') {
@@ -101,11 +79,11 @@ const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises 
           }
       }
 
-      (updatedExercises[index][field] as any) = value;
+      updatedExercises[index][field] = value;
       setSelectedExercises(updatedExercises);
   };
 
-  const moveUp = (index: number) => {
+  const moveUp = (index) => {
     if (index === 0) return;
     const updatedExercises = [...selectedExercises];
     const temp = updatedExercises[index - 1];
@@ -115,7 +93,7 @@ const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises 
     setSelectedExercises(updatedExercises);
   };
 
-  const moveDown = (index: number) => {
+  const moveDown = (index) => {
     if (index === selectedExercises.length - 1) return;
     const updatedExercises = [...selectedExercises];
     const temp = updatedExercises[index + 1];
@@ -125,7 +103,7 @@ const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises 
     setSelectedExercises(updatedExercises);
   };
 
-  const deleteExercise = (index: number) => {
+  const deleteExercise = (index) => {
     const isConfirmed = window.confirm("Are you sure you want to remove this exercise?");
     if (isConfirmed) {
         const updatedExercises = [...selectedExercises];
@@ -133,8 +111,7 @@ const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises 
         toast.success('Exercise removed');
         setSelectedExercises(updatedExercises);
     }
-};
-
+  };
 
   const validateForm = () => {
     if (!routineName.trim()) {
@@ -176,9 +153,9 @@ const RoutineBuilder: FC<RoutineBuilderProps> = ({ routineId, favoriteExercises 
       let { reps, exerciseDuration, trackingType } = exercise;
     
       if (exercise.trackingType === 'reps') {
-        exerciseDuration = exercise.exerciseDuration !== 0 ? exercise.exerciseDuration as number : undefined;
+        exerciseDuration = exercise.exerciseDuration !== 0 ? exercise.exerciseDuration : undefined;
       } else if (exercise.trackingType === 'duration') {
-        reps = exercise.reps !== 0 ? exercise.reps as number : undefined;
+        reps = exercise.reps !== 0 ? exercise.reps : undefined;
       }
       
       return {
