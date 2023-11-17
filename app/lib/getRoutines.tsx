@@ -29,6 +29,7 @@ const getCachedRoutines = (userId: string | null) => unstable_cache(
 			createdAt: true,
 			updatedAt: true,
 			isSystemRoutine: true,
+			systemRoutineCategory: true,
 			WorkoutPlanExercise: {
 				select: {
 				sets: true,
