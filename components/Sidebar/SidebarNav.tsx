@@ -2,7 +2,7 @@
 import { usePathname } from 'next/navigation'
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
-import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout } from '@tabler/icons-react';
+import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout, IconPlus } from '@tabler/icons-react';
 import { Button, Divider } from '@nextui-org/react';
 import { useSidebarVisibility } from "@/contexts/SidebarContext";
 
@@ -38,7 +38,13 @@ export default function SidebarNav() {
                 icon={<IconList className="h-5 w-5" />}
                 label="Manage Routines"
                 href="/routines"
-                active={pathname.startsWith("/routines")}
+                active={pathname === "/routines"}
+            />
+            <NavItem
+                icon={<IconPlus className="h-5 w-5" />}
+                label="New Routine"
+                href="/routines/new"
+                active={pathname.startsWith("/routines/new")}
             />
             <NavItem
                 icon={<IconStretching className="h-5 w-5" />}

@@ -112,7 +112,7 @@ model WorkoutPlan {
   updatedAt           DateTime              @updatedAt
   notes               String?
   isSystemRoutine     Boolean               @default(false)
-  SystemRoutineCategory String?
+  systemRoutineCategory String?
   User                User?                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   logs          WorkoutLog[]
   WorkoutPlanExercise WorkoutPlanExercise[]
