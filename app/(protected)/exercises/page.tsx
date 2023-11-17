@@ -9,7 +9,6 @@ import { Exercise } from '@/types/ExerciseType';
 import { EquipmentType } from "@prisma/client";
 
 export default async function ExercisesPage() {
-  const exercises: Exercise[] = await getExercises();
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -19,6 +18,7 @@ export default async function ExercisesPage() {
 	const userId = session?.user?.id;
   const favoriteExercises = await getUserFavoriteExercises(userId);
   const myEquipment: EquipmentType[] = await getEquipment(userId);
+  const exercises: Exercise[] = await getExercises();
 
   return (
     <>
