@@ -29,7 +29,7 @@ const useToggleFavoriteExercise = (favoriteExercises) => {
             const data = await response.json();
 
         } catch (error) {
-            toast.error('An error occurred while communicating with the server.');
+            console.error('An error occurred while communicating with the server.');
         }
     };
 

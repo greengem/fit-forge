@@ -21,7 +21,6 @@ export default async function NewRoutinePage({ params }: { params: { id: string 
   } else {
     existingRoutine = null;
   }
-  //console.log(existingRoutine);
 
   const favoriteExercises = await getUserFavoriteExercises(userId);
   

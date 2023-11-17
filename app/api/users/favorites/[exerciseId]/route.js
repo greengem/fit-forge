@@ -31,7 +31,6 @@ export async function DELETE(request, { params }) {
 
         return NextResponse.json({ message: "Favorite exercise removed." });
     } catch (error) {
-        console.error("Error in DELETE /api/users/favorites:", error);
         return NextResponse.json({ error: "An error occurred removing favorite exercise." }, { status: 500 });
     }
 }

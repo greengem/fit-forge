@@ -30,16 +30,8 @@ type FavoriteExercise = {
 
 const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises, myEquipment }) => {
     const router = useRouter();
-
-    // Favorites
-    const toggleFavoriteExercise = useToggleFavoriteExericse(favoriteExercises);
     const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
-    
-    const favoriteIdsSet = useMemo(() => new Set(favoriteExercises.map(fav => fav.exerciseId)), [favoriteExercises]);
-
-    const isFavorite = (exerciseId: string) => {
-        return favoriteIdsSet.has(exerciseId);
-    };
+    const toggleFavoriteExercise = useToggleFavoriteExericse(favoriteExercises);
 
     const handleToggleFavorite = async (exerciseId: string) => {
         setLoadingFavorite({ ...loadingFavorite, [exerciseId]: true });
@@ -52,7 +44,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
 
-    // Filters
+    //Filters
     const [filters, setFilters] = useState<Filters>({ category: null, muscleGroup: null });
     const [filterByEquipment, setFilterByEquipment] = useState<boolean>(false);
     const [filterByFavorites, setFilterByFavorites] = useState<boolean>(false);
@@ -79,7 +71,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
     
         const matchesFavorites = (exercise: Exercise) => {
             if (!filterByFavorites) return true;
-            return favoriteIdsSet.has(exercise.id);
+            return favoriteExercises.some(fav => fav.exerciseId === exercise.id);
         };
     
         return exercises.filter(exercise => 
@@ -89,7 +81,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
             matchesEquipment(exercise) &&
             matchesFavorites(exercise)
         );
-    }, [exercises, filters, searchQuery, filterByEquipment, filterByFavorites, myEquipment, favoriteExercises, favoriteIdsSet]);
+    }, [exercises, filters, searchQuery, filterByEquipment, filterByFavorites, myEquipment, favoriteExercises]);
 
     // Pagination
     const rowsPerPage = 10;
@@ -98,6 +90,10 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
         (page - 1) * rowsPerPage,
         page * rowsPerPage
     );
+
+    const isFavorite = (exerciseId: string) => {
+        return favoriteExercises.some(favExercise => favExercise.exerciseId === exerciseId);
+    };
 
     return (
         <>

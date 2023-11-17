@@ -4,7 +4,7 @@ import { unstable_cache } from 'next/cache';
 
 const getCachedExercises = unstable_cache(
     async () => {
-        console.log("Fetching exercises from the database");  // Log when fetching from the database
+        //console.log("Fetching exercises from the database");
         return await prisma.exercise.findMany({
             select: {
                 id: true,

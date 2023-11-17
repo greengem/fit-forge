@@ -8,7 +8,7 @@ type FavoriteExercise = {
 const getCachedFavoriteExercise = (userId: string) => unstable_cache(
     async () => {
         try {
-            console.log(`Fetching favorite exercises for user: ${userId}`);  // Log when fetching from the database
+            //console.log(`Fetching favorite exercises for user: ${userId}`);
             const favoriteExercises = await prisma.favoriteExercise.findMany({
                 where: {
                     userId: userId,
