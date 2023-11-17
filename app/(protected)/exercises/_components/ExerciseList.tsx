@@ -4,10 +4,8 @@ import { EquipmentType } from "@prisma/client";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
-//import useToggleFavoriteExericse from '@/app/hooks/useToggleFavoriteExercise';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
-import { Pagination, User, Button, useDisclosure, ButtonGroup, Card, CardBody } from "@nextui-org/react";
-import {CheckboxGroup, Checkbox} from "@nextui-org/react";
+import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-org/react";
 import { IconInfoCircle, IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
 import { Muscle } from "@prisma/client";
 import SearchFilter from "./filters/SearchFilter";
@@ -30,7 +28,7 @@ type FavoriteExercise = {
     exerciseId: string;
 };
 
-const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises, myEquipment }) => {
+const ExerciseList = ({ exercises, favoriteExercises, myEquipment }: ExerciseListProps) => {
     const router = useRouter();
 
     const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
