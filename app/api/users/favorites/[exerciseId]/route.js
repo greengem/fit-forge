@@ -27,7 +27,7 @@ export async function DELETE(request, { params }) {
             }
         });
 
-        revalidateTag(`favoriteExercises_${userId}`);
+        //revalidateTag(`favoriteExercises_${userId}`);
 
         return NextResponse.json({ message: "Favorite exercise removed." });
     } catch (error) {
