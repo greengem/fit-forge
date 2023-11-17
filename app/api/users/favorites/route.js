@@ -30,7 +30,7 @@ export async function POST(request) {
             }
         });
 
-        revalidateTag(`favoriteExercises_${session.user.id}`);
+        revalidateTag(`favoriteExercises_${userId}`);
 
         return NextResponse.json({ message: "Favorite exercise saved." });
     } catch (error) {

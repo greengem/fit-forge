@@ -58,7 +58,7 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
                     </button>
                 )}
             </CardBody>
-            <CardFooter className="gap-x-1 pt-0 px-5 pb-4">
+            <CardFooter className="gap-x-1 gap-y-1 pt-0 px-5 pb-4 flex flex-wrap">
                 {isRoutine ? (
                     Array.from(uniqueCategories).map((category, index) => (
                         <Chip 

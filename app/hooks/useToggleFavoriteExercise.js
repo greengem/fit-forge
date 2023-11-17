@@ -1,6 +1,4 @@
-
 // hooks/useToggleFavoriteExercise.js
-import toast from "react-hot-toast";
 
 const useToggleFavoriteExercise = (favoriteExercises) => {
     const isFavorite = (exerciseId) => {
@@ -30,12 +28,6 @@ const useToggleFavoriteExercise = (favoriteExercises) => {
 
             const data = await response.json();
 
-            if (response.ok) {
-                toast.success(data.message);
-                
-            } else {
-                toast.error(data.error || 'Error toggling favorite exercise');
-            }
         } catch (error) {
             toast.error('An error occurred while communicating with the server.');
         }
