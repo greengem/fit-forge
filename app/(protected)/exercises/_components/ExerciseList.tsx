@@ -3,15 +3,17 @@ import { Exercise } from '@/types/ExerciseType';
 import { EquipmentType } from "@prisma/client";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import useToggleFavoriteExericse from '@/app/hooks/useToggleFavoriteExercise';
+import toast from 'react-hot-toast';
+//import useToggleFavoriteExericse from '@/app/hooks/useToggleFavoriteExercise';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { Pagination, User, Button, useDisclosure, ButtonGroup, Card, CardBody } from "@nextui-org/react";
 import {CheckboxGroup, Checkbox} from "@nextui-org/react";
 import { IconInfoCircle, IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
 import { Muscle } from "@prisma/client";
-import ExerciseSearch from "./ExerciseSearch";
-import ExerciseFilters from "./ExerciseFilters";
+import SearchFilter from "./filters/SearchFilter";
+import CategoryFilters from "./filters/CategoryFilters";
 import ExerciseModal from "./ExerciseModal";
+import UserFilters from './filters/UserFilters';
 
 interface ExerciseListProps {
   exercises: Exercise[];
@@ -30,14 +32,47 @@ type FavoriteExercise = {
 
 const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercises, myEquipment }) => {
     const router = useRouter();
-    const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
-    const toggleFavoriteExercise = useToggleFavoriteExericse(favoriteExercises);
 
-    const handleToggleFavorite = async (exerciseId: string) => {
+    const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
+    const toggleFavoriteExercise = async (exerciseId: string) => {
         setLoadingFavorite({ ...loadingFavorite, [exerciseId]: true });
-        await toggleFavoriteExercise(exerciseId);
-        router.refresh();
-        setLoadingFavorite({ ...loadingFavorite, [exerciseId]: false });
+    
+        try {
+            let response;
+    
+            if (isFavorite(exerciseId)) {
+                response = await fetch(`/api/users/favorites/${exerciseId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+            } else {
+                response = await fetch('/api/users/favorites', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ exerciseId }),
+                });
+            }
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                router.refresh();
+            } else {
+                toast.error(data.error || 'Error toggling favorite exercise');
+            }
+        } catch (error) {
+            toast.error('An error occurred while communicating with the server.');
+        } finally {
+            setLoadingFavorite({ ...loadingFavorite, [exerciseId]: false });
+        }
+    };
+
+    const isFavorite = (exerciseId: string) => {
+        return favoriteExercises.some(favExercise => favExercise.exerciseId === exerciseId);
     };
 
     // Modal
@@ -91,38 +126,14 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
         page * rowsPerPage
     );
 
-    const isFavorite = (exerciseId: string) => {
-        return favoriteExercises.some(favExercise => favExercise.exerciseId === exerciseId);
-    };
-
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-2 mb-3">
-                <ExerciseSearch setSearchQuery={setSearchQuery} />
-                <ExerciseFilters onFilterChange={setFilters} />
+                <SearchFilter setSearchQuery={setSearchQuery} />
+                <CategoryFilters onFilterChange={setFilters} />
             </div>
-
-            <div className='mb-3'>
-                <Card>
-                    <CardBody>
-                        <CheckboxGroup orientation="horizontal" color="success">
-                            <Checkbox 
-                                value="myFavorites"
-                                onValueChange={setFilterByFavorites}
-                            >
-                                Only Favorites
-                            </Checkbox>
-                            <Checkbox 
-                                value="myEquipment"
-                                onValueChange={setFilterByEquipment}
-                            >
-                                Only My Equipment
-                            </Checkbox>
-                        </CheckboxGroup>
-                    </CardBody>
-                </Card>
-            </div>
-
+            <UserFilters setFilterByEquipment={setFilterByEquipment} setFilterByFavorites={setFilterByFavorites} />
+        
             <Table aria-label="Exercise Table" className="mb-5" shadow="none">
                 <TableHeader>
                     <TableColumn>NAME</TableColumn>
@@ -146,13 +157,13 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, favoriteExercise
                                 </div>
                             </TableCell>
                             <TableCell className="flex justify-end">
-                                <ButtonGroup size="sm">
+                                <ButtonGroup size="sm" variant='flat'>
                                     <Button 
-                                        onPress={() => handleToggleFavorite(exercise.id)}
+                                        onPress={() => toggleFavoriteExercise(exercise.id)}
                                         isIconOnly
                                         isLoading={loadingFavorite[exercise.id]}
                                     >
-                                        {isFavorite(exercise.id) ? <IconStarFilled className="text-warning" size={20} /> : <IconStar size={20} />}
+                                        {isFavorite(exercise.id) ? <IconStarFilled className="text-success" size={20} /> : <IconStar className='hover:text-success' size={20} />}
                                     </Button>
                                     
                                     <Button isIconOnly onPress={() => { setSelectedExercise(exercise); onOpen(); }}>

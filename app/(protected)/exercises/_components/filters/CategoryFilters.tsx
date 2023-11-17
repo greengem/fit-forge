@@ -45,7 +45,7 @@ const muscleGroups = [
   { value: Muscle.abductors, label: 'Abductors' },
 ];
 
-export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps) {
+export default function CategoryFilters({ onFilterChange }: ExerciseFiltersProps) {
 
   const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const newCategory = event.target.value === 'all' ? null : event.target.value as CategoryType;
@@ -61,22 +61,21 @@ export default function ExerciseFilters({ onFilterChange }: ExerciseFiltersProps
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-2">
-      <Select label="Category" onChange={handleCategoryChange} size="sm" defaultSelectedKeys={["all"]}>
-        {categories.map((category) => (
-          <SelectItem key={category.value} value={category.value}>
-            {category.label}
-          </SelectItem>
-        ))}
-      </Select>
+        <Select label="Category" onChange={handleCategoryChange} size="sm" defaultSelectedKeys={["all"]}>
+          {categories.map((category) => (
+            <SelectItem key={category.value} value={category.value}>
+              {category.label}
+            </SelectItem>
+          ))}
+        </Select>
 
-      <Select label="Muscle Group" onChange={handleMuscleGroupChange} size="sm" defaultSelectedKeys={["all"]}>
-        {muscleGroups.map((muscle) => (
-          <SelectItem key={muscle.value} value={muscle.value}>
-            {muscle.label}
-          </SelectItem>
-        ))}
-      </Select>
-
+        <Select label="Muscle Group" onChange={handleMuscleGroupChange} size="sm" defaultSelectedKeys={["all"]}>
+          {muscleGroups.map((muscle) => (
+            <SelectItem key={muscle.value} value={muscle.value}>
+              {muscle.label}
+            </SelectItem>
+          ))}
+        </Select>
       </div>
     </>
   );

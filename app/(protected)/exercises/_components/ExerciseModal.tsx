@@ -1,3 +1,4 @@
+'use client';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { Button } from "@nextui-org/react";
 import { Image } from "@nextui-org/react";
@@ -12,7 +13,7 @@ interface ExerciseModalProps {
 function ListItem({ label, value }: { label: string; value: string }) {
   return (
     <li className="capitalize">
-      <strong className="text-success">{label}:</strong> {value}
+      <span className="text-success">{label}:</span> {value}
     </li>
   );
 }

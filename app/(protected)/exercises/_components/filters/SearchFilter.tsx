@@ -5,7 +5,7 @@ interface ExerciseSearchProps {
   setSearchQuery: (query: string) => void;
 }
 
-export default function ExerciseSearch({ setSearchQuery }: ExerciseSearchProps) {
+export default function SearchFilter({ setSearchQuery }: ExerciseSearchProps) {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchQuery(query);
