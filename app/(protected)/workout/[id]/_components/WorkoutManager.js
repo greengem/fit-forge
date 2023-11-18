@@ -36,12 +36,14 @@ export default function WorkoutManager({ workout }) {
                     reps: exerciseDetail.reps || null,
                     duration: exerciseDetail.exerciseDuration || null,
                     weight: 0
-                }))
+                })),
+                trackingType: exerciseDetail.trackingType // Add trackingType here
             }));
             setWorkoutExercises(initialWorkoutExercises);
             setIsDataLoaded(true);
         }
     }, [workout, activeWorkoutRoutine, setWorkoutExercises, isDataLoaded]);
+
 
     // Add Sets to exercise
     const addSet = (exerciseIndex, exerciseName) => {
