@@ -10,7 +10,6 @@ export default function ProfileThemeSelection(){
             <CardHeader className='text-xl font-semibold px-5 pb-0'><IconPalette className='mr-1' />Theme</CardHeader>
             <CardBody className="px-5">
                 <RadioGroup 
-                    isDisabled
                     size="sm"
                     label="Coming soon!"
                     orientation="horizontal" 

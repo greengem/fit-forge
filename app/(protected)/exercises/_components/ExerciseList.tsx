@@ -1,22 +1,27 @@
 "use client";
 import { Exercise } from '@/types/ExerciseType';
-import { EquipmentType } from "@prisma/client";
+import { EquipmentType, WorkoutPlan } from "@prisma/client";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-org/react";
-import { IconInfoCircle, IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
+//import {Tooltip} from "@nextui-org/tooltip";
+
 import { Muscle } from "@prisma/client";
-import SearchFilter from "./filters/SearchFilter";
-import CategoryFilters from "./filters/CategoryFilters";
+import SearchFilter from "./Filters/SearchFilter";
+import CategoryFilters from "./Filters/CategoryFilters";
+import UserFilters from './Filters/UserFilters';
 import ExerciseModal from "./ExerciseModal";
-import UserFilters from './filters/UserFilters';
+import AddToFavorite from "./ActionButtons/AddtoFavorite";
+import AddToRoutine from "./ActionButtons/AddToRoutine";
+import ShowMoreInfo from "./ActionButtons/ShowMoreInfo";
 
 interface ExerciseListProps {
   exercises: Exercise[];
   favoriteExercises: FavoriteExercise[];
   myEquipment: EquipmentType[];
+  myRoutines: WorkoutPlan[];
 };
 
 type Filters = {
@@ -28,7 +33,7 @@ type FavoriteExercise = {
     exerciseId: string;
 };
 
-const ExerciseList = ({ exercises, favoriteExercises, myEquipment }: ExerciseListProps) => {
+const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }: ExerciseListProps) => {
     const router = useRouter();
 
     const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
@@ -130,6 +135,7 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment }: ExerciseLis
                 <SearchFilter setSearchQuery={setSearchQuery} />
                 <CategoryFilters onFilterChange={setFilters} />
             </div>
+            
             <UserFilters setFilterByEquipment={setFilterByEquipment} setFilterByFavorites={setFilterByFavorites} />
         
             <Table aria-label="Exercise Table" className="mb-5" shadow="none">
@@ -155,18 +161,11 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment }: ExerciseLis
                                 </div>
                             </TableCell>
                             <TableCell className="flex justify-end">
+
                                 <ButtonGroup size="sm" variant='flat'>
-                                    <Button 
-                                        onPress={() => toggleFavoriteExercise(exercise.id)}
-                                        isIconOnly
-                                        isLoading={loadingFavorite[exercise.id]}
-                                    >
-                                        {isFavorite(exercise.id) ? <IconStarFilled className="text-success" size={20} /> : <IconStar className='hover:text-success' size={20} />}
-                                    </Button>
-                                    
-                                    <Button isIconOnly onPress={() => { setSelectedExercise(exercise); onOpen(); }}>
-                                        <IconInfoCircle size={20} />
-                                    </Button>
+                                    <AddToFavorite exercise={exercise} loadingFavorite={loadingFavorite} toggleFavoriteExercise={toggleFavoriteExercise} isFavorite={isFavorite} />
+                                    <AddToRoutine />
+                                    <ShowMoreInfo exercise={exercise} setSelectedExercise={setSelectedExercise} onOpen={onOpen} />
                                 </ButtonGroup>
                             </TableCell>
                         </TableRow>
