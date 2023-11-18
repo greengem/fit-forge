@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-org/react";
 //import {Tooltip} from "@nextui-org/tooltip";
+import Link from 'next/link';
 
 import { Muscle } from "@prisma/client";
 import SearchFilter from "./Filters/SearchFilter";
@@ -166,6 +167,7 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
                                     <AddToFavorite exercise={exercise} loadingFavorite={loadingFavorite} toggleFavoriteExercise={toggleFavoriteExercise} isFavorite={isFavorite} />
                                     <AddToRoutine />
                                     <ShowMoreInfo exercise={exercise} setSelectedExercise={setSelectedExercise} onOpen={onOpen} />
+                                    <Button as={Link} href={`/exercises/${exercise.id}`}>Link</Button>
                                 </ButtonGroup>
                             </TableCell>
                         </TableRow>

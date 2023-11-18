@@ -23,7 +23,7 @@ const getCachedExercises = unstable_cache(
             },
             orderBy: {
                 name: 'asc',
-            },
+            }
         });
     },
     ['exerciseList'],
