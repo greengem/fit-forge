@@ -10,9 +10,9 @@ import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-or
 import Link from 'next/link';
 
 import { Muscle } from "@prisma/client";
-import SearchFilter from "./Filters/SearchFilter";
-import CategoryFilters from "./Filters/CategoryFilters";
-import UserFilters from './Filters/UserFilters';
+import SearchFilter from "./ExerciseFilters/SearchFilter";
+import CategoryFilters from "./ExerciseFilters/CategoryFilters";
+import UserFilters from './ExerciseFilters/UserFilters';
 import ExerciseModal from "./ExerciseModal";
 import AddToFavorite from "./ActionButtons/AddtoFavorite";
 import AddToRoutine from "./ActionButtons/AddToRoutine";
@@ -167,7 +167,7 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
                                     <AddToFavorite exercise={exercise} loadingFavorite={loadingFavorite} toggleFavoriteExercise={toggleFavoriteExercise} isFavorite={isFavorite} />
                                     <AddToRoutine />
                                     <ShowMoreInfo exercise={exercise} setSelectedExercise={setSelectedExercise} onOpen={onOpen} />
-                                    <Button as={Link} href={`/exercises/${exercise.id}`}>Link</Button>
+                                    {/*<Button as={Link} href={`/exercises/${exercise.id}`}>Link</Button>*/}
                                 </ButtonGroup>
                             </TableCell>
                         </TableRow>

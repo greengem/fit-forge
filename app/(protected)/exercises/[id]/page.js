@@ -4,12 +4,14 @@ import PageHeading from '@/components/PageHeading/PageHeading';
 import { Chip } from "@nextui-org/react";
 import Image from "next/image";
 
+{/*
 export async function generateStaticParams() {
     const allExercises = await getExercises();
     return allExercises.map((exercise) => ({ 
         id: exercise.id 
     }));
 }
+*/}
 
 async function getExerciseData(params) {
     return await getExercise(params.id);
