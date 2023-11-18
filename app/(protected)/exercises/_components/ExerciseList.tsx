@@ -14,7 +14,7 @@ import SearchFilter from "./ExerciseFilters/SearchFilter";
 import CategoryFilters from "./ExerciseFilters/CategoryFilters";
 import UserFilters from './ExerciseFilters/UserFilters';
 import ExerciseModal from "./ExerciseModal";
-import AddToFavorite from "./ActionButtons/AddtoFavorite";
+import AddToFavorite from "./ActionButtons/AddToFavorite";
 import AddToRoutine from "./ActionButtons/AddToRoutine";
 import ShowMoreInfo from "./ActionButtons/ShowMoreInfo";
 
