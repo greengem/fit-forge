@@ -38,7 +38,7 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
 
     const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
     const toggleFavoriteExercise = async (exerciseId: string) => {
-        setLoadingFavorite({ ...loadingFavorite, [exerciseId]: true });
+        setLoadingFavorite(prevState => ({ ...prevState, [exerciseId]: true }));
     
         try {
             let response;
@@ -70,7 +70,7 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
         } catch (error) {
             toast.error('An error occurred while communicating with the server.');
         } finally {
-            setLoadingFavorite({ ...loadingFavorite, [exerciseId]: false });
+            setLoadingFavorite(prevState => ({ ...prevState, [exerciseId]: false }));
         }
     };
 
