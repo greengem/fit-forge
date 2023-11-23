@@ -39,10 +39,10 @@ export const SearchBar: FC<SearchBarProps> = ({
 
     return (
         <Input
-            
+            label="Search"
             type="search"
             name="search"
-            placeholder="Search for Exercises"
+            placeholder="Squat"
             value={searchTerm}
             onChange={handleChange}
             ref={forwardedRef}
