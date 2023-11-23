@@ -236,7 +236,7 @@ export default function WorkoutManager({ workout }) {
 
     return (
 <div className='pb-40'>
-        {workout.notes && <Chip color='success' className='mb-3'>Notes: {workout.notes}</Chip>}
+        {workout.notes && <p color='success' className='mb-3'>Notes: {workout.notes}</p>}
         <div className='space-y-5'>
             {workoutExercises?.map((exercise, index) => (
                 <Card shadow="none" className="shadow-md" key={exercise.exerciseId}>
