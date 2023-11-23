@@ -1,9 +1,15 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions"
-import getRoutines from "@/app/lib/getRoutines";
-import WorkoutCards from "./_components/WorkoutCards";
-import PageHeading from '@/components/PageHeading/PageHeading'
 import Link from "next/link";
+import { Button } from "@nextui-org/button";
+import { IconPlus } from "@tabler/icons-react";
+
+import getRoutines from "@/app/lib/getRoutines";
+
+import PageHeading from '@/components/PageHeading/PageHeading'
+import RoutineCards from './_components/RoutineCards';
+import SystemRoutineDisplay from './_components/SystemRoutineDisplay';
+
 
 export default async function WorkoutPage() {
   const session = await getServerSession(authOptions);
@@ -14,16 +20,19 @@ export default async function WorkoutPage() {
 
   return (
     <>
-      <PageHeading title="Start a Workout" />
-        {userRoutines.length === 0 ? (
-          <p>No routines available. Please <Link className="text-success" href="/routines/new">add one</Link>.</p>
-        ) : (
-            <WorkoutCards routines={userRoutines} isSystem={false} />
-        )}
+    <div className="flex gap-x-4 items-center justify-between">
+      <PageHeading title="Start Workout" />
+      <Button as={Link} href="/routines/new" variant="ghost" color="success" className="gap-unit-1 mb-3">
+        <IconPlus size={16} />New Routine
+      </Button>
+    </div>
 
-      <PageHeading title="Example Workouts" />
-      <WorkoutCards routines={systemRoutines} isSystem={true} />
+    <h4 className="font-semibold text-2xl my-3">Your Workout Plans</h4>
+    <RoutineCards routines={userRoutines} isSystem={false} />
+
+    <h4 className="font-semibold text-2xl mb-3 mt-10">System Workout Plans</h4>
+    <SystemRoutineDisplay systemRoutines={systemRoutines} />
+
     </>
-  )
+  );
 }
-
