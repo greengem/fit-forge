@@ -3,7 +3,6 @@ import getExercises from "@/app/lib/getExercises";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import { Chip } from "@nextui-org/react";
 import Image from "next/image";
-
 {/*
 export async function generateStaticParams() {
     const allExercises = await getExercises();
@@ -23,7 +22,14 @@ export default async function ExercisePage({ params }) {
 
     return (
         <>
+
         <PageHeading title={exercise.name} />
+
+        {exercise.level && (
+            <div>
+                <Chip radius="sm" size="sm" color="success" className="capitalize mb-3">{exercise.level}</Chip>
+            </div>
+        )}
 
         {exercise.aliases && exercise.aliases.length > 0 && (
             <div>
@@ -36,21 +42,44 @@ export default async function ExercisePage({ params }) {
             </div>
         )}
 
+        {exercise.image && (
+            <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {[0, 1].map((index) => (
+                        <div>
+                    <Image
+                        key={index}
+                        src={`/images/exercises/${exercise.image}/images/${index}.jpg`}
+                        width={750}
+                        height={500}
+                        alt={`Exercise photo ${index + 1}`}
+                        className="rounded-xl w-full h-auto"
+                    />
+                    </div>
+                    ))}
+                </div>
+            </div>
+        )}
+
         {exercise.primary_muscles && exercise.primary_muscles.length > 0 && (
             <div>
                 <span>Primary Muscles: </span>
-                {exercise.primary_muscles.map((muscle, index) => (
-                    <Chip key={index} className="capitalize">{muscle}</Chip>
-                ))}
+                <div className="flex gap-1">
+                    {exercise.primary_muscles.map((muscle, index) => (
+                        <Chip color="success" size="sm" radius="sm" key={index} className="capitalize">{muscle}</Chip>
+                    ))}
+                </div>
             </div>
         )}
 
         {exercise.secondary_muscles && exercise.secondary_muscles.length > 0 && (
             <div>
                 <span>Secondary Muscles: </span>
-                {exercise.secondary_muscles.map((muscle, index) => (
-                    <Chip key={index} className="capitalize">{muscle}</Chip>
-                ))}
+                <div className="flex gap-1">
+                    {exercise.secondary_muscles.map((muscle, index) => (
+                        <Chip color="secondary" size="sm" radius="sm" key={index} className="capitalize">{muscle}</Chip>
+                    ))}
+                </div>
             </div>
         )}
 
@@ -68,12 +97,7 @@ export default async function ExercisePage({ params }) {
             </div>
         )}
 
-        {exercise.level && (
-            <div>
-                <span>Level: </span>
-                <span className="capitalize">{exercise.level}</span>
-            </div>
-        )}
+
 
         {exercise.equipment && (
             <div>
@@ -90,23 +114,6 @@ export default async function ExercisePage({ params }) {
                     <li key={index}>{instruction}</li>
                 ))}
                 </ol>
-            </div>
-        )}
-
-        {exercise.image && (
-            <div>
-                <span>Images: </span>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {[0, 1].map((index) => (
-                    <Image
-                        key={index}
-                        src={`/images/exercises/${exercise.image}/images/${index}.jpg`}
-                        width={750}
-                        height={500}
-                        alt={`Exercise photo ${index + 1}`}
-                    />
-                    ))}
-                </div>
             </div>
         )}
         
