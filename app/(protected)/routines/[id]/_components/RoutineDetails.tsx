@@ -13,13 +13,16 @@ export const RoutineDetails: React.FC<RoutineDetailsProps> = ({ routineName, set
         <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
             <Input 
                 name='routineName' 
-                placeholder='Routine Name' 
+                placeholder='My Awesome Workout Plan'
+                label="Routine Name"
+                isRequired
                 value={routineName} 
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setRoutineName(e.target.value)}
             />
             <Input 
                 name='routineNotes' 
-                placeholder='Notes' 
+                placeholder='Enter any notes about your workout here...'
+                label='Notes'
                 value={notes} 
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setNotes(e.target.value)}
             />
