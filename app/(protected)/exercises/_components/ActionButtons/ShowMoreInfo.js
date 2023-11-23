@@ -1,10 +1,11 @@
 "use client";
 import { Button } from "@nextui-org/button";
 import { IconInfoCircle } from "@tabler/icons-react";
+import Link from "next/link";
 
-export default function ShowMoreInfo({ exercise, setSelectedExercise, onOpen }) {
+export default function ShowMoreInfo({ exercise }) {
     return (
-        <Button isIconOnly onPress={() => { setSelectedExercise(exercise); onOpen(); }}>
+        <Button as={Link} href={`/exercises/${exercise.id}`} isIconOnly>
             <IconInfoCircle size={20} className='hover:text-success' />
         </Button>
     )
