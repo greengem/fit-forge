@@ -1,22 +1,25 @@
 "use client";
-import { Exercise } from '@/types/ExerciseType';
-import { EquipmentType, WorkoutPlan } from "@prisma/client";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
-import { Pagination, User, Button, useDisclosure, ButtonGroup } from "@nextui-org/react";
-//import {Tooltip} from "@nextui-org/tooltip";
-import Link from 'next/link';
-
-import { Muscle } from "@prisma/client";
+import { Pagination, User, useDisclosure, ButtonGroup } from "@nextui-org/react";
 import SearchFilter from "./ExerciseFilters/SearchFilter";
 import CategoryFilters from "./ExerciseFilters/CategoryFilters";
 import UserFilters from './ExerciseFilters/UserFilters';
-import ExerciseModal from "./ExerciseModal";
 import AddToFavorite from "./ActionButtons/AddToFavorite";
-import AddToRoutine from "./ActionButtons/AddToRoutine";
 import ShowMoreInfo from "./ActionButtons/ShowMoreInfo";
+import { EquipmentType, WorkoutPlan, Muscle, CategoryType } from "@prisma/client";
+
+type Exercise = {
+  id: string;
+  name: string;
+  primary_muscles: Muscle[];
+  secondary_muscles: Muscle[];
+  equipment: EquipmentType | null;
+  category: CategoryType;
+  image: string | null;
+};
 
 interface ExerciseListProps {
   exercises: Exercise[];
@@ -37,10 +40,10 @@ type FavoriteExercise = {
 const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }: ExerciseListProps) => {
     const router = useRouter();
 
+    // Favorites
     const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
     const toggleFavoriteExercise = async (exerciseId: string) => {
         setLoadingFavorite(prevState => ({ ...prevState, [exerciseId]: true }));
-    
         try {
             let response;
     
@@ -78,10 +81,6 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
     const isFavorite = (exerciseId: string) => {
         return favoriteExercises.some(favExercise => favExercise.exerciseId === exerciseId);
     };
-
-    // Modal
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
 
     //Filters
     const [filters, setFilters] = useState<Filters>({ category: null, muscleGroup: null });
@@ -130,6 +129,13 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
         page * rowsPerPage
     );
 
+    // Add to Routine
+    const handleAddToRoutine = (exerciseId: string) => {
+        // Your logic here
+        console.log("Adding exercise with ID:", exerciseId);
+      };
+      
+
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-3 gap-y-2 mb-3">
@@ -165,9 +171,7 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
 
                                 <ButtonGroup size="sm" variant='flat'>
                                     <AddToFavorite exercise={exercise} loadingFavorite={loadingFavorite} toggleFavoriteExercise={toggleFavoriteExercise} isFavorite={isFavorite} />
-                                    <AddToRoutine />
-                                    <ShowMoreInfo exercise={exercise} setSelectedExercise={setSelectedExercise} onOpen={onOpen} />
-                                    {/*<Button as={Link} href={`/exercises/${exercise.id}`}>Link</Button>*/}
+                                    <ShowMoreInfo exercise={exercise} />
                                 </ButtonGroup>
                             </TableCell>
                         </TableRow>
@@ -186,14 +190,6 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
                     onChange={(newPage) => setPage(newPage)}
                 />
             </div>
-
-            {selectedExercise && (
-                <ExerciseModal
-                    selectedExercise={selectedExercise}
-                    isOpen={isOpen}
-                    onOpenChange={onOpenChange}
-                />
-            )}
         </>
     );
 }
