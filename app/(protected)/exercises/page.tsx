@@ -6,8 +6,17 @@ import getEquipment from "@/app/lib/getEquipment";
 import getRoutines from "@/app/lib/getRoutines";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import ExerciseList from './_components/ExerciseList';
-import { Exercise } from '@/types/ExerciseType';
-import { EquipmentType, WorkoutPlan } from "@prisma/client";
+import { EquipmentType, WorkoutPlan, Muscle, CategoryType } from "@prisma/client";
+
+type Exercise = {
+  id: string;
+  name: string;
+  primary_muscles: Muscle[];
+  secondary_muscles: Muscle[];
+  equipment: EquipmentType | null;
+  category: CategoryType;
+  image: string | null;
+};
 
 export default async function ExercisesPage() {
   const session = await getServerSession(authOptions);
