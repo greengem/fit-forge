@@ -7,7 +7,6 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, Navba
 import { ThemeSwitcher } from '@/components/ThemeSwitcher/ThemeSwitcher';
 import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
-import { Button } from "@nextui-org/button";
 import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout } from '@tabler/icons-react';
 
 const NAV_CONTENT_ITEMS = [

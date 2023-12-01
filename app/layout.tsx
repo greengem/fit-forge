@@ -13,7 +13,7 @@ export function generateViewport() {
     userScalable: 'no',
     themeColor: [
       { media: "(prefers-color-scheme: light)", color: "white" },
-      { media: "(prefers-color-scheme: dark)", color: "#18181b" },
+      { media: "(prefers-color-scheme: dark)", color: "red" },
     ],
   };
 }
