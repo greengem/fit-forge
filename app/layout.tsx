@@ -11,10 +11,7 @@ export function generateViewport() {
     initialScale: 1,
     maximumScale: 1,
     userScalable: 'no',
-    themeColor: [
-      { media: "(prefers-color-scheme: light)", color: "white" },
-      { media: "(prefers-color-scheme: dark)", color: "red" },
-    ],
+    themeColor: '#18181b',
   };
 }
 
