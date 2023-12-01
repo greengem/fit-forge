@@ -11,7 +11,7 @@ export default function RootLayout({
     return (
       <div className="flex">
           <Sidebar />
-          <main className="flex-grow">
+          <main className="flex-grow w-full">
             <Navbar />
             <div className='p-3 md:p-5 ml-0 md:ml-64'>
               <ActiveWorkoutWarning />
