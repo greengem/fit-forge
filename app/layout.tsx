@@ -7,11 +7,14 @@ import { Toaster } from 'react-hot-toast';
 
 export function generateViewport() {
   return {
-    themeColor: '#18181b',
     width: 'device-width',
     initialScale: 1,
     maximumScale: 1,
-    userScalable: 'no'
+    userScalable: 'no',
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: "white" },
+      { media: "(prefers-color-scheme: dark)", color: "#18181b" },
+    ],
   };
 }
 
