@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
 import CardGrid from "@/components/Grid/CardGrid";
-import RoutineCard from "@/components/Cards/RoutineCard";
+import RoutineCard from "@/app/(protected)/workout/_components/RoutineCard";
 
 export default function RoutineCards({ routines, isSystem }) {
     const router = useRouter()

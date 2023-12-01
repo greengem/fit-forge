@@ -15,7 +15,6 @@ const NAV_CONTENT_ITEMS = [
     { label: <IconActivity className="mt-2" />, href: '/activity' },
     { label: <IconDashboard className="mt-2" />, href: '/dashboard' },
     { label: <IconJumpRope className="mt-2" />, href: '/workout' },
-    { label: <IconList className="mt-2" />, href: '/routines' },
     { label: <IconStretching className="mt-2" />, href: '/exercises' },
 ];
 

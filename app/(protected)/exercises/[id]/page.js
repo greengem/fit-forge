@@ -46,9 +46,9 @@ export default async function ExercisePage({ params }) {
             <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {[0, 1].map((index) => (
-                        <div>
+                        <div key={index}>
                     <Image
-                        key={index}
+                        
                         src={`/images/exercises/${exercise.image}/images/${index}.jpg`}
                         width={750}
                         height={500}
