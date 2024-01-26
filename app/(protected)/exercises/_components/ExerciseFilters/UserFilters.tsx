@@ -10,7 +10,7 @@ const UserFilters: React.FC<UserFiltersProps> = ({ setFilterByFavorites, setFilt
     return (
         <Card className="mb-3">
             <CardBody>
-                <CheckboxGroup orientation="horizontal" color="success" size='sm'>
+                <CheckboxGroup orientation="horizontal" color="primary" size='sm'>
                     <Checkbox 
                         value="myFavorites"
                         onValueChange={setFilterByFavorites}

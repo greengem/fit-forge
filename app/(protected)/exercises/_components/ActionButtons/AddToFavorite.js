@@ -9,7 +9,7 @@ export default function AddToFavorite({ loadingFavorite, toggleFavoriteExercise,
             isIconOnly
             isLoading={loadingFavorite[exercise.id]}
         >
-            {isFavorite(exercise.id) ? <IconStarFilled className="text-success" size={20} /> : <IconStar className='hover:text-success' size={20} />}
+            {isFavorite(exercise.id) ? <IconStarFilled className="text-primary" size={20} /> : <IconStar className='hover:text-primary' size={20} />}
         </Button>
     )
 }

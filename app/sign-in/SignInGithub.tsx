@@ -10,7 +10,7 @@ const SignInGithub = () => {
       type="button"
       size="lg"
       variant="ghost"
-      color="success"
+      color="primary"
     >
       <IconBrandGithub />Sign In With GitHub
     </Button>

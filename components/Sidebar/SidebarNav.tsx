@@ -74,7 +74,7 @@ interface NavItemProps {
 
 function NavItem({ icon, label, href, active, onClick }: NavItemProps) {
     const content = (
-        <div className={`flex items-center space-x-3 ${active && 'text-success'} text-foreground`}>
+        <div className={`flex items-center space-x-3 ${active && 'text-primary'} text-foreground`}>
             {icon}
             <div>{label}</div>
         </div>

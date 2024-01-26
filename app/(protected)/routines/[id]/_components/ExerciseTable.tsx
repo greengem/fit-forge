@@ -94,7 +94,7 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
                         <RadioGroup 
                             key={`radio-${exercise.id}`}
                             orientation="horizontal" 
-                            color='success' 
+                            color='primary' 
                             className='mb-3'
                             value={exercise.trackingType}
                             onValueChange={(value) => {

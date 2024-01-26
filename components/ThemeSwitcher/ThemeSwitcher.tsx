@@ -23,7 +23,7 @@ export function ThemeSwitcher() {
       <Switch
         isSelected={isDarkMode}
         size="lg"
-        color="success"
+        color="primary"
         thumbIcon={({ isSelected, className }) =>
           isSelected ? (
             <MoonIcon className={className} />

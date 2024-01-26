@@ -100,7 +100,7 @@ const DashboardChartWorkout = () => {
                     defaultValue={["exercises", "workouts"]}
                 >
                     <Checkbox 
-                        color='success' 
+                        color='primary' 
                         value="exercises"
                         checked={visibility.exercises}
                         onChange={() => handleCheckboxChange('exercises')}

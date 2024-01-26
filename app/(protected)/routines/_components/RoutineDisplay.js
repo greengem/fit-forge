@@ -6,7 +6,7 @@ import { IconUser, IconJumpRope, IconStretching, IconSeeding, IconScale, IconBar
 export default function RoutineDisplay({ userRoutines, systemRoutines }) {
     return (
         <div className="flex w-full flex-col">
-            <Tabs aria-label="Options" size='sm' color='success' variant='bordered'>
+            <Tabs aria-label="Options" size='sm' color='primary' variant='bordered'>
                 <Tab 
                     key="user" 
                     title={

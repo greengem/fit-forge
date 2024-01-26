@@ -29,7 +29,7 @@ export default function SidebarWorkoutControls() {
                             </Button>
                         </div>
                         {workoutPath !== pathname && (
-                            <div className='text-center text-sm text-success'>
+                            <div className='text-center text-sm text-primary'>
                                 <Link href={workoutPath}>View Details</Link>
                             </div>
                         )}

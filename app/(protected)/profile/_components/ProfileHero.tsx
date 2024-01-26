@@ -9,7 +9,7 @@ const ProfileHero: React.FC<ProfileHeroProps> = ({ session }) => {
     return(
         <div className="hero flex flex-col justify-center items-center pb-5 pt-10">
             <Avatar 
-                color="success" 
+                color="primary" 
                 isBordered 
                 showFallback
                 name={session.user.name || "User"}

@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function ShowMoreInfo({ exercise }) {
     return (
         <Button as={Link} href={`/exercises/${exercise.id}`} isIconOnly>
-            <IconInfoCircle size={20} className='hover:text-success' />
+            <IconInfoCircle size={20} className='hover:text-primary' />
         </Button>
     )
 }

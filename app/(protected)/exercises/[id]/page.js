@@ -27,7 +27,7 @@ export default async function ExercisePage({ params }) {
 
         {exercise.level && (
             <div>
-                <Chip radius="sm" size="sm" color="success" className="capitalize mb-3">{exercise.level}</Chip>
+                <Chip radius="sm" size="sm" color="primary" className="capitalize mb-3">{exercise.level}</Chip>
             </div>
         )}
 
@@ -66,7 +66,7 @@ export default async function ExercisePage({ params }) {
                 <span>Primary Muscles: </span>
                 <div className="flex gap-1">
                     {exercise.primary_muscles.map((muscle, index) => (
-                        <Chip color="success" size="sm" radius="sm" key={index} className="capitalize">{muscle}</Chip>
+                        <Chip color="primary" size="sm" radius="sm" key={index} className="capitalize">{muscle}</Chip>
                     ))}
                 </div>
             </div>

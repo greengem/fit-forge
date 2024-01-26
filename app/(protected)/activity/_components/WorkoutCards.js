@@ -73,9 +73,9 @@ const WorkoutCards = ({ workouts, personalBests, showDeleteButton }) => {
                             {showDeleteButton && (
                                 <Dropdown>
                                     <DropdownTrigger>
-                                        <Button color="success" variant="light" isIconOnly size="sm"><IconMenu2 /></Button>
+                                        <Button color="primary" variant="light" isIconOnly size="sm"><IconMenu2 /></Button>
                                     </DropdownTrigger>
-                                    <DropdownMenu color="success" aria-label="Workout Actions" onAction={(key) => handleAction(String(key), workout)}>
+                                    <DropdownMenu color="primary" aria-label="Workout Actions" onAction={(key) => handleAction(String(key), workout)}>
                                         <DropdownItem key="details">More Details</DropdownItem>
                                         <DropdownItem key="delete" className="text-danger" color="danger">Delete Activity</DropdownItem>
                                     </DropdownMenu>

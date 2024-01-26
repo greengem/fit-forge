@@ -26,7 +26,7 @@ export default function StatusBar({ completeWorkout, cancelWorkout, progressPerc
         <div className='fixed bottom-0 right-0 left-0 md:left-64 p-5 bg-white dark:bg-content1 z-10'>
             <div className='flex justify-between mb-5'>
                     {!workoutStartTime && (
-                        <Button color='success' onPress={handleStartWorkout}>
+                        <Button color='primary' onPress={handleStartWorkout}>
                             <IconPlayerPlay /> Start Workout
                         </Button>
                     )}
@@ -37,7 +37,7 @@ export default function StatusBar({ completeWorkout, cancelWorkout, progressPerc
                                 {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
                                 <span>{isPaused ? 'Resume' : 'Pause'}</span>
                             </Button>
-                            <Button onPress={completeWorkout} color='success'>
+                            <Button onPress={completeWorkout} color='primary'>
                                 <IconDeviceFloppy /><span>Save</span>
                             </Button>
                             <Button color='danger' onPress={cancelWorkout}>
@@ -48,7 +48,7 @@ export default function StatusBar({ completeWorkout, cancelWorkout, progressPerc
                             <Button isIconOnly color={isPaused ? 'default' : 'warning'} onPress={handlePauseToggle}>
                                 {isPaused ? <IconPlayerPlay /> : <IconPlayerPause />}
                             </Button>
-                            <Button isIconOnly onPress={completeWorkout} color='success'>
+                            <Button isIconOnly onPress={completeWorkout} color='primary'>
                                 <IconDeviceFloppy />
                             </Button>
                             <Button isIconOnly color='danger' onPress={cancelWorkout}>

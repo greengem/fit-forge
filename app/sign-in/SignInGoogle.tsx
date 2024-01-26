@@ -10,7 +10,7 @@ const SignInGoogle = () => {
       type="button"
       size="lg"
       variant="ghost"
-      color="success"
+      color="primary"
     >
       <IconBrandGoogle />Sign In With Google
     </Button>

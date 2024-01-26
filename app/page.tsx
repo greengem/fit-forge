@@ -28,13 +28,13 @@ export default function HomePage() {
           className="text-4xl lg:text-6xl font-bold text-center mb-2 tracking-tight"
           variants={fadeInUp}
         >
-          Track Every <span className="text-success">Rep</span>. Achieve Every <span className="text-success">Goal</span>.
+          Track Every <span className="text-primary">Rep</span>. Achieve Every <span className="text-primary">Goal</span>.
         </motion.h1>
         <motion.p className="text-xl text-center mb-10" variants={fadeInUp}>
           Your ultimate fitness companion. Stay on track, stay active with Tracktive.
         </motion.p>
         <motion.div variants={fadeInUp}>
-          <Button color="success" as={Link} href="/dashboard" size="lg" className="gap-unit-1">
+          <Button color="primary" as={Link} href="/dashboard" size="lg" className="gap-unit-1">
             <IconBarbell />Get Started 
           </Button>
         </motion.div>

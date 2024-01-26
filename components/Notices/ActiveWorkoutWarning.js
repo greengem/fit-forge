@@ -19,7 +19,7 @@ export default function ActiveWorkoutWarning() {
                 <span className='text-warning'><IconAlertCircleFilled /></span>
                 <span>You have an active workout</span>
             </div>
-            <Button color='success' as={Link} href={`/workout/${activeWorkoutRoutine}`}>Resume Workout</Button>
+            <Button color='primary' as={Link} href={`/workout/${activeWorkoutRoutine}`}>Resume Workout</Button>
         </div>
     );
 }

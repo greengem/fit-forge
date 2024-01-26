@@ -13,7 +13,7 @@ interface ExerciseModalProps {
 function ListItem({ label, value }: { label: string; value: string }) {
   return (
     <li className="capitalize">
-      <span className="text-success">{label}:</span> {value}
+      <span className="text-primary">{label}:</span> {value}
     </li>
   );
 }

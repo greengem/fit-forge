@@ -67,7 +67,7 @@ export default function ExerciseTable({
                             <Button 
 
                                 isIconOnly 
-                                color={set.completed ? 'success' : 'danger'} 
+                                color={set.completed ? 'primary' : 'danger'} 
                                 onPress={() => handleCompleteSet(index, setIndex, exerciseDetail.exerciseName)}
                             >
                                 {set.completed ? <IconSquareCheck size={20} /> : <IconSquare size={20} />}

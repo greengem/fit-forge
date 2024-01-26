@@ -184,7 +184,7 @@ const ExerciseList = ({ exercises, favoriteExercises, myEquipment, myRoutines }:
                     isCompact
                     showControls
                     showShadow
-                    color="success"
+                    color="primary"
                     page={page}
                     total={Math.ceil(filteredExercises.length / rowsPerPage)}
                     onChange={(newPage) => setPage(newPage)}

@@ -9,7 +9,7 @@ type SaveButtonProps = {
 export const SaveButton: React.FC<SaveButtonProps> = ({ handleSave, isLoading }) => {
     return (
         <div className="flex gap-x-2">
-            <Button className="gap-unit-1" color="success" onPress={handleSave} isLoading={isLoading}>
+            <Button className="gap-unit-1" color="primary" onPress={handleSave} isLoading={isLoading}>
                 <IconDeviceFloppy size={16} />Save Routine
             </Button>
             <Button className="gap-unit-1" as={Link} href="/routines">

@@ -5,7 +5,7 @@ export default function ProgressBar({ percentage }) {
         aria-label="Workout Progress"
         size="lg"
         value={percentage}
-        color="success"
+        color="primary"
         />
     );
 }

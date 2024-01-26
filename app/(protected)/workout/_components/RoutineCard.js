@@ -51,7 +51,7 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
 
                 {routine.WorkoutPlanExercise.length > 5 && (
                     <button 
-                        className='text-left text-success text-sm mt-1'
+                        className='text-left text-primary text-sm mt-1'
                         onClick={() => onToggleExpanded(routine.id)}
                     >
                         {isExpanded ? 'Show Less' : 'Show More'}
@@ -64,7 +64,7 @@ function RoutineCard({ routine, isSystem, isExpanded, onToggleExpanded, onAction
                     as={Link} 
                     href={`/workout/${routine.id}`} 
                     size="sm" 
-                    color={isAnotherWorkoutInProgress ? "danger" : "success"}
+                    color={isAnotherWorkoutInProgress ? "danger" : "primary"}
                     className="gap-unit-1"
                     isDisabled={isAnotherWorkoutInProgress}
                 >

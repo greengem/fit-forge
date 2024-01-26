@@ -32,7 +32,6 @@ export default async function ProfilePage() {
         <>
             <ProfileHero session={session} />
             <ProfileStats expandedProfile={expandedProfile} />
-            <ProfileThemeSelection />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 <ProfileDetails session={session} expandedProfile={expandedProfile} />
                 <ProfileEquipment equipment={equipment} session={session} />

@@ -46,10 +46,10 @@ export default function DashboardCards({ workouts, personalBests }) {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
             <Card shadow="none" className="shadow-md">
                 <CardHeader className="px-5">Weekly Workouts</CardHeader>
-                <CardBody className="text-5xl pt-0 text-success gap-y-3">
+                <CardBody className="text-5xl pt-0 text-primary gap-y-3">
                     <p>{workouts.length}</p>
                     <Progress 
-                        color="success" 
+                        color="primary" 
                         aria-label="Weekly Workouts" 
                         value={(workouts.length / 7) * 100} 
                         className="max-w-md"
@@ -59,10 +59,10 @@ export default function DashboardCards({ workouts, personalBests }) {
 
             <Card shadow="none" className="shadow-md">
                 <CardHeader className="px-5">Average Workout Duration</CardHeader>
-                <CardBody className="text-5xl pt-0 text-success gap-y-3">
+                <CardBody className="text-5xl pt-0 text-primary gap-y-3">
                     <p>{formattedAverageDuration}</p>
                     <Progress 
-                        color="success" 
+                        color="primary" 
                         aria-label="Average Workout Duration" 
                         value={(averageDuration / targetDuration) * 100} 
                         className="max-w-md"
@@ -72,10 +72,10 @@ export default function DashboardCards({ workouts, personalBests }) {
 
             <Card shadow="none" className="shadow-md">
                 <CardHeader className="px-5">Daily Streak</CardHeader>
-                <CardBody className="text-5xl pt-0 text-success gap-y-3">
+                <CardBody className="text-5xl pt-0 text-primary gap-y-3">
                     <p>{streak}</p>
                     <Progress 
-                    color="success" 
+                    color="primary" 
                     aria-label="Daily Streak" 
                     value={(streak / 7) * 100} 
                     className="max-w-md"
@@ -85,7 +85,7 @@ export default function DashboardCards({ workouts, personalBests }) {
 
             <Card shadow="none" className="shadow-md">
                 <CardHeader className="px-5">Weekly PBs</CardHeader>
-                <CardBody className="text-5xl pt-0 flex gap-x-2 text-success flex-row">
+                <CardBody className="text-5xl pt-0 flex gap-x-2 text-primary flex-row">
                     <IconTrophy size={48} />
                     <div>{personalBests}</div>
                 </CardBody>

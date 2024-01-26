@@ -11,12 +11,7 @@ export function Providers({children}: { children: React.ReactNode }) {
       <NextThemesProvider 
         attribute="class" 
         defaultTheme="dark"
-        themes={[
-          'light', 'dark', 
-          'light-cyan', 'dark-cyan',
-          'light-hot-pink', 'dark-hot-pink', 
-          'light-bright-orange', 'dark-bright-orange'
-        ]}
+        themes={['light', 'dark']}
       >
           <WorkoutControlsProvider>
             <WorkoutDataProvider>

@@ -67,7 +67,7 @@ export default function ProfileEquipment({ equipment, session }) {
                 <CheckboxGroup
                     value={selectedEquipment}
                     onChange={(value) => setSelectedEquipment(value)}
-                    color='success'
+                    color='primary'
                 >
                     {equipmentItems.map((item, index) => (
                         <Checkbox key={index} value={item}>
@@ -77,7 +77,7 @@ export default function ProfileEquipment({ equipment, session }) {
                 </CheckboxGroup>
             </CardBody>
             <CardFooter className='px-5'>
-                <Button color='success' onPress={handleSave} isLoading={isLoading} startContent={<IconDeviceFloppy />}>Save</Button>
+                <Button color='primary' onPress={handleSave} isLoading={isLoading} startContent={<IconDeviceFloppy />}>Save</Button>
             </CardFooter>
         </Card>
     )

@@ -17,7 +17,7 @@ export default async function CustomSignInPage() {
             <div className="flex justify-center items-center h-screen">
                 <Card className="max-w-lg w-[320px] shadow-lg" shadow="none">
                     <CardHeader className="bg-default-100 gap-x-1 px-5 py-3">
-                        <IconBarbell stroke={1} size={40} className="dark:text-success" />
+                        <IconBarbell stroke={1} size={40} className="dark:text-primary" />
                         <h3 className="text-2xl tracking-tight">Tracktive</h3>
                     </CardHeader>
                     <CardBody className="space-y-4 p-5">
@@ -29,7 +29,7 @@ export default async function CustomSignInPage() {
                         <form className="flex flex-col space-y-4">
                             <Input classNames={{ input: "autofill:bg-red-500" }} size="sm" label="Email" type="email" />
                             <Input size="sm" label="Password" type="password" />
-                            <Button size="lg" variant="ghost" color="success">
+                            <Button size="lg" variant="ghost" color="primary">
                                 <IconMail />Sign In With Email
                             </Button>
                         </form>

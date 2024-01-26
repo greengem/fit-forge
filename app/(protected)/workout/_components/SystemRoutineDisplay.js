@@ -6,7 +6,7 @@ import { IconJumpRope, IconStretching, IconSeeding, IconScale, IconBarbell } fro
 export default function SystemRoutineDisplay({ systemRoutines }) {
     return (
         <div className="flex w-full flex-col">
-            <Tabs aria-label="Options" size='sm' color='success' variant='bordered'>
+            <Tabs aria-label="Options" size='sm' color='primary' variant='bordered'>
                 <Tab 
                     key="strength" 
                     title={

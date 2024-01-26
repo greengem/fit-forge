@@ -7,9 +7,9 @@ function ActionDropdown({ onAction, routine }) {
     return (
         <Dropdown>
             <DropdownTrigger>
-                <Button color="success" variant="light" isIconOnly size="sm"><IconMenu2 /></Button>
+                <Button color="primary" variant="light" isIconOnly size="sm"><IconMenu2 /></Button>
             </DropdownTrigger>
-            <DropdownMenu color="success" aria-label="Routine Actions" onAction={(key) => onAction(key, routine)}>
+            <DropdownMenu color="primary" aria-label="Routine Actions" onAction={(key) => onAction(key, routine)}>
                 <DropdownItem key="edit">Edit Routine</DropdownItem>
                 <DropdownItem key="delete" className="text-danger" color="danger">Delete Routine</DropdownItem>
             </DropdownMenu>

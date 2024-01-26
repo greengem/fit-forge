@@ -13,7 +13,7 @@ export default function ProfileThemeSelection(){
                     size="sm"
                     label="Coming soon!"
                     orientation="horizontal" 
-                    color="success" 
+                    color="primary" 
                     className="text-sm"
                 >
                     <Radio value="neon-green">Neon Green</Radio>

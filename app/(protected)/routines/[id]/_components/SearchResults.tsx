@@ -34,7 +34,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, add
                         />
                     <Button 
                         isIconOnly
-                        color='success'
+                        color='primary'
                         onPress={() => addExerciseToRoutine(exercise)} 
                         isDisabled={selectedExercises.some(e => e.id === exercise.id)}
                         size='sm'
