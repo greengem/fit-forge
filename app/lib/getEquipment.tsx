@@ -2,6 +2,10 @@ import prisma from '@/db/prisma';
 import { EquipmentType } from '@prisma/client';
 import { unstable_cache } from 'next/cache';
 
+interface UserEquipment {
+  equipmentType: EquipmentType;
+}
+
 const getCachedEquipment = (userId: string) => unstable_cache(
     async () => {
         const equipmentObjects = await prisma.userEquipment.findMany({
@@ -13,7 +17,7 @@ const getCachedEquipment = (userId: string) => unstable_cache(
             }
         });
 
-        return equipmentObjects.map(eq => eq.equipmentType);
+        return equipmentObjects.map((eq: UserEquipment) => eq.equipmentType);
     },
     ['equipmentList', userId],
     {
