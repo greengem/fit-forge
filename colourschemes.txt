@@ -1,7 +1,0 @@
-Default: #A6FF00
-Neon Green: #39FF14
-Cyan: #00FFFF
-Hot Pink: #FF69B4
-Bright Orange: #FFA500
-Electric Blue: #7DF9FF
-Lime Yellow: #CCFF00
