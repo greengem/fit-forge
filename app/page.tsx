@@ -117,7 +117,7 @@ export default function Home() {
                   <p className="text-zinc-500 text-sm mb-5">Our complete plan</p>
                   <h4 className="text-4xl font-semibold">$6.99</h4>
                   <p className="mb-5 text-zinc-500 text-sm">Per month, cancel anytime.</p>
-                  <Button isDisabled color="primary" size="sm" as={Link} href="/dashboard" className="mb-5"><IconPlayerPlayFilled size={18} /> Coming Soon</Button>
+                  <Button isDisabled size="sm" as={Link} href="/dashboard" className="mb-5"><IconPlayerPlayFilled size={18} /> Coming Soon</Button>
                   <ul className="space-y-2 text-sm">
                     <li className="flex gap-3 items-center"><IconJumpRope size={18} />Unlimited Custom Programs</li>
                     <li className="flex gap-3 items-center"><IconStretching size={18} />Access to all of our 900+ Exercises</li>
