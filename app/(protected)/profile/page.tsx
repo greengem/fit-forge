@@ -8,7 +8,6 @@ import ProfileStats from "./_components/ProfileStats";
 import ProfileEquipment from "./_components/ProfileEquipment";
 import ProfileDetails from "./_components/ProfileDetails";
 import ProfileActions from "./_components/ProfileActions";
-import ProfileThemeSelection from "./_components/ProfileThemeSelection";
 
 import { ExpandedProfile } from "@/types/ProfileType";
 import { EquipmentType } from "@prisma/client";
