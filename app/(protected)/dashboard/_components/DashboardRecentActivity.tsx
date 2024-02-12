@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
 import { format } from 'date-fns';
 import Link from "next/link";
@@ -12,9 +10,7 @@ function formatDuration(seconds: number) {
     return `${minutes}m`;
 }
 
-export default async function DashboardRecentActivity() {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
+export default async function DashboardRecentActivity({ userId } : { userId: string }) {
     const recentActivity = await prisma.workoutLog.findMany({
         where: {
             userId: userId,

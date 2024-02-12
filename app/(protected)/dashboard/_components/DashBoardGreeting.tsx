@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
 import { getHours } from "date-fns";
 
 function getTimeGreeting() {
@@ -16,9 +14,7 @@ function getTimeGreeting() {
     }
 }
 
-export default async function GreetingComponent() {
-    const session = await getServerSession(authOptions);
-	const userName = session?.user?.name;
+export default async function GreetingComponent({ userName } : { userName: string }) {
     const greeting = getTimeGreeting();
 
     return (

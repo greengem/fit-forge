@@ -1,12 +1,8 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { subDays } from 'date-fns';
 
-export default async function DashboardCardAverageWorkoutDuration() {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
+export default async function DashboardCardAverageWorkoutDuration({ userId } : { userId: string }) {
     const thirtyDaysAgo = subDays(new Date(), 30);
     const workouts = await prisma.workoutLog.findMany({
         where: {
