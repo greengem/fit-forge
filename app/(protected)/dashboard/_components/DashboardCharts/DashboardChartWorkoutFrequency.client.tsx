@@ -22,8 +22,8 @@ function CustomTooltip({ active, payload, label }: TooltipProps<number, string>)
 export default function DashboardChartWorkoutFrequencyClient({ data } : { data: WorkoutFrequencyData[] }) {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-          <Bar dataKey="workouts" fill="#A6FF00" />
+        <BarChart data={data} margin={{ top: 0, right: 0, bottom: 0, left: 0 }} aria-label="Workout Frequency Bar Chart">
+          <Bar dataKey="workouts" fill="#A6FF00" aria-label="Workouts Bar" />
           <XAxis dataKey="week" tick={{ fontSize: '12px' }}  />
           <Tooltip content={<CustomTooltip />}  cursor={false} />
         </BarChart>
