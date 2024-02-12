@@ -60,7 +60,7 @@ export default async function DashboardChartExerciseCategoryDistribution() {
   //console.log(radarChartData);
 
   return (
-    <DashboardChartCard title='Exercise Category Distribution' colSpan="col-span-1">
+    <DashboardChartCard title='Exercise Category Distribution' colSpan="col-span-2">
       <DashboardChartExerciseCategoryDistributionClient data={mockData} />
     </DashboardChartCard>
   );
