@@ -1,3 +1,4 @@
+'use client'
 import clsx from 'clsx';
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Slider } from "@nextui-org/slider";
