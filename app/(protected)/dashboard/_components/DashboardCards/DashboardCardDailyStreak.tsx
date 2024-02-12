@@ -2,7 +2,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
-import { Card, CardHeader, CardBody } from "@nextui-org/card";
+import DashboardCardTemplate from "./DashboardCardTemplate";
 import { differenceInCalendarDays } from 'date-fns';
 
 export default async function DashboardCardDailyStreak() {
@@ -31,10 +31,5 @@ export default async function DashboardCardDailyStreak() {
         }
     }
 
-    return (
-        <Card shadow="none" className="shadow-md">
-            <CardHeader className="px-5">Daily Streak</CardHeader>
-            <CardBody className="text-5xl pt-0 text-primary gap-y-3">{streak}</CardBody>
-        </Card>
-    );
+    return <DashboardCardTemplate title="Daily Streak">{streak}</DashboardCardTemplate>;
 }

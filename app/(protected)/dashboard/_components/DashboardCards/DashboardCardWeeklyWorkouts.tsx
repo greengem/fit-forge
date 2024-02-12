@@ -2,7 +2,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
-import { Card, CardHeader, CardBody } from "@nextui-org/card";
+import DashboardCardTemplate from "./DashboardCardTemplate";
 
 export default async function DashboardCardWeeklyWorkouts() {
     const session = await getServerSession(authOptions);
@@ -16,10 +16,5 @@ export default async function DashboardCardWeeklyWorkouts() {
         },
     });
 
-    return (
-        <Card shadow="none" className="shadow-md">
-            <CardHeader className="px-5">Weekly Workouts</CardHeader>
-            <CardBody className="text-5xl pt-0 text-primary gap-y-3">{workouts.length}</CardBody>
-        </Card>
-    );
+    return <DashboardCardTemplate title="Weekly Workouts">{workouts.length}</DashboardCardTemplate>;
 }
