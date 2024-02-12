@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
 import { subMonths, startOfWeek, endOfWeek, eachWeekOfInterval, format } from 'date-fns';
-
 import DashboardChartCard from './DashboardChartCard';
 import DashboardChartWorkoutFrequencyClient from "./DashboardChartWorkoutFrequency.client";
 
