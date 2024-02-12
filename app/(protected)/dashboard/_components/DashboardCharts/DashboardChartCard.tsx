@@ -5,10 +5,10 @@ import { Slider } from "@nextui-org/slider";
 export default function DashboardChartCard({ children, title, colSpan }: { children: React.ReactNode, title: string, colSpan?: string }) {
     return (
         <Card shadow="none" className={clsx('shadow-md h-72', colSpan)}>
-            <CardHeader className="p-3 tracking-tight gap-5">
+            <CardHeader className="p-3 tracking-tight gap-5 items-center">
                 <p className='shrink-0 w-2/3'>{title}</p>
                 <Slider
-                    size="sm"
+                    size="md"
                     isDisabled
                     step={10}
                     color="primary"
