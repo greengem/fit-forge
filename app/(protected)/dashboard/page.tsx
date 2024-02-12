@@ -15,7 +15,7 @@ export default async function DashboardPage() {
 			</Suspense>
 			<DashboardCards />
 			<DashboardLinks />
-
+			<DashboardCharts />
 			<Suspense fallback={<div>Loading Recent Activity...</div>}>
 				<DashboardRecentActivity />
 			</Suspense>
