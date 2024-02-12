@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
 import DashboardChartCard from './DashboardChartCard';
 import DashboardChartExerciseCategoryDistributionClient from "./DashboardChartExerciseCategoryDistribution.client";
@@ -17,7 +19,9 @@ const mockData = [
   { category: 'olympic weightlifting', count: 2 }
 ];
 
-export default async function DashboardChartExerciseCategoryDistribution({ userId } : { userId: string }) {
+export default async function DashboardChartExerciseCategoryDistribution() {
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
 
   const categoryCounts = await prisma.exercise.groupBy({
     by: ['category'],

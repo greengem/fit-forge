@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
 import { subMonths, startOfWeek, endOfWeek, eachWeekOfInterval, format } from 'date-fns';
 import DashboardChartCard from './DashboardChartCard';
@@ -8,7 +10,9 @@ type WorkoutFrequencyData = {
   workouts: number;
 };
 
-export default async function DashboardChartWorkoutFrequency({ userId } : { userId: string }) {
+export default async function DashboardChartWorkoutFrequency() {
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     const threeMonthsAgo = subMonths(new Date(), 3);
 
     const workoutLogs = await prisma.workoutLog.groupBy({
@@ -42,7 +46,7 @@ export default async function DashboardChartWorkoutFrequency({ userId } : { user
         };
     });
 
-    console.log(workoutsPerWeek);
+    //console.log(workoutsPerWeek);
 
     return (
         <DashboardChartCard title='Workout Frequency' colSpan="col-span-2">

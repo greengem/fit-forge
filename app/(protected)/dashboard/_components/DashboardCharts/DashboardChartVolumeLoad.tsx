@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/authOptions";
 import prisma from "@/db/prisma";
 import DashboardChartCard from './DashboardChartCard';
 import DashboardChartVolumeLoadClient from './DashboardChartVolumeLoad.client';
@@ -9,7 +11,9 @@ type WorkoutVolumeLoadData = {
   totalVolumeLoad: number;
 };
 
-export default async function DashboardChartVolumeLoad({ userId } : { userId: string }) {
+export default async function DashboardChartVolumeLoad() {
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
 
     const workoutLogs = await prisma.workoutLog.findMany({
       where: {

@@ -1,3 +1,5 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
 import DashboardChartCard from './DashboardChartCard';
 import DashboardChartProgressOverTimeClient from './DashboardChartProgressOverTime.client';
@@ -7,7 +9,9 @@ type WorkoutData = {
     totalWeight: number;
 };
 
-export default async function DashboardChartProgressOverTime({ userId } : { userId: string }) {
+export default async function DashboardChartProgressOverTime() {
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     let totalWeightLiftedOverTime: WorkoutData[] = await prisma.workoutLog.findMany({
         where: {
           userId: userId,

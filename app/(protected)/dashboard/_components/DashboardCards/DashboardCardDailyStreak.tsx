@@ -1,9 +1,13 @@
 // DashboardCardDailyStreak.tsx
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/authOptions"
 import prisma from "@/db/prisma";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { differenceInCalendarDays } from 'date-fns';
 
-export default async function DashboardCardDailyStreak({ userId } : { userId: string }) {
+export default async function DashboardCardDailyStreak() {
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
 
     const workouts = await prisma.workoutLog.findMany({
         where: {
