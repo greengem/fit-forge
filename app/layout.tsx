@@ -37,6 +37,7 @@ export default async function RootLayout({
           <Toaster />
           {children}
         </Providers>
+        <SpeedInsights/>
         <Analytics />
       </body>
     </html>
