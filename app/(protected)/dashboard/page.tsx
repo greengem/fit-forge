@@ -1,4 +1,4 @@
-//import { Suspense } from "react";
+import { Suspense } from "react";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import DashboardGreeting from "./_components/DashBoardGreeting";
 import DashboardLinks from "./_components/DashboardLinks";
@@ -10,11 +10,15 @@ export default async function DashboardPage() {
 	return (
 		<>
 			<PageHeading title="Dashboard" />
-			<DashboardGreeting />
+			<Suspense fallback={<div>Loading Greeting...</div>}>
+				<DashboardGreeting />
+			</Suspense>
 			<DashboardCards />
 			<DashboardLinks />
 			<DashboardCharts />
-			<DashboardRecentActivity />
+			<Suspense fallback={<div>Loading Recent Activity...</div>}>
+				<DashboardRecentActivity />
+			</Suspense>
 		</>
 	);
 }
