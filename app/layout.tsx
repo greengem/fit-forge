@@ -1,4 +1,5 @@
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { ClerkProvider } from '@clerk/nextjs'
 import {Providers} from "./providers";
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
@@ -31,15 +32,17 @@ export default async function RootLayout({
 }) {
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>
-          <Toaster />
-          {children}
-        </Providers>
-        <SpeedInsights/>
-        <Analytics />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <Providers>
+            <Toaster />
+            {children}
+          </Providers>
+          <SpeedInsights/>
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
