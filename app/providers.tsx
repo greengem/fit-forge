@@ -4,6 +4,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { WorkoutControlsProvider } from '@/contexts/WorkoutControlsContext';
 import { WorkoutDataProvider } from '@/contexts/WorkoutDataContext';
 import { SidebarProvider } from '@/contexts/SidebarContext'
+import { ActivityModalProvider } from '@/contexts/ActivityModalContext';
 
 export function Providers({children}: { children: React.ReactNode }) {
   return (
@@ -16,7 +17,9 @@ export function Providers({children}: { children: React.ReactNode }) {
           <WorkoutControlsProvider>
             <WorkoutDataProvider>
               <SidebarProvider>
-                {children}
+                <ActivityModalProvider>
+                  {children}
+                </ActivityModalProvider>
               </SidebarProvider>
             </WorkoutDataProvider>
           </WorkoutControlsProvider>
