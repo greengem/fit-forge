@@ -1,12 +1,6 @@
-export { default } from "next-auth/middleware";
-
+import { authMiddleware } from "@clerk/nextjs";
+export default authMiddleware({});
+ 
 export const config = {
-    matcher: [
-        "/profile", 
-        "/dashboard", 
-        "/activity", 
-        "/workouts", 
-        "/routines", 
-        "/exercises", 
-    ],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
