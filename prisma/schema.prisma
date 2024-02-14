@@ -7,69 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  age           Int?
-  height        Int?
-  weight        Int?
-  workoutsGoal  Int?
-  durationGoal  Int?
-  accounts      Account[]
-  sessions      Session[]
-  workoutLogs  WorkoutLog[]
-  workoutPlans WorkoutPlan[]
-  equipment UserEquipment[]
-  exercisePBs UserExercisePB[]
-  favoriteExercises FavoriteExercise[]
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-model UserEquipment {
-  userId       String
-  equipmentType EquipmentType
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@id([userId, equipmentType])
-}
-
 model Exercise {
   id                  String                @id @default(uuid())
   name                String
@@ -90,31 +27,28 @@ model Exercise {
   WorkoutPlanExercise WorkoutPlanExercise[]
   logExercises  WorkoutLogExercise[]
   userPBs UserExercisePB[]
-  favoritedBy FavoriteExercise[]
+  favouritedBy FavouriteExercise[]
 }
 
-model FavoriteExercise {
-  userId    String
-  exerciseId String
-  favoritedAt DateTime @default(now())
-
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model FavouriteExercise {
+  userId   String
+  favouritedAt   DateTime @default(now())
+  exerciseId    String
   exercise Exercise @relation(fields: [exerciseId], references: [id])
 
   @@id([userId, exerciseId])
 }
 
 model WorkoutPlan {
-  id                  String                @id @default(uuid())
-  name                String
-  userId              String?
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  notes               String?
-  isSystemRoutine     Boolean               @default(false)
+  id              String              @id @default(uuid())
+  name            String
+  userId     String?             // Updated to reference Clerk's user ID directly
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  notes           String?
+  isSystemRoutine Boolean             @default(false)
   systemRoutineCategory String?
-  User                User?                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  logs          WorkoutLog[]
+  logs            WorkoutLog[]
   WorkoutPlanExercise WorkoutPlanExercise[]
 }
 
@@ -133,19 +67,19 @@ model WorkoutPlanExercise {
 }
 
 model WorkoutLog {
-  id            String @id @default(uuid())
-  userId       String
-  workoutPlanId String?
-  name         String
-  date         DateTime
-  duration     Int
-  createdAt    DateTime @default(now())
-  date_updated DateTime? @default(now())
-  User         User     @relation(fields: [userId], references: [id])
-  WorkoutPlan  WorkoutPlan? @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
-  exercises    WorkoutLogExercise[]
-  UserExercisePB  UserExercisePB[] @relation("WorkoutLogToUserExercisePB")
+  id              String              @id @default(uuid())
+  userId     String
+  workoutPlanId   String?
+  name            String
+  date            DateTime
+  duration        Int
+  createdAt       DateTime            @default(now())
+  date_updated    DateTime?           @default(now())
+  WorkoutPlan     WorkoutPlan?        @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+  exercises       WorkoutLogExercise[]
+  UserExercisePB  UserExercisePB[]    @relation("WorkoutLogToUserExercisePB")
 }
+
 
 model WorkoutLogExercise {
   id            String @id @default(uuid())
@@ -167,18 +101,24 @@ model SetLog {
 }
 
 model UserExercisePB {
-  userId     String
-  exerciseId String
-  weight     Float
-  reps       Int?
-  exerciseDuration Int?
-  user       User      @relation(fields: [userId], references: [id])
-  exercise   Exercise  @relation(fields: [exerciseId], references: [id])
-  createdAt           DateTime              @default(now())
-  workoutLogId String?
-  WorkoutLog      WorkoutLog? @relation("WorkoutLogToUserExercisePB", fields: [workoutLogId], references: [id], onDelete: Cascade)
+  userId       String
+  exerciseId        String
+  weight            Float
+  reps              Int?
+  exerciseDuration  Int?
+  exercise          Exercise @relation(fields: [exerciseId], references: [id])
+  createdAt         DateTime @default(now())
+  workoutLogId      String?
+  WorkoutLog        WorkoutLog? @relation("WorkoutLogToUserExercisePB", fields: [workoutLogId], references: [id], onDelete: Cascade)
 
   @@id([userId, exerciseId])
+}
+
+model UserEquipment {
+  userId   String
+  equipmentType EquipmentType
+
+  @@id([userId, equipmentType])
 }
 
 enum TrackingType {
