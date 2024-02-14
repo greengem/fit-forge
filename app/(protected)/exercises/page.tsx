@@ -1,41 +1,52 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions";
-import getExercises from '@/app/lib/getExercises';
-import getUserFavoriteExercises from "@/app/lib/getUserFavoriteExercises";
-import getEquipment from "@/app/lib/getEquipment";
-import getRoutines from "@/app/lib/getRoutines";
+import { Suspense } from "react";
 import PageHeading from '@/components/PageHeading/PageHeading';
-import ExerciseList from './_components/ExerciseList';
 import { EquipmentType, WorkoutPlan, Muscle, CategoryType } from "@prisma/client";
+import ExerciseFetch from "./_components/ExerciseFetch";
+import ExerciseSearch from "./_components/ExerciseSearch";
+import ExerciseFilterCategory from "./_components/ExerciseFilterCategory";
+import ExerciseFilterMuscle from "./_components/ExerciseFilterMuscle";
+import ExerciseFilterLevel from "./_components/ExerciseFilterDifficulty";
+import ExerciseFilterForce from "./_components/ExerciseFilterForce";
+import ExerciseFilterRemoveAll from "./_components/ExerciseFilterRemoveAll";
+import ExerciseTableSkeleton from "./_components/ExerciseTableSkeleton";
 
-type Exercise = {
-  id: string;
-  name: string;
-  primary_muscles: Muscle[];
-  secondary_muscles: Muscle[];
-  equipment: EquipmentType | null;
-  category: CategoryType;
-  image: string | null;
-};
-
-export default async function ExercisesPage() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return <div>No user session available</div>;
-  }
-
-	const userId = session?.user?.id;
-  const favoriteExercises = await getUserFavoriteExercises(userId);
-  const myEquipment: EquipmentType[] = await getEquipment(userId);
-  const myRoutines: WorkoutPlan[] = await getRoutines(userId);
-  const exercises: Exercise[] = await getExercises();
-  
+export default function ExercisesPage({ 
+  searchParams 
+} : { 
+  searchParams?: {
+    page?: number,
+    search?: string,
+    muscle?: string,
+    cat?: string,
+    level?: string,
+    force?: string
+  };
+}) {
+  const search = searchParams?.search || '';
+  const cat = searchParams?.cat ? searchParams?.cat.split(',') : [];
+  const muscle = searchParams?.muscle ? searchParams?.muscle.split(',') : [];
+  const level = searchParams?.level ? searchParams?.level.split(',') : [];
+  const force = searchParams?.force ? searchParams?.force.split(',') : [];
+  const currentPage = Number(searchParams?.page) || 1;
 
   return (
     <>
       <PageHeading title="Exercises" />
-      <ExerciseList exercises={exercises} favoriteExercises={favoriteExercises} myEquipment={myEquipment} myRoutines={myRoutines}  />
+      <div className="flex gap-3 mb-3">
+        <ExerciseSearch />
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+        <ExerciseFilterCategory />
+        <ExerciseFilterMuscle />
+        <ExerciseFilterLevel />
+        <ExerciseFilterForce />
+      </div>
+      <Suspense 
+        key={search + cat + muscle + level + force + currentPage} 
+        fallback={<ExerciseTableSkeleton />}
+      >
+        <ExerciseFetch search={search} cat={cat} muscle={muscle} level={level} force={force} currentPage={currentPage} />
+      </Suspense>
     </>
   );
 }
