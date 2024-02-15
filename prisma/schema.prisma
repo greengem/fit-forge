@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model UserInfo {
+  id     String @id @default(uuid())
+  userId String @unique
+  age    Int?
+  height Float?
+  weight Float?
+}
+
 model Exercise {
   id                  String                @id @default(uuid())
   name                String
@@ -42,7 +50,7 @@ model FavouriteExercise {
 model WorkoutPlan {
   id              String              @id @default(uuid())
   name            String
-  userId     String?             // Updated to reference Clerk's user ID directly
+  userId     String?
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
   notes           String?
