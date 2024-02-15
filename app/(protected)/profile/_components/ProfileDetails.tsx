@@ -2,58 +2,51 @@
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
+import { handleUpdateUserInfo } from '@/server-actions/UserServerActions';
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { IconUser, IconDeviceFloppy } from '@tabler/icons-react';
-import { ExpandedProfile } from "@/types/ProfileType";
-import { Session } from 'next-auth';
 
-interface ProfileDetailsProps {
-  session: Session;
-  expandedProfile: ExpandedProfile;
+interface UserMeasurements {
+  weight?: number | null;
+  height?: number | null;
+  age?: number | null;
 }
 
-export default function ProfileDetails({ session, expandedProfile }: ProfileDetailsProps) {
+export default function ProfileDetails({ 
+  username, userEmailAddress, userMeasurements 
+} : { 
+  username: string | undefined, 
+  userEmailAddress: string | undefined, 
+  userMeasurements: UserMeasurements | null 
+}) {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false);
-    const [age, setAge] = useState(expandedProfile.age || '');
-    const [height, setHeight] = useState(expandedProfile.height || '');
-    const [weight, setWeight] = useState(expandedProfile.weight || '');
+    const [age, setAge] = useState(userMeasurements?.age || '');
+    const [height, setHeight] = useState(userMeasurements?.height || '');
+    const [weight, setWeight] = useState(userMeasurements?.weight || '');
 
     const handleSubmit = async () => {
-        setIsLoading(true);
-
-        const data = {
-          age: age ? parseInt(age.toString()) : null,
-          height: height ? parseInt(height.toString()) : null,
-          weight: weight ? parseInt(weight.toString()) : null
-        };        
-      
-        try {
-          const response = await fetch(`/api/users`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-      
-          const result = await response.json();
-          if (response.ok) {
-            toast.success("Profile updated successfully!");
-            router.refresh();
-          } else {
-            toast.error("Failed to update profile!");
-          }
-        } catch (error) {
-          const e = error as Error;
-          toast.error("Failed to update profile: " + e.message);
-        } finally {
-          setIsLoading(false);
-        }
+      setIsLoading(true);
+  
+      const data = {
+        age: age.toString(),
+        height: height.toString(),
+        weight: weight.toString(),
       };
-      
+  
+      const response = await handleUpdateUserInfo(data);
+  
+      if (response.success) {
+        toast.success(response.message);
+      } else {
+        toast.error(response.message);
+      }
+  
+      setIsLoading(false);
+    };
+  
 
     return (
         <Card shadow="none" className='shadow-md'>
@@ -65,7 +58,7 @@ export default function ProfileDetails({ session, expandedProfile }: ProfileDeta
                   type="text" 
                   label="Name" 
                   placeholder="Enter your name" 
-                  value={session.user.name || ''}
+                  value={username || ''}
                   isRequired 
                   isDisabled
                 />
@@ -74,7 +67,7 @@ export default function ProfileDetails({ session, expandedProfile }: ProfileDeta
                     type="email" 
                     label="Email" 
                     placeholder="Enter your email" 
-                    value={session.user.email || ''} 
+                    value={userEmailAddress || ''} 
                     isRequired 
                     isDisabled 
                 />
