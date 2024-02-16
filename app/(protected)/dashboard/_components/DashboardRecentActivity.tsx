@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
-import prisma from "@/db/prisma";
+import { auth } from "@clerk/nextjs";
+import prisma from "@/prisma/prisma";
 import { format } from 'date-fns';
 import Link from "next/link";
 import { Card, CardBody, CardHeader } from "@nextui-org/card"
@@ -13,8 +12,12 @@ function formatDuration(seconds: number) {
 }
 
 export default async function DashboardRecentActivity() {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
+    const { userId } : { userId: string | null } = auth();
+
+    if (!userId) {
+        throw new Error('You must be signed in to view this page.');
+    }
+
     const recentActivity = await prisma.workoutLog.findMany({
         where: {
             userId: userId,
