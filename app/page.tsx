@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IconBrandGithub, IconLayoutKanban, IconHeartHandshake, IconWand, IconChartBar, IconRocket, IconBook, IconBook2, IconBarbell, IconTag, IconPlayerPlayFilled, IconCheck, IconCheckbox, IconStretching, IconJumpRope, IconActivity, IconBrandOpenai, IconUser, IconUserBolt, IconListCheck } from "@tabler/icons-react";
+import { IconChartBar, IconBook, IconBarbell, IconPlayerPlayFilled, IconStretching, IconJumpRope, IconActivity, IconBrandOpenai, IconUser, IconUserBolt, IconListCheck } from "@tabler/icons-react";
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
