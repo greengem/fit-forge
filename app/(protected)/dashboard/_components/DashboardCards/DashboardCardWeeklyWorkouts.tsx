@@ -1,12 +1,15 @@
 // DashboardCardWeeklyWorkouts.tsx
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
-import prisma from "@/db/prisma";
+import { auth } from "@clerk/nextjs";
+import prisma from "@/prisma/prisma";
 import DashboardCardTemplate from "./DashboardCardTemplate";
 
 export default async function DashboardCardWeeklyWorkouts() {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
+    const { userId } : { userId: string | null } = auth();
+
+    if (!userId) {
+        throw new Error('You must be signed in to view this page.');
+    }
+
     const workouts = await prisma.workoutLog.findMany({
         where: {
             userId: userId,
