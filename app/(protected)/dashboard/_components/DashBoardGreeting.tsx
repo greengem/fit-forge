@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
+import { currentUser } from "@clerk/nextjs";
 import { getHours } from "date-fns";
 
 function getTimeGreeting() {
@@ -17,11 +16,10 @@ function getTimeGreeting() {
 }
 
 export default async function GreetingComponent() {
-    const session = await getServerSession(authOptions);
-	const userName = session?.user?.name;
+    const user = await currentUser();
     const greeting = getTimeGreeting();
 
     return (
-        <p className="mb-2">{greeting} {userName}</p>
+        <p className="mb-2">{greeting} {user?.firstName}</p>
     );
 }
