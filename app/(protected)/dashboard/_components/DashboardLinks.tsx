@@ -15,7 +15,7 @@ export default function DashboardLinks() {
         <div className="flex flex-wrap gap-x-3 gap-y-2 mb-5">
             {links.map(link => (
                 <Button color="default" variant="ghost" key={link.href} as={Link} href={link.href} className="gap-unit-1">
-                    <link.icon />{link.label}
+                    <link.icon size={20} />{link.label}
                 </Button>
             ))}
         </div>
