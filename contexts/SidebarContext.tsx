@@ -21,7 +21,7 @@ interface SidebarProviderProps {
 
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children }) => {
   const [isSidebarVisible, setSidebarVisible] = useState(true);
-  const [isSlim, setSlim] = useState(false); // State for slim mode
+  const [isSlim, setSlim] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
