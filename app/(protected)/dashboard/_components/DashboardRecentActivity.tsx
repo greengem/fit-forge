@@ -22,6 +22,7 @@ export default async function DashboardRecentActivity() {
         where: {
             userId: userId,
         },
+        take: 4,
         orderBy: {
             createdAt: 'desc',
         },
