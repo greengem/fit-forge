@@ -43,6 +43,12 @@ export default async function ExerciseFetch({
             equipment: true,
             category: true,
             image: true,
+            aliases: true,
+            force: true,
+            mechanic: true,
+            instructions: true,
+            tips: true,
+            level: true,
         },
         orderBy: {
             name: 'asc',
