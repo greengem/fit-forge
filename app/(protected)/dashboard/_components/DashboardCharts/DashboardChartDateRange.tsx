@@ -40,7 +40,7 @@ export default function DashboardChartDateRange({ chartId }: { chartId: number }
             }}
             size="sm"
             step={10}
-            color="foreground"
+            color="primary"
             showSteps={true}
             defaultValue={40}
             maxValue={50}
