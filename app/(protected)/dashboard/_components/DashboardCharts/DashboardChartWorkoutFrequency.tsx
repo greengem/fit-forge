@@ -1,56 +1,52 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
-import prisma from "@/db/prisma";
-import { subMonths, startOfWeek, endOfWeek, eachWeekOfInterval, format } from 'date-fns';
-import DashboardChartCard from './DashboardChartCard';
+import { auth } from "@clerk/nextjs";
+import prisma from "@/prisma/prisma";
+import { format } from 'date-fns';
+import { calculateIntervals, getIntervalStartAndEndDates } from "./utils/dateUtils";
 import DashboardChartWorkoutFrequencyClient from "./DashboardChartWorkoutFrequency.client";
 
 type WorkoutFrequencyData = {
-  week: string;
+  period: string;
   workouts: number;
 };
 
-export default async function DashboardChartWorkoutFrequency() {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
-    const threeMonthsAgo = subMonths(new Date(), 3);
+export default async function DashboardChartWorkoutFrequency({ dateRange = '3M' }: { dateRange?: string }) {
+  const { userId }: { userId: string | null } = auth();
 
-    const workoutLogs = await prisma.workoutLog.groupBy({
-      by: ['date'],
-      where: {
-        userId: userId,
+  if (!userId) {
+    throw new Error('You must be signed in to view this page.');
+  }
+
+  const intervals = calculateIntervals(dateRange);
+
+  const workoutLogs = await prisma.workoutLog.groupBy({
+    by: ['date'],
+    where: {
+      userId: userId,
+      date: {
+        gte: intervals[0],
       },
-      _count: {
-        _all: true,
-      },
-      orderBy: {
-        date: 'asc',
-      },
+    },
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      date: 'asc',
+    },
+  });
+
+  const workoutsPerInterval = intervals.map((interval): WorkoutFrequencyData => {
+    const { startOfInterval, endOfInterval } = getIntervalStartAndEndDates(interval, dateRange);
+
+    const workoutsInInterval = workoutLogs.filter(log => {
+      const logDate = new Date(log.date);
+      return logDate >= startOfInterval && logDate <= endOfInterval;
     });
 
-    const weeks = eachWeekOfInterval({
-      start: threeMonthsAgo,
-      end: new Date(),
-    }, { weekStartsOn: 1 });
+    return {
+      period: format(startOfInterval, 'dd-MM-yyyy'),
+      workouts: workoutsInInterval.length,
+    };
+  });
 
-    const workoutsPerWeek: WorkoutFrequencyData[] = weeks.map(week => {
-        const startOfWeekDate = startOfWeek(week, { weekStartsOn: 1 });
-        const endOfWeekDate = endOfWeek(week, { weekStartsOn: 1 });
-        const workoutsThisWeek = workoutLogs.filter(log => {
-            const logDate = new Date(log.date);
-            return logDate >= startOfWeekDate && logDate <= endOfWeekDate;
-        });
-        return {
-            week: format(startOfWeekDate, 'yyyy-MM-dd'),
-            workouts: workoutsThisWeek.length,
-        };
-    });
-
-    //console.log(workoutsPerWeek);
-
-    return (
-        <DashboardChartCard title='Workout Frequency' colSpan="col-span-2">
-            <DashboardChartWorkoutFrequencyClient data={workoutsPerWeek} />
-        </DashboardChartCard>
-    )
+  return <DashboardChartWorkoutFrequencyClient data={workoutsPerInterval} />;
 }
