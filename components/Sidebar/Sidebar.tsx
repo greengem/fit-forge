@@ -1,14 +1,9 @@
-//"use client";
 import SidebarNav from './SidebarNav';
 import SidebarBrand from './SidebarBrand';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher/ThemeSwitcher';
 import SidebarWorkoutControls from './SidebarWorkoutControls';
-//import { useSidebarVisibility } from "@/contexts/SidebarContext";
-import { Divider } from '@nextui-org/react';
 
 export default function Sidebar() {
-    //const { isSidebarVisible, toggleSidebar, isSlim, toggleSlim } = useSidebarVisibility();
-
     return (
         <aside className="
             fixed top-0 left-0 h-full w-64 
