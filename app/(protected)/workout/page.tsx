@@ -1,10 +1,9 @@
 import { auth } from "@clerk/nextjs";
+import prisma from "@/prisma/prisma";
+import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import { IconPlus } from "@tabler/icons-react";
-
-import getRoutines from "@/app/lib/getRoutines";
-
 import PageHeading from '@/components/PageHeading/PageHeading'
 import RoutineCards from './_components/RoutineCards';
 import SystemRoutineDisplay from './_components/SystemRoutineDisplay';
@@ -17,8 +16,50 @@ export default async function WorkoutPage() {
       throw new Error('You must be signed in to view this page.');
   }
 
-  const routines = await getRoutines(userId)
-
+  const whereClause: Prisma.WorkoutPlanWhereInput[] = [
+    {isSystemRoutine: true},
+  ];
+  
+  if (userId && typeof userId === 'string') {
+    whereClause.push({
+      userId: userId,
+    });
+  }
+  
+  const routines = await prisma.workoutPlan.findMany({
+    where: {
+      OR: whereClause,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    select: {
+      id: true,
+      name: true,
+      notes: true,
+      userId: true,
+      createdAt: true,
+      updatedAt: true,
+      isSystemRoutine: true,
+      systemRoutineCategory: true,
+      WorkoutPlanExercise: {
+        select: {
+          sets: true,
+          reps: true,
+          exerciseDuration: true,
+          order: true,
+          Exercise: {
+            select: {
+              id: true,
+              name: true,
+              category: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  
   const userRoutines = routines.filter(routine => !routine.isSystemRoutine);
   const systemRoutines = routines.filter(routine => routine.isSystemRoutine);
 
