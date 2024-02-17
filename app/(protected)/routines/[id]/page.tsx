@@ -1,8 +1,7 @@
 import { auth } from "@clerk/nextjs";
-import getUserFavoriteExercises from "@/app/lib/getUserFavoriteExercises";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import RoutineBuilder from './_components/RoutineBuilder';
-import getRoutine from '@/app/lib/getRoutine';
+import prisma from "@/prisma/prisma";
 
 export default async function NewRoutinePage({ params }: { params: { id: string } }) {
   const routineId = params.id;
@@ -15,12 +14,47 @@ export default async function NewRoutinePage({ params }: { params: { id: string 
   let existingRoutine;
 
   if (routineId !== 'new') {
-    existingRoutine = await getRoutine(routineId);
+    const existingRoutine = await prisma.workoutPlan.findUnique({
+      where: { id: routineId },
+      select: {
+        id: true,
+        name: true,
+        notes: true,
+        userId: true,
+        createdAt: true,
+        updatedAt: true,
+        isSystemRoutine: true,
+        systemRoutineCategory: true,
+        WorkoutPlanExercise: {
+          select: {
+          sets: true,
+          reps: true,
+          exerciseDuration: true,
+          order: true,
+          trackingType: true,
+          Exercise: {
+            select: {
+            id: true,
+            name: true,
+            category: true,
+            },
+          },
+          },
+        },
+        },
+      });
   } else {
     existingRoutine = null;
   }
 
-  const favoriteExercises = await getUserFavoriteExercises(userId);
+  const favoriteExercises = await prisma.favouriteExercise.findMany({
+    where: {
+        userId: userId,
+    },
+    select: {
+        exerciseId: true,
+    }
+});
   
   return (
     <>
