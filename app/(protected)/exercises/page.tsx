@@ -7,6 +7,7 @@ import ExerciseFilterMuscle from "./_components/ExerciseFilterMuscle";
 import ExerciseFilterLevel from "./_components/ExerciseFilterDifficulty";
 import ExerciseFilterForce from "./_components/ExerciseFilterForce";
 import ExerciseTableSkeleton from "./_components/ExerciseTableSkeleton";
+import ExerciseModal from "./_components/ExerciseModal";
 
 export default function ExercisesPage({ 
   searchParams 
@@ -45,6 +46,7 @@ export default function ExercisesPage({
       >
         <ExerciseFetch search={search} cat={cat} muscle={muscle} level={level} force={force} currentPage={currentPage} />
       </Suspense>
+      <ExerciseModal />
     </>
   );
 }
