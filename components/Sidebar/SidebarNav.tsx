@@ -35,7 +35,7 @@ export default function SidebarNav() {
             <NavItem
                 icon={<IconPlus className="h-5 w-5" />}
                 label="New Routine"
-                href="/routines/new"
+                href="workout/routine/new"
                 active={pathname.startsWith("/workout/routine/new")}
             />
             <NavItem
