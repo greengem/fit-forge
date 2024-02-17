@@ -1,62 +1,64 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions";
-import prisma from "@/db/prisma";
-import DashboardChartCard from './DashboardChartCard';
+import { auth } from "@clerk/nextjs";
+import prisma from "@/prisma/prisma";
+import { format } from 'date-fns';
 import DashboardChartVolumeLoadClient from './DashboardChartVolumeLoad.client';
+import { calculateIntervals, getIntervalStartAndEndDates } from "./utils/dateUtils";
 
 type WorkoutVolumeLoadData = {
-  workoutLogId: string;
-  date: Date;
-  name: string;
+  period: string;
   totalVolumeLoad: number;
 };
 
-export default async function DashboardChartVolumeLoad() {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user?.id;
+export default async function DashboardChartVolumeLoad({ dateRange = '3M' }: { dateRange?: string }) {
+  const { userId }: { userId: string | null } = auth();
 
-    const workoutLogs = await prisma.workoutLog.findMany({
-      where: {
-        userId: userId,
+  if (!userId) {
+    throw new Error('You must be signed in to view this page.');
+  }
+
+  const intervals = calculateIntervals(dateRange);
+  const startDate = intervals[0];
+  const endDate = new Date();
+
+  const workoutLogs = await prisma.workoutLog.findMany({
+    where: {
+      userId: userId,
+      date: {
+        gte: startDate,
+        lte: endDate,
       },
-      include: {
-        exercises: {
-          include: {
-            sets: true,
-          },
+    },
+    include: {
+      exercises: {
+        include: {
+          sets: true,
         },
       },
-    });
+    },
+  });
 
-    let workoutVolumeLoads: WorkoutVolumeLoadData[] = workoutLogs.map(workoutLog => {
-      const totalVolumeLoad = workoutLog.exercises.reduce((totalExerciseVolume, exercise) => {
+  let workoutVolumeLoads: WorkoutVolumeLoadData[] = intervals.map(interval => {
+    const { startOfInterval, endOfInterval } = getIntervalStartAndEndDates(interval, dateRange);
+
+    const volumeLoadInInterval = workoutLogs.filter(workoutLog => {
+      const logDate = new Date(workoutLog.date);
+      return logDate >= startOfInterval && logDate <= endOfInterval;
+    }).reduce((totalVolume, workoutLog) => {
+      const workoutVolume = workoutLog.exercises.reduce((totalExerciseVolume, exercise) => {
         const exerciseVolume = exercise.sets.reduce((totalSetVolume, set) => {
-          // Ensure weight is greater than 0 before including in the volume calculation
-          if (set.weight && set.weight > 0) {
-            const setVolume = set.weight * (set.reps || 0);
-            return totalSetVolume + setVolume;
-          }
-          return totalSetVolume;
+          const setVolume = (set.weight || 0) * (set.reps || 0);
+          return totalSetVolume + setVolume;
         }, 0);
         return totalExerciseVolume + exerciseVolume;
       }, 0);
-  
-      return {
-        workoutLogId: workoutLog.id,
-        date: workoutLog.date,
-        name: workoutLog.name,
-        totalVolumeLoad,
-      };
-    });
+      return totalVolume + workoutVolume;
+    }, 0);
 
-    // Filter out entries with a totalVolumeLoad of 0
-    workoutVolumeLoads = workoutVolumeLoads.filter(workout => workout.totalVolumeLoad > 0);
-  
-    //console.log(workoutVolumeLoads);
+    return {
+      period: format(startOfInterval, 'dd-MM-yyyy'),
+      totalVolumeLoad: volumeLoadInInterval,
+    };
+  });
 
-    return (
-        <DashboardChartCard title='Volume Load' colSpan="col-span-2">
-          <DashboardChartVolumeLoadClient data={workoutVolumeLoads} />
-        </DashboardChartCard>
-    );
+  return <DashboardChartVolumeLoadClient data={workoutVolumeLoads} />;
 }
