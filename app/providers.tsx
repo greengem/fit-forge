@@ -5,6 +5,7 @@ import { WorkoutControlsProvider } from '@/contexts/WorkoutControlsContext';
 import { WorkoutDataProvider } from '@/contexts/WorkoutDataContext';
 import { SidebarProvider } from '@/contexts/SidebarContext'
 import { ActivityModalProvider } from '@/contexts/ActivityModalContext';
+import { ExerciseModalProvider } from '@/contexts/ExerciseModalContext';
 
 export function Providers({children}: { children: React.ReactNode }) {
   return (
@@ -18,7 +19,9 @@ export function Providers({children}: { children: React.ReactNode }) {
             <WorkoutDataProvider>
               <SidebarProvider>
                 <ActivityModalProvider>
-                  {children}
+                  <ExerciseModalProvider>
+                    {children}
+                  </ExerciseModalProvider>
                 </ActivityModalProvider>
               </SidebarProvider>
             </WorkoutDataProvider>
