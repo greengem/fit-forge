@@ -1,27 +1,23 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
-import prisma from "@/db/prisma";
-import DashboardChartCard from './DashboardChartCard';
-import DashboardChartExerciseCategoryDistributionClient from "./DashboardChartExerciseCategoryDistribution.client";
+import { auth } from "@clerk/nextjs";
+import prisma from "@/prisma/prisma";
+import DashboardChartExerciseCategoryDistributionPieClient from "./DashboardChartExerciseCategoryDistributionPie.client";
+import { calculateIntervals, getIntervalStartAndEndDates } from "./utils/dateUtils";
 
 type ExerciseCategoryData = {
   category: string;
   count: number;
 };
 
-const mockData = [
-  { category: 'strength', count: 6 },
-  { category: 'stretching', count: 5 },
-  { category: 'plyometrics', count: 7 },
-  { category: 'strongman', count: 3 },
-  { category: 'powerlifting', count: 8 },
-  { category: 'cardio', count: 5 },
-  { category: 'olympic weightlifting', count: 2 }
-];
+export default async function DashboardChartExerciseCategoryDistribution({ dateRange = '3M' }: { dateRange?: string }) {
+  const { userId }: { userId: string | null } = auth();
 
-export default async function DashboardChartExerciseCategoryDistribution() {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user?.id;
+  if (!userId) {
+      throw new Error('You must be signed in to view this page.');
+  }
+
+  const intervals = calculateIntervals(dateRange);
+  const startDate = intervals[0];
+  const endDate = new Date();
 
   const categoryCounts = await prisma.exercise.groupBy({
     by: ['category'],
@@ -33,6 +29,10 @@ export default async function DashboardChartExerciseCategoryDistribution() {
         some: {
           WorkoutLog: {
             userId: userId,
+            date: {
+              gte: startDate,
+              lte: endDate,
+            },
           },
         },
       },
@@ -57,11 +57,5 @@ export default async function DashboardChartExerciseCategoryDistribution() {
     };
   });
 
-  //console.log(radarChartData);
-
-  return (
-    <DashboardChartCard title='Exercise Category Distribution' colSpan="col-span-2">
-      <DashboardChartExerciseCategoryDistributionClient data={mockData} />
-    </DashboardChartCard>
-  );
+  return <DashboardChartExerciseCategoryDistributionPieClient data={radarChartData} />;
 }
