@@ -3,14 +3,45 @@ import DashboardChartExerciseCategoryDistribution from "./DashboardChartExercise
 import DashboardChartProgressOverTime from "./DashboardChartProgressOverTime";
 import DashboardChartVolumeLoad from "./DashboardChartVolumeLoad";
 import DashboardChartWorkoutFrequency from "./DashboardChartWorkoutFrequency";
+import DashboardChartCard from "./DashboardChartCard";
+import { IconChartArea, IconChartAreaFilled, IconChartBar, IconChartLine, IconChartRadar } from "@tabler/icons-react";
 
-export default function DashboardCharts(){
+export default function DashboardCharts({ 
+    chart1DateRange, 
+    chart2DateRange, 
+    chart3DateRange, 
+    chart4DateRange 
+} : {
+    chart1DateRange?: string,
+    chart2DateRange?: string,
+    chart3DateRange?: string,
+    chart4DateRange?: string,
+}){
     return (
-        <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 mb-5">
-            <Suspense fallback={<div>Loading Chart...</div>}><DashboardChartWorkoutFrequency /></Suspense>
-            <Suspense fallback={<div>Loading Chart...</div>}><DashboardChartProgressOverTime /></Suspense>
-            <Suspense fallback={<div>Loading Chart...</div>}><DashboardChartVolumeLoad /></Suspense>
-            <Suspense fallback={<div>Loading Chart...</div>}><DashboardChartExerciseCategoryDistribution /></Suspense>
+        <div className="grid grid-cols-2 xl:grid-cols-6 gap-5 mb-5">
+            <DashboardChartCard icon={<IconChartBar />} title='Workout Frequency' colSpan="col-span-2" chartId={1}>
+                <Suspense fallback={<div>Loading Chart...</div>}>
+                    <DashboardChartWorkoutFrequency dateRange={chart1DateRange} />
+                </Suspense>
+            </DashboardChartCard>
+
+            <DashboardChartCard icon={<IconChartAreaFilled />} title='Progress Over Time' colSpan="col-span-2" chartId={2}>
+                <Suspense fallback={<div>Loading Chart...</div>}>
+                    <DashboardChartProgressOverTime dateRange={chart2DateRange} />
+                </Suspense>
+            </DashboardChartCard>
+            
+            <DashboardChartCard icon={<IconChartLine />} title='Volume Load' colSpan="col-span-2" chartId={3}>
+                <Suspense fallback={<div>Loading Chart...</div>}>
+                    <DashboardChartVolumeLoad dateRange={chart3DateRange} />
+                </Suspense>
+            </DashboardChartCard>
+            
+            {/* <DashboardChartCard icon={<IconChartRadar />} title='Exercise Split' colSpan="col-span-1" chartId={4}>
+                <Suspense fallback={<div>Loading Chart...</div>}>
+                    <DashboardChartExerciseCategoryDistribution dateRange={chart4DateRange} />
+                </Suspense>
+            </DashboardChartCard> */}
         </div>
     )
 }
