@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs'
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Navbar from '@/components/Navbar/Navbar';
 import ActiveWorkoutWarning from '@/components/Notices/ActiveWorkoutWarning';
@@ -9,7 +10,8 @@ export default function RootLayout({
   }) {
 
     return (
-      <div className="flex">
+      <ClerkProvider>
+        <div className="flex">
           <Sidebar />
           <main className="flex-grow w-full">
             <Navbar />
@@ -19,5 +21,6 @@ export default function RootLayout({
             </div>
           </main>
         </div>
+      </ClerkProvider>
     )
   }
