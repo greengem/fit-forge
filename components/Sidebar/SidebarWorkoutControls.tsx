@@ -10,7 +10,7 @@ export default function SidebarWorkoutControls() {
     const { isPaused, setIsPaused, workoutDuration, workoutStartTime, formatDuration, activeWorkoutRoutine } = useWorkoutControls();
     const pathname = usePathname();
     const workoutPath = `/workout/${activeWorkoutRoutine}`;
-    const formattedStartTime = format(new Date(workoutStartTime), "HH:mm");
+    const formattedStartTime = workoutStartTime ? format(new Date(workoutStartTime), "HH:mm") : 'N/A';
     const handlePauseToggle = () => {
         setIsPaused(!isPaused);
     };
