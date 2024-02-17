@@ -3,8 +3,8 @@ import { handleToggleFavouriteExercise } from "@/server-actions/ExerciseServerAc
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { User } from "@nextui-org/user";
 import { Button, ButtonGroup } from "@nextui-org/button";
-import { IconInfoCircle, IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
-import Link from "next/link";
+import { IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
+import ExerciseInfoButton from "./ExerciseInfoButton";
 
 type Exercise = {
     id: string;
@@ -49,9 +49,7 @@ export default function ExerciseTable({ exercises, favouriteExercises }: Exercis
                     <TableCell className="capitalize hidden lg:table-cell py-1">{exercise.category}</TableCell>
                     <TableCell className="flex justify-end py-1">
                         <ButtonGroup size="sm" variant='flat'>
-                            <Button isIconOnly as={Link} href={`/exercises/${exercise.id}`}>
-                                <IconInfoCircle size={20} />
-                            </Button>
+                            <ExerciseInfoButton exercise={exercise} />
                             <Button isIconOnly onClick={() => handleToggleFavouriteExercise(exercise.id)}>
                                 {favouriteExercises.has(exercise.id) ? <IconStarFilled className="text-primary" size={20} /> : <IconStar className="hover:text-primary" size={20} />}
                             </Button>
