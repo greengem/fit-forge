@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
+import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import { IconPlus } from "@tabler/icons-react";
@@ -12,8 +11,13 @@ import SystemRoutineDisplay from './_components/SystemRoutineDisplay';
 
 
 export default async function WorkoutPage() {
-  const session = await getServerSession(authOptions);
-  const routines = await getRoutines(session!.user.id)
+  const { userId } : { userId: string | null } = auth();
+
+  if (!userId) {
+      throw new Error('You must be signed in to view this page.');
+  }
+
+  const routines = await getRoutines(userId)
 
   const userRoutines = routines.filter(routine => !routine.isSystemRoutine);
   const systemRoutines = routines.filter(routine => routine.isSystemRoutine);
