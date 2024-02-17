@@ -1,14 +1,12 @@
-"use client";
+'use client'
 import { usePathname } from 'next/navigation'
-import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
-import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout, IconPlus } from '@tabler/icons-react';
-import { Button, Divider } from '@nextui-org/react';
-import { useSidebarVisibility } from "@/contexts/SidebarContext";
+import { SignOutButton } from "@clerk/nextjs";
+import { IconDashboard, IconJumpRope, IconStretching, IconUser, IconActivity, IconLogout, IconPlus } from '@tabler/icons-react';
+import { Divider } from '@nextui-org/react';
 
 export default function SidebarNav() {
     const pathname = usePathname();
-    const { isSidebarVisible, toggleSidebar } = useSidebarVisibility();
 
     return (
         <ul className="space-y-3 text-sm">
@@ -54,29 +52,27 @@ export default function SidebarNav() {
                 href="/profile"
                 active={pathname === "/profile"}
             />
-            <NavItem
-                icon={<IconLogout className="h-5 w-5" />}
-                label="Sign Out"
-                active={false}
-                onClick={() => signOut({ callbackUrl: '/' })}
-            />
+            <li>
+                <SignOutButton><button className='flex items-center gap-3'><IconLogout className='h-5 w-5' />Sign Out</button></SignOutButton>
+            </li>
         </ul>
     );
 }
 
 interface NavItemProps {
     icon: JSX.Element;
-    label: string;
+    label?: string;
     href?: string;
     active: boolean;
     onClick?: () => void;
+    children?: React.ReactNode;
 }
 
-function NavItem({ icon, label, href, active, onClick }: NavItemProps) {
+function NavItem({ icon, label, href, active, onClick, children }: NavItemProps) {
     const content = (
         <div className={`flex items-center space-x-3 ${active && 'text-primary'} text-foreground`}>
             {icon}
-            <div>{label}</div>
+            {label && <div>{label}</div>}
         </div>
     );
 
@@ -87,6 +83,7 @@ function NavItem({ icon, label, href, active, onClick }: NavItemProps) {
             ) : (
                 <Link href={href || '#'}>{content}</Link>
             )}
+            {children}
         </li>
     );
 }
