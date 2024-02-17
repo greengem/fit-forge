@@ -11,7 +11,7 @@ function CustomTooltip({ active, payload, label }: TooltipProps<number, string>)
     return (
       <div className="bg-zinc-800 text-white px-4 py-2 rounded-xl shadow-xl text-xs">
         <p className='font-semibold'>Workouts: <span className='text-primary'>{payload[0].value}</span></p>
-        <p>{label}</p>
+        <p>Period: {label}</p>
       </div>
     );
   }
