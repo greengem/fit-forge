@@ -1,49 +1,33 @@
 'use client';
+import { useContext } from "react";
+import { ExerciseModalContext } from "@/contexts/ExerciseModalContext";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { Button } from "@nextui-org/react";
 import { Image } from "@nextui-org/react";
-import { Exercise } from '@/types/ExerciseType';
-
-interface ExerciseModalProps {
-  selectedExercise: Exercise;
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-}
 
 function ListItem({ label, value }: { label: string; value: string }) {
   return (
     <li className="capitalize">
-      <span className="text-primary">{label}:</span> {value}
+      <span className="font-semibold">{label}:</span> {value}
     </li>
   );
 }
 
-export default function ExerciseModal({ selectedExercise, isOpen, onOpenChange }: ExerciseModalProps) {
-  const {
-    name,
-    image,
-    category,
-    primary_muscles,
-    secondary_muscles,
-    force,
-    mechanic,
-    equipment,
-    instructions,
-    tips,
-  } = selectedExercise;
+export default function ExerciseModal() {
+  const { exercise, isOpen, onOpenChange } = useContext(ExerciseModalContext);
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="3xl" scrollBehavior="inside">
+    <Modal isOpen={isOpen} backdrop="blur" onOpenChange={onOpenChange} size="3xl" isKeyboardDismissDisabled scrollBehavior="inside">
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">{name}</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">{exercise?.name}</ModalHeader>
             <ModalBody>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {[0, 1].map((index) => (
                   <Image
                     key={index}
-                    src={`/images/exercises/${image}/images/${index}.jpg`}
+                    src={`/images/exercises/${exercise?.image}/images/${index}.jpg`}
                     width={750}
                     height={500}
                     alt={`Exercise photo ${index + 1}`}
@@ -52,29 +36,29 @@ export default function ExerciseModal({ selectedExercise, isOpen, onOpenChange }
               </div>
 
               <ul className="space-y-2">
-                {category && <ListItem label="Category" value={category} />}
-                {primary_muscles && primary_muscles.length > 0 && (
-                  <ListItem label="Primary Muscles" value={primary_muscles.join(', ')} />
+                {exercise?.category && <ListItem label="Category" value={exercise?.category} />}
+                {exercise?.primary_muscles && exercise?.primary_muscles.length > 0 && (
+                  <ListItem label="Primary Muscles" value={exercise?.primary_muscles.join(', ')} />
                 )}
-                {secondary_muscles && secondary_muscles.length > 0 && (
-                  <ListItem label="Secondary Muscles" value={secondary_muscles.join(', ')} />
+                {exercise?.secondary_muscles && exercise?.secondary_muscles.length > 0 && (
+                  <ListItem label="Secondary Muscles" value={exercise?.secondary_muscles.join(', ')} />
                 )}
-                {force && <ListItem label="Force" value={force} />}
-                {mechanic && <ListItem label="Mechanic" value={mechanic} />}
-                {equipment && <ListItem label="Equipment" value={equipment} />}
-                {instructions && (
-                    <ListItem label="Instructions" value={instructions.join(', ')} />
+                {exercise?.force && <ListItem label="Force" value={exercise?.force} />}
+                {exercise?.mechanic && <ListItem label="Mechanic" value={exercise?.mechanic} />}
+                {exercise?.equipment && <ListItem label="Equipment" value={exercise?.equipment} />}
+                {exercise?.instructions && (
+                    <ListItem label="Instructions" value={exercise?.instructions.join(', ')} />
                 )}
 
-                {tips && tips.length > 0 && (
-                  <ListItem label="Tips" value={tips.join(', ')} />
+                {exercise?.tips && exercise?.tips.length > 0 && (
+                  <ListItem label="Tips" value={exercise?.tips.join(', ')} />
                 )}
               </ul>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
-                Close
-              </Button>
+            <ModalFooter className="pt-0">
+                <Button color="danger" variant="light" onPress={onClose}>Close</Button>
+            </ModalFooter>
             </ModalFooter>
           </>
         )}
