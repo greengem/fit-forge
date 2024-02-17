@@ -2,12 +2,11 @@
 
 import React from "react";
 import { usePathname } from 'next/navigation'
-import { signOut } from "next-auth/react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/navbar";
+import { Navbar, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import { ThemeSwitcher } from '@/components/ThemeSwitcher/ThemeSwitcher';
 import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
-import { IconDashboard, IconJumpRope, IconList, IconStretching, IconUser, IconActivity, IconLogout } from '@tabler/icons-react';
+import { IconDashboard, IconJumpRope, IconStretching, IconUser, IconActivity } from '@tabler/icons-react';
 
 const NAV_CONTENT_ITEMS = [
     { label: <IconUser className="mt-2" />, href: '/profile' },
