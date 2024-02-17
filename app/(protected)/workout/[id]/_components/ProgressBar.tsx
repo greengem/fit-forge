@@ -1,5 +1,5 @@
 import {Progress} from "@nextui-org/progress";
-export default function ProgressBar({ percentage }) {
+export default function ProgressBar({ percentage } : { percentage: number }) {
     return (
         <Progress
         aria-label="Workout Progress"
