@@ -2,6 +2,28 @@
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Input, Button } from "@nextui-org/react";
 import { IconSquare, IconSquareCheck } from '@tabler/icons-react';
 
+interface Set {
+    weight: number | "";
+    duration?: number | "" | null;
+    reps?: number | "" | null;
+    completed: boolean;
+  }
+  
+  interface ExerciseDetail {
+    exerciseName: string;
+    sets: Set[];
+    trackingType: string;
+  }
+  
+  interface ExerciseTableProps {
+    exerciseDetail: ExerciseDetail;
+    index: number;
+    handleCompleteSet: (exerciseIndex: number, setIndex: number, exerciseName: string) => void;
+    handleWeightChange: (exerciseIndex: number, setIndex: number, newValue: number) => void;
+    handleRepChange: (exerciseIndex: number, setIndex: number, newValue: number | null) => void;
+    handleDurationChange: (exerciseIndex: number, setIndex: number, newValue: number | null) => void;
+  }
+
 export default function ExerciseTable({ 
     exerciseDetail, 
     index, 
@@ -9,7 +31,7 @@ export default function ExerciseTable({
     handleWeightChange, 
     handleRepChange, 
     handleDurationChange 
-}) {
+} : ExerciseTableProps) {
     return (
         <Table removeWrapper aria-label={`Table for exercise ${exerciseDetail.exerciseName}`} className="min-w-full table-auto" shadow="none">
             <TableHeader>
@@ -32,7 +54,7 @@ export default function ExerciseTable({
                             <Input 
                                 labelPlacement="outside"
                                 type='number' 
-                                value={set.weight || ""}
+                                value={String(set.weight) || ""}
                                 onChange={e => handleWeightChange(index, setIndex, Number(e.target.value))}
                                 isDisabled={set.completed} 
                                 className="max-w-[80px]"
@@ -44,7 +66,7 @@ export default function ExerciseTable({
                                 <Input 
                                     labelPlacement="outside"
                                     type="number" 
-                                    value={set.duration || ""}
+                                    value={set.duration !== null ? String(set.duration) : ""}
                                     onChange={e => handleDurationChange(index, setIndex, Number(e.target.value))}
                                     isDisabled={set.completed}
                                     className="max-w-[80px]"
@@ -55,7 +77,7 @@ export default function ExerciseTable({
                                 <Input 
                                     labelPlacement="outside"
                                     type="number" 
-                                    value={set.reps || ""}
+                                    value={set.reps !== null ? String(set.reps) : ""}
                                     onChange={e => handleRepChange(index, setIndex, Number(e.target.value))}
                                     isDisabled={set.completed}
                                     className="max-w-[80px]"
