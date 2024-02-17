@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions"
+import { auth } from "@clerk/nextjs";
 import getRoutines from '@/app/lib/getRoutines';
 
 import PageHeading from '@/components/PageHeading/PageHeading';
@@ -10,11 +9,14 @@ import { WorkoutPlan } from "@prisma/client";
 import RoutineDisplay from './_components/RoutineDisplay';
 
 export default async function RoutinesPage() {
-  const session = await getServerSession(authOptions);
-  let routines: WorkoutPlan[] = [];
-  if (session && session.user) {
-    routines = await getRoutines(session.user.id);
+  const { userId } : { userId: string | null } = auth();
+
+  if (!userId) {
+    throw new Error('You must be signed in to view this page.');
   }
+
+  let routines: WorkoutPlan[] = [];
+  routines = await getRoutines(userId);
   
   const userRoutines = routines.filter(routine => !routine.isSystemRoutine);
   const systemRoutines = routines.filter(routine => routine.isSystemRoutine);
