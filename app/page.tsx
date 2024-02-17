@@ -67,7 +67,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mb-10 py-5 px-3 md:px-10">
+      <section className="mb-10 py-5 px-3 md:px-10 hidden">
         <h2 className="text-center text-6xl my-10 font-bold">The Perfect Plan <span className="text-primary">For Your Needs</span></h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
