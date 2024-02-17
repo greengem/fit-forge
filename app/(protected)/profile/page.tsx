@@ -1,6 +1,5 @@
-import { auth, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
-import getEquipment from "@/app/lib/getEquipment";
 
 import ProfileHero from "./_components/ProfileHero";
 import ProfileStats from "./_components/ProfileStats";
