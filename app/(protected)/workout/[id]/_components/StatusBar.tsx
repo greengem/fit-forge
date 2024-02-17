@@ -21,11 +21,11 @@ export default function StatusBar({ completeWorkout, cancelWorkout, progressPerc
     } = useWorkoutControls();
 
     const handlePauseToggle = () => {
-        togglePause(workoutStartTime, isPaused, setIsPaused);
+        togglePause();
     };
 
     const handleStartWorkout = () => {
-        startWorkout(activeRoutineId, setWorkoutStartTime);
+        startWorkout(activeRoutineId);
     };
 
     return (
