@@ -67,7 +67,7 @@ export default async function WorkoutPage() {
     <>
     <div className="flex gap-x-4 items-center justify-between">
       <PageHeading title="Start Workout" />
-      <Button as={Link} href="/routines/new" variant="ghost" color="primary" className="gap-unit-1 mb-3">
+      <Button as={Link} href="/workout/routine/new" variant="ghost" color="primary" className="gap-unit-1 mb-3">
         <IconPlus size={16} />New Routine
       </Button>
     </div>
