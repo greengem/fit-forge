@@ -7,7 +7,6 @@ import ExerciseFilterCategory from "./_components/ExerciseFilterCategory";
 import ExerciseFilterMuscle from "./_components/ExerciseFilterMuscle";
 import ExerciseFilterLevel from "./_components/ExerciseFilterDifficulty";
 import ExerciseFilterForce from "./_components/ExerciseFilterForce";
-import ExerciseFilterRemoveAll from "./_components/ExerciseFilterRemoveAll";
 import ExerciseTableSkeleton from "./_components/ExerciseTableSkeleton";
 
 export default function ExercisesPage({ 
