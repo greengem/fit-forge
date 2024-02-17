@@ -1,12 +1,11 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions";
-import prisma from '@/db/prisma';
+import { auth } from "@clerk/nextjs";
+import prisma from '@/prisma/prisma';
 import { NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache'
 
 // POST
 export async function POST(request) {
-    const session = await getServerSession(authOptions);
+    const { userId } = auth();
 
     try {
         const data = JSON.parse(await request.text());
@@ -17,7 +16,7 @@ export async function POST(request) {
         const newWorkoutPlan = await prisma.workoutPlan.create({
             data: {
                 name: routineName,
-                userId: session.user.id,
+                userId: userId,
                 notes: notes,
                 WorkoutPlanExercise: {
                     create: exercises.map((exercise) => ({
@@ -32,7 +31,7 @@ export async function POST(request) {
             },
         });
 
-        revalidateTag(`routines_${session.user.id}`);
+        revalidateTag(`routines_${userId}`);
         return NextResponse.json({ success: true, id: newWorkoutPlan.id }, { status: 200 });
         
     } catch (error) {
