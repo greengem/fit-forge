@@ -1,17 +1,34 @@
 // WorkoutControlsContext.js
-import React, { createContext, useState, useContext, useEffect, useRef } from 'react';
+'use client'
+import React, { createContext, useState, useContext, useEffect, useRef, ReactNode } from 'react';
 import toast from 'react-hot-toast';
 
-const WorkoutControlsContext = createContext();
+interface WorkoutControlsContextType {
+  isPaused: boolean;
+  setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
+  isSaving: boolean;
+  setIsSaving: React.Dispatch<React.SetStateAction<boolean>>;
+  workoutDuration: number;
+  setWorkoutDuration: React.Dispatch<React.SetStateAction<number>>;
+  workoutStartTime: number | null;
+  setWorkoutStartTime: React.Dispatch<React.SetStateAction<number | null>>;
+  activeWorkoutRoutine: string | null;
+  setActiveWorkoutRoutine: React.Dispatch<React.SetStateAction<string | null>>;
+  formatDuration: (seconds: number) => string;
+  togglePause: () => void;
+  startWorkout: (workoutId: string) => void;
+}
 
-export const WorkoutControlsProvider = ({ children }) => {
+const WorkoutControlsContext = createContext<WorkoutControlsContextType | undefined>(undefined);
+
+export const WorkoutControlsProvider = ({ children }: { children: ReactNode}) => {
   const [isPaused, setIsPaused] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [workoutDuration, setWorkoutDuration] = useState(0);
-  const [workoutStartTime, setWorkoutStartTime] = useState(null);
-  const [activeWorkoutRoutine, setActiveWorkoutRoutine] = useState(null);
+  const [workoutStartTime, setWorkoutStartTime] = useState<number | null>(null);
+  const [activeWorkoutRoutine, setActiveWorkoutRoutine] = useState<string | null>(null);
 
-  const intervalRef = useRef(null);
+  const intervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleWorkoutTimer = () => {
@@ -21,7 +38,7 @@ export const WorkoutControlsProvider = ({ children }) => {
     };
 
     if (workoutStartTime && !isPaused) {
-      intervalRef.current = setInterval(handleWorkoutTimer, 1000);
+      intervalRef.current = window.setInterval(handleWorkoutTimer, 1000);
     } else if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
@@ -33,7 +50,7 @@ export const WorkoutControlsProvider = ({ children }) => {
     };
   }, [workoutStartTime, isPaused]);
 
-  const formatDuration = (seconds) => {
+  const formatDuration = (seconds: number): string => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds - hours * 3600) / 60);
     const remainingSeconds = seconds - hours * 3600 - minutes * 60;
@@ -49,7 +66,7 @@ export const WorkoutControlsProvider = ({ children }) => {
     }
   };
 
-  const startWorkout = (workoutId) => {
+  const startWorkout = (workoutId: string) => {
     if (!workoutStartTime) {
       setWorkoutStartTime(Date.now());
       setActiveWorkoutRoutine(workoutId);
