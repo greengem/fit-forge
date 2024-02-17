@@ -7,13 +7,20 @@ import { IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
 import ExerciseInfoButton from "./ExerciseInfoButton";
 import { Exercise } from "@prisma/client";
 import ExerciseAddToRoutineButton from "./ExerciseAddToRoutineButton";
-  
+
+interface UserRoutine {
+    id: string;
+    name: string;
+    exerciseCount: number;
+}
+
 type ExerciseProps = {
     exercises: Exercise[];
     favouriteExercises: Set<string>;
-};
+    userRoutines: UserRoutine[];
+}
 
-export default function ExerciseTable({ exercises, favouriteExercises }: ExerciseProps) {
+export default function ExerciseTable({ exercises, favouriteExercises, userRoutines }: ExerciseProps) {
   return (
     <Table aria-label="Exercises Table" className="mb-3 shadow-md" shadow="none">
         <TableHeader>
@@ -45,7 +52,7 @@ export default function ExerciseTable({ exercises, favouriteExercises }: Exercis
                             <Button isIconOnly onClick={() => handleToggleFavouriteExercise(exercise.id)}>
                                 {favouriteExercises.has(exercise.id) ? <IconStarFilled className="text-primary" size={20} /> : <IconStar className="hover:text-primary" size={20} />}
                             </Button>
-                            <ExerciseAddToRoutineButton exerciseId={exercise.id} />
+                            <ExerciseAddToRoutineButton exercise={exercise} userRoutines={userRoutines} />
                         </ButtonGroup>
                     </TableCell>
                 </TableRow>
