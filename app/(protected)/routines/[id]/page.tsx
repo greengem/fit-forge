@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/authOptions";
+import { auth } from "@clerk/nextjs";
 import getUserFavoriteExercises from "@/app/lib/getUserFavoriteExercises";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import RoutineBuilder from './_components/RoutineBuilder';
@@ -7,13 +6,12 @@ import getRoutine from '@/app/lib/getRoutine';
 
 export default async function NewRoutinePage({ params }: { params: { id: string } }) {
   const routineId = params.id;
-  const session = await getServerSession(authOptions);
+  const { userId } : { userId: string | null } = auth();
   
-  if (!session) {
-    return <div>No user session available</div>;
+  if (!userId) {
+    throw new Error('You must be signed in to view this page.');
   }
-
-  const userId = session?.user?.id;
+  
   let existingRoutine;
 
   if (routineId !== 'new') {
