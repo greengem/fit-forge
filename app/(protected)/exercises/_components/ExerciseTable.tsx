@@ -6,6 +6,7 @@ import { Button, ButtonGroup } from "@nextui-org/button";
 import { IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
 import ExerciseInfoButton from "./ExerciseInfoButton";
 import { Exercise } from "@prisma/client";
+import ExerciseAddToRoutineButton from "./ExerciseAddToRoutineButton";
   
 type ExerciseProps = {
     exercises: Exercise[];
@@ -44,7 +45,7 @@ export default function ExerciseTable({ exercises, favouriteExercises }: Exercis
                             <Button isIconOnly onClick={() => handleToggleFavouriteExercise(exercise.id)}>
                                 {favouriteExercises.has(exercise.id) ? <IconStarFilled className="text-primary" size={20} /> : <IconStar className="hover:text-primary" size={20} />}
                             </Button>
-                            <Button isIconOnly><IconPlus size={20} /></Button>
+                            <ExerciseAddToRoutineButton exerciseId={exercise.id} />
                         </ButtonGroup>
                     </TableCell>
                 </TableRow>
