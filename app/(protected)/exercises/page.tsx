@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import PageHeading from '@/components/PageHeading/PageHeading';
-import { EquipmentType, WorkoutPlan, Muscle, CategoryType } from "@prisma/client";
 import ExerciseFetch from "./_components/ExerciseFetch";
 import ExerciseSearch from "./_components/ExerciseSearch";
 import ExerciseFilterCategory from "./_components/ExerciseFilterCategory";
