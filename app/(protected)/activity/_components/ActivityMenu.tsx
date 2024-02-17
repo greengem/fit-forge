@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { ActivityModalContext } from "@/contexts/ActivityModalContext";
 import { handleDeleteActivity } from "@/server-actions/ActivityServerActions";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem } from "@nextui-org/dropdown";
-import { Button } from "@nextui-org/button";
 import { IconEdit, IconInfoCircle, IconMenu2, IconTrash } from "@tabler/icons-react";
 
 interface Set {
@@ -40,7 +39,7 @@ export default function ActivityMenu({ activity } : { activity: Activity }) {
             }
         } else if (key === "details") {
             setActivity(activity);
-            console.log('Opening modal...');
+            //console.log('Opening modal...');
             onOpen();
         }
     }
