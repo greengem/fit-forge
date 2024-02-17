@@ -5,7 +5,7 @@ import { IconJumpRope, IconList, IconStretching, IconUser, IconActivity } from '
 export default function DashboardLinks() {
     const links = [
         { href: '/workout', icon: IconJumpRope, label: 'Start a Workout' },
-        { href: '/routines', icon: IconList, label: 'Create a Routine' },
+        { href: '/workout/routine/new', icon: IconList, label: 'Create a Routine' },
         { href: '/exercises', icon: IconStretching, label: 'Browse Exercises' },
         { href: '/activity', icon: IconActivity, label: 'View Activity' },
         { href: '/profile', icon: IconUser, label: 'Edit Profile' }
