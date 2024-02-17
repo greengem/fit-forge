@@ -1,19 +1,31 @@
 'use client'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer, TooltipProps } from 'recharts';
 
-type WorkoutVolumeLoadData = {
-  workoutLogId: string;
-  date: Date;
-  name: string;
+type WorkoutData = {
+  period: string;
   totalVolumeLoad: number;
 };
 
-export default function DashboardChartVolumeLoadClient({ data } : { data: WorkoutVolumeLoadData[] }) {
+function CustomTooltip({ active, payload, label }: TooltipProps<number, string>) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-zinc-800 text-white px-4 py-2 rounded-xl shadow-xl text-xs">
+        <p className='font-semibold'>Volume Load: <span className='text-primary'>{payload[0].value}</span> Kg</p>
+        <p>Period: {label}</p>
+      </div>
+    );
+  }
+
+  return null;
+}
+
+export default function DashboardChartVolumeLoadClient({ data } : { data: WorkoutData[] }) {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <LineChart data={data} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
           <Line type="monotone" dataKey="totalVolumeLoad" stroke="#A6FF00" />
-          <Tooltip />
+          <XAxis dataKey="period" tick={{ fontSize: '10px' }}  />
+          <Tooltip content={<CustomTooltip />} />
         </LineChart>
       </ResponsiveContainer>
     );
