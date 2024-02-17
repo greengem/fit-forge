@@ -5,16 +5,7 @@ import { User } from "@nextui-org/user";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import { IconPlus, IconStar, IconStarFilled } from "@tabler/icons-react";
 import ExerciseInfoButton from "./ExerciseInfoButton";
-
-type Exercise = {
-    id: string;
-    name: string;
-    category: string;
-    image: string | null;
-    primary_muscles: string[];
-    secondary_muscles: string[];
-    equipment: string | null;
-};
+import { Exercise } from "@prisma/client";
   
 type ExerciseProps = {
     exercises: Exercise[];
