@@ -19,7 +19,7 @@ export default function RoutineCards({ routines, isSystem }) {
 
     const handleAction = (key, routine) => {
         if (key === "edit") {
-            router.push(`/routines/${routine.id}`);
+            router.push(`workout/routine/${routine.id}`);
         } else if (key === "delete") {
             handleDelete(routine.id);
         }
