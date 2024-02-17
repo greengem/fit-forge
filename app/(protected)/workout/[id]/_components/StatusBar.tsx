@@ -3,13 +3,19 @@ import { Button } from "@nextui-org/button";
 import { IconPlayerPlay, IconPlayerPause, IconDeviceFloppy, IconX } from '@tabler/icons-react';
 import { useWorkoutControls } from '@/contexts/WorkoutControlsContext';
 
-export default function StatusBar({ completeWorkout, cancelWorkout, progressPercentage, activeRoutineId }) {
+interface StatusBarProps {
+    completeWorkout: () => void;
+    cancelWorkout: () => void;
+    progressPercentage: number;
+    activeRoutineId: string;
+  }
+
+export default function StatusBar({ completeWorkout, cancelWorkout, progressPercentage, activeRoutineId }:  StatusBarProps) {
     const { 
         workoutStartTime, setWorkoutStartTime,
         workoutDuration, 
         formatDuration, 
         isPaused, setIsPaused,
-        isSaving, 
         startWorkout,
         togglePause 
     } = useWorkoutControls();
