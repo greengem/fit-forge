@@ -1,4 +1,6 @@
+import { auth } from "@clerk/nextjs";
 import { Suspense } from "react";
+import prisma from "@/prisma/prisma";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import ExerciseFetch from "./_components/ExerciseFetch";
 import ExerciseSearch from "./_components/ExerciseSearch";
@@ -9,7 +11,12 @@ import ExerciseFilterForce from "./_components/ExerciseFilterForce";
 import ExerciseTableSkeleton from "./_components/ExerciseTableSkeleton";
 import ExerciseModal from "./_components/ExerciseModal";
 
-export default function ExercisesPage({ 
+interface UserRoutine {
+  name: string;
+  id: string;
+}
+
+export default async function ExercisesPage({ 
   searchParams 
 } : { 
   searchParams?: {
@@ -21,12 +28,32 @@ export default function ExercisesPage({
     force?: string
   };
 }) {
+  const { userId } : { userId: string | null } = auth();
+
+  if (!userId) {
+      throw new Error('You must be signed in to view this page.');
+  }
+
   const search = searchParams?.search || '';
   const cat = searchParams?.cat ? searchParams?.cat.split(',') : [];
   const muscle = searchParams?.muscle ? searchParams?.muscle.split(',') : [];
   const level = searchParams?.level ? searchParams?.level.split(',') : [];
   const force = searchParams?.force ? searchParams?.force.split(',') : [];
   const currentPage = Number(searchParams?.page) || 1;
+
+  const userRoutines: (UserRoutine & { exerciseCount: number })[] = await prisma.workoutPlan.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      name: true,
+      id: true,
+      WorkoutPlanExercise: true
+    }
+  }).then(routines => routines.map(routine => ({
+    ...routine,
+    exerciseCount: routine.WorkoutPlanExercise.length
+  })));
 
   return (
     <>
@@ -44,7 +71,7 @@ export default function ExercisesPage({
         key={search + cat + muscle + level + force + currentPage} 
         fallback={<ExerciseTableSkeleton />}
       >
-        <ExerciseFetch search={search} cat={cat} muscle={muscle} level={level} force={force} currentPage={currentPage} />
+        <ExerciseFetch search={search} cat={cat} muscle={muscle} level={level} force={force} currentPage={currentPage} userRoutines={userRoutines} />
       </Suspense>
       <ExerciseModal />
     </>
