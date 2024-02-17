@@ -10,8 +10,30 @@ import { useWorkoutData } from '@/contexts/WorkoutDataContext';
 
 import ExerciseTable from './ExerciseTable';
 import StatusBar from './StatusBar';
+import { handleSaveWorkout } from '@/server-actions/WorkoutServerActions';
 
-export default function WorkoutManager({ workout }) {
+interface Exercise {
+    id: string;
+    name: string;
+}
+
+interface WorkoutPlanExercise {
+    Exercise: Exercise;
+    sets: number;
+    reps:  number | null;
+    exerciseDuration: number | null;
+    trackingType: string;
+    order: number;
+}
+
+interface Workout {
+    id: string;
+    name: string;
+    notes: string | null;
+    WorkoutPlanExercise: WorkoutPlanExercise[];
+}
+
+export default function WorkoutManager({ workout }: { workout: Workout }) {
     const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     const router = useRouter();
@@ -37,7 +59,7 @@ export default function WorkoutManager({ workout }) {
                     duration: exerciseDetail.exerciseDuration || null,
                     weight: 0
                 })),
-                trackingType: exerciseDetail.trackingType // Add trackingType here
+                trackingType: exerciseDetail.trackingType
             }));
             setWorkoutExercises(initialWorkoutExercises);
             setIsDataLoaded(true);
@@ -46,8 +68,9 @@ export default function WorkoutManager({ workout }) {
 
 
     // Add Sets to exercise
-    const addSet = (exerciseIndex, exerciseName) => {
+    const addSet = (exerciseIndex: number, exerciseName: string) => {
         setWorkoutExercises(prevWorkoutExercises => {
+            if (!prevWorkoutExercises) return prevWorkoutExercises;
             const updatedWorkoutExercises = [...prevWorkoutExercises];
             const exerciseToUpdate = { ...updatedWorkoutExercises[exerciseIndex] };
             const newSet = {
@@ -64,8 +87,9 @@ export default function WorkoutManager({ workout }) {
     };
 
     //Remove Sets from exercise
-    const removeSet = (exerciseIndex, exerciseName) => {
+    const removeSet = (exerciseIndex: number, exerciseName: string) => {
         setWorkoutExercises(prevWorkoutExercises => {
+            if (!prevWorkoutExercises) return prevWorkoutExercises;
             const updatedWorkoutExercises = [...prevWorkoutExercises];
             if (updatedWorkoutExercises[exerciseIndex].sets.length > 1) {
                 if (window.confirm(`Are you sure you want to delete the last set from ${exerciseName}?`)) {
@@ -81,29 +105,34 @@ export default function WorkoutManager({ workout }) {
             return prevWorkoutExercises;
         });
     };
-
+    
     // Handle clicking complete set button
-    const handleCompleteSet = (exerciseIndex, setIndex, exerciseName) => {
+    const handleCompleteSet = (exerciseIndex: number, setIndex: number, exerciseName: string) => {
         if (!workoutStartTime) {
             startWorkout(workoutPlanId);
         }
         setWorkoutExercises(prevWorkoutExercises => {
+            if (!prevWorkoutExercises) return prevWorkoutExercises;
             const updatedWorkoutExercises = [...prevWorkoutExercises];
             const exerciseToUpdate = { ...updatedWorkoutExercises[exerciseIndex] };
             const setToUpdate = { ...exerciseToUpdate.sets[setIndex] };
             setToUpdate.completed = !setToUpdate.completed;
             exerciseToUpdate.sets[setIndex] = setToUpdate;
             updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
-            if (!setToUpdate.completed) {
+            if (setToUpdate.completed) {
                 toast.success(`${exerciseName} Set ${setIndex + 1} completed`);
+            } else {
+                toast(`${exerciseName} Set ${setIndex + 1} marked as incomplete`);
             }
             return updatedWorkoutExercises;
         });
     };
 
     // Handle changing weight for a set
-    const handleWeightChange = (exerciseIndex, setIndex, newValue) => {
+    const handleWeightChange = (exerciseIndex: number, setIndex: number, newValue: number) => {
         setWorkoutExercises(prevWorkoutExercises => {
+            if (!prevWorkoutExercises) return prevWorkoutExercises;
+
             const updatedWorkoutExercises = [...prevWorkoutExercises];
             const exerciseToUpdate = { ...updatedWorkoutExercises[exerciseIndex] };
             const setToUpdate = { ...exerciseToUpdate.sets[setIndex] };
@@ -113,10 +142,12 @@ export default function WorkoutManager({ workout }) {
             return updatedWorkoutExercises;
         });
     };
-
+    
     // Handle changing reps for a set
-    const handleRepChange = (exerciseIndex, setIndex, newValue) => {
+    const handleRepChange = (exerciseIndex: number, setIndex: number, newValue: number | null) => {
         setWorkoutExercises(prevWorkoutExercises => {
+            if (!prevWorkoutExercises) return prevWorkoutExercises;
+
             const updatedWorkoutExercises = [...prevWorkoutExercises];
             const exerciseToUpdate = { ...updatedWorkoutExercises[exerciseIndex] };
             const setToUpdate = { ...exerciseToUpdate.sets[setIndex] };
@@ -126,10 +157,12 @@ export default function WorkoutManager({ workout }) {
             return updatedWorkoutExercises;
         });
     };
-
+    
     //Handle changing exerciseDuration for a set
-    const handleDurationChange = (exerciseIndex, setIndex, newValue) => {
+    const handleDurationChange = (exerciseIndex: number, setIndex: number, newValue: number | null) => {
         setWorkoutExercises(prevWorkoutExercises => {
+            if (!prevWorkoutExercises) return prevWorkoutExercises;
+    
             const updatedWorkoutExercises = [...prevWorkoutExercises];
             const exerciseToUpdate = { ...updatedWorkoutExercises[exerciseIndex] };
             const setToUpdate = { ...exerciseToUpdate.sets[setIndex] };
@@ -139,7 +172,7 @@ export default function WorkoutManager({ workout }) {
             return updatedWorkoutExercises;
         });
     };
-
+    
     // Cancel workout and reset states
     const cancelWorkout = () => {
         if (window.confirm('Are you sure you want to cancel the workout? No data will be saved.')) {
@@ -155,51 +188,55 @@ export default function WorkoutManager({ workout }) {
     // Save the workout
     const completeWorkout = async () => {
     
-        // Validate if at least one set has been completed.
-        const atLeastOneSetCompleted = workoutExercises.some(exercise => 
-            exercise.sets.some(set => set.completed));
-        if (!atLeastOneSetCompleted) {
-            toast.error('You need to complete at least one set to save the workout.');
-            return;
-        }
-
-        // Warn user if any sets are not completed before saving
-        const incompleteSetsExist = workoutExercises.some(exercise => 
-            exercise.sets.some(set => !set.completed));
-        if (incompleteSetsExist) {
-            if(!window.confirm('There are incomplete sets. These will not be saved. Do you want to proceed?')) {
+        // Ensure workoutExercises is not null before proceeding
+        if (workoutExercises) {
+            // Validate if at least one set has been completed.
+            const atLeastOneSetCompleted = workoutExercises.some(exercise => 
+                exercise.sets.some(set => set.completed));
+            if (!atLeastOneSetCompleted) {
+                toast.error('You need to complete at least one set to save the workout.');
                 return;
             }
+
+            // Warn user if any sets are not completed before saving
+            const incompleteSetsExist = workoutExercises.some(exercise => 
+                exercise.sets.some(set => !set.completed));
+            if (incompleteSetsExist) {
+                if(!window.confirm('There are incomplete sets. These will not be saved. Do you want to proceed?')) {
+                    return;
+                }
+            }
+        } else {
+            // Handle the case where workoutExercises is null, e.g., show an error message
+            toast.error('No workout exercises available.');
         }
 
         setIsSaving(true);
 
         try {
-            const response = await fetch('/api/workouts/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: workoutName,
-                    date: new Date().toISOString(),
-                    duration: workoutDuration,
-                    workoutPlanId,
-                    exercises: workoutExercises.map(exercise => ({
-                        exerciseId: exercise.exerciseId,
-                        sets: exercise.sets.map(set => ({
-                            reps: set.reps,
-                            weight: set.weight,
-                            duration: set.duration,
-                            completed: set.completed
-                        }))
-                    }))
-                })
-            });
-    
-            const responseData = await response.json();
+            const exercisesData = workoutExercises ? workoutExercises.map(exercise => ({
+                exerciseId: exercise.exerciseId,
+                sets: exercise.sets.map(set => ({
+                    reps: set.reps,
+                    weight: set.weight,
+                    duration: set.duration,
+                    completed: set.completed
+                }))
+            })) : [];
+            
+            const data = {
+                name: workoutName,
+                date: new Date().toISOString(),
+                duration: workoutDuration,
+                workoutPlanId,
+                exercises: exercisesData
+            };
 
-            if (response.ok) {
+            //console.log('data in front end', data);
+
+            const response = await handleSaveWorkout(data);
+
+            if (response.success) {
                 router.push("/dashboard");
                 router.refresh();
                 setWorkoutExercises([]);
@@ -208,10 +245,10 @@ export default function WorkoutManager({ workout }) {
                 setActiveWorkoutRoutine(null);
                 toast.success('Workout saved successfully!');
             } else {
-                toast.error('Failed to save workout. ' + responseData.message);
+                toast.error('Failed to save workout');
             }
         } catch (error) {
-            toast.error('An error occurred while saving the workout: ' + error.message);
+            toast.error('An error occurred while saving the workout');
         } finally {
             setIsSaving(false);
         }
@@ -235,7 +272,7 @@ export default function WorkoutManager({ workout }) {
 
 
     return (
-<div className='pb-40'>
+        <div className='pb-40'>
         {workout.notes && <p color='primary' className='mb-3'>Notes: {workout.notes}</p>}
         <div className='space-y-5'>
             {workoutExercises?.map((exercise, index) => (
@@ -251,8 +288,6 @@ export default function WorkoutManager({ workout }) {
                             handleWeightChange={handleWeightChange}
                             handleRepChange={handleRepChange}
                             handleDurationChange={handleDurationChange}
-                            addSet={addSet}
-                            removeSet={removeSet}
                         />
                     </CardBody>
                     <CardFooter className='gap-2 px-5 bg-default-100'>
@@ -274,7 +309,7 @@ export default function WorkoutManager({ workout }) {
             activeRoutineId={workoutPlanId}
             cancelWorkout={cancelWorkout}
         />
-</div>
+    </div>
 
     );
     
