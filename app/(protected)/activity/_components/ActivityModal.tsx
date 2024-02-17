@@ -34,7 +34,7 @@ export default function ActivityModal() {
     const { activity, isOpen, onOpenChange } = useContext(ActivityModalContext);
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur" isKeyboardDismissDisabled scrollBehavior="outside">
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur" size="3xl" isKeyboardDismissDisabled scrollBehavior="outside">
             <ModalContent>
                 {(onClose) => (
                     <>
