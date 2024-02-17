@@ -1,8 +1,7 @@
-import getExercise from "@/app/lib/getExercise";
-import getExercises from "@/app/lib/getExercises";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import { Chip } from "@nextui-org/react";
 import Image from "next/image";
+import prisma from '@/prisma/prisma';
 {/*
 export async function generateStaticParams() {
     const allExercises = await getExercises();
@@ -12,12 +11,25 @@ export async function generateStaticParams() {
 }
 */}
 
-async function getExerciseData(params) {
-    return await getExercise(params.id);
-}
-
 export default async function ExercisePage({ params }) {
-    const exercise = await getExerciseData(params);
+            const exercise = await prisma.exercise.findUnique({
+            where: { id: params.id },
+            select: {
+                id: true,
+                name: true,
+                aliases: true,
+                primary_muscles: true,
+                secondary_muscles: true,
+                force: true,
+                level: true,
+                mechanic: true,
+                equipment: true,
+                category: true,
+                instructions: true,
+                tips: true,
+                image: true,
+            }
+        });
     if (!exercise) return notFound();
 
     return (
@@ -33,7 +45,7 @@ export default async function ExercisePage({ params }) {
 
         {exercise.aliases && exercise.aliases.length > 0 && (
             <div>
-                <span>Instructions: </span>
+                <span>Aliases: </span>
                 <ol className="list-decimal list-inside">
                 {exercise.aliases.map((alias, index) => (
                     <li key={index}>{alias}</li>
