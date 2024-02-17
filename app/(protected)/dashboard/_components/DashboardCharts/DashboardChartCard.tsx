@@ -10,7 +10,7 @@ export default function DashboardChartCard({ children, title, colSpan, chartId, 
                 <p className='shrink-0 w-1/2 flex items-center gap-1'><span className='text-primary'>{icon}</span> {title}</p>
                 <DashboardChartDateRange chartId={chartId} />
             </CardHeader>
-            <CardBody className="p-3 pb-0 text-black">{children}</CardBody>
+            <CardBody className="p-3 pb-0">{children}</CardBody>
         </Card>
     )
 }
