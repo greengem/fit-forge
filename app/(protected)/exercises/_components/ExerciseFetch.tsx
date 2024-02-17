@@ -4,10 +4,16 @@ import ExerciseTable from "./ExerciseTable";
 import { CategoryType, Muscle, LevelType, ForceType } from "@prisma/client";
 import ExercisePagination from "./ExercisePagination";
 
+interface UserRoutine {
+    id: string;
+    name: string;
+    exerciseCount: number;
+}
+
 export default async function ExerciseFetch({ 
-    search, cat, muscle, level, force, currentPage
+    search, cat, muscle, level, force, currentPage, userRoutines
 } : { 
-    search: string, cat: string[], muscle: string[], level: string[], force: string[], currentPage: number
+    search: string, cat: string[], muscle: string[], level: string[], force: string[], currentPage: number, userRoutines: UserRoutine[]
 }) {
     const { userId } : { userId: string | null } = auth();
   
@@ -71,7 +77,7 @@ export default async function ExerciseFetch({
 
     return (
         <>
-            <ExerciseTable exercises={exercises} favouriteExercises={favouriteExercisesSet} />
+            <ExerciseTable exercises={exercises} favouriteExercises={favouriteExercisesSet} userRoutines={userRoutines} />
             <ExercisePagination numberOfResults={numberOfResults} itemsPerPage={itemsPerPage} />
         </>
     );
