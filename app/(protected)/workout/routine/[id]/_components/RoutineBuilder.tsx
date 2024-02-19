@@ -9,34 +9,70 @@ import SearchResults from './SearchResults';
 import ExerciseTable from './ExerciseTable';
 import SaveButton from './SaveButton';
 
-const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
-  const router = useRouter();
+type FavoriteExercise = {
+  exerciseId: string;
+};
+
+type Exercise = {
+  id: string;
+  name: string;
+  category: string;
+};
+
+type WorkoutPlanExercise = {
+  sets: number;
+  reps: number | null;
+  exerciseDuration: number | null;
+  order: number;
+  trackingType: string;
+  Exercise: Exercise;
+};
+
+type ExistingRoutine = {
+  id: string;
+  name: string;
+  notes: string | null;
+  userId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  isSystemRoutine: boolean;
+  systemRoutineCategory: string | null;
+  WorkoutPlanExercise: WorkoutPlanExercise[];
+} | null;
+
+type SearchExercise = {
+  id: string;
+  name: string;
+  trackingType: string;
+  category: string;
+  image: string;
+};
+
+type RoutineBuilderProps = {
+  routineId: string;
+  favoriteExercises: FavoriteExercise[];
+  existingRoutine: ExistingRoutine | null;
+};
+
+export default function RoutineBuilder({ existingRoutine, routineId, favoriteExercises }: RoutineBuilderProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedExercises, setSelectedExercises] = useState([]);
+  const [searchResults, setSearchResults] = useState<SearchExercise[]>([]);
+  const [selectedExercises, setSelectedExercises] = useState<WorkoutPlanExercise[]>([]);
   const [routineName, setRoutineName] = useState('');
   const [notes, setNotes] = useState('');
-  const searchInputRef = useRef(null);
   const [isSaving, setIsSaving] = useState(false);
 
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
+
   useEffect(() => {
-    if (routineId !== 'new') {
-      const fetchRoutine = async () => {
-        const response = await fetch(`/api/routines/${routineId}`);
-        const data = await response.json();
-  
-        if (data && data.name && Array.isArray(data.WorkoutPlanExercise)) {
-          setRoutineName(data.name);
-          setSelectedExercises(data.exercises || []);
-          setNotes(data.notes);
-        } else {
-          toast.error('Error fetching routine details.');
-        }
-      };
-  
-      fetchRoutine();
+    if (existingRoutine) {
+      setRoutineName(existingRoutine.name);
+      setSelectedExercises(existingRoutine.WorkoutPlanExercise || []);
+      setNotes(existingRoutine.notes || '');
     }
-  }, [routineId]);
+  }, [existingRoutine]);
 
   const executeSearch = async () => {
     if (!searchTerm.trim()) {
@@ -48,42 +84,47 @@ const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
     setSearchResults(data);
   };
 
-  const addExerciseToRoutine = (exercise) => {
-    if (selectedExercises.some(e => e.id === exercise.id)) return;
+  const addExerciseToRoutine = (exercise: SearchExercise) => {
+    if (selectedExercises.some(e => e.Exercise.id === exercise.id)) return;
     
-    const { id, name, trackingType } = exercise;
-    
-    const newExercise = {
-      id,
-      name,
+    const newExercise: WorkoutPlanExercise = {
       sets: 1,
-      reps: trackingType === 'reps' ? 0 : undefined,
-      exerciseDuration: trackingType === 'duration' ? 0 : undefined,
-      trackingType: 'reps',
+      reps: exercise.trackingType === 'reps' ? 0 : null,
+      exerciseDuration: exercise.trackingType === 'duration' ? 0 : null,
+      order: selectedExercises.length + 1,
+      trackingType: exercise.trackingType,
+      Exercise: {
+        id: exercise.id,
+        name: exercise.name,
+        category: exercise.category,
+      },
     };
-  
+
     setSelectedExercises([...selectedExercises, newExercise]);
     setSearchTerm('');
     setSearchResults([]);
     searchInputRef.current?.focus();
   };
 
-  const updateExercise = (index, field, value) => {
-      const updatedExercises = [...selectedExercises];
-
-      if (field === 'trackingType') {
-          if (value === 'reps') {
-              updatedExercises[index]['exerciseDuration'] = undefined;
-          } else if (value === 'duration') {
-              updatedExercises[index]['reps'] = undefined;
-          }
+  const updateExercise = (index: number, field: keyof WorkoutPlanExercise, value: string | number | null) => {
+    const updatedExercises = [...selectedExercises];
+  
+    if (field === 'trackingType') {
+      if (value === 'reps') {
+        updatedExercises[index]['exerciseDuration'] = null;
+      } else if (value === 'duration') {
+        updatedExercises[index]['reps'] = null;
       }
-
-      updatedExercises[index][field] = value;
-      setSelectedExercises(updatedExercises);
+    }
+  
+    if (field in updatedExercises[index]) {
+      (updatedExercises[index] as any)[field] = value;
+    }
+  
+    setSelectedExercises(updatedExercises);
   };
 
-  const moveUp = (index) => {
+  const moveUp = (index: number) => {
     if (index === 0) return;
     const updatedExercises = [...selectedExercises];
     const temp = updatedExercises[index - 1];
@@ -93,7 +134,7 @@ const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
     setSelectedExercises(updatedExercises);
   };
 
-  const moveDown = (index) => {
+  const moveDown = (index: number) => {
     if (index === selectedExercises.length - 1) return;
     const updatedExercises = [...selectedExercises];
     const temp = updatedExercises[index + 1];
@@ -103,7 +144,7 @@ const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
     setSelectedExercises(updatedExercises);
   };
 
-  const deleteExercise = (index) => {
+  const deleteExercise = (index: number) => {
     const isConfirmed = window.confirm("Are you sure you want to remove this exercise?");
     if (isConfirmed) {
         const updatedExercises = [...selectedExercises];
@@ -126,17 +167,17 @@ const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
   
     for (let exercise of selectedExercises) {
       if (exercise.sets < 1) {
-        toast.error(`${exercise.name} should have at least 1 set.`);
+        toast.error(`${exercise.Exercise.name} should have at least 1 set.`);
         return false;
       }
       
       if (exercise.trackingType === 'reps' && (exercise.reps ?? 0) < 1) {
-        toast.error(`${exercise.name} should have at least 1 rep.`);
+        toast.error(`${exercise.Exercise.name} should have at least 1 rep.`);
         return false;
       }
       
       if (exercise.trackingType === 'duration' && (exercise.exerciseDuration ?? 0) <= 0) {
-        toast.error(`${exercise.name} should have a duration greater than zero.`);
+        toast.error(`${exercise.Exercise.name} should have a duration greater than zero.`);
         return false;
       }    
     }
@@ -151,13 +192,13 @@ const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
 
     const exercisesWithOrder = selectedExercises.map((exercise, index) => {
       let { reps, exerciseDuration, trackingType } = exercise;
-    
+  
       if (exercise.trackingType === 'reps') {
-        exerciseDuration = exercise.exerciseDuration !== 0 ? exercise.exerciseDuration : undefined;
+        exerciseDuration = exercise.exerciseDuration !== 0 ? exercise.exerciseDuration : null;
       } else if (exercise.trackingType === 'duration') {
-        reps = exercise.reps !== 0 ? exercise.reps : undefined;
+        reps = exercise.reps !== 0 ? exercise.reps : null;
       }
-      
+  
       return {
         ...exercise,
         reps,
@@ -236,5 +277,3 @@ const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
     </div>
   );
 }
-
-export default RoutineBuilder;
