@@ -67,7 +67,7 @@ interface Set {
 
         revalidatePath('/activity');
 
-        return { success: true, message: 'Workout Saves' };
+        return { success: true, message: 'Workout Saved' };
     } catch (e) {
         return { success: false, message: 'Failed to save workout' };
     }
