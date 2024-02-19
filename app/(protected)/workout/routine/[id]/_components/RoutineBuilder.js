@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
+import { toast } from "sonner";
 
 import { RoutineDetails } from './RoutineDetails';
 import { SearchBar } from './SearchBar';
@@ -192,7 +192,7 @@ const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
     
       if (data.success) {
         toast.success('Routine saved successfully!');
-        router.push('/routines');
+        router.push('/workout');
         router.refresh();
       } else {
         toast.error('Error saving routine.');

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
-import toast from 'react-hot-toast';
+import { toast } from "sonner";
 import { handleUpdateUserInfo } from '@/server-actions/UserServerActions';
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";

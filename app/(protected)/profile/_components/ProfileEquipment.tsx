@@ -5,7 +5,7 @@ import { handleUpdateUserEquipment } from '@/server-actions/UserServerActions';
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { CheckboxGroup, Checkbox } from "@nextui-org/checkbox";
 import { Button } from "@nextui-org/button";
-import toast from 'react-hot-toast';
+import { toast } from "sonner";
 import { IconBarbell, IconDeviceFloppy } from '@tabler/icons-react';
 import { EquipmentType } from '@prisma/client';
 

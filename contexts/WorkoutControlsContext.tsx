@@ -1,7 +1,7 @@
 // WorkoutControlsContext.js
 'use client'
 import React, { createContext, useState, useContext, useEffect, useRef, ReactNode } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from "sonner";
 
 interface WorkoutControlsContextType {
   isPaused: boolean;

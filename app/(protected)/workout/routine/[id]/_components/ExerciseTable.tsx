@@ -6,7 +6,7 @@ import {RadioGroup, Radio} from "@nextui-org/radio";
 import {Button, ButtonGroup} from "@nextui-org/button";
 import { IconArrowUp, IconArrowDown, IconTrash, IconStar, IconStarFilled } from '@tabler/icons-react';
 import { useRouter } from "next/navigation";
-import toast from 'react-hot-toast';
+import { toast } from "sonner";
 
 interface Exercise {
     id: string;

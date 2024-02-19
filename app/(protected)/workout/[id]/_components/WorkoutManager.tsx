@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
+import { toast } from "sonner";
 import { Card, CardBody, CardFooter, CardHeader, Chip, Button, ButtonGroup } from '@nextui-org/react';
 import { IconPlus, IconX } from '@tabler/icons-react';
 

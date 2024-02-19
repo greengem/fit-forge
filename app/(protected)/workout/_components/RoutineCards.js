@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
-import toast from 'react-hot-toast';
+import { toast } from "sonner";
 import CardGrid from "@/components/Grid/CardGrid";
 import RoutineCard from "./RoutineCard";
 import { useWorkoutControls } from '@/contexts/WorkoutControlsContext';
