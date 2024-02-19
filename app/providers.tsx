@@ -3,9 +3,10 @@ import { NextUIProvider } from '@nextui-org/react'
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { WorkoutControlsProvider } from '@/contexts/WorkoutControlsContext';
 import { WorkoutDataProvider } from '@/contexts/WorkoutDataContext';
-import { SidebarProvider } from '@/contexts/SidebarContext'
 import { ActivityModalProvider } from '@/contexts/ActivityModalContext';
-import { ExerciseModalProvider } from '@/contexts/ExerciseModalContext';
+import { ExerciseDetailModalProvider } from '@/contexts/ExerciseDetailModalContext';
+import { ExerciseAddToRoutineModalProvider } from '@/contexts/ExerciseAddToRoutineModalContext';
+import { ModalProvider } from '@/contexts/ModalContext';
 
 export function Providers({children}: { children: React.ReactNode }) {
   return (
@@ -17,13 +18,15 @@ export function Providers({children}: { children: React.ReactNode }) {
       >
           <WorkoutControlsProvider>
             <WorkoutDataProvider>
-              <SidebarProvider>
-                <ActivityModalProvider>
-                  <ExerciseModalProvider>
-                    {children}
-                  </ExerciseModalProvider>
-                </ActivityModalProvider>
-              </SidebarProvider>
+              <ActivityModalProvider>
+                <ExerciseDetailModalProvider>
+                  <ExerciseAddToRoutineModalProvider>
+                    <ModalProvider>
+                      {children}
+                    </ModalProvider>
+                  </ExerciseAddToRoutineModalProvider>
+                </ExerciseDetailModalProvider>
+              </ActivityModalProvider>
             </WorkoutDataProvider>
           </WorkoutControlsProvider>
       </NextThemesProvider>
