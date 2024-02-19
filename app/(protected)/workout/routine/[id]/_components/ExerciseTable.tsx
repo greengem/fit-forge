@@ -160,17 +160,17 @@ export default function ExerciseTable({ selectedExercises, updateExercise, moveU
               )}
             </div>
 
-            <ButtonGroup className='justify-start'>
-              <Button isIconOnly onPress={() => moveUp(index)}><IconArrowUp size={16} /></Button>
-              <Button isIconOnly onPress={() => moveDown(index)}><IconArrowDown size={16} /></Button>
+            <ButtonGroup className='justify-start' size='sm'>
+              <Button isIconOnly onPress={() => moveUp(index)}><IconArrowUp size={18} /></Button>
+              <Button isIconOnly onPress={() => moveDown(index)}><IconArrowDown size={18} /></Button>
               <Button
                 onPress={() => toggleFavoriteExercise(exercise.Exercise.id)}
                 isIconOnly
                 isLoading={loadingFavorite[exercise.Exercise.id]}
               >
-                {isFavorite(exercise.Exercise.id) ? <IconStarFilled className="text-warning" size={20} /> : <IconStar size={20} />}
+                {isFavorite(exercise.Exercise.id) ? <IconStarFilled className="text-warning" size={18} /> : <IconStar size={18} />}
               </Button>
-              <Button color='danger' isIconOnly onPress={() => deleteExercise(index)}><IconTrash size={16} /></Button>
+              <Button color='danger' isIconOnly onPress={() => deleteExercise(index)}><IconTrash size={18} /></Button>
             </ButtonGroup>
           </CardBody>
         </Card>
