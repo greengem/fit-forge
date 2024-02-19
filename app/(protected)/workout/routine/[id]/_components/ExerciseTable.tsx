@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Card, CardBody } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import {RadioGroup, Radio} from "@nextui-org/radio";
@@ -8,32 +8,35 @@ import { IconArrowUp, IconArrowDown, IconTrash, IconStar, IconStarFilled } from 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-interface Exercise {
+type FavoriteExercise = {
+    exerciseId: string;
+};
+
+type Exercise = {
     id: string;
     name: string;
+    category: string;
+  };
+  
+  type WorkoutPlanExercise = {
     sets: number;
-    reps?: number;
-    exerciseDuration?: number;
-    order?: number;
-    trackingType: 'reps' | 'duration';
-}
-
-type ExerciseField = 'sets' | 'reps' | 'exerciseDuration' | 'trackingType';
+    reps: number | null;
+    exerciseDuration: number | null;
+    order: number;
+    trackingType: string;
+    Exercise: Exercise;
+};
 
 type ExerciseTableProps = {
-    selectedExercises: Exercise[];
-    updateExercise: (index: number, field: ExerciseField, value: number | 'reps' | 'duration') => void;
+    selectedExercises: WorkoutPlanExercise[];
+    updateExercise: (index: number, field: keyof WorkoutPlanExercise, value: string | number | null) => void;
     moveUp: (index: number) => void;
     moveDown: (index: number) => void;
     deleteExercise: (index: number) => void;
     favoriteExercises: FavoriteExercise[];
 };
-  
-type FavoriteExercise = {
-    exerciseId: string;
-};
 
-export default function ExerciseTable({ selectedExercises, updateExercise, moveUp, moveDown, deleteExercise, favoriteExercises }: ExerciseTableProps) {
+export default function ExerciseTable({ selectedExercises, updateExercise, moveUp, moveDown, deleteExercise, favoriteExercises } : ExerciseTableProps ) {
     const router = useRouter();
 
     const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
@@ -89,10 +92,10 @@ export default function ExerciseTable({ selectedExercises, updateExercise, moveU
             {selectedExercises.map((exercise, index) => (
                 <Card key={index} shadow='none' className='shadow-md'>
                     <CardBody className='p-3'>
-                        <p className='mb-3'>{index + 1}. {exercise.name}</p>
+                        <p className='mb-3'>{index + 1}. {exercise.Exercise.name}</p>
 
                         <RadioGroup 
-                            key={`radio-${exercise.id}`}
+                            key={`radio-${exercise.Exercise.id}`}
                             orientation="horizontal" 
                             color='primary' 
                             className='mb-3'
@@ -156,11 +159,11 @@ export default function ExerciseTable({ selectedExercises, updateExercise, moveU
                             <Button isIconOnly onPress={() => moveUp(index)}><IconArrowUp size={16} /></Button>
                             <Button isIconOnly onPress={() => moveDown(index)}><IconArrowDown size={16} /></Button>
                             <Button 
-                                onPress={() => toggleFavoriteExercise(exercise.id)} 
+                                onPress={() => toggleFavoriteExercise(exercise.Exercise.id)} 
                                 isIconOnly
-                                isLoading={loadingFavorite[exercise.id]}
+                                isLoading={loadingFavorite[exercise.Exercise.id]}
                             >
-                                {isFavorite(exercise.id) ? <IconStarFilled className="text-warning" size={20} /> : <IconStar size={20} />}
+                                {isFavorite(exercise.Exercise.id) ? <IconStarFilled className="text-warning" size={20} /> : <IconStar size={20} />}
                             </Button>
                             <Button color='danger' isIconOnly onPress={() => deleteExercise(index)}><IconTrash size={16} /></Button>
                         </ButtonGroup>
