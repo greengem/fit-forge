@@ -2,22 +2,33 @@ import { Button } from '@nextui-org/button'
 import { User } from '@nextui-org/user';
 import { IconPlus } from '@tabler/icons-react';
 
-interface Exercise {
+type SearchExercise = {
     id: string;
     name: string;
-    sets: number;
-    reps?: number;
-    duration?: number;
+    trackingType: string;
+    category: string;
+    image: string;
+};
 
-    image?: string;
-    order?: number;
-    trackingType: 'reps' | 'duration';
-}
+type Exercise = {
+    id: string;
+    name: string;
+    category: string;
+};
+
+type WorkoutPlanExercise = {
+    sets: number;
+    reps: number | null;
+    exerciseDuration: number | null;
+    order: number;
+    trackingType: string;
+    Exercise: Exercise;
+};
 
 type SearchResultsProps = {
-    searchResults: Exercise[];
-    selectedExercises: Exercise[];
-    addExerciseToRoutine: (exercise: Exercise) => void;
+    searchResults: SearchExercise[];
+    addExerciseToRoutine: (exercise: SearchExercise) => void;
+    selectedExercises: WorkoutPlanExercise[];
 };
 
 export default function SearchResults({ searchResults, addExerciseToRoutine, selectedExercises }: SearchResultsProps) {
@@ -36,7 +47,7 @@ export default function SearchResults({ searchResults, addExerciseToRoutine, sel
                         isIconOnly
                         color='primary'
                         onPress={() => addExerciseToRoutine(exercise)} 
-                        isDisabled={selectedExercises.some(e => e.id === exercise.id)}
+                        isDisabled={selectedExercises.some(e => e.Exercise.id === exercise.id)}
                         size='sm'
                     >
                         <IconPlus size={12} />
