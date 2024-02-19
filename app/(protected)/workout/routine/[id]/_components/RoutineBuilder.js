@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
 
-import { RoutineDetails } from './RoutineDetails';
-import { SearchBar } from './SearchBar';
-import { SearchResults } from './SearchResults';
+import RoutineDetails from './RoutineDetails';
+import SearchBar from './SearchBar';
+import SearchResults from './SearchResults';
 import ExerciseTable from './ExerciseTable';
-import { SaveButton } from './SaveButton';
+import SaveButton from './SaveButton';
 
 const RoutineBuilder = ({ routineId, favoriteExercises, existingRoutine }) => {
   const router = useRouter();

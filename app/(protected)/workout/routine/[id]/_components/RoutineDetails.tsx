@@ -8,7 +8,7 @@ type RoutineDetailsProps = {
     setNotes: (value: string) => void;
 };
 
-export const RoutineDetails: React.FC<RoutineDetailsProps> = ({ routineName, setRoutineName, notes, setNotes }) => {
+export default function RoutineDetails({ routineName, setRoutineName, notes, setNotes }: RoutineDetailsProps) {
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
             <Input 

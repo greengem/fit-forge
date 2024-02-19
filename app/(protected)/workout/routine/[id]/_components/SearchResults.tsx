@@ -20,7 +20,7 @@ type SearchResultsProps = {
     addExerciseToRoutine: (exercise: Exercise) => void;
 };
 
-export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, addExerciseToRoutine, selectedExercises }) => {
+export default function SearchResults({ searchResults, addExerciseToRoutine, selectedExercises }: SearchResultsProps) {
     return (
         <div className="max-h-72 overflow-y-auto">
             <ul className="space-y-2 px-2">

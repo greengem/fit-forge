@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Input } from "@nextui-org/input";
 
 interface SearchBarProps {
@@ -9,13 +9,7 @@ interface SearchBarProps {
     forwardedRef: React.RefObject<HTMLInputElement>;
 }
 
-export const SearchBar: FC<SearchBarProps> = ({ 
-    searchTerm, 
-    setSearchTerm, 
-    handleSearch, 
-    setSearchResults, 
-    forwardedRef 
-}) => {
+export default function SearchBar({ searchTerm, setSearchTerm, handleSearch, setSearchResults, forwardedRef } : SearchBarProps) {
 
     const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
 

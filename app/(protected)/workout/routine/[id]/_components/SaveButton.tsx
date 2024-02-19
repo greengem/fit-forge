@@ -1,12 +1,13 @@
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { IconDeviceFloppy, IconX } from "@tabler/icons-react";
+
 type SaveButtonProps = {
     handleSave: () => void;
     isLoading: boolean;
 };
 
-export const SaveButton: React.FC<SaveButtonProps> = ({ handleSave, isLoading }) => {
+export default function SaveButton({ handleSave, isLoading } : SaveButtonProps) {
     return (
         <div className="flex gap-x-2">
             <Button className="gap-unit-1" color="primary" onPress={handleSave} isLoading={isLoading}>

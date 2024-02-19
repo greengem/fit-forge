@@ -33,7 +33,7 @@ type FavoriteExercise = {
     exerciseId: string;
 };
 
-const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExercise, moveUp, moveDown, deleteExercise, favoriteExercises }) => {
+export default function ExerciseTable({ selectedExercises, updateExercise, moveUp, moveDown, deleteExercise, favoriteExercises }: ExerciseTableProps) {
     const router = useRouter();
 
     const [loadingFavorite, setLoadingFavorite] = useState<{ [key: string]: boolean }>({});
@@ -170,5 +170,3 @@ const ExerciseTable: FC<ExerciseTableProps> = ({ selectedExercises, updateExerci
         </>
     );
 }
-
-export default ExerciseTable;
