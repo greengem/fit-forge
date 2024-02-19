@@ -29,7 +29,7 @@ export default function ExerciseTable({ exercises, favouriteExercises, userRouti
             <TableColumn className="hidden lg:table-cell">CATEGORY</TableColumn>
             <TableColumn><></></TableColumn>
         </TableHeader>
-        <TableBody>
+        <TableBody emptyContent={"No results found."}>
             {exercises.map((exercise) => (
                 <TableRow key={exercise.id}>
                     <TableCell className="capitalize py-1">
