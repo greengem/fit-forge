@@ -10,28 +10,12 @@ type SearchExercise = {
     image: string;
 };
 
-type Exercise = {
-    id: string;
-    name: string;
-    category: string;
-};
-
-type WorkoutPlanExercise = {
-    sets: number;
-    reps: number | null;
-    exerciseDuration: number | null;
-    order: number;
-    trackingType: string;
-    Exercise: Exercise;
-};
-
 type SearchResultsProps = {
     searchResults: SearchExercise[];
     addExerciseToRoutine: (exercise: SearchExercise) => void;
-    selectedExercises: WorkoutPlanExercise[];
 };
 
-export default function SearchResults({ searchResults, addExerciseToRoutine, selectedExercises }: SearchResultsProps) {
+export default function SearchResults({ searchResults, addExerciseToRoutine }: SearchResultsProps) {
     return (
         <div className="max-h-72 overflow-y-auto">
             <ul className="space-y-2 px-2">
@@ -43,15 +27,14 @@ export default function SearchResults({ searchResults, addExerciseToRoutine, sel
                             description={(exercise as any).category}
                             name={exercise.name}
                         />
-                    <Button 
-                        isIconOnly
-                        color='primary'
-                        onPress={() => addExerciseToRoutine(exercise)} 
-                        isDisabled={selectedExercises.some(e => e.Exercise.id === exercise.id)}
-                        size='sm'
-                    >
-                        <IconPlus size={12} />
-                    </Button>
+                        <Button 
+                            isIconOnly
+                            color='primary'
+                            onPress={() => addExerciseToRoutine(exercise)} 
+                            size='sm'
+                        >
+                            <IconPlus size={12} />
+                        </Button>
                     </div>
                 </li>
             ))}
