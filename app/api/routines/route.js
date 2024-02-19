@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import prisma from '@/prisma/prisma';
 import { NextResponse } from 'next/server';
-import { revalidateTag } from 'next/cache'
+//import { revalidateTag } from 'next/cache'
 
 // POST
 export async function POST(request) {
@@ -9,10 +9,9 @@ export async function POST(request) {
 
     try {
         const data = JSON.parse(await request.text());
+
         const { routineName, exercises, notes } = data;
-        if (!routineName || !Array.isArray(exercises)) {
-            return NextResponse.json({ error: "Invalid data format." }, { status: 400 });
-        }
+
         const newWorkoutPlan = await prisma.workoutPlan.create({
             data: {
                 name: routineName,
@@ -20,7 +19,7 @@ export async function POST(request) {
                 notes: notes,
                 WorkoutPlanExercise: {
                     create: exercises.map((exercise) => ({
-                        exerciseId: exercise.id,
+                        exerciseId: exercise.exerciseId,
                         sets: exercise.sets,
                         trackingType: exercise.trackingType,
                         reps: exercise.reps,
@@ -31,10 +30,10 @@ export async function POST(request) {
             },
         });
 
-        revalidateTag(`routines_${userId}`);
         return NextResponse.json({ success: true, id: newWorkoutPlan.id }, { status: 200 });
         
     } catch (error) {
+        console.error('Error details:', error.message);
         return NextResponse.json({ error: "An error occurred saving routine." }, { status: 500 });
     }
 }
