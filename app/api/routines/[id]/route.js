@@ -2,64 +2,6 @@ import { NextResponse } from 'next/server'
 import prisma from '@/prisma/prisma';
 import { revalidateTag } from 'next/cache'
 import { auth } from "@clerk/nextjs";
-import { use } from 'react';
-
-// GET
-export async function GET(request, { params }) {
-  const { id } = params;
-
-  try {
-    const routine = await prisma.workoutPlan.findFirst({
-      where: {
-        id: id,
-      },
-      select: {
-        id: true,
-        name: true,
-        notes: true,
-        WorkoutPlanExercise: {
-          select: {
-            Exercise: {
-              select: {
-                id: true,
-                name: true,
-              }
-            },
-            sets: true,
-            reps: true,
-            exerciseDuration: true,
-            order: true,
-            trackingType: true
-          }
-        },
-        updatedAt: true,
-      }
-    });
-
-    if (!routine) {
-      return NextResponse.json({ error: "Routine not found" }, { status: 404 });
-    }
-
-    // Normalize the data here
-    const normalizedExercises = routine.WorkoutPlanExercise.map(exercise => {
-      return {
-        ...exercise,
-        ...exercise.Exercise
-      };
-    });
-
-    const normalizedRoutine = {
-      ...routine,
-      exercises: normalizedExercises
-    }
-
-    return NextResponse.json(normalizedRoutine);
-
-  } catch (error) {
-    return NextResponse.json({ error: "An error occurred fetching the routine." }, { status: 500 });
-  }
-}
-
 
 // DELETE
 export async function DELETE(req, context) {
@@ -94,29 +36,41 @@ export async function PUT(request, { params }) {
 
       const routineId = params.id;
 
+      // First, update the workout plan details
       await prisma.workoutPlan.update({
           where: { id: routineId },
           data: {
               name: routineName,
+              userId: userId,
               notes: notes,
-              WorkoutPlanExercise: {
-                  deleteMany: { workoutPlanId: routineId },
-                  create: exercises.map((exercise) => ({
-                      exerciseId: exercise.id,
-                      trackingType: exercise.trackingType,
-                      sets: exercise.sets,
-                      reps: exercise.reps,
-                      exerciseDuration: exercise.exerciseDuration,
-                      order: exercise.order,
-                  })),
-              },
           },
       });
 
-      revalidateTag(`routines_${userId}`);
+      // Then, delete the existing exercises for the routine
+      await prisma.workoutPlanExercise.deleteMany({
+          where: { workoutPlanId: routineId },
+      });
+
+      // Finally, create the new exercises
+      for (const exercise of exercises) {
+          await prisma.workoutPlanExercise.create({
+              data: {
+                  workoutPlanId: routineId,
+                  exerciseId: exercise.exerciseId,
+                  trackingType: exercise.trackingType,
+                  sets: exercise.sets,
+                  reps: exercise.reps,
+                  exerciseDuration: exercise.exerciseDuration,
+                  order: exercise.order,
+              },
+          });
+      }
+
       return NextResponse.json({ success: true }, { status: 200 });
 
   } catch (error) {
+      console.error('Error details:', error.message);
       return NextResponse.json({ error: "An error occurred updating the routine." }, { status: 500 });
   }
 }
+
