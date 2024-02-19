@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import { SignOutButton } from "@clerk/nextjs";
 import { IconDashboard, IconJumpRope, IconStretching, IconUser, IconActivity, IconLogout, IconPlus } from '@tabler/icons-react';
-import { Divider } from '@nextui-org/react';
+import { Divider } from '@nextui-org/divider';
 
 export default function SidebarNav() {
     const pathname = usePathname();

@@ -1,4 +1,3 @@
-// WorkoutControlsContext.js
 'use client'
 import React, { createContext, useState, useContext, useEffect, useRef, ReactNode } from 'react';
 import { toast } from "sonner";

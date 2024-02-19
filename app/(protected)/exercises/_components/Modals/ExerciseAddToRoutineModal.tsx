@@ -24,6 +24,7 @@ export default function ExerciseAddToRoutineModal() {
     const [setsInvalid, setSetsInvalid] = useState(false);
     const [repsInvalid, setRepsInvalid] = useState(false);
     const [durationInvalid, setDurationInvalid] = useState(false);
+    const [routineNameInvalid, setRoutineNameInvalid] = useState(false);
 
     if (!exercise) {
         return null;
@@ -31,6 +32,11 @@ export default function ExerciseAddToRoutineModal() {
 
     const handleAddToNewRoutine = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (routineName === '') {
+            setRoutineNameInvalid(true);
+            return;
+        }
 
         try {
             const response = await handleAddExerciseToNewRoutine({
@@ -124,7 +130,7 @@ export default function ExerciseAddToRoutineModal() {
                 {(onClose) => (
                 <>
                     <ModalHeader className="flex">Add {exercise.name} to a Routine</ModalHeader>
-                    <ModalBody>
+                    <ModalBody className="pb-5">
 
                     {page === 1 && (
                         <form onSubmit={(e) => e.preventDefault()} className="space-y-3">
@@ -205,33 +211,45 @@ export default function ExerciseAddToRoutineModal() {
                                     placeholder="My awesome workout plan"
                                     size="sm"
                                     label="Routine Name"
+                                    variant="bordered"
                                     className="grow mb-3"
                                     value={routineName}
-                                    onChange={(e) => setRoutineName(e.target.value)}
+                                    onChange={(e) => {
+                                        setRoutineName(e.target.value);
+                                        if (e.target.value !== '') {
+                                            setRoutineNameInvalid(false);
+                                        }
+                                    }}
+                                    isInvalid={routineNameInvalid}
+                                    errorMessage={routineNameInvalid ? "Please enter a routine name" : undefined}
                                 />
                                 <div><Button type="submit" size="md">Save</Button></div>
                             </form>
 
-                            <Divider className="my-3 dark:bg-zinc-800" />
+                            {userRoutines.length > 0 && (
+                                <>
+                                    <Divider className="my-3 dark:bg-zinc-800" />
 
-                            <h5 className="font-semibold mb-2">Existing Routines</h5>
+                                    <h5 className="font-semibold mb-2">Existing Routines</h5>
 
-                            <ul>
-                                {userRoutines.map((routine) => (
-                                    <li key={routine.id}>
-                                        <form className="flex gap-x-2 justify-between items-center space-y-2" onSubmit={(e) => {
-                                            e.preventDefault();
-                                            handleAddToExistingRoutine(routine.id);
-                                        }}>
-                                            <User
-                                                name={routine.name}
-                                                description={`${routine.exerciseCount} Exercises`}
-                                            />
-                                            <div><Button type="submit" size="md" variant="flat" isIconOnly><IconPlus size={18} /></Button></div>
-                                        </form>
-                                    </li>
-                                ))}
-                            </ul>
+                                    <ul>
+                                        {userRoutines.map((routine) => (
+                                            <li key={routine.id}>
+                                                <form className="flex gap-x-2 justify-between items-center space-y-2" onSubmit={(e) => {
+                                                    e.preventDefault();
+                                                    handleAddToExistingRoutine(routine.id);
+                                                }}>
+                                                    <User
+                                                        name={routine.name}
+                                                        description={`${routine.exerciseCount} Exercises`}
+                                                    />
+                                                    <div><Button type="submit" size="md" variant="flat" isIconOnly><IconPlus size={18} /></Button></div>
+                                                </form>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
 
                             <Divider className="my-3 dark:bg-zinc-800" />
 
@@ -239,9 +257,6 @@ export default function ExerciseAddToRoutineModal() {
                         </div>
                     )}
                     </ModalBody>
-                    <ModalFooter>
-                        <Button onPress={onClose}>Cancel</Button>
-                    </ModalFooter>
                 </>
                 )}
             </ModalContent>

@@ -1,5 +1,7 @@
 "use client";
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, Input, Button } from "@nextui-org/react";
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
+import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/button";
 import { IconSquare, IconSquareCheck } from '@tabler/icons-react';
 
 interface Set {

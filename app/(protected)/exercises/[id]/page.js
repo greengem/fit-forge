@@ -1,5 +1,5 @@
 import PageHeading from '@/components/PageHeading/PageHeading';
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@nextui-org/chip";
 import Image from "next/image";
 import prisma from '@/prisma/prisma';
 {/*

@@ -1,5 +1,4 @@
 "use client";
-import { Input } from "@nextui-org/react";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/table";
 
 export default function RoutineTable({ exercise }) {

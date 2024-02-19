@@ -1,6 +1,6 @@
 'use client'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { Checkbox } from "@nextui-org/react";
+import { Checkbox } from "@nextui-org/checkbox";
 
 export default function ExerciseFilterFavourites() {
     const searchParams = useSearchParams();

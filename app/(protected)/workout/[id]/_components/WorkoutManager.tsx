@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
-import { Card, CardBody, CardFooter, CardHeader, Chip, Button, ButtonGroup } from '@nextui-org/react';
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
+import { Button, ButtonGroup } from '@nextui-org/button';
 import { IconPlus, IconX } from '@tabler/icons-react';
 
 import { useWorkoutControls } from '@/contexts/WorkoutControlsContext';

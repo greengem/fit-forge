@@ -3,7 +3,8 @@ import { usePathname } from 'next/navigation';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import { useWorkoutControls } from '@/contexts/WorkoutControlsContext';
-import { Button, Divider } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
+import { Divider } from '@nextui-org/divider';
 import { IconPlayerPause, IconPlayerPlay } from '@tabler/icons-react';
 
 export default function SidebarWorkoutControls() {

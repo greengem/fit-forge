@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 import { useWorkoutControls } from '@/contexts/WorkoutControlsContext';
 import Link from "next/link";
 import { IconAlertCircleFilled, IconAlertTriangleFilled } from '@tabler/icons-react';
-import { Button } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
 export default function ActiveWorkoutWarning() {
     const { activeWorkoutRoutine } = useWorkoutControls();
     const pathname = usePathname();
