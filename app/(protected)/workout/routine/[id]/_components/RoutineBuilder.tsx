@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 import { toast } from "sonner";
 
 import RoutineDetails from './RoutineDetails';
@@ -41,11 +42,11 @@ type ExistingRoutine = {
 } | null;
 
 type SearchExercise = {
-  id: string;
-  name: string;
-  trackingType: string;
-  category: string;
-  image: string;
+    id: string;
+    name: string;
+    trackingType: string;
+    category: string;
+    image: string;
 };
 
 type RoutineBuilderProps = {
@@ -74,7 +75,7 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
     }
   }, [existingRoutine]);
 
-  const executeSearch = async () => {
+  const executeSearch = useDebouncedCallback(async () => {
     if (!searchTerm.trim()) {
       setSearchResults([]);
       return;
@@ -82,17 +83,20 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
     const response = await fetch(`/api/exercises/search?q=${searchTerm}`);
     const data = await response.json();
     setSearchResults(data);
-  };
+}, 300);
 
   const addExerciseToRoutine = (exercise: SearchExercise) => {
     if (selectedExercises.some(e => e.Exercise.id === exercise.id)) return;
+
+    const defaultReps = 8;
+    const defaultDuration = 30;
     
     const newExercise: WorkoutPlanExercise = {
       sets: 1,
-      reps: exercise.trackingType === 'reps' ? 0 : null,
-      exerciseDuration: exercise.trackingType === 'duration' ? 0 : null,
+      reps: exercise.trackingType === 'reps' ? defaultReps : null,
+      exerciseDuration: exercise.trackingType === 'duration' ? defaultDuration : null,
       order: selectedExercises.length + 1,
-      trackingType: exercise.trackingType,
+      trackingType: 'reps',
       Exercise: {
         id: exercise.id,
         name: exercise.name,
@@ -189,18 +193,15 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
     if (!validateForm()) return;
     
     setIsSaving(true);
-
-    const exercisesWithOrder = selectedExercises.map((exercise, index) => {
-      let { reps, exerciseDuration, trackingType } = exercise;
   
-      if (exercise.trackingType === 'reps') {
-        exerciseDuration = exercise.exerciseDuration !== 0 ? exercise.exerciseDuration : null;
-      } else if (exercise.trackingType === 'duration') {
-        reps = exercise.reps !== 0 ? exercise.reps : null;
-      }
+    // Adjust the structure of exercises to match the API's expected format
+    const exercisesWithOrder = selectedExercises.map((exercise, index) => {
+      // Extracting id from the Exercise object and renaming it to exerciseId
+      const { Exercise: { id: exerciseId }, sets, reps, exerciseDuration, trackingType } = exercise;
   
       return {
-        ...exercise,
+        exerciseId,
+        sets,
         reps,
         exerciseDuration,
         trackingType,
@@ -244,6 +245,7 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
       setIsSaving(false);
     }
   };
+  
 
   return (
     <div className="space-y-2">
@@ -263,7 +265,6 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
       <SearchResults 
         searchResults={searchResults}
         addExerciseToRoutine={addExerciseToRoutine}
-        selectedExercises={selectedExercises}
       />
       <ExerciseTable 
         selectedExercises={selectedExercises}
