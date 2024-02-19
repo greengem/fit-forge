@@ -83,8 +83,6 @@ export default async function NewRoutinePage({ params }: { params: { id: string 
       existingRoutine = null;
   }
 
-  console.log('existingRoutine', existingRoutine)
-
   const favoriteExercises: FavoriteExercise[] = await prisma.favouriteExercise.findMany({
     where: {
         userId: userId,
