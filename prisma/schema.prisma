@@ -61,6 +61,7 @@ model WorkoutPlan {
 }
 
 model WorkoutPlanExercise {
+  id                String        @id @default(uuid())
   workoutPlanId String
   exerciseId    String
   sets          Int
@@ -70,8 +71,6 @@ model WorkoutPlanExercise {
   trackingType  TrackingType
   Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
   WorkoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
-
-  @@id([workoutPlanId, exerciseId])
 }
 
 model WorkoutLog {
