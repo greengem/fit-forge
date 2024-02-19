@@ -14,38 +14,42 @@ export default async function NewRoutinePage({ params }: { params: { id: string 
   let existingRoutine;
 
   if (routineId !== 'new') {
-    const existingRoutine = await prisma.workoutPlan.findUnique({
-      where: { id: routineId },
-      select: {
-        id: true,
-        name: true,
-        notes: true,
-        userId: true,
-        createdAt: true,
-        updatedAt: true,
-        isSystemRoutine: true,
-        systemRoutineCategory: true,
-        WorkoutPlanExercise: {
-          select: {
-          sets: true,
-          reps: true,
-          exerciseDuration: true,
-          order: true,
-          trackingType: true,
-          Exercise: {
-            select: {
+    existingRoutine = await prisma.workoutPlan.findUnique({
+        where: { id: routineId },
+        select: {
             id: true,
             name: true,
-            category: true,
+            notes: true,
+            userId: true,
+            createdAt: true,
+            updatedAt: true,
+            isSystemRoutine: true,
+            systemRoutineCategory: true,
+            WorkoutPlanExercise: {
+                select: {
+                    sets: true,
+                    reps: true,
+                    exerciseDuration: true,
+                    order: true,
+                    trackingType: true,
+                    Exercise: {
+                        select: {
+                            id: true,
+                            name: true,
+                            category: true,
+                        },
+                    },
+                },
             },
-          },
-          },
         },
-        },
-      });
-  } else {
+    });
+
+    if (!existingRoutine) {
+        throw new Error('Invalid routine ID.');
+    }
+} else {
     existingRoutine = null;
-  }
+}
 
   const favoriteExercises = await prisma.favouriteExercise.findMany({
     where: {
