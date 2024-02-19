@@ -1,10 +1,7 @@
 'use client';
 import { useContext, useState } from "react";
 import { handleAddExerciseToNewRoutine, handleAddExerciseToExistingRoutine } from "@/server-actions/ExerciseServerActions";
-import { Exercise } from "@prisma/client";
 import { User } from "@nextui-org/user";
-
-//import { ExerciseModalContext } from "@/contexts/ExerciseModalContext";
 import { ExerciseAddToRoutineModalContext } from "@/contexts/ExerciseAddToRoutineModalContext";
 
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
@@ -15,252 +12,239 @@ import { Divider } from "@nextui-org/divider";
 import { toast } from "sonner";
 import { RadioGroup, Radio } from "@nextui-org/radio";
 
-interface UserRoutine {
-  id: string;
-  name: string;
-  exerciseCount: number;
-}
-
-type ExerciseAddToRoutineButtonProps = {
-  exercise: Exercise;
-  userRoutines: UserRoutine[];
-}
-
 export default function ExerciseAddToRoutineModal() {
-    const { exercise, isOpen, onOpenChange, userRoutines, setUserRoutines } = useContext(ExerciseAddToRoutineModalContext);
+    const { exercise, isOpen, onOpenChange, userRoutines } = useContext(ExerciseAddToRoutineModalContext);
+
+    const [page, setPage] = useState(1);
+    const [trackingType, setTrackingType] = useState("reps");
+    const [sets, setSets] = useState('');
+    const [reps, setReps] = useState('');
+    const [duration, setDuration] = useState('');
+    const [routineName, setRoutineName] = useState('');
+    const [setsInvalid, setSetsInvalid] = useState(false);
+    const [repsInvalid, setRepsInvalid] = useState(false);
+    const [durationInvalid, setDurationInvalid] = useState(false);
 
     if (!exercise) {
-        return null; // or some fallback UI
-      }
+        return null;
+    }
 
-  const [page, setPage] = useState(1);
+    const handleAddToNewRoutine = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-  const [trackingType, setTrackingType] = useState("reps");
-  const [sets, setSets] = useState('');
-  const [reps, setReps] = useState('');
-  const [duration, setDuration] = useState('');
-  const [routineName, setRoutineName] = useState('');
+        try {
+            const response = await handleAddExerciseToNewRoutine({
+                routineName,
+                exerciseId: exercise.id,
+                sets,
+                reps,
+                duration,
+                trackingType: trackingType === 'reps' ? 'reps' : 'duration',
+            });
 
-  const [setsInvalid, setSetsInvalid] = useState(false);
-  const [repsInvalid, setRepsInvalid] = useState(false);
-  const [durationInvalid, setDurationInvalid] = useState(false);
+            if (response.success) {
+                toast.success(response.message);
+                onOpenChange(false);
+                setTrackingType("reps");
+                setSets('');
+                setReps('');
+                setDuration('');
+                setRoutineName('');
+                setPage(1);
+            } else {
+                toast.error(response.message);
+            }
 
-  const handleAddToNewRoutine = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
+    };
 
-    try {
-        const response = await handleAddExerciseToNewRoutine({
-            routineName,
-            exerciseId: exercise.id,
-            sets,
-            reps,
-            duration,
-            trackingType: trackingType === 'reps' ? 'reps' : 'duration',
-        });
+    const handleAddToExistingRoutine = async (routineId: string) => {
+        try {
+            const response = await handleAddExerciseToExistingRoutine({
+                routineId,
+                exerciseId: exercise.id,
+                sets,
+                reps,
+                duration,
+                trackingType: trackingType === 'reps' ? 'reps' : 'duration',
+            });
 
-        if (response.success) {
-            toast.success(response.message);
-            onOpenChange(false);
-            setTrackingType("reps");
-            setSets('');
-            setReps('');
-            setDuration('');
-            setRoutineName('');
-            setPage(1);
+            if (response.success) {
+                toast.success(response.message);
+                onOpenChange(false);
+                setTrackingType("reps");
+                setSets('');
+                setReps('');
+                setDuration('');
+                setRoutineName('');
+                setPage(1);
+            } else {
+                toast.error(response.message);
+            }
+
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
+    };
+
+    const handleNext = () => {
+        let isValid = true;
+
+        if (sets === '') {
+            setSetsInvalid(true);
+            isValid = false;
         } else {
-            toast.error(response.message);
+            setSetsInvalid(false);
         }
 
-    } catch (error) {
-        console.error('Error submitting form:', error);
-    }
-};
-
-const handleAddToExistingRoutine = async (routineId: string) => {
-    try {
-        const response = await handleAddExerciseToExistingRoutine({
-            routineId,
-            exerciseId: exercise.id,
-            sets,
-            reps,
-            duration,
-            trackingType: trackingType === 'reps' ? 'reps' : 'duration',
-        });
-
-        if (response.success) {
-            toast.success(response.message);
-            onOpenChange(false);
-            setTrackingType("reps");
-            setSets('');
-            setReps('');
-            setDuration('');
-            setRoutineName('');
-            setPage(1);
+        if (trackingType === 'reps' && reps === '') {
+            setRepsInvalid(true);
+            isValid = false;
         } else {
-            toast.error(response.message);
+            setRepsInvalid(false);
         }
 
-    } catch (error) {
-        console.error('Error submitting form:', error);
-    }
-};
+        if (trackingType === 'duration' && duration === '') {
+            setDurationInvalid(true);
+            isValid = false;
+        } else {
+            setDurationInvalid(false);
+        }
 
-const handleNext = () => {
-    let isValid = true;
+        if (isValid) {
+            setPage(2);
+        }
+    };
 
-    if (sets === '') {
-        setSetsInvalid(true);
-        isValid = false;
-    } else {
-        setSetsInvalid(false);
-    }
+    return (
+        <Modal isOpen={isOpen} backdrop="blur" onOpenChange={onOpenChange} size="3xl" isKeyboardDismissDisabled scrollBehavior="inside">
+            <ModalContent>
+                {(onClose) => (
+                <>
+                    <ModalHeader className="flex">Add {exercise.name} to a Routine</ModalHeader>
+                    <ModalBody>
 
-    if (trackingType === 'reps' && reps === '') {
-        setRepsInvalid(true);
-        isValid = false;
-    } else {
-        setRepsInvalid(false);
-    }
+                    {page === 1 && (
+                        <form onSubmit={(e) => e.preventDefault()} className="space-y-3">
+                            <Input 
+                                type="number" 
+                                size="sm" 
+                                variant="bordered"
+                                name="sets" 
+                                label="Sets" 
+                                placeholder="Sets..." 
+                                value={sets} 
+                                onChange={(e) => {
+                                    setSets(e.target.value);
+                                    if (e.target.value !== '') {
+                                        setSetsInvalid(false);
+                                    }
+                                }} 
+                                isRequired 
+                                isInvalid={setsInvalid}
+                                errorMessage={setsInvalid ? "Please enter a valid number of sets" : undefined}
+                            />
 
-    if (trackingType === 'duration' && duration === '') {
-        setDurationInvalid(true);
-        isValid = false;
-    } else {
-        setDurationInvalid(false);
-    }
+                            <RadioGroup orientation="horizontal" defaultValue="reps"  onValueChange={setTrackingType}>
+                                <Radio value="reps">Reps</Radio>
+                                <Radio value="duration">Duration</Radio>
+                            </RadioGroup>
 
-    if (isValid) {
-        setPage(2);
-    }
-};
+                            {trackingType === 'reps' ? (
+                                <Input 
+                                    type="number" 
+                                    size="sm" 
+                                    variant="bordered"
+                                    name="reps" 
+                                    label="Reps" 
+                                    placeholder="Reps..." 
+                                    value={reps} 
+                                    onChange={(e) => {
+                                        setReps(e.target.value);
+                                        if (e.target.value !== '') {
+                                            setRepsInvalid(false);
+                                        }
+                                    }} 
+                                    isRequired 
+                                    isInvalid={repsInvalid}
+                                    errorMessage={repsInvalid ? "Please enter a valid number of reps" : undefined}
+                                />
+                            ) : (
+                                <Input 
+                                    type="number"
+                                    size="sm"
+                                    name="duration"
+                                    variant="bordered"
+                                    label="Duration" 
+                                    placeholder="Duration..." 
+                                    value={duration} 
+                                    onChange={(e) => {
+                                        setDuration(e.target.value);
+                                        if (e.target.value !== '') {
+                                            setDurationInvalid(false);
+                                        }
+                                    }} 
+                                    isRequired 
+                                    isInvalid={durationInvalid}
+                                    errorMessage={durationInvalid ? "Please enter a valid duration" : undefined}
+                                />
+                            )}
 
-  return (
-    <Modal isOpen={isOpen} backdrop="blur" onOpenChange={onOpenChange} size="3xl" isKeyboardDismissDisabled scrollBehavior="inside">
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className="flex">Add {exercise.name} to a Routine</ModalHeader>
-            <ModalBody>
-
-            {page === 1 && (
-                <form onSubmit={(e) => e.preventDefault()} className="space-y-3">
-                    <Input 
-                        type="number" 
-                        size="sm" 
-                        variant="bordered"
-                        name="sets" 
-                        label="Sets" 
-                        placeholder="Sets..." 
-                        value={sets} 
-                        onChange={(e) => {
-                            setSets(e.target.value);
-                            if (e.target.value !== '') {
-                                setSetsInvalid(false);
-                            }
-                        }} 
-                        isRequired 
-                        isInvalid={setsInvalid}
-                        errorMessage={setsInvalid ? "Please enter a valid number of sets" : undefined}
-                    />
-
-                    <RadioGroup orientation="horizontal" defaultValue="reps"  onValueChange={setTrackingType}>
-                        <Radio value="reps">Reps</Radio>
-                        <Radio value="duration">Duration</Radio>
-                    </RadioGroup>
-
-                    {trackingType === 'reps' ? (
-                        <Input 
-                            type="number" 
-                            size="sm" 
-                            variant="bordered"
-                            name="reps" 
-                            label="Reps" 
-                            placeholder="Reps..." 
-                            value={reps} 
-                            onChange={(e) => {
-                                setReps(e.target.value);
-                                if (e.target.value !== '') {
-                                    setRepsInvalid(false);
-                                }
-                            }} 
-                            isRequired 
-                            isInvalid={repsInvalid}
-                            errorMessage={repsInvalid ? "Please enter a valid number of reps" : undefined}
-                        />
-                    ) : (
-                        <Input 
-                            type="number"
-                            size="sm"
-                            name="duration"
-                            variant="bordered"
-                            label="Duration" 
-                            placeholder="Duration..." 
-                            value={duration} 
-                            onChange={(e) => {
-                                setDuration(e.target.value);
-                                if (e.target.value !== '') {
-                                    setDurationInvalid(false);
-                                }
-                            }} 
-                            isRequired 
-                            isInvalid={durationInvalid}
-                            errorMessage={durationInvalid ? "Please enter a valid duration" : undefined}
-                        />
+                            <div><Button onClick={handleNext} size="md">Next</Button></div>
+                        </form>
                     )}
 
-                    <div><Button onClick={handleNext} size="md">Next</Button></div>
-                </form>
-            )}
+                    {page === 2 && (
+                        <div>
+                            <form onSubmit={handleAddToNewRoutine} className="space-y-3">
+                                <h5 className="font-semibold mb-2">New Routine</h5>
+                                <Input
+                                    name="routineName"
+                                    placeholder="My awesome workout plan"
+                                    size="sm"
+                                    label="Routine Name"
+                                    className="grow mb-3"
+                                    value={routineName}
+                                    onChange={(e) => setRoutineName(e.target.value)}
+                                />
+                                <div><Button type="submit" size="md">Save</Button></div>
+                            </form>
 
-            {page === 2 && (
-                <div>
-                    <form onSubmit={handleAddToNewRoutine} className="space-y-3">
-                        <h5 className="font-semibold mb-2">New Routine</h5>
-                        <Input
-                            name="routineName"
-                            placeholder="My awesome workout plan"
-                            size="sm"
-                            label="Routine Name"
-                            className="grow mb-3"
-                            value={routineName}
-                            onChange={(e) => setRoutineName(e.target.value)}
-                        />
-                        <div><Button type="submit" size="md">Save</Button></div>
-                    </form>
+                            <Divider className="my-3 dark:bg-zinc-800" />
 
-                    <Divider className="my-3 dark:bg-zinc-800" />
+                            <h5 className="font-semibold mb-2">Existing Routines</h5>
 
-                    <h5 className="font-semibold mb-2">Existing Routines</h5>
+                            <ul>
+                                {userRoutines.map((routine) => (
+                                    <li key={routine.id}>
+                                        <form className="flex gap-x-2 justify-between items-center space-y-2" onSubmit={(e) => {
+                                            e.preventDefault();
+                                            handleAddToExistingRoutine(routine.id);
+                                        }}>
+                                            <User
+                                                name={routine.name}
+                                                description={`${routine.exerciseCount} Exercises`}
+                                            />
+                                            <div><Button type="submit" size="md" variant="flat" isIconOnly><IconPlus size={18} /></Button></div>
+                                        </form>
+                                    </li>
+                                ))}
+                            </ul>
 
-                    <ul>
-                        {userRoutines.map((routine) => (
-                            <li key={routine.id}>
-                                <form className="flex gap-x-2 justify-between items-center space-y-2" onSubmit={(e) => {
-                                    e.preventDefault();
-                                    handleAddToExistingRoutine(routine.id);
-                                }}>
-                                    <User
-                                        name={routine.name}
-                                        description={`${routine.exerciseCount} Exercises`}
-                                    />
-                                    <div><Button type="submit" size="md" variant="flat" isIconOnly><IconPlus size={18} /></Button></div>
-                                </form>
-                            </li>
-                        ))}
-                    </ul>
+                            <Divider className="my-3 dark:bg-zinc-800" />
 
-                    <Divider className="my-3 dark:bg-zinc-800" />
-
-                    <div><Button onClick={() => setPage(1)} size="md">Back</Button></div>
-                </div>
-            )}
-            </ModalBody>
-            <ModalFooter>
-                <Button onPress={onClose}>Cancel</Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
-    </Modal>
-  );
+                            <div><Button onClick={() => setPage(1)} size="md">Back</Button></div>
+                        </div>
+                    )}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onPress={onClose}>Cancel</Button>
+                    </ModalFooter>
+                </>
+                )}
+            </ModalContent>
+        </Modal>
+    );
 }
