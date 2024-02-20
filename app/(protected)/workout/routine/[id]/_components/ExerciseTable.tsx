@@ -7,6 +7,7 @@ import { Button, ButtonGroup } from "@nextui-org/button";
 import { IconArrowUp, IconArrowDown, IconTrash, IconStar, IconStarFilled } from '@tabler/icons-react';
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Reorder } from "framer-motion"
 
 type FavoriteExercise = {
   exerciseId: string;
