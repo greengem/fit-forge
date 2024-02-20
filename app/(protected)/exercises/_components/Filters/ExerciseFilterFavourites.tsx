@@ -1,6 +1,7 @@
 'use client'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { Checkbox } from "@nextui-org/checkbox";
+import { IconStar } from '@tabler/icons-react';
 
 export default function ExerciseFilterFavourites() {
     const searchParams = useSearchParams();
@@ -25,7 +26,7 @@ export default function ExerciseFilterFavourites() {
             onChange={handleFilterFavourites}
             defaultSelected={searchParams.get('favs') === 'true'}
         >
-            My Favourites
+            <span className='flex items-center gap-1'><IconStar size={16} /> My Favourites</span>
         </Checkbox>
     )
 }

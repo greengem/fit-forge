@@ -1,6 +1,7 @@
 'use client'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { Checkbox } from "@nextui-org/checkbox";
+import { IconBarbell, IconJumpRope } from '@tabler/icons-react';
 
 export default function ExerciseFilterUserEquipment() {
     const searchParams = useSearchParams();
@@ -25,7 +26,7 @@ export default function ExerciseFilterUserEquipment() {
             onChange={handleFilterUserEquipment}
             defaultSelected={searchParams.get('equipmentOwned') === 'true'}
         >
-            Exercises with my equipment
+            <span className='flex items-center gap-1'><IconJumpRope size={17} /> My Equipment</span>
         </Checkbox>
     )
 }
