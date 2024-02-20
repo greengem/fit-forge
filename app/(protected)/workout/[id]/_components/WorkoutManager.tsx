@@ -188,72 +188,80 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
 
     // Save the workout
     const completeWorkout = async () => {
-    
         // Ensure workoutExercises is not null before proceeding
         if (workoutExercises) {
-            // Validate if at least one set has been completed.
-            const atLeastOneSetCompleted = workoutExercises.some(exercise => 
-                exercise.sets.some(set => set.completed));
-            if (!atLeastOneSetCompleted) {
+            // Check if there's at least one set not completed
+            const hasIncompleteSets = workoutExercises.some(exercise => 
+                exercise.sets.some(set => !set.completed)
+            );
+
+            // Warn the user if there are incomplete sets
+            if (hasIncompleteSets) {
+                const proceedWithIncompleteSets = window.confirm('There are incomplete sets. These will not be saved. Do you want to proceed?');
+                if (!proceedWithIncompleteSets) {
+                    return; // Stop the save operation if the user does not want to proceed
+                }
+            }
+
+            // Filter exercises to only include those with at least one set completed
+            const filteredExercises = workoutExercises.filter(exercise => 
+                exercise.sets.some(set => set.completed)
+            ).map(exercise => ({
+                ...exercise,
+                sets: exercise.sets.filter(set => set.completed)
+            }));
+
+            // Proceed with save operation if there are exercises with completed sets
+            if (filteredExercises.length === 0) {
                 toast.error('You need to complete at least one set to save the workout.');
                 return;
             }
 
-            // Warn user if any sets are not completed before saving
-            const incompleteSetsExist = workoutExercises.some(exercise => 
-                exercise.sets.some(set => !set.completed));
-            if (incompleteSetsExist) {
-                if(!window.confirm('There are incomplete sets. These will not be saved. Do you want to proceed?')) {
-                    return;
+            setIsSaving(true);
+
+            try {
+                const exercisesData = filteredExercises.map(exercise => ({
+                    exerciseId: exercise.exerciseId,
+                    sets: exercise.sets.map(set => ({
+                        reps: set.reps,
+                        weight: set.weight,
+                        duration: set.duration,
+                        completed: set.completed
+                    }))
+                }));
+
+                const data = {
+                    name: workout.name,
+                    date: new Date().toISOString(),
+                    duration: workoutDuration,
+                    workoutPlanId: workout.id,
+                    exercises: exercisesData
+                };
+
+                const response = await handleSaveWorkout(data);
+
+                if (response.success) {
+                    router.push("/dashboard");
+                    router.refresh();
+                    setWorkoutExercises([]);
+                    setWorkoutDuration(0);
+                    setWorkoutStartTime(null);
+                    setActiveWorkoutRoutine(null);
+                    toast.success('Workout saved successfully!');
+                } else {
+                    toast.error('Failed to save workout');
                 }
+            } catch (error) {
+                toast.error('An error occurred while saving the workout');
+            } finally {
+                setIsSaving(false);
             }
         } else {
-            // Handle the case where workoutExercises is null, e.g., show an error message
             toast.error('No workout exercises available.');
         }
-
-        setIsSaving(true);
-
-        try {
-            const exercisesData = workoutExercises ? workoutExercises.map(exercise => ({
-                exerciseId: exercise.exerciseId,
-                sets: exercise.sets.map(set => ({
-                    reps: set.reps,
-                    weight: set.weight,
-                    duration: set.duration,
-                    completed: set.completed
-                }))
-            })) : [];
-            
-            const data = {
-                name: workoutName,
-                date: new Date().toISOString(),
-                duration: workoutDuration,
-                workoutPlanId,
-                exercises: exercisesData
-            };
-
-            //console.log('data in front end', data);
-
-            const response = await handleSaveWorkout(data);
-
-            if (response.success) {
-                router.push("/dashboard");
-                router.refresh();
-                setWorkoutExercises([]);
-                setWorkoutDuration(0);
-                setWorkoutStartTime(null);
-                setActiveWorkoutRoutine(null);
-                toast.success('Workout saved successfully!');
-            } else {
-                toast.error('Failed to save workout');
-            }
-        } catch (error) {
-            toast.error('An error occurred while saving the workout');
-        } finally {
-            setIsSaving(false);
-        }
     };
+
+
     
     const workoutName = workout.name;
 
