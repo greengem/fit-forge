@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import prisma from '@/prisma/prisma';
 import { subMonths } from 'date-fns';
 
-export async function GET({ params }: { params: { exerciseId: string } }) {
+export async function GET(request: Request, { params }: { params: { exerciseId: string } }) {
     try {
         const { userId } : { userId: string | null } = auth();
         const { exerciseId } = params;
