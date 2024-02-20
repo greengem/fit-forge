@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import PageHeading from '@/components/PageHeading/PageHeading';
 import ExerciseFetch from "./_components/ExerciseFetch";
-import ExerciseDetailModal from "./_components/Modals/ExerciseDetailModal";
+import ExerciseDetailModal from "./_components/Modals/ExerciseDetailModal/ExerciseDetailModal";
 import ExerciseAddToRoutineModal from "./_components/Modals/ExerciseAddToRoutineModal";
 import ExerciseFilters from "./_components/Filters/ExerciseFilters";
 
