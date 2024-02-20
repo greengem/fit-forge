@@ -4,6 +4,7 @@ import { ActivityModalContext } from "@/contexts/ActivityModalContext";
 import { handleDeleteActivity } from "@/server-actions/ActivityServerActions";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem } from "@nextui-org/dropdown";
 import { IconEdit, IconInfoCircle, IconMenu2, IconTrash } from "@tabler/icons-react";
+import { toast } from 'sonner';
 
 interface Set {
     weight: number | null;
@@ -31,11 +32,20 @@ interface Activity {
 export default function ActivityMenu({ activity } : { activity: Activity }) {
     const { setActivity, onOpen } = useContext(ActivityModalContext);
 
+    const handleDelete = async (activityId: string) => {
+        const response = await handleDeleteActivity(activityId);
+        if (response.success) {
+            toast.success(response.message);
+        } else {
+            toast.error(response.message);
+        }
+    }
+
     const handleAction = (key: string, activity: Activity) => {
         if (key === "delete") {
             const confirmDelete = window.confirm("Are you sure you want to delete this activity?");
             if (confirmDelete) {
-                handleDeleteActivity(activity.id);
+                handleDelete(activity.id);
             }
         } else if (key === "details") {
             setActivity(activity);
