@@ -17,6 +17,36 @@ export default function RecordsTab() {
                     <span>560KG</span>
                 </li>
             </ul>
+
+            <table className="w-full text-center">
+                <thead>
+                    <tr>
+                        <th>Reps</th>
+                        <th>Best Performance</th> 
+                        <th>Predicted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <div>40 kg (x2)</div>
+                            <div className="text-sm">31 Aug 2023</div>
+                        </td> 
+                        <td>42kg</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            <div>40 kg (x2)</div>
+                            <div className="text-sm">31 Aug 2023</div>
+                        </td> 
+                        <td>42kg</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
         </div>
     )
 }
