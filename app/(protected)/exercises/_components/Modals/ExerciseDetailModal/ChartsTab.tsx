@@ -1,8 +1,9 @@
 'use client'
+import useSWR from 'swr';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 
-const data = [
+const mockData = [
     {
       name: 'Page A',
       uv: 4000,
@@ -47,9 +48,42 @@ const data = [
     },
   ];
 
+interface Set {
+    id: string;
+    workoutLogExerciseId: string;
+    weight: number;
+    reps: number;
+    exerciseDuration?: number;
+    order?: number;
+}
 
+interface Exercise {
+    id: string;
+    workoutLogId: string;
+    exerciseId: string;
+    sets: Set[];
+}
 
-export default function ChartsTab({ exerciseName } : { exerciseName: string | undefined }) {
+interface WorkoutLog {
+    id: string;
+    userId: string;
+    workoutPlanId?: string;
+    name: string;
+    date: Date;
+    duration: number;
+    createdAt: Date;
+    date_updated?: Date;
+    exercises: Exercise[];
+}
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+
+export default function ChartsTab({ exerciseId, exerciseName } : { exerciseId: string | undefined, exerciseName: string | undefined }) {
+    const { data, error } = useSWR<WorkoutLog[]>(`/api/exercise-charts/${exerciseId}`, fetcher);
+
+    if (error) return <div>Failed to load</div>;
+    if (!data) return <div>Loading...</div>;
+    if (data.length === 0) return <div className='text-zinc-500'>Previous performances of this exercise will display here - check back later!</div>;
 
     function ChartCard({ children, title } : { children: React.ReactNode, title: string }) {
         return (
@@ -63,13 +97,13 @@ export default function ChartsTab({ exerciseName } : { exerciseName: string | un
         )
     }
 
-    function Chart( { myData } : { myData: any }) {
+    function Chart( { data } : { data: any }) {
         return (
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                     width={500}
                     height={300}
-                    data={myData}
+                    data={data}
                     margin={{
                         top: 0,
                         right: 0,
@@ -84,24 +118,25 @@ export default function ChartsTab({ exerciseName } : { exerciseName: string | un
             </ResponsiveContainer>
         )
     }
+    
 
     return (
         <div className="space-y-3">
 
             <ChartCard title='Best Set'>
-                <Chart myData={data} />
+                <Chart data={mockData} />
             </ChartCard>
 
             <ChartCard title='Total Volume'>
-                <Chart myData={data} />
+                <Chart data={mockData} />
             </ChartCard>
 
             <ChartCard title='PR Progression (as 1RM)'>
-                <Chart myData={data} />
+                <Chart data={mockData} />
             </ChartCard>
 
             <ChartCard title='Max Consecutive Reps'>
-                <Chart myData={data} />
+                <Chart data={mockData} />
             </ChartCard>
 
         </div>
