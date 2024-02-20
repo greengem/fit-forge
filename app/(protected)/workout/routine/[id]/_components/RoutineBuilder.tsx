@@ -266,15 +266,18 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
         searchResults={searchResults}
         addExerciseToRoutine={addExerciseToRoutine}
       />
-      <ExerciseTable 
-        selectedExercises={selectedExercises}
-        updateExercise={updateExercise}
-        moveUp={moveUp}
-        moveDown={moveDown}
-        deleteExercise={deleteExercise}
-        favoriteExercises={favoriteExercises}
-      />
+      <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5'>
+        <ExerciseTable 
+          selectedExercises={selectedExercises}
+          updateExercise={updateExercise}
+          moveUp={moveUp}
+          moveDown={moveDown}
+          deleteExercise={deleteExercise}
+          favoriteExercises={favoriteExercises}
+        />
+      </div>
       <SaveButton handleSave={handleSave} isLoading={isSaving} />
+      
     </div>
   );
 }
