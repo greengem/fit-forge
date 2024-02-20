@@ -275,11 +275,11 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     return (
         <div className='pb-40'>
         {workout.notes && <p color='primary' className='mb-3'>Notes: {workout.notes}</p>}
-        <div className='space-y-5'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5'>
             {workoutExercises?.map((exercise, index) => (
                 <Card shadow="none" className="shadow-md" key={exercise.exerciseId}>
                     <CardHeader className='text-lg px-5'>
-                        {exercise.exerciseName}
+                        {index + 1}. {exercise.exerciseName}
                     </CardHeader>
                     <CardBody className='pb-1 pt-0'>
                         <ExerciseTable 
