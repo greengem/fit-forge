@@ -24,7 +24,7 @@ export default function DashboardPage({
 		<>
 			<PageHeading title="Dashboard" />
 			<DashboardCards />
-			<DashboardLinks />
+			{/* <DashboardLinks /> */}
 			<DashboardCharts 
 				chart1DateRange={chart1DateRange} 
 				chart2DateRange={chart2DateRange} 
