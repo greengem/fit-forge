@@ -1,8 +1,7 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function updateExerciseImages() {
-    
   const exercises = await prisma.exercise.findMany({
     where: {
       image: null,
@@ -10,7 +9,7 @@ async function updateExerciseImages() {
   });
 
   for (const exercise of exercises) {
-    const updatedImage = exercise.name.replace(/\s+/g, '_').replace(/\//g, '_');
+    const updatedImage = exercise.name.replace(/\s+/g, "_").replace(/\//g, "_");
     await prisma.exercise.update({
       where: {
         id: exercise.id,
@@ -22,12 +21,14 @@ async function updateExerciseImages() {
     console.log(`Updated exercise ${exercise.name} with image ${updatedImage}`);
   }
 
-  console.log('All exercises have been updated successfully.');
+  console.log("All exercises have been updated successfully.");
 }
 
-updateExerciseImages().catch((e) => {
-  console.error(e);
-  process.exit(1);
-}).finally(async () => {
-  await prisma.$disconnect();
-});
+updateExerciseImages()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

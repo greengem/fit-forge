@@ -1,5 +1,11 @@
-'use client'
-import { createContext, useState, useContext, Dispatch, SetStateAction } from 'react';
+"use client";
+import {
+  createContext,
+  useState,
+  useContext,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 interface WorkoutExercise {
   exerciseId: string;
@@ -23,13 +29,22 @@ const defaultContextValue: WorkoutDataContextType = {
   setWorkoutExercises: () => {},
 };
 
-const WorkoutDataContext = createContext<WorkoutDataContextType>(defaultContextValue);
+const WorkoutDataContext =
+  createContext<WorkoutDataContextType>(defaultContextValue);
 
-export const WorkoutDataProvider = ({ children }: { children: React.ReactNode }) => {
-  const [workoutExercises, setWorkoutExercises] = useState<WorkoutExercise[] | null>(null);
+export const WorkoutDataProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [workoutExercises, setWorkoutExercises] = useState<
+    WorkoutExercise[] | null
+  >(null);
 
   return (
-    <WorkoutDataContext.Provider value={{ workoutExercises, setWorkoutExercises }}>
+    <WorkoutDataContext.Provider
+      value={{ workoutExercises, setWorkoutExercises }}
+    >
       {children}
     </WorkoutDataContext.Provider>
   );

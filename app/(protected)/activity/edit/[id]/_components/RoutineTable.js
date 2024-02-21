@@ -1,9 +1,20 @@
 "use client";
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/table";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell,
+} from "@nextui-org/table";
 
 export default function RoutineTable({ exercise }) {
   return (
-    <Table removeWrapper aria-label="Example static collection table" shadow="none">
+    <Table
+      removeWrapper
+      aria-label="Example static collection table"
+      shadow="none"
+    >
       <TableHeader>
         <TableColumn>SET</TableColumn>
         <TableColumn>KG</TableColumn>

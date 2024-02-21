@@ -1,12 +1,12 @@
 import { nextui } from "@nextui-org/react";
-import type { Config } from 'tailwindcss';
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
@@ -21,7 +21,7 @@ const config: Config = {
             foreground: "#000000",
 
             primary: {
-              100: "#F4FFCC", 
+              100: "#F4FFCC",
               200: "#E6FF99",
               300: "#D4FF66",
               400: "#C3FF3F",
@@ -93,7 +93,7 @@ const config: Config = {
             foreground: "#ffffff",
 
             primary: {
-              100: "#F4FFCC", 
+              100: "#F4FFCC",
               200: "#E6FF99",
               300: "#D4FF66",
               400: "#C3FF3F",

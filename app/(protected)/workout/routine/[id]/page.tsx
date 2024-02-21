@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
-import PageHeading from '@/components/PageHeading/PageHeading';
-import RoutineBuilder from './_components/RoutineBuilder';
+import PageHeading from "@/components/PageHeading/PageHeading";
+import RoutineBuilder from "./_components/RoutineBuilder";
 import prisma from "@/prisma/prisma";
 
 type FavoriteExercise = {
@@ -36,66 +36,80 @@ type ExistingRoutine = {
 
 let existingRoutine: ExistingRoutine;
 
-export default async function NewRoutinePage({ params }: { params: { id: string } }) {
+export default async function NewRoutinePage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const routineId = params.id;
-  const { userId } : { userId: string | null } = auth();
-  
+  const { userId }: { userId: string | null } = auth();
+
   if (!userId) {
-    throw new Error('You must be signed in to view this page.');
+    throw new Error("You must be signed in to view this page.");
   }
 
-  if (routineId !== 'new') {
+  if (routineId !== "new") {
     existingRoutine = await prisma.workoutPlan.findUnique({
-        where: { id: routineId },
-        select: {
-            id: true,
-            name: true,
-            notes: true,
-            userId: true,
-            createdAt: true,
-            updatedAt: true,
-            isSystemRoutine: true,
-            systemRoutineCategory: true,
-            WorkoutPlanExercise: {
-                select: {
-                    sets: true,
-                    reps: true,
-                    exerciseDuration: true,
-                    order: true,
-                    trackingType: true,
-                    Exercise: {
-                        select: {
-                            id: true,
-                            name: true,
-                            category: true,
-                        },
-                    },
-                },
+      where: { id: routineId },
+      select: {
+        id: true,
+        name: true,
+        notes: true,
+        userId: true,
+        createdAt: true,
+        updatedAt: true,
+        isSystemRoutine: true,
+        systemRoutineCategory: true,
+        WorkoutPlanExercise: {
+          select: {
+            sets: true,
+            reps: true,
+            exerciseDuration: true,
+            order: true,
+            trackingType: true,
+            Exercise: {
+              select: {
+                id: true,
+                name: true,
+                category: true,
+              },
             },
+          },
         },
+      },
     });
 
     if (!existingRoutine) {
-        throw new Error('Invalid routine ID.');
+      throw new Error("Invalid routine ID.");
     }
-
   } else {
-      existingRoutine = null;
+    existingRoutine = null;
   }
 
-  const favoriteExercises: FavoriteExercise[] = await prisma.favouriteExercise.findMany({
-    where: {
+  const favoriteExercises: FavoriteExercise[] =
+    await prisma.favouriteExercise.findMany({
+      where: {
         userId: userId,
-    },
-    select: {
+      },
+      select: {
         exerciseId: true,
-    }
-  });
-  
+      },
+    });
+
   return (
     <>
-      <PageHeading title={existingRoutine ? `Edit ${existingRoutine.name}` : "Create New Routine"} />
-      <RoutineBuilder existingRoutine={existingRoutine} routineId={routineId} favoriteExercises={favoriteExercises} />
+      <PageHeading
+        title={
+          existingRoutine
+            ? `Edit ${existingRoutine.name}`
+            : "Create New Routine"
+        }
+      />
+      <RoutineBuilder
+        existingRoutine={existingRoutine}
+        routineId={routineId}
+        favoriteExercises={favoriteExercises}
+      />
     </>
-  )
+  );
 }

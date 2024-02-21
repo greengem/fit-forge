@@ -1,5 +1,12 @@
-'use client'
-import React, { createContext, useState, useContext, useEffect, useRef, ReactNode } from 'react';
+"use client";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+  ReactNode,
+} from "react";
 import { toast } from "sonner";
 
 interface WorkoutControlsContextType {
@@ -18,21 +25,29 @@ interface WorkoutControlsContextType {
   startWorkout: (workoutId: string) => void;
 }
 
-const WorkoutControlsContext = createContext<WorkoutControlsContextType | undefined>(undefined);
+const WorkoutControlsContext = createContext<
+  WorkoutControlsContextType | undefined
+>(undefined);
 
-export const WorkoutControlsProvider = ({ children }: { children: ReactNode}) => {
+export const WorkoutControlsProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   const [isPaused, setIsPaused] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [workoutDuration, setWorkoutDuration] = useState(0);
   const [workoutStartTime, setWorkoutStartTime] = useState<number | null>(null);
-  const [activeWorkoutRoutine, setActiveWorkoutRoutine] = useState<string | null>(null);
+  const [activeWorkoutRoutine, setActiveWorkoutRoutine] = useState<
+    string | null
+  >(null);
 
   const intervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleWorkoutTimer = () => {
       if (workoutStartTime && !isPaused) {
-        setWorkoutDuration(prevDuration => prevDuration + 1);
+        setWorkoutDuration((prevDuration) => prevDuration + 1);
       }
     };
 
@@ -53,15 +68,15 @@ export const WorkoutControlsProvider = ({ children }: { children: ReactNode}) =>
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds - hours * 3600) / 60);
     const remainingSeconds = seconds - hours * 3600 - minutes * 60;
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
   };
 
   const togglePause = () => {
     if (!workoutStartTime) {
-      toast.success('Workout Session Started from pause!');
+      toast.success("Workout Session Started from pause!");
     } else {
-      setIsPaused(prevIsPaused => !prevIsPaused);
-      toast.success(isPaused ? 'Workout Resumed!' : 'Workout Paused!');
+      setIsPaused((prevIsPaused) => !prevIsPaused);
+      toast.success(isPaused ? "Workout Resumed!" : "Workout Paused!");
     }
   };
 
@@ -69,21 +84,30 @@ export const WorkoutControlsProvider = ({ children }: { children: ReactNode}) =>
     if (!workoutStartTime) {
       setWorkoutStartTime(Date.now());
       setActiveWorkoutRoutine(workoutId);
-      toast.success('Workout Session Started!');
+      toast.success("Workout Session Started!");
     }
   };
 
   return (
-    <WorkoutControlsContext.Provider value={{ 
-      //States
-      isPaused, setIsPaused, 
-      isSaving, setIsSaving, 
-      workoutDuration, setWorkoutDuration, 
-      workoutStartTime, setWorkoutStartTime,
-      activeWorkoutRoutine, setActiveWorkoutRoutine,
-      //Functions
-      formatDuration, togglePause, startWorkout,
-    }}>
+    <WorkoutControlsContext.Provider
+      value={{
+        //States
+        isPaused,
+        setIsPaused,
+        isSaving,
+        setIsSaving,
+        workoutDuration,
+        setWorkoutDuration,
+        workoutStartTime,
+        setWorkoutStartTime,
+        activeWorkoutRoutine,
+        setActiveWorkoutRoutine,
+        //Functions
+        formatDuration,
+        togglePause,
+        startWorkout,
+      }}
+    >
       {children}
     </WorkoutControlsContext.Provider>
   );
@@ -92,8 +116,9 @@ export const WorkoutControlsProvider = ({ children }: { children: ReactNode}) =>
 export const useWorkoutControls = () => {
   const context = useContext(WorkoutControlsContext);
   if (context === undefined) {
-    throw new Error('useWorkoutControls must be used within a WorkoutControlsProvider');
+    throw new Error(
+      "useWorkoutControls must be used within a WorkoutControlsProvider",
+    );
   }
   return context;
 };
-

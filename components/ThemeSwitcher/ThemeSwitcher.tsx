@@ -19,22 +19,21 @@ export function ThemeSwitcher() {
 
   const isDarkMode = theme === "dark";
 
-  return (    
-      <Switch
-        isSelected={isDarkMode}
-        size="lg"
-        color="primary"
-        thumbIcon={({ isSelected, className }) =>
-          isSelected ? (
-            <MoonIcon className={className} />
-          ) : (
-            <SunIcon className={className} />
-          )
-        }
-        onChange={() => {
-          setTheme(isDarkMode ? "light" : "dark");
-        }}
-      >
-      </Switch>
+  return (
+    <Switch
+      isSelected={isDarkMode}
+      size="lg"
+      color="primary"
+      thumbIcon={({ isSelected, className }) =>
+        isSelected ? (
+          <MoonIcon className={className} />
+        ) : (
+          <SunIcon className={className} />
+        )
+      }
+      onChange={() => {
+        setTheme(isDarkMode ? "light" : "dark");
+      }}
+    ></Switch>
   );
 }

@@ -2,44 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-html.dark
-{
-    background-color: rgb(17, 17, 19);
+html.dark {
+  background-color: rgb(17, 17, 19);
 }
 
-html.light
-{
-    background-color: rgb(238, 237, 242);
+html.light {
+  background-color: rgb(238, 237, 242);
 }
 
-nav [data-active=true] a{
-    color: #a6ff00;
+nav [data-active="true"] a {
+  color: #a6ff00;
 }
 
-.dashboard-chart{
-    height: 300px;
+.dashboard-chart {
+  height: 300px;
 }
 
-.hero-container{
-    background-color: rgb(17, 17, 19);
+.hero-container {
+  background-color: rgb(17, 17, 19);
 }
 
 .no-scrollbar::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
-.dark .group-dark-bg-1
-{
-    background-color: rgb(24, 24, 27);
+.dark .group-dark-bg-1 {
+  background-color: rgb(24, 24, 27);
 }
 
-.light .group-light-bg-1
-{
-    background-color: white;
+.light .group-light-bg-1 {
+  background-color: white;
 }

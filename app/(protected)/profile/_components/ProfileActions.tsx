@@ -7,5 +7,5 @@ export default function ProfileActions() {
     <SignOutButton>
       <Button>Sign out</Button>
     </SignOutButton>
-  )
+  );
 }

@@ -1,18 +1,25 @@
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import DashboardChartExerciseCategoryDistributionPieClient from "./DashboardChartExerciseCategoryDistributionPie.client";
-import { calculateIntervals, getIntervalStartAndEndDates } from "./utils/dateUtils";
+import {
+  calculateIntervals,
+  getIntervalStartAndEndDates,
+} from "./utils/dateUtils";
 
 type ExerciseCategoryData = {
   category: string;
   count: number;
 };
 
-export default async function DashboardChartExerciseCategoryDistribution({ dateRange = '3M' }: { dateRange?: string }) {
+export default async function DashboardChartExerciseCategoryDistribution({
+  dateRange = "3M",
+}: {
+  dateRange?: string;
+}) {
   const { userId }: { userId: string | null } = auth();
 
   if (!userId) {
-      throw new Error('You must be signed in to view this page.');
+    throw new Error("You must be signed in to view this page.");
   }
 
   const intervals = calculateIntervals(dateRange);
@@ -20,7 +27,7 @@ export default async function DashboardChartExerciseCategoryDistribution({ dateR
   const endDate = new Date();
 
   const categoryCounts = await prisma.exercise.groupBy({
-    by: ['category'],
+    by: ["category"],
     _count: {
       id: true,
     },
@@ -40,22 +47,30 @@ export default async function DashboardChartExerciseCategoryDistribution({ dateR
   });
 
   const allCategories = [
-    'strength', 
-    'stretching', 
-    'plyometrics', 
-    'strongman', 
-    'powerlifting', 
-    'cardio', 
-    'olympic weightlifting'
+    "strength",
+    "stretching",
+    "plyometrics",
+    "strongman",
+    "powerlifting",
+    "cardio",
+    "olympic weightlifting",
   ];
 
-  const radarChartData: ExerciseCategoryData[] = allCategories.map(category => {
-    const categoryData = categoryCounts.find(item => item.category === category);
-    return {
-      category,
-      count: categoryData ? categoryData._count.id : 0,
-    };
-  });
+  const radarChartData: ExerciseCategoryData[] = allCategories.map(
+    (category) => {
+      const categoryData = categoryCounts.find(
+        (item) => item.category === category,
+      );
+      return {
+        category,
+        count: categoryData ? categoryData._count.id : 0,
+      };
+    },
+  );
 
-  return <DashboardChartExerciseCategoryDistributionPieClient data={radarChartData} />;
+  return (
+    <DashboardChartExerciseCategoryDistributionPieClient
+      data={radarChartData}
+    />
+  );
 }

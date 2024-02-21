@@ -1,14 +1,14 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 import { toast } from "sonner";
 
-import RoutineDetails from './RoutineDetails';
-import SearchBar from './SearchBar';
-import SearchResults from './SearchResults';
-import ExerciseTable from './ExerciseTable';
-import SaveButton from './SaveButton';
+import RoutineDetails from "./RoutineDetails";
+import SearchBar from "./SearchBar";
+import SearchResults from "./SearchResults";
+import ExerciseTable from "./ExerciseTable";
+import SaveButton from "./SaveButton";
 
 type FavoriteExercise = {
   exerciseId: string;
@@ -42,11 +42,11 @@ type ExistingRoutine = {
 } | null;
 
 type SearchExercise = {
-    id: string;
-    name: string;
-    trackingType: string;
-    category: string;
-    image: string;
+  id: string;
+  name: string;
+  trackingType: string;
+  category: string;
+  image: string;
 };
 
 type RoutineBuilderProps = {
@@ -55,12 +55,18 @@ type RoutineBuilderProps = {
   existingRoutine: ExistingRoutine | null;
 };
 
-export default function RoutineBuilder({ existingRoutine, routineId, favoriteExercises }: RoutineBuilderProps) {
-  const [searchTerm, setSearchTerm] = useState('');
+export default function RoutineBuilder({
+  existingRoutine,
+  routineId,
+  favoriteExercises,
+}: RoutineBuilderProps) {
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<SearchExercise[]>([]);
-  const [selectedExercises, setSelectedExercises] = useState<WorkoutPlanExercise[]>([]);
-  const [routineName, setRoutineName] = useState('');
-  const [notes, setNotes] = useState('');
+  const [selectedExercises, setSelectedExercises] = useState<
+    WorkoutPlanExercise[]
+  >([]);
+  const [routineName, setRoutineName] = useState("");
+  const [notes, setNotes] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -71,7 +77,7 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
     if (existingRoutine) {
       setRoutineName(existingRoutine.name);
       setSelectedExercises(existingRoutine.WorkoutPlanExercise || []);
-      setNotes(existingRoutine.notes || '');
+      setNotes(existingRoutine.notes || "");
     }
   }, [existingRoutine]);
 
@@ -83,20 +89,21 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
     const response = await fetch(`/api/exercises/search?q=${searchTerm}`);
     const data = await response.json();
     setSearchResults(data);
-}, 300);
+  }, 300);
 
   const addExerciseToRoutine = (exercise: SearchExercise) => {
-    if (selectedExercises.some(e => e.Exercise.id === exercise.id)) return;
+    if (selectedExercises.some((e) => e.Exercise.id === exercise.id)) return;
 
     const defaultReps = 8;
     const defaultDuration = 30;
-    
+
     const newExercise: WorkoutPlanExercise = {
       sets: 1,
-      reps: exercise.trackingType === 'reps' ? defaultReps : null,
-      exerciseDuration: exercise.trackingType === 'duration' ? defaultDuration : null,
+      reps: exercise.trackingType === "reps" ? defaultReps : null,
+      exerciseDuration:
+        exercise.trackingType === "duration" ? defaultDuration : null,
       order: selectedExercises.length + 1,
-      trackingType: 'reps',
+      trackingType: "reps",
       Exercise: {
         id: exercise.id,
         name: exercise.name,
@@ -105,26 +112,30 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
     };
 
     setSelectedExercises([...selectedExercises, newExercise]);
-    setSearchTerm('');
+    setSearchTerm("");
     setSearchResults([]);
     searchInputRef.current?.focus();
   };
 
-  const updateExercise = (index: number, field: keyof WorkoutPlanExercise, value: string | number | null) => {
+  const updateExercise = (
+    index: number,
+    field: keyof WorkoutPlanExercise,
+    value: string | number | null,
+  ) => {
     const updatedExercises = [...selectedExercises];
-  
-    if (field === 'trackingType') {
-      if (value === 'reps') {
-        updatedExercises[index]['exerciseDuration'] = null;
-      } else if (value === 'duration') {
-        updatedExercises[index]['reps'] = null;
+
+    if (field === "trackingType") {
+      if (value === "reps") {
+        updatedExercises[index]["exerciseDuration"] = null;
+      } else if (value === "duration") {
+        updatedExercises[index]["reps"] = null;
       }
     }
-  
+
     if (field in updatedExercises[index]) {
       (updatedExercises[index] as any)[field] = value;
     }
-  
+
     setSelectedExercises(updatedExercises);
   };
 
@@ -134,7 +145,7 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
     const temp = updatedExercises[index - 1];
     updatedExercises[index - 1] = updatedExercises[index];
     updatedExercises[index] = temp;
-    toast.success('Exercise moved up');
+    toast.success("Exercise moved up");
     setSelectedExercises(updatedExercises);
   };
 
@@ -144,61 +155,74 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
     const temp = updatedExercises[index + 1];
     updatedExercises[index + 1] = updatedExercises[index];
     updatedExercises[index] = temp;
-    toast.success('Exercise moved down');
+    toast.success("Exercise moved down");
     setSelectedExercises(updatedExercises);
   };
 
   const deleteExercise = (index: number) => {
-    const isConfirmed = window.confirm("Are you sure you want to remove this exercise?");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to remove this exercise?",
+    );
     if (isConfirmed) {
-        const updatedExercises = [...selectedExercises];
-        updatedExercises.splice(index, 1);
-        toast.success('Exercise removed');
-        setSelectedExercises(updatedExercises);
+      const updatedExercises = [...selectedExercises];
+      updatedExercises.splice(index, 1);
+      toast.success("Exercise removed");
+      setSelectedExercises(updatedExercises);
     }
   };
 
   const validateForm = () => {
     if (!routineName.trim()) {
-      toast.error('Routine Name is required.');
+      toast.error("Routine Name is required.");
       return false;
     }
-  
+
     if (selectedExercises.length === 0) {
-      toast.error('At least one exercise is required.');
+      toast.error("At least one exercise is required.");
       return false;
     }
-  
+
     for (let exercise of selectedExercises) {
       if (exercise.sets < 1) {
         toast.error(`${exercise.Exercise.name} should have at least 1 set.`);
         return false;
       }
-      
-      if (exercise.trackingType === 'reps' && (exercise.reps ?? 0) < 1) {
+
+      if (exercise.trackingType === "reps" && (exercise.reps ?? 0) < 1) {
         toast.error(`${exercise.Exercise.name} should have at least 1 rep.`);
         return false;
       }
-      
-      if (exercise.trackingType === 'duration' && (exercise.exerciseDuration ?? 0) <= 0) {
-        toast.error(`${exercise.Exercise.name} should have a duration greater than zero.`);
+
+      if (
+        exercise.trackingType === "duration" &&
+        (exercise.exerciseDuration ?? 0) <= 0
+      ) {
+        toast.error(
+          `${exercise.Exercise.name} should have a duration greater than zero.`,
+        );
         return false;
-      }    
+      }
     }
-  
+
     return true;
   };
 
   const handleSave = async () => {
     if (!validateForm()) return;
-    
+
     setIsSaving(true);
-  
+
     // Adjust the structure of exercises to match the API's expected format
     const exercisesWithOrder = selectedExercises.map((exercise, index) => {
       // Extracting id from the Exercise object and renaming it to exerciseId
-      const { Exercise: { id: exerciseId }, sets, reps, exerciseDuration, trackingType } = exercise;
-  
+      const {
+        Exercise: { id: exerciseId },
+        sets,
+        reps,
+        exerciseDuration,
+        trackingType,
+      } = exercise;
+
       return {
         exerciseId,
         sets,
@@ -208,66 +232,73 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
         order: index + 1,
       };
     });
-    
+
     try {
       let response;
-      
-      if (routineId === 'new') {
-        response = await fetch('/api/routines', {
-          method: 'POST',
+
+      if (routineId === "new") {
+        response = await fetch("/api/routines", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
+          body: JSON.stringify({
+            routineName,
+            exercises: exercisesWithOrder,
+            notes,
+          }),
         });
-      } else { 
+      } else {
         response = await fetch(`/api/routines/${routineId}`, {
-          method: 'PUT',
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({ routineName, exercises: exercisesWithOrder, notes }),
+          body: JSON.stringify({
+            routineName,
+            exercises: exercisesWithOrder,
+            notes,
+          }),
         });
       }
-    
+
       const data = await response.json();
-    
+
       if (data.success) {
-        toast.success('Routine saved successfully!');
-        router.push('/workout');
+        toast.success("Routine saved successfully!");
+        router.push("/workout");
         router.refresh();
       } else {
-        toast.error('Error saving routine.');
+        toast.error("Error saving routine.");
       }
     } catch (error) {
-      toast.error('Unexpected error while saving routine.');
+      toast.error("Unexpected error while saving routine.");
     } finally {
       setIsSaving(false);
     }
   };
-  
 
   return (
     <div className="space-y-2">
-      <RoutineDetails 
-        routineName={routineName} 
+      <RoutineDetails
+        routineName={routineName}
         setRoutineName={setRoutineName}
         notes={notes}
         setNotes={setNotes}
       />
-      <SearchBar 
+      <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         handleSearch={executeSearch}
         setSearchResults={setSearchResults}
         forwardedRef={searchInputRef}
       />
-      <SearchResults 
+      <SearchResults
         searchResults={searchResults}
         addExerciseToRoutine={addExerciseToRoutine}
       />
-      <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5'>
-        <ExerciseTable 
+      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+        <ExerciseTable
           selectedExercises={selectedExercises}
           updateExercise={updateExercise}
           moveUp={moveUp}
@@ -277,7 +308,6 @@ export default function RoutineBuilder({ existingRoutine, routineId, favoriteExe
         />
       </div>
       <SaveButton handleSave={handleSave} isLoading={isSaving} />
-      
     </div>
   );
 }

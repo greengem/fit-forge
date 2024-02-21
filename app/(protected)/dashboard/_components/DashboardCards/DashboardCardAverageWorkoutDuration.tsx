@@ -1,30 +1,38 @@
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import DashboardCardTemplate from "./DashboardCardTemplate";
-import { subDays } from 'date-fns';
+import { subDays } from "date-fns";
 
 export default async function DashboardCardAverageWorkoutDuration() {
-    const { userId } : { userId: string | null } = auth();
+  const { userId }: { userId: string | null } = auth();
 
-    if (!userId) {
-        throw new Error('You must be signed in to view this page.');
-    }
-    
-    const thirtyDaysAgo = subDays(new Date(), 30);
-    const workouts = await prisma.workoutLog.findMany({
-        where: {
-            userId: userId,
-            createdAt: {
-                gte: thirtyDaysAgo,
-            },
-        },
-        select: {
-            duration: true,
-        },
-    });
+  if (!userId) {
+    throw new Error("You must be signed in to view this page.");
+  }
 
-    const totalDuration = workouts.reduce((total, workout) => total + workout.duration / 60, 0);
-    const averageDuration = workouts.length > 0 ? Math.round(totalDuration / workouts.length) : 0;
+  const thirtyDaysAgo = subDays(new Date(), 30);
+  const workouts = await prisma.workoutLog.findMany({
+    where: {
+      userId: userId,
+      createdAt: {
+        gte: thirtyDaysAgo,
+      },
+    },
+    select: {
+      duration: true,
+    },
+  });
 
-    return <DashboardCardTemplate title="Average Workout Duration">{averageDuration}</DashboardCardTemplate>;
+  const totalDuration = workouts.reduce(
+    (total, workout) => total + workout.duration / 60,
+    0,
+  );
+  const averageDuration =
+    workouts.length > 0 ? Math.round(totalDuration / workouts.length) : 0;
+
+  return (
+    <DashboardCardTemplate title="Average Workout Duration">
+      {averageDuration}
+    </DashboardCardTemplate>
+  );
 }
