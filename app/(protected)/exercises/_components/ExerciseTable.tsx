@@ -35,14 +35,14 @@ export default function ExerciseTable({ exercises, favouriteExercises, userRouti
                     <TableCell className="capitalize py-1">
                         <User
                             avatarProps={{ radius: "lg", src: `/images/exercises/${exercise.image}/images/0.jpg` }}
-                            description={exercise.category}
+                            description={(<span className="text-zinc-500">{exercise.category}</span>)}
                             name={exercise.name}
                         />
                     </TableCell>
                     <TableCell className="capitalize hidden lg:table-cell py-1">
                         <div className="flex flex-col">
                             <p className="text-bold text-small">{exercise.primary_muscles.join(', ')}</p>
-                            <p className="text-bold text-tiny text-default-400">{exercise.secondary_muscles.join(', ')}</p>
+                            <p className="text-bold text-tiny text-zinc-500">{exercise.secondary_muscles.join(', ')}</p>
                         </div>
                     </TableCell>
                     <TableCell className="capitalize hidden lg:table-cell py-1">{exercise.category}</TableCell>
