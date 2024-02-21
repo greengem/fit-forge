@@ -26,7 +26,6 @@ export default function ExerciseTable({ exercises, favouriteExercises, userRouti
         <TableHeader>
             <TableColumn>NAME</TableColumn>
             <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
-            <TableColumn className="hidden lg:table-cell">CATEGORY</TableColumn>
             <TableColumn><></></TableColumn>
         </TableHeader>
         <TableBody emptyContent={"No results found."}>
@@ -45,7 +44,6 @@ export default function ExerciseTable({ exercises, favouriteExercises, userRouti
                             <p className="text-bold text-tiny text-zinc-500">{exercise.secondary_muscles.join(', ')}</p>
                         </div>
                     </TableCell>
-                    <TableCell className="capitalize hidden lg:table-cell py-1">{exercise.category}</TableCell>
                     <TableCell className="flex justify-end py-1">
                         <ButtonGroup size="sm" variant='flat'>
                             <ExerciseInfoButton exercise={exercise} />
