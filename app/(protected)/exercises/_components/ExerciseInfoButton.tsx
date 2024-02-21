@@ -10,7 +10,6 @@ export default function ExerciseInfoButton({ exercise } : { exercise: Exercise }
 
     const handleClick = () => {
         setExercise(exercise);
-        console.log('Opening modal...');
         onOpen();
     };
 

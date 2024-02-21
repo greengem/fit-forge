@@ -49,7 +49,6 @@ export default function ActivityMenu({ activity } : { activity: Activity }) {
             }
         } else if (key === "details") {
             setActivity(activity);
-            //console.log('Opening modal...');
             onOpen();
         }
     }

@@ -24,8 +24,6 @@ interface Set {
   }
 
   export async function handleSaveWorkout(data: WorkoutData) {
-    //console.log('data in server action', data);
-
     try {
         const { userId } : { userId: string | null } = auth();
     

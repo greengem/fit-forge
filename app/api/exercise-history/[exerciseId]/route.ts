@@ -6,8 +6,6 @@ export async function GET(request: Request, { params }: { params: { exerciseId: 
         const { userId } : { userId: string | null } = await auth();
         const { exerciseId } = params;
 
-        console.log('exerciseId:', exerciseId);
-
         if (!userId) {
             return new Response(JSON.stringify({ error: "User not authenticated" }), { status: 401 });
         }

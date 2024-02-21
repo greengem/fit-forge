@@ -51,7 +51,6 @@ interface NewRoutineFromExercise {
 }
 
 export async function handleAddExerciseToNewRoutine(data: NewRoutineFromExercise) {
-    console.log('data in server action', data);
     try {
         const { userId } : { userId: string | null } = auth();
         
@@ -82,6 +81,8 @@ export async function handleAddExerciseToNewRoutine(data: NewRoutineFromExercise
                 trackingType: trackingType,
             },
         });
+
+        revalidatePath('/exercises');
 
         return { success: true, message: 'New routine created' };
     } catch (e) {
@@ -135,10 +136,10 @@ export async function handleAddExerciseToExistingRoutine(data: UpdateRoutineFrom
             },
         });
 
+        revalidatePath('/exercises');
+
         return { success: true, message: 'Exercise added to existing routine' };
     } catch (e) {
-        console.error('Error adding exercise to existing routine:', e); // Log the error
-        console.log('Data:', data); // Log the data
         return { success: false, message: 'Failed to add exercise to existing routine' };
     }
 }
