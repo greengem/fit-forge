@@ -55,7 +55,8 @@ export default async function ExerciseFetch({
         skip: (currentPage - 1) * itemsPerPage,
         where: {
             name: {
-                search: search
+                contains: search,
+                mode: 'insensitive',
             },
             category: cat.length > 0 ? { in: cat as CategoryType[] } : undefined,
             level: level.length > 0 ? { in: level as LevelType[] } : undefined,
@@ -83,7 +84,8 @@ export default async function ExerciseFetch({
     const numberOfResults = await prisma.exercise.count({
         where: {
             name: {
-                search: search
+                contains: search,
+                mode: 'insensitive',
             },
             category: cat.length > 0 ? { in: cat as CategoryType[] } : undefined,
             level: level.length > 0 ? { in: level as LevelType[] } : undefined,
