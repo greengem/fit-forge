@@ -102,7 +102,7 @@ function CustomTooltip({ active, payload, label } : TooltipProps<any, any>) {
 }
 
 export default function ChartsTab({ exerciseId, exerciseName } : { exerciseId: string | undefined, exerciseName: string | undefined }) {
-    const { data, error } = useSWR<WorkoutLog[]>(`/api/exercise-charts/${exerciseId}`, fetcher);
+    const { data, error } = useSWR<WorkoutLog[]>(`/api/exercise-history/${exerciseId}`, fetcher);
     const weeks = useMemo(() => generateLastThreeMonthsWeeks(), []);
 
     const chartData = useMemo(() => {
