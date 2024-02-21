@@ -22,7 +22,12 @@ type ExerciseProps = {
 
 export default function ExerciseTable({ exercises, favouriteExercises, userRoutines }: ExerciseProps) {
   return (
-    <Table aria-label="Exercises Table" className="mb-3 shadow-md" shadow="none">
+    <Table 
+        aria-label="Exercises Table" 
+        className="mb-3 shadow-md" 
+        shadow="none"
+        classNames={{wrapper: "p-2 md:p-4"}}
+    >
         <TableHeader>
             <TableColumn>NAME</TableColumn>
             <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
@@ -31,7 +36,7 @@ export default function ExerciseTable({ exercises, favouriteExercises, userRouti
         <TableBody emptyContent={"No results found."}>
             {exercises.map((exercise) => (
                 <TableRow key={exercise.id}>
-                    <TableCell className="capitalize py-1">
+                    <TableCell className="capitalize py-1 pl-1">
                         <User
                             avatarProps={{ radius: "lg", src: `/images/exercises/${exercise.image}/images/0.jpg` }}
                             description={(<span className="text-zinc-500">{exercise.category}</span>)}
@@ -44,7 +49,7 @@ export default function ExerciseTable({ exercises, favouriteExercises, userRouti
                             <p className="text-bold text-tiny text-zinc-500">{exercise.secondary_muscles.join(', ')}</p>
                         </div>
                     </TableCell>
-                    <TableCell className="flex justify-end py-1">
+                    <TableCell className="flex justify-end py-1 pr-1">
                         <ButtonGroup size="sm" variant='flat'>
                             <ExerciseInfoButton exercise={exercise} />
                             <Button isIconOnly onClick={() => handleToggleFavouriteExercise(exercise.id)}>
