@@ -1,34 +1,8 @@
 'use client';
 import useSWR from 'swr';
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
-
-interface Set {
-    id: string;
-    workoutLogExerciseId: string;
-    weight: number;
-    reps: number;
-    exerciseDuration?: number;
-    order?: number;
-}
-
-interface Exercise {
-    id: string;
-    workoutLogId: string;
-    exerciseId: string;
-    sets: Set[];
-}
-
-interface WorkoutLog {
-    id: string;
-    userId: string;
-    workoutPlanId?: string;
-    name: string;
-    date: Date;
-    duration: number;
-    createdAt: Date;
-    date_updated?: Date;
-    exercises: Exercise[];
-}
+import { Spinner } from '@nextui-org/spinner';
+import { Set, Exercise, WorkoutLog } from './ModalChartTypes';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -36,7 +10,7 @@ export default function HistoryTab({ exerciseId }: { exerciseId: string | undefi
     const { data, error } = useSWR<WorkoutLog[]>(`/api/exercise-history/${exerciseId}`, fetcher);
 
     if (error) return <div>Failed to load</div>;
-    if (!data) return <div>Loading...</div>;
+    if (!data) return <div className='py-10 flex items-center justify-center'><Spinner /></div>;
     if (data.length === 0) return <div className='text-zinc-500'>Previous performances of this exercise will display here - check back later!</div>;
 
     return (
