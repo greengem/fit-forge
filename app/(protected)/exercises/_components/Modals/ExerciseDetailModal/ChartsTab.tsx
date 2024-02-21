@@ -1,89 +1,118 @@
 'use client'
 import useSWR from 'swr';
+import { useMemo } from 'react';
+import { parseISO, startOfWeek, endOfWeek, eachWeekOfInterval, format, subMonths } from 'date-fns';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { TooltipProps } from 'recharts';
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
-
-const mockData = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
-
-interface Set {
-    id: string;
-    workoutLogExerciseId: string;
-    weight: number;
-    reps: number;
-    exerciseDuration?: number;
-    order?: number;
-}
-
-interface Exercise {
-    id: string;
-    workoutLogId: string;
-    exerciseId: string;
-    sets: Set[];
-}
-
-interface WorkoutLog {
-    id: string;
-    userId: string;
-    workoutPlanId?: string;
-    name: string;
-    date: Date;
-    duration: number;
-    createdAt: Date;
-    date_updated?: Date;
-    exercises: Exercise[];
-}
+import { Spinner } from '@nextui-org/spinner';
+import { WorkoutLog } from './ModalChartTypes';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
+function generateLastThreeMonthsWeeks() {
+    const end = new Date();
+    const start = subMonths(end, 3);
+    return eachWeekOfInterval({ start, end }).map(weekStart =>
+        format(weekStart, 'MMM d')
+    );
+}
+
+interface GroupedWorkouts {
+    [week: string]: WorkoutLog[];
+}
+
+function groupWorkoutsByWeek(workouts: WorkoutLog[]): GroupedWorkouts {
+    return workouts.reduce((acc: GroupedWorkouts, workout) => {
+      const weekStart = format(startOfWeek(parseISO(workout.date)), 'MMM d');
+      acc[weekStart] = acc[weekStart] || [];
+      acc[weekStart].push(workout);
+      return acc;
+    }, {});
+  }
+
+  function calculateWeeklyMetrics(groupedWorkouts: GroupedWorkouts) {
+    return Object.entries(groupedWorkouts).map(([week, workouts]) => {
+      let totalVolume = 0;
+      let heaviestSet = 0;
+      let maxConsecutiveReps = 0;
+      let estimated1RM = 0;
+  
+      workouts.forEach(workout => {
+        workout.exercises.forEach(exercise => {
+          exercise.sets.forEach(set => {
+            const volume = set.weight * set.reps;
+            totalVolume += volume;
+            heaviestSet = Math.max(heaviestSet, set.weight);
+            maxConsecutiveReps = Math.max(maxConsecutiveReps, set.reps);
+  
+            const setEstimated1RM = set.weight * (1 + set.reps / 30);
+            estimated1RM = Math.max(estimated1RM, setEstimated1RM);
+          });
+        });
+      });
+  
+      return { week, bestSet: heaviestSet, totalVolume, prProgression: estimated1RM, maxConsecutiveReps };
+    });
+  }
+
+  function prepareChartData(workouts: WorkoutLog[], weeks: string[]) {
+    const groupedWorkouts = groupWorkoutsByWeek(workouts);
+    const weeklyMetrics = calculateWeeklyMetrics(groupedWorkouts);
+
+    return weeks.map(week => {
+        const weeklyMetric = weeklyMetrics.find(wm => wm.week === week) ?? {
+            bestSet: 0, totalVolume: 0, prProgression: 0, maxConsecutiveReps: 0
+        };
+
+        return {
+            week,
+            bestSet: weeklyMetric.bestSet,
+            totalVolume: weeklyMetric.totalVolume,
+            prProgression: weeklyMetric.prProgression,
+            maxConsecutiveReps: weeklyMetric.maxConsecutiveReps,
+        };
+    });
+}
+
+
+const getFriendlyName = (key: string): string => {
+    const mappings: { [key: string]: string } = {
+        bestSet: 'Best Set',
+        totalVolume: 'Total Volume',
+        prProgression: 'PR Progression',
+        maxConsecutiveReps: 'Max Consecutive Reps',
+    };
+    return mappings[key] || key;
+};
+
+function CustomTooltip({ active, payload, label } : TooltipProps<any, any>) {
+    if (active && payload && payload.length) {
+        return (
+            <div className="bg-zinc-800 text-white px-4 py-2 rounded-xl shadow-xl text-xs">
+                <p>{label}</p>
+                {payload.map((entry, index) => (
+                    <p key={`item-${index}`}>{`${getFriendlyName(entry.name)}: ${entry.value}`}</p>
+                ))}
+            </div>
+        );
+    }
+
+    return null;
+}
+
 export default function ChartsTab({ exerciseId, exerciseName } : { exerciseId: string | undefined, exerciseName: string | undefined }) {
     const { data, error } = useSWR<WorkoutLog[]>(`/api/exercise-charts/${exerciseId}`, fetcher);
+    const weeks = useMemo(() => generateLastThreeMonthsWeeks(), []);
+
+    const chartData = useMemo(() => {
+        if (!data || data.length === 0) return weeks.map(week => ({ week, bestSet: 0, totalVolume: 0, prProgression: 0, maxConsecutiveReps: 0 }));
+        return prepareChartData(data, weeks);
+    }, [data, weeks]);
 
     if (error) return <div>Failed to load</div>;
-    if (!data) return <div>Loading...</div>;
-    if (data.length === 0) return <div className='text-zinc-500'>Previous performances of this exercise will display here - check back later!</div>;
+    if (!data) return <div className='py-10 flex items-center justify-center'><Spinner /></div>;
+    if (data.length === 0) return <div className='text-zinc-500'>Previous performances of this exercise will display here - check back later!</div>;  
 
     function ChartCard({ children, title } : { children: React.ReactNode, title: string }) {
         return (
@@ -92,12 +121,12 @@ export default function ChartsTab({ exerciseId, exerciseName } : { exerciseId: s
                     <h4>{exerciseName}</h4>
                     <p className="text-sm text-zinc-500">{title}</p>
                 </CardHeader>
-                <CardBody className='h-44'>{children}</CardBody>
+                <CardBody className='h-32 overflow-hidden'>{children}</CardBody>
             </Card>   
         )
     }
 
-    function Chart( { data } : { data: any }) {
+    function Chart( { data, dataKey } : { data: any, dataKey: string}) {
         return (
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
@@ -111,34 +140,31 @@ export default function ChartsTab({ exerciseId, exerciseName } : { exerciseId: s
                         bottom: 0,
                     }}
                 >
-                    <XAxis dataKey="name" fontSize={10} />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="pv" stroke="#A6FF00" activeDot={{ r: 8 }} />
+                    <XAxis dataKey="week" fontSize={10} />
+                    <Line type="monotone" dataKey={dataKey} stroke="#A6FF00" activeDot={{ r: 4 }} />
+                    <Tooltip content={<CustomTooltip />} />
                 </LineChart>
             </ResponsiveContainer>
         )
     }
-    
 
     return (
         <div className="space-y-3">
-
             <ChartCard title='Best Set'>
-                <Chart data={mockData} />
+                <Chart data={chartData} dataKey="bestSet" />
             </ChartCard>
-
+    
             <ChartCard title='Total Volume'>
-                <Chart data={mockData} />
+                <Chart data={chartData} dataKey="totalVolume" />
             </ChartCard>
-
+    
             <ChartCard title='PR Progression (as 1RM)'>
-                <Chart data={mockData} />
+                <Chart data={chartData} dataKey="prProgression" />
             </ChartCard>
-
+    
             <ChartCard title='Max Consecutive Reps'>
-                <Chart data={mockData} />
+                <Chart data={chartData} dataKey="maxConsecutiveReps" />
             </ChartCard>
-
         </div>
     )
 }
