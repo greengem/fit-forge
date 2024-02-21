@@ -50,14 +50,18 @@ export default async function ExerciseFetch({
 
     const itemsPerPage = 10;
 
+    const searchWords = search.split(' ');
+
     const exercises = await prisma.exercise.findMany({
         take: itemsPerPage,
         skip: (currentPage - 1) * itemsPerPage,
         where: {
-            name: {
-                contains: search,
-                mode: 'insensitive',
-            },
+            AND: searchWords.map(word => ({
+                name: {
+                    contains: word,
+                    mode: 'insensitive',
+                }
+            })),
             category: cat.length > 0 ? { in: cat as CategoryType[] } : undefined,
             level: level.length > 0 ? { in: level as LevelType[] } : undefined,
             force: force.length > 0 ? { in: force as ForceType[] } : undefined,
@@ -83,10 +87,12 @@ export default async function ExerciseFetch({
     
     const numberOfResults = await prisma.exercise.count({
         where: {
-            name: {
-                contains: search,
-                mode: 'insensitive',
-            },
+            AND: searchWords.map(word => ({
+                name: {
+                    contains: word,
+                    mode: 'insensitive',
+                }
+            })),
             category: cat.length > 0 ? { in: cat as CategoryType[] } : undefined,
             level: level.length > 0 ? { in: level as LevelType[] } : undefined,
             force: force.length > 0 ? { in: force as ForceType[] } : undefined,
