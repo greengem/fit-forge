@@ -27,7 +27,7 @@ export default function ExerciseFilters({
     const { replace } = useRouter();
     const { page, search, ...otherParams } = searchParams || {};
     const hasSearchParams = Object.values(otherParams).some(param => param);
-    const [showFilters, setShowFilters] = useState(false);
+    const [showFilters, setShowFilters] = useState(hasSearchParams);
 
     const toggleFilters = () => {
         if (showFilters && hasSearchParams) {
