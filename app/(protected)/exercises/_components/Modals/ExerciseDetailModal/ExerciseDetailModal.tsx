@@ -38,7 +38,6 @@ export default function ExerciseDetailModal() {
                     </div>
                   }><HistoryTab exerciseId={exercise?.id} /></Tab>
                 <Tab 
-                  isDisabled
                   key="charts" 
                   title={
                     <div className="flex items-center space-x-2">
@@ -47,14 +46,13 @@ export default function ExerciseDetailModal() {
                     </div>
                   }><ChartsTab exerciseId={exercise?.id} exerciseName={exercise?.name} /></Tab>
                 <Tab 
-                  isDisabled
                   key="records" 
                   title={
                     <div className="flex items-center space-x-2">
                       <IconTrophy size={17} />
                       <span>Records</span>
                     </div>
-                  }><RecordsTab /></Tab>
+                  }><RecordsTab exerciseId={exercise?.id} /></Tab>
               </Tabs>
             </ModalBody>
           </>
