@@ -64,8 +64,8 @@ export default function ProfileEquipment({ equipment }: ProfileEquipmentProps) {
 
   return (
     <Card shadow="none" className="shadow-md">
-      <CardHeader className="text-xl font-semibold px-5 pb-0">
-        <IconBarbell className="mr-1" />
+      <CardHeader className="text-xl font-semibold px-5 pb-0 gap-x-3">
+        <IconBarbell />
         Equipment
       </CardHeader>
       <CardBody className="px-5">
