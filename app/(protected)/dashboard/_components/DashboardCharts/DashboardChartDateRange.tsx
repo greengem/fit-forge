@@ -46,12 +46,13 @@ export default function DashboardChartDateRange({
       }}
       size="sm"
       step={10}
-      color="primary"
+      color="foreground"
       showSteps={true}
       defaultValue={40}
       maxValue={50}
       minValue={10}
       className="w-44"
+      classNames={{mark: "text-xs text-zinc-500"}}
       marks={[
         { value: 10, label: "3D" },
         { value: 20, label: "1W" },
