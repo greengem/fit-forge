@@ -9,7 +9,7 @@ export const SearchUsers = () => {
   const pathname = usePathname();
  
   return (
-    <div>
+    <div className="mb-5">
       <form
         onSubmit={async (e) => {
           e.preventDefault();
