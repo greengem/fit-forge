@@ -8,8 +8,8 @@ export default function DashboardCardTemplate({
 }) {
   return (
     <Card shadow="none" className="shadow-md">
-      <CardHeader className="px-5">{title}</CardHeader>
-      <CardBody className="text-5xl pt-0 text-primary gap-y-3">
+      <CardHeader className="px-3 text-xs uppercase truncate">{title}</CardHeader>
+      <CardBody className="px-3 text-4xl pt-0 text-primary">
         {children}
       </CardBody>
     </Card>
