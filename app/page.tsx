@@ -110,11 +110,11 @@ export default function Home() {
         <h2 className="text-center text-6xl my-10 font-bold">
           The Perfect Plan <span className="text-primary">For Your Needs</span>
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <Card className="shadow-xl" shadow="none">
             <CardBody className="px-5">
               <div className="flex-none">
-                <h4 className="font-semibold gap-3 text-xl">Free</h4>
+                <h4 className="font-semibold gap-3 text-xl">Standard</h4>
                 <p className="text-zinc-500 text-sm mb-5">For the basics</p>
                 <h4 className="text-4xl font-semibold">$0</h4>
                 <p className="mb-5 text-zinc-500 text-sm">
@@ -125,7 +125,7 @@ export default function Home() {
                 </Button>
                 <ul className="space-y-2 text-sm">
                   <li className="flex gap-3 items-center">
-                    <IconJumpRope size={18} />3 Custom Programs
+                    <IconJumpRope size={18} />Unlimited Routines
                   </li>
                   <li className="flex gap-3 items-center">
                     <IconStretching size={18} />
@@ -151,13 +151,11 @@ export default function Home() {
           <Card className="shadow-xl ring-2 ring-primary" shadow="none">
             <CardBody className="px-5">
               <div className="flex-none">
-                <h4 className="font-semibold gap-3 text-xl text-primary">
-                  Plus
-                </h4>
+                <h4 className="font-semibold gap-3 text-xl text-primary">Pro</h4>
                 <p className="text-zinc-500 text-sm mb-5">
                   Our most popular plan
                 </p>
-                <h4 className="text-4xl font-semibold">$3.99</h4>
+                <h4 className="text-4xl font-semibold">$4.99</h4>
                 <p className="mb-5 text-zinc-500 text-sm">
                   Per month, cancel anytime.
                 </p>
@@ -174,7 +172,7 @@ export default function Home() {
                 <ul className="space-y-2 text-sm">
                   <li className="flex gap-3 items-center">
                     <IconJumpRope size={18} />
-                    10 Custom Programs
+                    Unlimited Routines
                   </li>
                   <li className="flex gap-3 items-center">
                     <IconStretching size={18} />
@@ -194,55 +192,11 @@ export default function Home() {
                   </li>
                   <li className="flex gap-3 items-center">
                     <IconBrandOpenai size={18} />
-                    Enhanced with AI
-                  </li>
-                </ul>
-              </div>
-            </CardBody>
-          </Card>
-
-          <Card className="shadow-xl" shadow="none">
-            <CardBody className="px-5">
-              <div className="flex-none">
-                <h4 className="font-semibold gap-3 text-xl">Pro</h4>
-                <p className="text-zinc-500 text-sm mb-5">Our complete plan</p>
-                <h4 className="text-4xl font-semibold">$6.99</h4>
-                <p className="mb-5 text-zinc-500 text-sm">
-                  Per month, cancel anytime.
-                </p>
-                <Button
-                  isDisabled
-                  size="sm"
-                  as={Link}
-                  href="/dashboard"
-                  className="mb-5"
-                >
-                  <IconPlayerPlayFilled size={18} /> Coming Soon
-                </Button>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex gap-3 items-center">
-                    <IconJumpRope size={18} />
-                    Unlimited Custom Programs
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconStretching size={18} />
-                    Access to all of our 900+ Exercises
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconActivity size={18} />
-                    Unlimited Advanced Workout Logs
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconChartBar size={18} />
-                    Advanced Charts
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconUserBolt size={18} />
-                    Advanced Profile
+                    AI Routine Builder
                   </li>
                   <li className="flex gap-3 items-center">
                     <IconBrandOpenai size={18} />
-                    Enhanced with AI
+                    AI Workout Analysis
                   </li>
                 </ul>
               </div>
