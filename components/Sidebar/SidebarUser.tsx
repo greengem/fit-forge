@@ -1,28 +1,29 @@
-import { currentUser } from "@clerk/nextjs";
-import { Divider } from "@nextui-org/react";
+'use client'
+import { useSidebarToggleContext } from '@/contexts/SidebarToggleContext';
 import { User } from "@nextui-org/user";
+import { Avatar } from '@nextui-org/avatar';
 
-export default async function SidebarUser() {
-  const user = await currentUser();
-
-  if (!user) {
-    throw new Error("You must be signed in to view this page.");
-  }
-  const username = user?.username || undefined;
-  const userImage = user?.imageUrl;
+export default function SidebarUser({ username, userImage} : { username?: string, userImage?: string }) {
+  const { sidebarCollapse } = useSidebarToggleContext();
 
   return (
     <div className="px-5 mb-3">
-      <User
-        name={username}
-        description="Standard Plan"
-        avatarProps={{
-          src: userImage,
-        }}
-        classNames={{
-          description: "text-gray-500",
-        }}
-      />
+      {!sidebarCollapse &&
+        <User
+          name={username || 'Unknown'}
+          description="Standard Plan"
+          avatarProps={{
+            src: userImage || 'default-image-url',
+          }}
+          classNames={{
+            description: "text-gray-500",
+          }}
+        />
+      }
+
+      {sidebarCollapse &&
+        <Avatar showFallback name={username || 'Unknown'} src={userImage || 'default-image-url'} />
+      }
     </div>
   );
 }
