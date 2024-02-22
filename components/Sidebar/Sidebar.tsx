@@ -4,6 +4,7 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
 import SidebarWorkoutControls from "./SidebarWorkoutControls";
 import SidebarUser from "./SidebarUser";
 import SidebarSearch from "./SidebarSearch";
+import SidebarSocials from "./SidebarSocials";
 
 export default function Sidebar() {
   return (
@@ -13,11 +14,10 @@ export default function Sidebar() {
       {/* <SidebarSearch /> */}
       <SidebarNav />
       <SidebarWorkoutControls />
-
-      <div>
-        <div className="absolute bottom-0 left-0 right-0 py-5 flex flex-col items-center justify-center group-light-bg-1 group-dark-bg-1">
-          <ThemeSwitcher />
-        </div>
+      
+      <div className="absolute bottom-0 left-0 right-0 py-5 px-5 flex flex-col items-center">
+        <ThemeSwitcher />
+        {/* <SidebarSocials /> */}
       </div>
     </aside>
   );
