@@ -1,12 +1,18 @@
-import { IconBarbell } from "@tabler/icons-react";
+import { Chip } from "@nextui-org/react";
+import { IconBarbell, IconHammer } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default function SidebarBrand() {
   return (
-    <div className="flex items-center justify-center flex-col pt-5 pb-2">
-      <Link href="/">
-        <IconBarbell stroke={1} size={64} className="dark:text-primary" />
-        <p className="uppercase text-xs text-gray-500">Tracktive</p>
+    <div className="px-5 mb-6">
+      <Link href="/" className="flex items-center gap-3">
+        <div className="flex items-end justify-center w-11 h-[60px] pb-2 bg-primary rounded-b-lg">
+          <IconHammer stroke={1} size={28} className="text-black" />
+        </div>
+        <div className="flex gap-3 items-center pt-[18px]">
+          <p className="text-xl">FitForge</p>
+          {/* <Chip color="primary" radius="full">Pro</Chip> */}
+        </div>
       </Link>
     </div>
   );
