@@ -7,6 +7,7 @@ import { ActivityModalProvider } from "@/contexts/ActivityModalContext";
 import { ExerciseDetailModalProvider } from "@/contexts/ExerciseDetailModalContext";
 import { ExerciseAddToRoutineModalProvider } from "@/contexts/ExerciseAddToRoutineModalContext";
 import { ModalProvider } from "@/contexts/ModalContext";
+import { SidebarToggleProvider } from "@/contexts/SidebarToggleContext";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -21,7 +22,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <ActivityModalProvider>
               <ExerciseDetailModalProvider>
                 <ExerciseAddToRoutineModalProvider>
-                  <ModalProvider>{children}</ModalProvider>
+                  <ModalProvider>
+                    <SidebarToggleProvider>
+                      {children}
+                    </SidebarToggleProvider>
+                  </ModalProvider>
                 </ExerciseAddToRoutineModalProvider>
               </ExerciseDetailModalProvider>
             </ActivityModalProvider>
