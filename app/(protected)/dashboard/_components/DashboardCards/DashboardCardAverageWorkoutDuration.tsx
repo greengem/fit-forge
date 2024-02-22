@@ -31,7 +31,7 @@ export default async function DashboardCardAverageWorkoutDuration() {
     workouts.length > 0 ? Math.round(totalDuration / workouts.length) : 0;
 
   return (
-    <DashboardCardTemplate title="Average Workout Duration">
+    <DashboardCardTemplate title="Avg Workout Time">
       {averageDuration}
     </DashboardCardTemplate>
   );
