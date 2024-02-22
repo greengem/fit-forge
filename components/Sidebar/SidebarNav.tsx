@@ -12,11 +12,13 @@ import {
   IconUser,
   IconBook,
   IconHelp,
+  IconLayoutSidebarLeftExpand,
+  IconLayoutSidebarLeftCollapse,
 } from "@tabler/icons-react";
 import SidebarToggleButton from "./SidebarToggleButton";
 
 export default function SidebarNav() {
-  const { sidebarCollapse } = useSidebarToggleContext();
+  const { sidebarCollapse, toggleSidebar } = useSidebarToggleContext();
   const pathname = usePathname();
 
   return (
@@ -73,7 +75,18 @@ export default function SidebarNav() {
           href="/support"
           active={pathname === "/support"}
         />
-        <SidebarToggleButton />
+        <li onClick={toggleSidebar} className='cursor-pointer'>
+          <div className={clsx(
+            "flex items-center space-x-3 p-2 rounded-lg text-zinc-600 dark:text-zinc-400",
+            sidebarCollapse ? "justify-center" : ""
+          )}>
+            {sidebarCollapse ? 
+                <IconLayoutSidebarLeftExpand size={22} className='shrink-0' /> :
+                <IconLayoutSidebarLeftCollapse size={22} className='shrink-0' />
+            }
+            {!sidebarCollapse && <div>Collapse Sidebar</div>}
+          </div>
+        </li>
       </ul>
     </div>
   );
@@ -100,6 +113,7 @@ function NavItem({
     <div
       className={clsx(
         "flex items-center space-x-3 p-2 rounded-lg",
+        sidebarCollapse ? "justify-center" : "",
         active
           ? "bg-zinc-300 dark:bg-zinc-800 text-black dark:text-white"
           : "text-zinc-600 dark:text-zinc-400",
