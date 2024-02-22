@@ -51,8 +51,8 @@ export default function ProfileDetails({
 
   return (
     <Card shadow="none" className="shadow-md">
-      <CardHeader className="text-xl font-semibold px-5 pb-0">
-        <IconUser className="mr-1" />
+      <CardHeader className="text-xl font-semibold px-5 pb-0 gap-x-3">
+        <IconUser />
         Details
       </CardHeader>
       <CardBody className="gap-y-3 px-5">
