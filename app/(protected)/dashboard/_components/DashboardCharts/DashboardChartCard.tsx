@@ -18,8 +18,8 @@ export default function DashboardChartCard({
 }) {
   return (
     <Card shadow="none" className={clsx("shadow-md h-72", colSpan)}>
-      <CardHeader className="p-3 tracking-tight gap-5 items-start justify-between">
-        <p className="shrink-0 w-1/2 flex items-center gap-1 truncate">
+      <CardHeader className="p-3 gap-5 items-start justify-between">
+        <p className="shrink-0 w-1/2 flex items-center gap-x-3 truncate text-xs uppercase">
           <span className="text-primary">{icon}</span> {title}
         </p>
         <DashboardChartDateRange chartId={chartId} />
