@@ -8,7 +8,7 @@ import { Spinner } from "@nextui-org/spinner";
 
 export default function DashboardCards() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
       <Suspense
         fallback={
           <DashboardCardTemplate title="Weekly Workouts">
