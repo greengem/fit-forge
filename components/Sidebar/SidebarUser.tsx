@@ -22,7 +22,9 @@ export default function SidebarUser({ username, userImage} : { username?: string
       }
 
       {sidebarCollapse &&
+      <div className='flex justify-center'>
         <Avatar showFallback name={username || 'Unknown'} src={userImage || 'default-image-url'} />
+      </div>
       }
     </div>
   );
