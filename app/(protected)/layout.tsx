@@ -2,6 +2,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Navbar from "@/components/Navbar/Navbar";
 import ActiveWorkoutWarning from "@/components/Notices/ActiveWorkoutWarning";
+import LayoutWrapper from "./LayoutWrapper.client";
 
 export default function RootLayout({
   children,
@@ -14,10 +15,10 @@ export default function RootLayout({
         <Sidebar />
         <main className="flex-grow w-full">
           <Navbar />
-          <div className="p-3 md:p-5 ml-0 md:ml-64">
+          <LayoutWrapper>
             <ActiveWorkoutWarning />
             {children}
-          </div>
+          </LayoutWrapper>
         </main>
       </div>
     </ClerkProvider>
