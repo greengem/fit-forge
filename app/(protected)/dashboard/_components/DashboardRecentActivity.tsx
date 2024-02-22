@@ -57,7 +57,7 @@ export default async function DashboardRecentActivity() {
       {recentActivity.length > 0 && (
         <>
           <PageHeading title="Recent Activity" />
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-5 mb-5">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-3 mb-3">
             {recentActivity.map((activity) => {
               const totalWeight = activity.exercises.reduce(
                 (total, exercise) => {
