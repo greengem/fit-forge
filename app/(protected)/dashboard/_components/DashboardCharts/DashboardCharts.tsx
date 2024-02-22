@@ -24,10 +24,10 @@ export default function DashboardCharts({
   chart4DateRange?: string;
 }) {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6 gap-5 mb-5">
+    <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-5 mb-5">
       <DashboardChartCard
         icon={<IconChartBar />}
-        title="Workout Frequency"
+        title="Frequency"
         colSpan="col-span-2"
         chartId={1}
       >
@@ -38,7 +38,7 @@ export default function DashboardCharts({
 
       <DashboardChartCard
         icon={<IconChartAreaFilled />}
-        title="Progress Over Time"
+        title="Progress"
         colSpan="col-span-2"
         chartId={2}
       >
