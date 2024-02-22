@@ -125,7 +125,8 @@ export default function Home() {
                 </Button>
                 <ul className="space-y-2 text-sm">
                   <li className="flex gap-3 items-center">
-                    <IconJumpRope size={18} />Unlimited Routines
+                    <IconJumpRope size={18} />
+                    Unlimited Routines
                   </li>
                   <li className="flex gap-3 items-center">
                     <IconStretching size={18} />
@@ -151,7 +152,9 @@ export default function Home() {
           <Card className="shadow-xl ring-2 ring-primary" shadow="none">
             <CardBody className="px-5">
               <div className="flex-none">
-                <h4 className="font-semibold gap-3 text-xl text-primary">Pro</h4>
+                <h4 className="font-semibold gap-3 text-xl text-primary">
+                  Pro
+                </h4>
                 <p className="text-zinc-500 text-sm mb-5">
                   Our most popular plan
                 </p>

@@ -21,7 +21,9 @@ export default function SidebarNav() {
   return (
     <div className="px-5">
       <ul className="text-sm">
-        <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">Data</li>
+        <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">
+          Data
+        </li>
         <div className="space-y-1 mb-4">
           <NavItem
             icon={<IconDashboard size={22} />}
@@ -43,7 +45,9 @@ export default function SidebarNav() {
           />
         </div>
 
-        <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">Workout</li>
+        <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">
+          Workout
+        </li>
         <div className="space-y-1 mb-4">
           <NavItem
             icon={<IconJumpRope size={22} />}
@@ -59,7 +63,9 @@ export default function SidebarNav() {
           />
         </div>
 
-        <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">More</li>
+        <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">
+          More
+        </li>
         <NavItem
           icon={<IconBook size={22} />}
           label="Docs"
@@ -95,13 +101,18 @@ function NavItem({
   children,
 }: NavItemProps) {
   const content = (
-<div
-  className={clsx('flex items-center space-x-3 p-2 rounded-lg', active ? 'bg-zinc-300 dark:bg-zinc-800 text-black dark:text-white' : 'text-zinc-600 dark:text-zinc-400')}
->
-  {icon}
-  {label && <div>{label}</div>}
-</div>
-);
+    <div
+      className={clsx(
+        "flex items-center space-x-3 p-2 rounded-lg",
+        active
+          ? "bg-zinc-300 dark:bg-zinc-800 text-black dark:text-white"
+          : "text-zinc-600 dark:text-zinc-400",
+      )}
+    >
+      {icon}
+      {label && <div>{label}</div>}
+    </div>
+  );
 
   return (
     <li>

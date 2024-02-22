@@ -14,7 +14,7 @@ export default function Sidebar() {
       {/* <SidebarSearch /> */}
       <SidebarNav />
       <SidebarWorkoutControls />
-      
+
       <div className="absolute bottom-0 left-0 right-0 py-5 px-5 flex flex-col items-center">
         <ThemeSwitcher />
         {/* <SidebarSocials /> */}

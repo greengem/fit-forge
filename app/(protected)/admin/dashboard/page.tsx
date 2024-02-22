@@ -14,55 +14,61 @@ export default async function AdminDashboard(params: {
   if (!checkRole("admin")) {
     redirect("/");
   }
- 
+
   const query = params.searchParams.search;
- 
+
   const users = query ? await clerkClient.users.getUserList({ query }) : [];
- 
+
   return (
     <>
       <PageHeading title="Admin Dashboard" />
-      <p className="mb-3">This page is restricted to users with the &apos;admin&apos; role.</p>
- 
+      <p className="mb-3">
+        This page is restricted to users with the &apos;admin&apos; role.
+      </p>
+
       <SearchUsers />
 
       <ul className="space-y-3">
-      {users.map((user) => {
-        const role = user.publicMetadata.role as string;
-        const userString = role 
-        ? `${user.firstName} ${user.lastName} (${role})` 
-        : `${user.firstName} ${user.lastName}`;
+        {users.map((user) => {
+          const role = user.publicMetadata.role as string;
+          const userString = role
+            ? `${user.firstName} ${user.lastName} (${role})`
+            : `${user.firstName} ${user.lastName}`;
 
-        return (
-          <li key={user.id} className="flex justify-between">
-            <User   
+          return (
+            <li key={user.id} className="flex justify-between">
+              <User
                 name={userString}
                 description={
                   user.emailAddresses.find(
-                    (email) => email.id === user.primaryEmailAddressId
+                    (email) => email.id === user.primaryEmailAddressId,
                   )?.emailAddress
                 }
                 avatarProps={{
-                  src: user.imageUrl
+                  src: user.imageUrl,
                 }}
-                classNames={{description: "text-gray-500"}}
+                classNames={{ description: "text-gray-500" }}
               />
-            <div className="flex gap-3">
-              <form action={setRole}>
-                <input type="hidden" value={user.id} name="id" />
-                <input type="hidden" value="admin" name="role" />
-                <Button type="submit" size="sm">Make Admin</Button>
-              </form>
-              
-              <form action={setRole}>
-                <input type="hidden" value={user.id} name="id" />
-                <input type="hidden" value="moderator" name="role" />
-                <Button type="submit" size="sm">Make Moderator</Button>
-              </form>
-            </div>
-          </li>
-        );
-      })}
+              <div className="flex gap-3">
+                <form action={setRole}>
+                  <input type="hidden" value={user.id} name="id" />
+                  <input type="hidden" value="admin" name="role" />
+                  <Button type="submit" size="sm">
+                    Make Admin
+                  </Button>
+                </form>
+
+                <form action={setRole}>
+                  <input type="hidden" value={user.id} name="id" />
+                  <input type="hidden" value="moderator" name="role" />
+                  <Button type="submit" size="sm">
+                    Make Moderator
+                  </Button>
+                </form>
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </>
   );
