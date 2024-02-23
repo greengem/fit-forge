@@ -13,7 +13,7 @@ type WorkoutData = {
 };
 
 export default async function DashboardChartProgressOverTime({
-  dateRange = "3M",
+  dateRange = "1W",
 }: {
   dateRange?: string;
 }) {
