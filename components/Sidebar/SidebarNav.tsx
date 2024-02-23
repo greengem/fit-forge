@@ -24,7 +24,9 @@ export default function SidebarNav() {
   return (
     <div className="px-5">
       <ul className="text-sm">
+
       {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">Data</li>}
+
         <div className="space-y-1 mb-4">
           <NavItem
             icon={<IconDashboard size={22} className="shrink-0" />}
@@ -46,7 +48,8 @@ export default function SidebarNav() {
           />
         </div>
 
-        {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">Workout</li>}
+        {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 mt-4 px-2">Workout</li>}
+
         <div className="space-y-1 mb-4">
           <NavItem
             icon={<IconJumpRope size={22} className="shrink-0" />}
@@ -63,6 +66,7 @@ export default function SidebarNav() {
         </div>
 
         {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">More</li>}
+        
         <NavItem
           icon={<IconBook size={22} className="shrink-0" />}
           label="Docs"
@@ -87,6 +91,7 @@ export default function SidebarNav() {
             {!sidebarCollapse && <div>Collapse Sidebar</div>}
           </div>
         </li>
+        
       </ul>
     </div>
   );
