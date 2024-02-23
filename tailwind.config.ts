@@ -39,12 +39,12 @@ const config: Config = {
               200: "#A1EDFE",
               300: "#72DCFE",
               400: "#4FC8FD",
-              500: "#16A8FC",
+              500: "#00A5FF",
               600: "#1083D8",
               700: "#0B62B5",
               800: "#074592",
               900: "#043178",
-              DEFAULT: "#16A8FC",
+              DEFAULT: "#00A5FF",
             },
 
             success: {
@@ -65,12 +65,12 @@ const config: Config = {
               200: "#FFF8A1",
               300: "#FFF373",
               400: "#FFEE50",
-              500: "#FFE716",
+              500: "#FFEA07",
               600: "#DBC410",
               700: "#B7A20B",
               800: "#938007",
               900: "#7A6904",
-              DEFAULT: "#FFE716",
+              DEFAULT: "#FFEA07",
             },
 
             danger: {
@@ -111,12 +111,12 @@ const config: Config = {
               200: "#A1EDFE",
               300: "#72DCFE",
               400: "#4FC8FD",
-              500: "#16A8FC",
+              500: "#00A5FF",
               600: "#1083D8",
               700: "#0B62B5",
               800: "#074592",
               900: "#043178",
-              DEFAULT: "#16A8FC",
+              DEFAULT: "#00A5FF",
             },
 
             success: {
@@ -137,12 +137,12 @@ const config: Config = {
               200: "#FFF8A1",
               300: "#FFF373",
               400: "#FFEE50",
-              500: "#FFE716",
+              500: "#FFEA07",
               600: "#DBC410",
               700: "#B7A20B",
               800: "#938007",
               900: "#7A6904",
-              DEFAULT: "#FFE716",
+              DEFAULT: "#FFEA07",
             },
 
             danger: {
