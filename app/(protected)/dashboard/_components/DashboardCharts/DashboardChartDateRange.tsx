@@ -48,7 +48,7 @@ export default function DashboardChartDateRange({
       step={10}
       color="foreground"
       showSteps={true}
-      defaultValue={40}
+      defaultValue={20}
       maxValue={50}
       minValue={10}
       className="w-44"
