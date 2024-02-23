@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 
 interface Set {
   reps: number | null;
-  weight: number;
+  weight: number | null;
   duration: number | null;
   completed: boolean;
 }
