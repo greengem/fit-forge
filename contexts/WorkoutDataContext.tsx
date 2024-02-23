@@ -14,7 +14,7 @@ interface WorkoutExercise {
     completed: boolean;
     reps: number | null;
     duration: number | null;
-    weight: number;
+    weight: number | null;
   }[];
   trackingType: string;
 }
