@@ -41,6 +41,7 @@ export default function ExerciseTable({
     >
       <TableHeader>
         <TableColumn>NAME</TableColumn>
+        {/* <TableColumn>ID</TableColumn> */}
         <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
         <TableColumn>
           <></>
@@ -61,6 +62,7 @@ export default function ExerciseTable({
                 name={exercise.name}
               />
             </TableCell>
+            {/* <TableCell className="py-1">{exercise.id}</TableCell> */}
             <TableCell className="capitalize hidden lg:table-cell py-1">
               <div className="flex flex-col">
                 <p className="text-bold text-small">
