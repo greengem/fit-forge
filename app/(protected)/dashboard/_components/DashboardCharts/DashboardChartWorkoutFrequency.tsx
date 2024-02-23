@@ -13,7 +13,7 @@ type WorkoutFrequencyData = {
 };
 
 export default async function DashboardChartWorkoutFrequency({
-  dateRange = "3M",
+  dateRange = "1W",
 }: {
   dateRange?: string;
 }) {
