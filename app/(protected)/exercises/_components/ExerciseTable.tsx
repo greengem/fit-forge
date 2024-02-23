@@ -43,9 +43,7 @@ export default function ExerciseTable({
         <TableColumn>NAME</TableColumn>
         {/* <TableColumn>ID</TableColumn> */}
         <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
-        <TableColumn>
-          <></>
-        </TableColumn>
+        <TableColumn><></></TableColumn>
       </TableHeader>
       <TableBody emptyContent={"No results found."}>
         {exercises.map((exercise) => (
