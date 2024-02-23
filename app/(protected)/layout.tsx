@@ -3,6 +3,7 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import Navbar from "@/components/Navbar/Navbar";
 import ActiveWorkoutWarning from "@/components/Notices/ActiveWorkoutWarning";
 import LayoutWrapper from "./LayoutWrapper.client";
+import SiteNotice from "./SiteNotice";
 
 export default function RootLayout({
   children,
@@ -11,6 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
+      <SiteNotice />
       <div className="flex">
         <Sidebar />
         <main className="flex-grow w-full">
