@@ -1,54 +1,19 @@
 "use client";
 import { useState } from "react";
-
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@nextui-org/table";
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell,} from "@nextui-org/table";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-
-import {
-  IconCheck,
-  IconCheckbox,
-  IconPlus,
-  IconSquareCheck,
-  IconX,
-} from "@tabler/icons-react";
+import { IconCheck, IconPlus, IconSquareCheck, IconX } from "@tabler/icons-react";
 import { Switch } from "@nextui-org/react";
+import { Workout } from "./WorkoutTypes";
 
-interface Exercise {
-  id: string;
-  name: string;
-}
+export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
+  const [completedSets, setCompletedSets] = useState<Record<string, boolean>>({});
 
-interface WorkoutPlanExercise {
-  Exercise: Exercise;
-  sets: number;
-  reps: number | null;
-  exerciseDuration: number | null;
-  trackingType: string;
-  order: number;
-}
-
-interface Workout {
-  id: string;
-  name: string;
-  notes: string | null;
-  WorkoutPlanExercise: WorkoutPlanExercise[];
-}
-
-export default function WorkoutManager({ workout }: { workout: Workout }) {
-  //console.log(JSON.stringify(workout, null, 2));
-
-  const handleCompleteSet = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCompleteSet = (setIndex: number, exerciseId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
-    console.log("Switch value changed to: ", newValue);
+    setCompletedSets(prevState => ({ ...prevState, [`${exerciseId}-${setIndex}`]: newValue }));
   };
 
   return (
@@ -96,6 +61,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
                               </span>
                             </div>
                           }
+                          isDisabled={completedSets[`${exercise.Exercise.id}-${setIndex}`]}
                         />
                       </TableCell>
                       <TableCell>
@@ -106,13 +72,14 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
                           defaultValue={
                             exercise.reps ? exercise.reps.toString() : ""
                           }
+                          isDisabled={completedSets[`${exercise.Exercise.id}-${setIndex}`]}
                         />
                       </TableCell>
                       <TableCell>
                         <Switch
                           startContent={<IconCheck />}
                           endContent={<IconX />}
-                          onChange={handleCompleteSet}
+                          onChange={handleCompleteSet(setIndex, exercise.Exercise.id)}
                           size="lg"
                           name="completedSwitch"
                         />
