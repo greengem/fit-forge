@@ -13,7 +13,7 @@ type WorkoutVolumeLoadData = {
 };
 
 export default async function DashboardChartVolumeLoad({
-  dateRange = "3M",
+  dateRange = "1W",
 }: {
   dateRange?: string;
 }) {
