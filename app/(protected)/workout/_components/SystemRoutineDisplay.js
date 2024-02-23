@@ -10,6 +10,8 @@ import {
 } from "@tabler/icons-react";
 
 export default function SystemRoutineDisplay({ systemRoutines }) {
+  const strengthRoutines = systemRoutines.filter(routine => routine.systemRoutineCategory === 'Strength');
+
   return (
     <div className="flex w-full flex-col">
       <Tabs aria-label="Options" size="sm" color="primary" variant="bordered">
@@ -25,7 +27,7 @@ export default function SystemRoutineDisplay({ systemRoutines }) {
           <h4 className="text-xl font-semibold mb-3 block md:hidden">
             Strength
           </h4>
-          <RoutineCards routines={systemRoutines} isSystem={true} />
+          <RoutineCards routines={strengthRoutines} isSystem={true} />
         </Tab>
         <Tab
           key="cardio"
