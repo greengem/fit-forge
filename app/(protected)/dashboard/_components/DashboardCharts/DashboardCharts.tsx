@@ -24,7 +24,7 @@ export default function DashboardCharts({
   chart4DateRange?: string;
 }) {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-6 gap-3 mb-3">
+    <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-3 mb-5">
       <DashboardChartCard
         icon={<IconChartBar />}
         title="Frequency"
