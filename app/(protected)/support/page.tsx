@@ -5,7 +5,8 @@ export default function Support() {
   return (
     <>
       <PageHeading title="Support" />
-      <p className="text-zinc-500 mb-5">We're here to help! You can find answers to common questions about the Workout Tracker below. If you can't find what you're looking for, you can contact our support team using the form at the bottom of the page.</p>
+      <p>Coming Soon</p>
+      {/* <p className="text-zinc-500 mb-5">We're here to help! You can find answers to common questions about the Workout Tracker below. If you can't find what you're looking for, you can contact our support team using the form at the bottom of the page.</p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <h1 className="text-2xl mb-3 font-bold">Frequently Asked Questions</h1>
@@ -26,7 +27,7 @@ export default function Support() {
         </div>
 
 
-      </div>
+      </div> */}
     </>
   );
 }
