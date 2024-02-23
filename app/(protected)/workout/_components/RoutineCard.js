@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import { format } from "date-fns";
-import ActionDropdown from "@/components/Cards/ActionDropdown";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Chip } from "@nextui-org/chip";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
+import RoutineMenu from "./RoutineMenu";
 
 function RoutineCard({
   routine,
@@ -49,7 +49,7 @@ function RoutineCard({
             </p>
           )}
         </div>
-        {!isSystem && <ActionDropdown onAction={onAction} routine={routine} />}
+        {!isSystem && <RoutineMenu routineId={routine.id} />}
       </CardHeader>
 
       <CardBody className="pt-0 px-5">
