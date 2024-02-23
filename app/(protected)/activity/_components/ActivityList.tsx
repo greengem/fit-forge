@@ -50,7 +50,7 @@ export default async function ActivityList() {
   return (
     <>
       {workouts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
           {workouts.map((activity) => {
             const totalWeight = activity.exercises.reduce((total, exercise) => {
               const exerciseWeight = exercise.sets.reduce(
