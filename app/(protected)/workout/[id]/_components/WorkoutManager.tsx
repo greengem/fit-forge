@@ -97,7 +97,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
         reps: workout.WorkoutPlanExercise[exerciseIndex].reps || null,
         duration:
           workout.WorkoutPlanExercise[exerciseIndex].exerciseDuration || null,
-        weight: 0,
+        weight: null,
       };
       exerciseToUpdate.sets = [...exerciseToUpdate.sets, newSet];
       updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
@@ -332,11 +332,9 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
   return (
     <div className="pb-40">
       {workout.notes && (
-        <p color="primary" className="mb-3">
-          Notes: {workout.notes}
-        </p>
+        <p className="mb-3 text-sm text-zinc-500">{workout.notes}</p>
       )}
-      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3">
         {workoutExercises?.map((exercise, index) => (
           <Card shadow="none" className="shadow-md" key={exercise.exerciseId}>
             <CardHeader className="text-lg px-5">
