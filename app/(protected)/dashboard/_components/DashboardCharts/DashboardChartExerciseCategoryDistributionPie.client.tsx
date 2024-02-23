@@ -6,7 +6,7 @@ type ExerciseCategoryData = {
   count: number;
 };
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#A6FF00", "#00A5FF", "#62EF6E", "#FFEA07", "#f11450"];
 
 export default function DashboardChartExerciseCategoryDistributionClient({
   data,
