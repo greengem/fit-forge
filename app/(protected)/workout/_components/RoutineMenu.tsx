@@ -40,7 +40,7 @@ export default function RoutineMenu({ routineId }: { routineId: string }) {
         <Dropdown>
             <DropdownTrigger>
                 <button className="shrink-0">
-                    <IconMenu2 size={22} />
+                    <IconMenu2 className="text-primary" size={22} />
                 </button>
             </DropdownTrigger>
             <DropdownMenu
