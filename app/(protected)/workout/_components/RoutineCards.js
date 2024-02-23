@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import CardGrid from "@/components/Grid/CardGrid";
 import RoutineCard from "./RoutineCard";
 import { useWorkoutControls } from "@/contexts/WorkoutControlsContext";
 
@@ -50,7 +49,7 @@ export default function RoutineCards({ routines, isSystem }) {
   };
 
   return (
-    <CardGrid>
+    <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
       {routines.map((routine) => (
         <RoutineCard
           key={routine.id}
@@ -62,6 +61,6 @@ export default function RoutineCards({ routines, isSystem }) {
           activeWorkoutRoutine={activeWorkoutRoutine}
         />
       ))}
-    </CardGrid>
+    </div>
   );
 }
