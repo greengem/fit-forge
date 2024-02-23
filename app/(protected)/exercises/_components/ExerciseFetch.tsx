@@ -50,7 +50,7 @@ export default async function ExerciseFetch({
     (equipment) => equipment.equipmentType,
   );
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
 
   const searchWords = search.split(" ");
 
