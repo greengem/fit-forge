@@ -23,7 +23,7 @@ export default function DashboardChartExerciseCategoryDistributionClient({
       <RadarChart data={data}>
         <PolarGrid stroke="#333" />
         <PolarAngleAxis dataKey="category" fontSize={12} />
-        <PolarRadiusAxis fontSize={12} />
+
         <Radar
           name="Workouts"
           dataKey="count"
