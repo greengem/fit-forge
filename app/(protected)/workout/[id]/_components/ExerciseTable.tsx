@@ -12,7 +12,7 @@ import { Button } from "@nextui-org/button";
 import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
 
 interface Set {
-  weight: number | "";
+  weight: number | "" | null;
   duration?: number | "" | null;
   reps?: number | "" | null;
   completed: boolean;
@@ -84,7 +84,7 @@ export default function ExerciseTable({
               <Input
                 labelPlacement="outside"
                 type="number"
-                value={String(set.weight) || ""}
+                value={set.weight !== null && set.weight !== undefined ? String(set.weight) : ""}
                 onChange={(e) =>
                   handleWeightChange(index, setIndex, Number(e.target.value))
                 }
