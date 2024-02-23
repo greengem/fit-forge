@@ -4,7 +4,6 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import PageHeading from "@/components/PageHeading/PageHeading";
 
 function formatDuration(seconds: number) {
   const minutes = Math.floor(seconds / 60);
@@ -56,7 +55,7 @@ export default async function DashboardRecentActivity() {
     <>
       {recentActivity.length > 0 && (
         <>
-          <PageHeading title="Recent Activity" />
+          <h2 className="mb-3 mt-2 text-lg">Recent Activity</h2>
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-3 mb-3">
             {recentActivity.map((activity) => {
               const totalWeight = activity.exercises.reduce(
