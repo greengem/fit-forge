@@ -82,22 +82,28 @@ export default function ExerciseTable({
             <TableCell>{setIndex + 1}</TableCell>
             <TableCell>
               <Input
-                labelPlacement="outside"
-                type="number"
+                size="sm"
+                label="Weight"
+                placeholder="0"
                 value={set.weight !== null && set.weight !== undefined ? String(set.weight) : ""}
+                endContent={
+                  <span className="text-zinc-500">kg</span>
+                }
                 onChange={(e) =>
                   handleWeightChange(index, setIndex, Number(e.target.value))
                 }
                 isDisabled={set.completed}
-                className="max-w-[80px]"
               />
             </TableCell>
             {exerciseDetail.trackingType === "duration" ? (
               <TableCell>
                 <Input
-                  labelPlacement="outside"
-                  type="number"
-                  value={set.duration !== null ? String(set.duration) : ""}
+                  size="sm"
+                  label="Duration"
+                  placeholder={set.duration !== null ? String(set.duration) : ""}
+                  endContent={
+                    <span className="text-zinc-500">s</span>
+                  }
                   onChange={(e) =>
                     handleDurationChange(
                       index,
@@ -106,20 +112,18 @@ export default function ExerciseTable({
                     )
                   }
                   isDisabled={set.completed}
-                  className="max-w-[80px]"
                 />
               </TableCell>
             ) : (
               <TableCell>
                 <Input
-                  labelPlacement="outside"
-                  type="number"
-                  value={set.reps !== null ? String(set.reps) : ""}
+                  size="sm"
+                  label="Reps"
+                  placeholder={set.reps !== null ? String(set.reps) : ""}
                   onChange={(e) =>
                     handleRepChange(index, setIndex, Number(e.target.value))
                   }
                   isDisabled={set.completed}
-                  className="max-w-[80px]"
                 />
               </TableCell>
             )}
@@ -127,6 +131,8 @@ export default function ExerciseTable({
             <TableCell className="text-center">
               <Button
                 isIconOnly
+                radius="sm"
+                size="lg"
                 color={set.completed ? "primary" : "danger"}
                 onPress={() =>
                   handleCompleteSet(
@@ -137,9 +143,9 @@ export default function ExerciseTable({
                 }
               >
                 {set.completed ? (
-                  <IconSquareCheck size={20} />
+                  <IconSquareCheck />
                 ) : (
-                  <IconSquare size={20} />
+                  <IconSquare />
                 )}
               </Button>
             </TableCell>
