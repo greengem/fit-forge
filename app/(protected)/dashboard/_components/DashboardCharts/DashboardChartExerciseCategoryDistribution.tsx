@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import DashboardChartExerciseCategoryDistributionPieClient from "./DashboardChartExerciseCategoryDistributionPie.client";
+import DashboardChartExerciseCategoryDistributionClient from "./DashboardChartExerciseCategoryDistribution.client";
 import {
   calculateIntervals,
   getIntervalStartAndEndDates,
@@ -22,6 +23,7 @@ export default async function DashboardChartExerciseCategoryDistribution({
     throw new Error("You must be signed in to view this page.");
   }
 
+  const minCount = 2;
   const intervals = calculateIntervals(dateRange);
   const startDate = intervals[0];
   const endDate = new Date();
@@ -63,7 +65,7 @@ export default async function DashboardChartExerciseCategoryDistribution({
       );
       return {
         category,
-        count: categoryData ? categoryData._count.id : 0,
+        count: categoryData ? Math.max(categoryData._count.id, minCount) : minCount,
       };
     },
   );
