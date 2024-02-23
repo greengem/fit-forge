@@ -15,10 +15,10 @@ export default function DashboardPage({
     chart4?: string;
   };
 }) {
-  const chart1DateRange = searchParams?.chart1 || "3M";
-  const chart2DateRange = searchParams?.chart2 || "3M";
-  const chart3DateRange = searchParams?.chart3 || "3M";
-  const chart4DateRange = searchParams?.chart4 || "3M";
+  const chart1DateRange = searchParams?.chart1 || "1W";
+  const chart2DateRange = searchParams?.chart2 || "1W";
+  const chart3DateRange = searchParams?.chart3 || "1W";
+  const chart4DateRange = searchParams?.chart4 || "1W";
 
   return (
     <>
