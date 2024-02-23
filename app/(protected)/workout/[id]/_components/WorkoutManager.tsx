@@ -34,6 +34,20 @@ interface Workout {
   WorkoutPlanExercise: WorkoutPlanExercise[];
 }
 
+interface Set {
+  completed: boolean;
+  reps: number | null;
+  duration: number | null;
+  weight: number | null;
+}
+
+interface WorkoutExercise {
+  exerciseId: string;
+  exerciseName: string;
+  sets: Set[];
+  trackingType: string;
+}
+
 export default function WorkoutManager({ workout }: { workout: Workout }) {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -58,11 +72,11 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
         (exerciseDetail) => ({
           exerciseId: exerciseDetail.Exercise.id,
           exerciseName: exerciseDetail.Exercise.name,
-          sets: Array.from({ length: exerciseDetail.sets }, (_, index) => ({
+          sets: Array.from({ length: exerciseDetail.sets }, () => ({
             completed: false,
             reps: exerciseDetail.reps || null,
             duration: exerciseDetail.exerciseDuration || null,
-            weight: 0,
+            weight: null,
           })),
           trackingType: exerciseDetail.trackingType,
         }),
