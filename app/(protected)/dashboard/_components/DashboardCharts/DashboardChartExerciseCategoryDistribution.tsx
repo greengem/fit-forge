@@ -13,7 +13,7 @@ type ExerciseCategoryData = {
 };
 
 export default async function DashboardChartExerciseCategoryDistribution({
-  dateRange = "3M",
+  dateRange = "1W",
 }: {
   dateRange?: string;
 }) {
