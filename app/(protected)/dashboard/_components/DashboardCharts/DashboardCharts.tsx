@@ -5,7 +5,6 @@ import DashboardChartVolumeLoad from "./DashboardChartVolumeLoad";
 import DashboardChartWorkoutFrequency from "./DashboardChartWorkoutFrequency";
 import DashboardChartCard from "./DashboardChartCard";
 import {
-  IconChartArea,
   IconChartAreaFilled,
   IconChartBar,
   IconChartLine,
@@ -58,11 +57,16 @@ export default function DashboardCharts({
         </Suspense>
       </DashboardChartCard>
 
-      {/* <DashboardChartCard icon={<IconChartRadar />} title='Exercise Split' colSpan="col-span-1" chartId={4}>
-                <Suspense fallback={<div>Loading Chart...</div>}>
-                    <DashboardChartExerciseCategoryDistribution dateRange={chart4DateRange} />
-                </Suspense>
-            </DashboardChartCard> */}
+      {/* <DashboardChartCard 
+        icon={<IconChartRadar />} 
+        title='Exercise Split' 
+        colSpan="col-span-2" 
+        chartId={4}
+      >
+        <Suspense fallback={<div>Loading Chart...</div>}>
+          <DashboardChartExerciseCategoryDistribution dateRange={chart4DateRange} />
+        </Suspense>
+      </DashboardChartCard> */}
     </div>
   );
 }
