@@ -107,7 +107,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mb-10 py-5 px-3 md:px-10">
+      <section className="mb-10 py-5 px-3 md:px-10 hidden">
         <h2 className="text-center text-6xl my-10 font-bold">
           The Perfect Plan <span className="text-primary">For Your Needs</span>
         </h2>
@@ -130,11 +130,12 @@ export default function Home() {
           />
 
           <PricingCard 
-            title="Pro (Weekly)"
+            title="Pro (Monthly)"
             subtitle="Per month, cancel anytime."
             price="$4.99"
             description="Per month, cancel anytime."
-            buttonText="Get Started"
+            buttonText="Coming soon"
+            buttonDisabled={true}
             buttonLink="/dashboard"
             highlight={true}
             features={[
@@ -147,14 +148,14 @@ export default function Home() {
             ]}
           />
 
-          
           <PricingCard 
-            title="Pro (Monthly)"
+            title="Pro (Yearly)"
             subtitle="Per month, cancel anytime."
             price="$49.99"
             description="Per month, cancel anytime."
-            buttonText="Get Started"
+            buttonText="Coming soon"
             buttonLink="/dashboard"
+            buttonDisabled={true}
             features={[
               { icon: <IconJumpRope size={18} />, text: "Unlimited Routines" },
               { icon: <IconStretching size={18} />, text: "Access to all of our 900+ Exercises" },
@@ -164,6 +165,7 @@ export default function Home() {
               { icon: <IconBrandOpenai size={18} />, text: "AI Features"}
             ]}
           />
+
         </div>
       </section>
     </main>
