@@ -28,8 +28,6 @@ type ExtendedWorkoutPlan = WorkoutPlan & {
 type RoutineCardProps = {
   routine: ExtendedWorkoutPlan;
   isSystem: boolean;
-  isExpanded: boolean;
-  onToggleExpanded: (routineId: string) => void;
   activeWorkoutRoutine: string | null;
 };
 
@@ -45,27 +43,17 @@ const categoryColorMap: Record<string, Color> = {
   olympic_weightlifting: "secondary",
 };
 
-export default function RoutineCard({
-  routine,
-  isSystem,
-  isExpanded,
-  onToggleExpanded,
-  activeWorkoutRoutine,
-} : RoutineCardProps) {
+export default function RoutineCard({ routine, isSystem, activeWorkoutRoutine } : RoutineCardProps) {
   
   const isAnotherWorkoutInProgress = activeWorkoutRoutine !== null && activeWorkoutRoutine !== routine.id;
-
   const isCurrentWorkout = activeWorkoutRoutine === routine.id;
-
   const uniqueCategories = new Set();
 
   routine.WorkoutPlanExercise.forEach((exerciseDetail) => {
     uniqueCategories.add(exerciseDetail.Exercise.category);
   });
 
-  const displayedExercises = isExpanded
-    ? routine.WorkoutPlanExercise
-    : routine.WorkoutPlanExercise.slice(0, 3);
+  const displayedExercises = routine.WorkoutPlanExercise;
 
   return (
     <Card key={routine.id} shadow="none" className="shadow-md">
@@ -82,7 +70,7 @@ export default function RoutineCard({
       </CardHeader>
 
       <CardBody className="pt-0 px-5">
-        <ul className="text-sm">
+      <ul className="text-sm">
           {displayedExercises
             .sort((a, b) => a.order - b.order)
             .map((exerciseDetail) => (
@@ -93,14 +81,6 @@ export default function RoutineCard({
             ))}
         </ul>
 
-        {routine.WorkoutPlanExercise.length > 5 && (
-          <button
-            className="text-left text-primary text-sm mt-1"
-            onClick={() => onToggleExpanded(routine.id)}
-          >
-            {isExpanded ? "Show Less" : "Show More"}
-          </button>
-        )}
       </CardBody>
       <CardFooter className="pt-0 px-5 pb-4 block">
         <Button

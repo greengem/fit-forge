@@ -33,16 +33,6 @@ export default function RoutineCards({ routines, isSystem } : RoutineCardsProps)
 
   const { activeWorkoutRoutine } = useWorkoutControls();
 
-  const [expandedRoutines, setExpandedRoutines] = useState<ExpandedRoutines>({});
-
-  const toggleRoutineExpanded = (routineId: string) => {
-    setExpandedRoutines((prevState: ExpandedRoutines) => ({
-      ...prevState,
-      [routineId]: !prevState[routineId],
-    }));
-  };
-
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
       {routines.map((routine) => (
@@ -50,8 +40,6 @@ export default function RoutineCards({ routines, isSystem } : RoutineCardsProps)
           key={routine.id}
           routine={routine}
           isSystem={isSystem}
-          isExpanded={expandedRoutines[routine.id] || false}
-          onToggleExpanded={toggleRoutineExpanded}
           activeWorkoutRoutine={activeWorkoutRoutine}
         />
       ))}
