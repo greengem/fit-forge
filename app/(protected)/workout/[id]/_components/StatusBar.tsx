@@ -1,4 +1,5 @@
 import ProgressBar from "./ProgressBar";
+import clsx from "clsx";
 import { Button } from "@nextui-org/button";
 import {
   IconPlayerPlay,
@@ -84,7 +85,7 @@ export default function StatusBar({
             </div>
           </>
         )}
-        <p className={`text-3xl ${isPaused ? "text-warning" : ""}`}>
+        <p className={clsx('text-3xl', { 'text-warning': isPaused })}>
           {formatDuration(workoutDuration)}
         </p>
       </div>
