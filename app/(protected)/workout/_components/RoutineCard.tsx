@@ -7,19 +7,58 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
 import RoutineMenu from "./RoutineMenu";
+import { WorkoutPlan } from "@prisma/client";
 
-function RoutineCard({
+type Exercise = {
+  id: string;
+  name: string;
+  category: string;
+};
+
+type WorkoutPlanExercise = {
+  Exercise: Exercise;
+  order: number;
+  sets: number;
+};
+
+type ExtendedWorkoutPlan = WorkoutPlan & {
+  WorkoutPlanExercise: WorkoutPlanExercise[];
+};
+
+type RoutineCardProps = {
+  routine: ExtendedWorkoutPlan;
+  isSystem: boolean;
+  isExpanded: boolean;
+  onToggleExpanded: (routineId: string) => void;
+  activeWorkoutRoutine: string | null;
+};
+
+type Color = "default" | "success" | "secondary" | "warning" | "primary" | "danger";
+
+const categoryColorMap: Record<string, Color> = {
+  strength: "success",
+  cardio: "secondary",
+  stretching: "warning",
+  plyometrics: "primary",
+  strongman: "danger",
+  powerlifting: "default",
+  olympic_weightlifting: "secondary",
+};
+
+export default function RoutineCard({
   routine,
   isSystem,
   isExpanded,
   onToggleExpanded,
-  onAction,
   activeWorkoutRoutine,
-}) {
-  const isAnotherWorkoutInProgress =
-    activeWorkoutRoutine !== null && activeWorkoutRoutine !== routine.id;
+} : RoutineCardProps) {
+  
+  const isAnotherWorkoutInProgress = activeWorkoutRoutine !== null && activeWorkoutRoutine !== routine.id;
+
   const isCurrentWorkout = activeWorkoutRoutine === routine.id;
+
   const uniqueCategories = new Set();
+
   routine.WorkoutPlanExercise.forEach((exerciseDetail) => {
     uniqueCategories.add(exerciseDetail.Exercise.category);
   });
@@ -27,16 +66,6 @@ function RoutineCard({
   const displayedExercises = isExpanded
     ? routine.WorkoutPlanExercise
     : routine.WorkoutPlanExercise.slice(0, 3);
-
-  const categoryColorMap = {
-    strength: "success",
-    cardio: "secondary",
-    stretching: "warning",
-    plyometrics: "primary",
-    strongman: "danger",
-    powerlifting: "default",
-    olympic_weightlifting: "secondary",
-  };
 
   return (
     <Card key={routine.id} shadow="none" className="shadow-md">
@@ -98,12 +127,12 @@ function RoutineCard({
           )}
         </Button>
         <div className="lex-wrap gap-1 hidden">
-          {Array.from(uniqueCategories).map((category, index) => (
+          {Array.from(uniqueCategories as Set<string>).map((category: string, index: number) => (
             <Chip
               radius="sm"
               size="sm"
               className="capitalize"
-              color={categoryColorMap[category] || "default"}
+              color={categoryColorMap[category as keyof typeof categoryColorMap] || "default"}
               key={index}
             >
               {category}
@@ -114,5 +143,3 @@ function RoutineCard({
     </Card>
   );
 }
-
-export default RoutineCard;
