@@ -18,25 +18,42 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const nameParts = e.target.name.split('.');
-    const exerciseId = nameParts[1];
-    const setIndex = nameParts[3];
-  
-    if (completedSets[`${exerciseId}-${setIndex}`]) {
-      setFormData({
-        ...formData,
-        [e.target.name]: e.target.value
-      });
-    } else {
-      const newFormData: Record<string, any> = { ...formData };
-      delete newFormData[e.target.name];
-      setFormData(newFormData);
-    }
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
-
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+  
+    const structuredData: Record<string, { sets: Array<{ weight: string, reps: string }> }> = {};
+  
+    Object.keys(formData)
+      .filter(key => {
+        const nameParts = key.split('.');
+        const exerciseId = nameParts[1];
+        const setIndex = nameParts[3];
+        return completedSets[`${exerciseId}-${setIndex}`];
+      })
+      .forEach(key => {
+        const nameParts = key.split('.');
+        const exerciseId = nameParts[1];
+        const setIndex = parseInt(nameParts[3]);
+        const property = nameParts[4];
+  
+        if (!structuredData[exerciseId]) {
+          structuredData[exerciseId] = { sets: [] };
+        }
+  
+        if (!structuredData[exerciseId].sets[setIndex]) {
+          structuredData[exerciseId].sets[setIndex] = { weight: '', reps: '' };
+        }
+  
+        structuredData[exerciseId].sets[setIndex][property as 'weight' | 'reps'] = formData[key];
+      });
+  
+    console.log(structuredData);
   };
 
   return (
