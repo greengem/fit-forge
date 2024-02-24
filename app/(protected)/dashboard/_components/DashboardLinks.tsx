@@ -18,7 +18,7 @@ export default function DashboardLinks() {
   ];
 
   return (
-    <div className="flex flex-wrap gap-x-3 gap-y-2 mb-5">
+    <div className="flex flex-wrap gap-x-3 gap-y-2 mb-3">
       {links.map((link) => (
         <Button
           color="default"
