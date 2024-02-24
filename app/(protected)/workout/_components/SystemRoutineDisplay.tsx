@@ -8,8 +8,29 @@ import {
   IconScale,
   IconBarbell,
 } from "@tabler/icons-react";
+import { WorkoutPlan } from "@prisma/client";
 
-export default function SystemRoutineDisplay({ systemRoutines }) {
+type Exercise = {
+  id: string;
+  name: string;
+  category: string;
+};
+
+type WorkoutPlanExercise = {
+  Exercise: Exercise;
+  order: number;
+  sets: number;
+};
+
+type ExtendedWorkoutPlan = WorkoutPlan & {
+  WorkoutPlanExercise: WorkoutPlanExercise[];
+};
+
+type SystemRoutineDisplayProps = {
+  systemRoutines: ExtendedWorkoutPlan[];
+};
+
+export default function SystemRoutineDisplay({ systemRoutines }: SystemRoutineDisplayProps) {
   const strengthRoutines = systemRoutines.filter(routine => routine.systemRoutineCategory === 'Strength');
 
   return (
