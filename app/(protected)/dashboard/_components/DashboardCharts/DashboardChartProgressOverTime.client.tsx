@@ -47,8 +47,8 @@ export default function DashboardChartProgressOverTimeClient({
         <Area
           type="monotone"
           dataKey="totalWeight"
-          stroke="#f11450"
-          fill="#f11450"
+          stroke="#A6FF00"
+          fill="#A6FF00"
           aria-label="Total Weight Area"
         />
         <XAxis dataKey="period" tick={{ fontSize: "10px" }} />
