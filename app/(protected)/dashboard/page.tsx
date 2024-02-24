@@ -4,7 +4,7 @@ import DashboardLinks from "./_components/DashboardLinks";
 import DashboardRecentActivity from "./_components/DashboardRecentActivity";
 import DashboardCards from "./_components/DashboardCards/DashboardCards";
 import DashboardCharts from "./_components/DashboardCharts/DashboardCharts";
-import DashboardHeatmap from "./_components/DashboardHeatmap";
+//import DashboardHeatmap from "./_components/DashboardHeatmap";
 
 export default function DashboardPage({
   searchParams,
