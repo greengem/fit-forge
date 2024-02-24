@@ -34,7 +34,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
-          <Toaster />
+          <Toaster position="top-center" />
           {children}
           <Modal />
         </Providers>
