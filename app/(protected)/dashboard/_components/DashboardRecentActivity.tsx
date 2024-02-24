@@ -56,7 +56,7 @@ export default async function DashboardRecentActivity() {
       {recentActivity.length > 0 && (
         <>
           <h2 className="mb-3 mt-2 text-lg">Recent Activity</h2>
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-3 mb-3">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-3 mb-5">
             {recentActivity.map((activity) => {
               const totalWeight = activity.exercises.reduce(
                 (total, exercise) => {
@@ -109,7 +109,7 @@ export default async function DashboardRecentActivity() {
             })}
           </div>
           <div className="flex justify-center">
-            <Button variant="ghost" as={Link} href="/activity">
+            <Button color="primary" variant="ghost" as={Link} href="/activity">
               View all activity
             </Button>
           </div>
