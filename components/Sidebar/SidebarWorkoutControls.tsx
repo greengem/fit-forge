@@ -6,6 +6,7 @@ import { useWorkoutControls } from "@/contexts/WorkoutControlsContext";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react";
+import clsx from "clsx";
 
 export default function SidebarWorkoutControls() {
   const {
@@ -34,9 +35,7 @@ export default function SidebarWorkoutControls() {
             <div className="text-center">
               {isPaused ? "Workout Paused" : "Active Workout"}
             </div>
-            <div
-              className={`text-center text-3xl mb-2 tracking-tight ${isPaused ? "text-warning" : ""}`}
-            >
+            <div className={clsx('text-center text-3xl mb-2 tracking-tight', { 'text-warning': isPaused })}>
               {formatDuration(workoutDuration)}
             </div>
             <div className="flex justify-center gap-x-2 mb-2">
