@@ -8,7 +8,7 @@ import { Spinner } from "@nextui-org/spinner";
 
 export default function DashboardCards() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
+    <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 mb-3">
       <Suspense
         fallback={
           <DashboardCardTemplate title="Weekly Workouts">
@@ -45,6 +45,11 @@ export default function DashboardCards() {
       >
         <DashboardCardWeeklyPbs />
       </Suspense>
+
+      {/* <DashboardCardTemplate title="Goal One">1</DashboardCardTemplate>
+      <DashboardCardTemplate title="Goal Two">2</DashboardCardTemplate>
+      <DashboardCardTemplate title="Goal Three">3</DashboardCardTemplate>
+      <DashboardCardTemplate title="Goal Four">4</DashboardCardTemplate> */}
     </div>
   );
 }
