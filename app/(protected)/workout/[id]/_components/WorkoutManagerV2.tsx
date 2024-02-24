@@ -10,10 +10,33 @@ import { Workout } from "./WorkoutTypes";
 
 export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
   const [completedSets, setCompletedSets] = useState<Record<string, boolean>>({});
+  const [formData, setFormData] = useState<Record<string, any>>({});
 
   const handleCompleteSet = (setIndex: number, exerciseId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
     setCompletedSets(prevState => ({ ...prevState, [`${exerciseId}-${setIndex}`]: newValue }));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nameParts = e.target.name.split('.');
+    const exerciseId = nameParts[1];
+    const setIndex = nameParts[3];
+  
+    if (completedSets[`${exerciseId}-${setIndex}`]) {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+      });
+    } else {
+      const newFormData: Record<string, any> = { ...formData };
+      delete newFormData[e.target.name];
+      setFormData(newFormData);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(formData);
   };
 
   return (
@@ -24,7 +47,7 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
         </p>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+      <form className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5" onSubmit={handleSubmit}>
         {workout.WorkoutPlanExercise.map((exercise, index) => (
           <Card
             key={exercise.Exercise.id}
@@ -62,6 +85,8 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
                             </div>
                           }
                           isDisabled={completedSets[`${exercise.Exercise.id}-${setIndex}`]}
+                          name={`exercises.${exercise.Exercise.id}.sets.${setIndex}.weight`}
+                          onChange={handleInputChange}
                         />
                       </TableCell>
                       <TableCell>
@@ -69,10 +94,9 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
                           label="Reps"
                           placeholder="8"
                           size="sm"
-                          defaultValue={
-                            exercise.reps ? exercise.reps.toString() : ""
-                          }
                           isDisabled={completedSets[`${exercise.Exercise.id}-${setIndex}`]}
+                          name={`exercises.${exercise.Exercise.id}.sets.${setIndex}.reps`}
+                          onChange={handleInputChange}
                         />
                       </TableCell>
                       <TableCell>
@@ -103,7 +127,8 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
             </CardFooter>
           </Card>
         ))}
-      </div>
+        <Button type="submit">Submit</Button>
+      </form>
     </div>
   );
 }
