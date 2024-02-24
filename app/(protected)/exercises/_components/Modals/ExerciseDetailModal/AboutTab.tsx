@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { Exercise } from "@prisma/client";
+import clsx from "clsx";
 
 export default function AboutTab({ exercise }: { exercise: Exercise | null }) {
   const [emblaRef, emblaApi] = useEmblaCarousel();
@@ -47,7 +48,10 @@ export default function AboutTab({ exercise }: { exercise: Exercise | null }) {
               <button
                 key={index}
                 onClick={() => emblaApi.scrollTo(index)}
-                className={`h-1 w-10 rounded-full ${selectedIndex === index ? "bg-primary" : "bg-gray-300"}`}
+                className={clsx('h-1 w-10 rounded-full', {
+                  'bg-primary': selectedIndex === index,
+                  'bg-gray-300': selectedIndex !== index
+                })}
               />
             ))}
           </div>
