@@ -44,7 +44,6 @@ export default function RoutineMenu({ routineId }: { routineId: string }) {
                 </button>
             </DropdownTrigger>
             <DropdownMenu
-                disabledKeys={["details"]}
                 aria-label="Static Actions"
                 topContent={
                     <h4 className="text-zinc-500 uppercase font-semibold text-xs px-2 pt-2">
@@ -54,12 +53,6 @@ export default function RoutineMenu({ routineId }: { routineId: string }) {
                 onAction={(key) => handleAction(String(key), routineId)}
             >
                 <DropdownSection showDivider>
-                    <DropdownItem
-                        startContent={<IconInfoCircle size={20} />}
-                        key="details"
-                    >
-                        View Details (Coming Soon)
-                    </DropdownItem>
                     <DropdownItem startContent={<IconEdit size={20} />} key="edit">
                         Edit
                     </DropdownItem>
