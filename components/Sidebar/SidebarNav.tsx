@@ -81,7 +81,7 @@ export default function SidebarNav() {
         />
         <li onClick={toggleSidebar} className='cursor-pointer'>
           <div className={clsx(
-            "flex items-center space-x-3 p-2 rounded-lg text-zinc-600 dark:text-zinc-400",
+            "flex items-center space-x-3 p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-colors duration-200 ease-in-out",
             sidebarCollapse ? "justify-center" : ""
           )}>
             {sidebarCollapse ? 
@@ -117,10 +117,10 @@ function NavItem({
   const content = (
     <div
       className={clsx(
-        "flex items-center space-x-3 p-2 rounded-lg",
+        "flex items-center space-x-3 p-2 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-colors duration-200 ease-in-out",
         sidebarCollapse ? "justify-center" : "",
         active
-          ? "bg-zinc-300 dark:bg-zinc-800 text-black dark:text-white"
+          ? "bg-zinc-300 dark:bg-zinc-800 text-black dark:text-primary"
           : "text-zinc-600 dark:text-zinc-400",
       )}
     >
