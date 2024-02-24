@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import PricingCard from "./PricingCard";
 
 export default function Home() {
   const cardData = [
@@ -106,105 +107,63 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mb-10 py-5 px-3 md:px-10 hidden">
+      <section className="mb-10 py-5 px-3 md:px-10">
         <h2 className="text-center text-6xl my-10 font-bold">
           The Perfect Plan <span className="text-primary">For Your Needs</span>
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <Card className="shadow-xl" shadow="none">
-            <CardBody className="px-5">
-              <div className="flex-none">
-                <h4 className="font-semibold gap-3 text-xl">Standard</h4>
-                <p className="text-zinc-500 text-sm mb-5">For the basics</p>
-                <h4 className="text-4xl font-semibold">$0</h4>
-                <p className="mb-5 text-zinc-500 text-sm">
-                  Free forever, no commitments
-                </p>
-                <Button size="sm" as={Link} href="/dashboard" className="mb-5">
-                  <IconPlayerPlayFilled size={18} /> Get Started
-                </Button>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex gap-3 items-center">
-                    <IconJumpRope size={18} />
-                    Unlimited Routines
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconStretching size={18} />
-                    Access to all of our 900+ Exercises
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconActivity size={18} />
-                    Unlimited Basic Workout Logs
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconChartBar size={18} />
-                    Basic Charts
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconUser size={18} />
-                    Simple Profile
-                  </li>
-                </ul>
-              </div>
-            </CardBody>
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-          <Card className="shadow-xl ring-2 ring-primary" shadow="none">
-            <CardBody className="px-5">
-              <div className="flex-none">
-                <h4 className="font-semibold gap-3 text-xl text-primary">
-                  Pro
-                </h4>
-                <p className="text-zinc-500 text-sm mb-5">
-                  Our most popular plan
-                </p>
-                <h4 className="text-4xl font-semibold">$4.99</h4>
-                <p className="mb-5 text-zinc-500 text-sm">
-                  Per month, cancel anytime.
-                </p>
-                <Button
-                  isDisabled
-                  color="primary"
-                  size="sm"
-                  as={Link}
-                  href="/dashboard"
-                  className="mb-5"
-                >
-                  <IconPlayerPlayFilled size={18} /> Coming Soon
-                </Button>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex gap-3 items-center">
-                    <IconJumpRope size={18} />
-                    Unlimited Routines
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconStretching size={18} />
-                    Access to all of our 900+ Exercises
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconActivity size={18} />
-                    Unlimited Advanced Workout Logs
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconChartBar size={18} />
-                    Advanced Charts
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconUserBolt size={18} />
-                    Advanced Profile
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconBrandOpenai size={18} />
-                    AI Routine Builder
-                  </li>
-                  <li className="flex gap-3 items-center">
-                    <IconBrandOpenai size={18} />
-                    AI Workout Analysis
-                  </li>
-                </ul>
-              </div>
-            </CardBody>
-          </Card>
+          <PricingCard 
+            title="Standard"
+            subtitle="For the basics"
+            price="$0"
+            description="Free forever, no commitments"
+            buttonText="Get Started"
+            buttonLink="/dashboard"
+            features={[
+              { icon: <IconJumpRope size={18} />, text: "Unlimited Routines" },
+              { icon: <IconStretching size={18} />, text: "Access to all of our 900+ Exercises" },
+              { icon: <IconActivity size={18} />, text: "Unlimited Basic Workout Logs" },
+              { icon: <IconChartBar size={18} />, text: "Basic Charts" },
+              { icon: <IconUser size={18} />, text: "Simple Profile" },
+            ]}
+          />
+
+          <PricingCard 
+            title="Pro (Weekly)"
+            subtitle="Per month, cancel anytime."
+            price="$4.99"
+            description="Per month, cancel anytime."
+            buttonText="Get Started"
+            buttonLink="/dashboard"
+            highlight={true}
+            features={[
+              { icon: <IconJumpRope size={18} />, text: "Unlimited Routines" },
+              { icon: <IconStretching size={18} />, text: "Access to all of our 900+ Exercises" },
+              { icon: <IconActivity size={18} />, text: "Unlimited Advnaced Workout Logs" },
+              { icon: <IconChartBar size={18} />, text: "Advanced Charts" },
+              { icon: <IconUser size={18} />, text: "Advanced Profile" },
+              { icon: <IconBrandOpenai size={18} />, text: "AI Features"}
+            ]}
+          />
+
+          
+          <PricingCard 
+            title="Pro (Monthly)"
+            subtitle="Per month, cancel anytime."
+            price="$49.99"
+            description="Per month, cancel anytime."
+            buttonText="Get Started"
+            buttonLink="/dashboard"
+            features={[
+              { icon: <IconJumpRope size={18} />, text: "Unlimited Routines" },
+              { icon: <IconStretching size={18} />, text: "Access to all of our 900+ Exercises" },
+              { icon: <IconActivity size={18} />, text: "Unlimited Advnaced Workout Logs" },
+              { icon: <IconChartBar size={18} />, text: "Advanced Charts" },
+              { icon: <IconUser size={18} />, text: "Advanced Profile" },
+              { icon: <IconBrandOpenai size={18} />, text: "AI Features"}
+            ]}
+          />
         </div>
       </section>
     </main>
