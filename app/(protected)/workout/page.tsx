@@ -7,6 +7,23 @@ import { IconPlus } from "@tabler/icons-react";
 import PageHeading from "@/components/PageHeading/PageHeading";
 import RoutineCards from "./_components/RoutineCards";
 import SystemRoutineDisplay from "./_components/SystemRoutineDisplay";
+import { WorkoutPlan } from "@prisma/client";
+
+type Exercise = {
+  id: string;
+  name: string;
+  category: string;
+};
+
+type WorkoutPlanExercise = {
+  Exercise: Exercise;
+  order: number;
+  sets: number;
+};
+
+type ExtendedWorkoutPlan = WorkoutPlan & {
+  WorkoutPlanExercise: WorkoutPlanExercise[];
+};
 
 export default async function WorkoutPage() {
   const { userId }: { userId: string | null } = auth();
@@ -25,22 +42,14 @@ export default async function WorkoutPage() {
     });
   }
 
-  const routines = await prisma.workoutPlan.findMany({
+  const routines: ExtendedWorkoutPlan[] = await prisma.workoutPlan.findMany({
     where: {
       OR: whereClause,
     },
     orderBy: {
       createdAt: "desc",
     },
-    select: {
-      id: true,
-      name: true,
-      notes: true,
-      userId: true,
-      createdAt: true,
-      updatedAt: true,
-      isSystemRoutine: true,
-      systemRoutineCategory: true,
+    include: {
       WorkoutPlanExercise: {
         select: {
           sets: true,
