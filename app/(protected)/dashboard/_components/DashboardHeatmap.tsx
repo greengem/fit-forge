@@ -10,7 +10,7 @@ export default async function DashboardHeatmap() {
   });
 
   const counts = logs.reduce((acc, log) => {
-    const date = format(log.date, 'yyyy-MM-dd');
+    const date = format(log.date, 'yyyy/MM/dd');
     acc[date] = (acc[date] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
