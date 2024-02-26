@@ -17,6 +17,7 @@ export default async function ActivityList() {
   const workouts = await prisma.workoutLog.findMany({
     where: {
       userId: userId,
+      inProgress: false,
     },
     orderBy: {
       createdAt: "desc",
