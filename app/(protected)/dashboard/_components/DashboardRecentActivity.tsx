@@ -20,6 +20,7 @@ export default async function DashboardRecentActivity() {
   const recentActivity = await prisma.workoutLog.findMany({
     where: {
       userId: userId,
+      inProgress: false,
     },
     take: 4,
     orderBy: {
