@@ -23,9 +23,13 @@ export default async function ActivityList() {
     },
     select: {
       id: true,
-      name: true,
       duration: true,
       createdAt: true,
+      WorkoutPlan: {
+        select: {
+          name: true,
+        },
+      },
       exercises: {
         select: {
           id: true,
@@ -78,7 +82,7 @@ export default async function ActivityList() {
                     <ActivityMenu activity={activity} />
                   </div>
                   <p className="text-sm text-zinc-500 leading-5">
-                    {activity.name}
+                    {activity.WorkoutPlan.name}
                   </p>
                 </CardHeader>
                 <CardBody className="pt-0 px-5 pb-4">
