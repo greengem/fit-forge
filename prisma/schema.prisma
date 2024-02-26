@@ -76,13 +76,12 @@ model WorkoutPlanExercise {
 model WorkoutLog {
   id              String              @id @default(uuid())
   userId     String
-  workoutPlanId   String?
-  name            String
+  workoutPlanId   String
   date            DateTime
   duration        Int
   createdAt       DateTime            @default(now())
   date_updated    DateTime?           @default(now())
-  WorkoutPlan     WorkoutPlan?        @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+  WorkoutPlan     WorkoutPlan        @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
   exercises       WorkoutLogExercise[]
   UserExercisePB  UserExercisePB[]    @relation("WorkoutLogToUserExercisePB")
 }
