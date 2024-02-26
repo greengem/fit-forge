@@ -31,9 +31,7 @@ export default function DashboardPage({
         chart3DateRange={chart3DateRange}
         chart4DateRange={chart4DateRange}
       />
-      {/* <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <DashboardHeatmap />
-      </div> */}
+      {/* <DashboardHeatmap /> */}
       <DashboardLinks />
       <Suspense fallback={<div>Loading Recent Activity...</div>}>
         <DashboardRecentActivity />
