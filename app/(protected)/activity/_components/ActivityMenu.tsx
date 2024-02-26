@@ -17,6 +17,8 @@ import {
 } from "@tabler/icons-react";
 import { toast } from "sonner";
 
+
+
 interface Set {
   weight: number | null;
   reps: number | null;
@@ -32,11 +34,15 @@ interface Exercise {
   sets: Set[];
 }
 
+interface WorkoutPlan {
+  name: string;
+}
+
 interface Activity {
   id: string;
-  name: string;
   duration: number;
   createdAt: Date;
+  WorkoutPlan: WorkoutPlan;
   exercises: Exercise[];
 }
 
