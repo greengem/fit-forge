@@ -27,9 +27,13 @@ export default async function DashboardRecentActivity() {
     },
     select: {
       id: true,
-      name: true,
       duration: true,
       createdAt: true,
+      WorkoutPlan: {
+        select: {
+          name: true,
+        },
+      },
       exercises: {
         select: {
           id: true,
@@ -73,7 +77,7 @@ export default async function DashboardRecentActivity() {
                 <Card key={activity.id} shadow="none" className="shadow-md">
                   <CardHeader className="flex gap-3 px-5 pt-4">
                     <div className="flex flex-col flex-grow">
-                      <p className="text-md  leading-5">{activity.name}</p>
+                      <p className="text-md  leading-5">{activity.WorkoutPlan.name}</p>
                       <p className="text-xs text-default-500 leading-5">
                         <span className="flex space-x-1">
                           <time>
