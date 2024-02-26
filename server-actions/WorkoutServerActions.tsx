@@ -35,7 +35,6 @@ export async function handleSaveWorkout(data: WorkoutData) {
 
     const newWorkoutLog = await prisma.workoutLog.create({
       data: {
-        name,
         date,
         duration,
         workoutPlanId,
@@ -67,6 +66,45 @@ export async function handleSaveWorkout(data: WorkoutData) {
 
     return { success: true, message: "Workout Saved" };
   } catch (e) {
+    return { success: false, message: "Failed to save workout" };
+  }
+}
+
+
+export async function handleSaveWorkoutV2(data: any) {
+  try {
+    const { userId }: { userId: string | null } = auth();
+
+    if (!userId) {
+      throw new Error("You must be signed in to view this page.");
+    }
+
+    console.log(JSON.stringify(data, null, 2));
+
+    const workoutLog = await prisma.workoutLog.create({
+      data: {
+        userId,
+        workoutPlanId: data.workoutPlanId,
+        date: new Date(),
+        duration: data.duration,
+        exercises: {
+          create: Object.entries(data.exercises).map(([exerciseId, exerciseData]) => ({
+            exerciseId,
+            sets: {
+              create: (exerciseData as { sets: Array<{ weight: string, reps: string }> }).sets.map((set: any) => ({
+                weight: parseFloat(set.weight),
+                reps: set.reps ? parseInt(set.reps) : null,
+                exerciseDuration: set.exerciseDuration ? parseInt(set.exerciseDuration) : null,
+              })),
+            },
+          })),
+        },
+      },
+    });
+
+    return { success: true, message: "Workout Saved" };
+  } catch (e) {
+    console.error(e);
     return { success: false, message: "Failed to save workout" };
   }
 }
