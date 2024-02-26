@@ -1,33 +1,68 @@
 "use client";
-import { useState } from "react";
+import { Workout } from "./WorkoutTypes";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { handleSaveWorkoutV2 } from "@/server-actions/WorkoutServerActions";
+
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell,} from "@nextui-org/table";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { IconCheck, IconPlus, IconSquareCheck, IconX } from "@tabler/icons-react";
 import { Switch } from "@nextui-org/react";
-import { Workout } from "./WorkoutTypes";
+
 
 export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
+  const router = useRouter();
+
+  const [weightValues, setWeightValues] = useState<Record<string, string>>({});
+  const [trackingValues, setTrackingValues] = useState<Record<string, string>>({});
   const [completedSets, setCompletedSets] = useState<Record<string, boolean>>({});
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleCompleteSet = (setIndex: number, exerciseId: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.checked;
-    setCompletedSets(prevState => ({ ...prevState, [`${exerciseId}-${setIndex}`]: newValue }));
-  };
+  const weightRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const trackingRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  const duration = 60;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const newValue = e.target.value;
+    if (newValue && !isNaN(Number(newValue))) {
+      const name = e.target.name;
+      if (name.includes('weight')) {
+        setWeightValues(prevValues => ({ ...prevValues, [name]: newValue }));
+      } else {
+        setTrackingValues(prevValues => ({ ...prevValues, [name]: newValue }));
+      }
+    }
+  };
+
+  const handleCompleteSet = (setIndex: number, exerciseId: string, trackingType: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.checked;
+    setCompletedSets(prevState => ({ ...prevState, [`${exerciseId}-${setIndex}`]: newValue }));
+  
+    if (newValue) {
+      const weightInput = weightRefs.current[`${exerciseId}-${setIndex}`];
+      const trackingInput = trackingRefs.current[`${exerciseId}-${setIndex}`];
+    
+      if (weightInput && trackingInput) {
+        setFormData(prevState => ({
+          ...prevState,
+          [`exercises.${exerciseId}.sets.${setIndex}.weight`]: weightInput.value,
+          [`exercises.${exerciseId}.sets.${setIndex}.${trackingType === 'duration' ? 'exerciseDuration' : trackingType}`]: trackingInput.value
+        }));
+      }
+    }
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setIsSubmitting(true);
   
-    const structuredData: Record<string, { sets: Array<{ weight: string, reps: string }> }> = {};
+    const structuredData: Record<string, { sets: Array<{ weight: string, reps: string, exerciseDuration: string }> }> = {};
   
     Object.keys(formData)
       .filter(key => {
@@ -47,13 +82,28 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
         }
   
         if (!structuredData[exerciseId].sets[setIndex]) {
-          structuredData[exerciseId].sets[setIndex] = { weight: '', reps: '' };
+          structuredData[exerciseId].sets[setIndex] = { weight: '', reps: '', exerciseDuration: '' };
         }
   
-        structuredData[exerciseId].sets[setIndex][property as 'weight' | 'reps'] = formData[key];
+        structuredData[exerciseId].sets[setIndex][property as 'weight' | 'reps' | 'exerciseDuration'] = formData[key];
       });
   
-    console.log(structuredData);
+    const dataToSend = {
+      duration,
+      workoutPlanId: workout.id,
+      exercises: structuredData,
+    };
+
+    const response = await handleSaveWorkoutV2(dataToSend);
+    if (response.success) {
+      router.push("/dashboard");
+      toast.success(response.message);
+    } else {
+      toast.error(response.message);
+    }
+
+    setIsSubmitting(false);
+
   };
 
   return (
@@ -63,8 +113,12 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
           Notes: {workout.notes}
         </p>
       )}
+      <Card className="mb-3" shadow="none"><CardBody>
+      <pre>{JSON.stringify(formData, null, 2)}</pre>
+      </CardBody></Card>
 
-      <form className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5 mb-5">
         {workout.WorkoutPlanExercise.map((exercise, index) => (
           <Card
             key={exercise.Exercise.id}
@@ -80,7 +134,7 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
                 <TableHeader>
                   <TableColumn>SET</TableColumn>
                   <TableColumn>KG</TableColumn>
-                  <TableColumn>REPS</TableColumn>
+                  <TableColumn>{exercise.trackingType === 'reps' ? 'REPS' : 'DURATION'}</TableColumn>
                   <TableColumn className="flex justify-center items-center">
                     <IconSquareCheck />
                   </TableColumn>
@@ -103,16 +157,18 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
                           }
                           isDisabled={completedSets[`${exercise.Exercise.id}-${setIndex}`]}
                           name={`exercises.${exercise.Exercise.id}.sets.${setIndex}.weight`}
+                          ref={(el) => weightRefs.current[`${exercise.Exercise.id}-${setIndex}`] = el}
                           onChange={handleInputChange}
                         />
                       </TableCell>
                       <TableCell>
                         <Input
-                          label="Reps"
-                          placeholder="8"
+                          label={exercise.trackingType === 'reps' ? 'Reps' : 'Duration'}
+                          placeholder={exercise.trackingType === 'reps' ? '8' : '60'}
                           size="sm"
                           isDisabled={completedSets[`${exercise.Exercise.id}-${setIndex}`]}
-                          name={`exercises.${exercise.Exercise.id}.sets.${setIndex}.reps`}
+                          name={`exercises.${exercise.Exercise.id}.sets.${setIndex}.${exercise.trackingType}`}
+                          ref={(el) => trackingRefs.current[`${exercise.Exercise.id}-${setIndex}`] = el}
                           onChange={handleInputChange}
                         />
                       </TableCell>
@@ -120,7 +176,7 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
                         <Switch
                           startContent={<IconCheck />}
                           endContent={<IconX />}
-                          onChange={handleCompleteSet(setIndex, exercise.Exercise.id)}
+                          onChange={handleCompleteSet(setIndex, exercise.Exercise.id, exercise.trackingType)}
                           size="lg"
                           name="completedSwitch"
                         />
@@ -144,7 +200,8 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
             </CardFooter>
           </Card>
         ))}
-        <Button type="submit">Submit</Button>
+        </div>
+        <Button isLoading={isSubmitting} type="submit">Submit</Button>
       </form>
     </div>
   );
