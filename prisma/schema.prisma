@@ -79,6 +79,7 @@ model WorkoutLog {
   workoutPlanId   String
   date            DateTime
   duration        Int
+  inProgress      Boolean             @default(true)
   createdAt       DateTime            @default(now())
   date_updated    DateTime?           @default(now())
   WorkoutPlan     WorkoutPlan        @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
