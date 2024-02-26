@@ -35,14 +35,6 @@ interface Exercise {
   sets: Set[];
 }
 
-interface Activity {
-  id: string;
-  name: string;
-  duration: number;
-  createdAt: Date;
-  exercises: Exercise[];
-}
-
 export default function ActivityModal() {
   const { activity, isOpen, onOpenChange } = useContext(ActivityModalContext);
 
@@ -64,7 +56,7 @@ export default function ActivityModal() {
                   {format(activity?.createdAt || new Date(), "dd/MM/yyyy")}
                 </time>
                 <span>-</span>
-                <span>{activity?.name}</span>
+                <span>{activity?.WorkoutPlan.name}</span>
               </h2>
 
               <p className="text-sm">{activity?.duration} Mins</p>
