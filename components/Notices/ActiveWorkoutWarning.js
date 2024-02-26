@@ -4,7 +4,7 @@ import { useWorkoutControls } from "@/contexts/WorkoutControlsContext";
 import Link from "next/link";
 import {
   IconAlertCircleFilled,
-  IconAlertTriangleFilled,
+  IconPlayerPlayFilled,
 } from "@tabler/icons-react";
 import { Button } from "@nextui-org/button";
 export default function ActiveWorkoutWarning() {
@@ -17,18 +17,19 @@ export default function ActiveWorkoutWarning() {
   }
 
   return (
-    <div className="py-3 px-4 bg-default-100 rounded-lg flex justify-between items-center">
-      <div className="flex gap-2">
-        <span className="text-warning">
-          <IconAlertCircleFilled />
-        </span>
-        <span>You have an active workout</span>
+    <div className="py-2 px-3 bg-zinc-900 rounded-xl flex justify-between items-center mb-3">
+      <div className="flex gap-2 items-center">
+        <IconAlertCircleFilled size={18} className="text-warning" />
+        <p className="text-sm">You have an active workout</p>
       </div>
+
       <Button
         color="primary"
         as={Link}
+        size="sm"
         href={`/workout/${activeWorkoutRoutine}`}
       >
+        <IconPlayerPlayFilled size={16} />
         Resume Workout
       </Button>
     </div>
