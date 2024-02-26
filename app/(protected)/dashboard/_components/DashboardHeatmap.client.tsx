@@ -1,7 +1,8 @@
 'use client'
 import { subMonths } from 'date-fns';
-import { Card, CardBody } from '@nextui-org/react';
+import { Card, CardBody, CardHeader } from '@nextui-org/react';
 import HeatMap from '@uiw/react-heat-map';
+import { IconCalendar } from '@tabler/icons-react';
 
 type HeatmapValue = {
   date: string;
@@ -18,18 +19,21 @@ export default function DashboardHeatmapClient({ values }: DashboardHeatmapClien
   const endDate = new Date();
 
   return (
-    <Card className='mb-3'>
-      <CardBody>
-        <div className='flex items-end justify-end overflow-x-scroll relative h-40 no-scrollbar'>
+    <Card className='mb-3 shadow-md' shadow='none'>
+      <CardHeader className="p-3 gap-x-3">
+          <span className="text-primary"><IconCalendar /></span> Heatmap
+      </CardHeader>
+      <CardBody className='p-3 pb-0 '>
+        <div className='overflow-x-scroll relative h-40 no-scrollbar'>
           <div className='absolute right-0 top-0 bottom-0'>
           <HeatMap
               value={values}
               //weekLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']}
               weekLabels={false}
               startDate={startDate}
-              legendCellSize={0}
+              legendCellSize={5}
               endDate={endDate}
-              rectSize={20}
+              rectSize={16}
               width={1200}
               style={{ color: '#71717a', '--rhm-rect-active': '#A6FF00' } as React.CSSProperties}
               panelColors={{
