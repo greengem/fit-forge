@@ -17,11 +17,15 @@ interface Exercise {
   sets: Set[];
 }
 
+interface WorkoutPlan {
+  name: string;
+}
+
 interface Activity {
   id: string;
-  name: string;
   duration: number;
   createdAt: Date;
+  WorkoutPlan: WorkoutPlan;
   exercises: Exercise[];
 }
 
