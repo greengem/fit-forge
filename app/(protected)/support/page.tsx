@@ -1,33 +1,53 @@
+import { supportData } from "./supportData";
 import PageHeading from "@/components/PageHeading/PageHeading";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
+
+function CustomCard({ title, children } : { title: string, children: React.ReactNode }) {
+  return (
+    <Card shadow="none" className="shadow-md">
+      <CardHeader className="text-xl pb-0">{title}</CardHeader>
+      <CardBody className="text-zinc-300">{children}</CardBody>
+    </Card>
+  );
+}
+
+function CustomGrid({ children } : { children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+      {children}
+    </div>
+  );
+}
+
+function SectionTitle({ title } : { title: string }) {
+  return (
+    <h1 className="text-2xl mb-3 font-bold">{title}</h1>
+  );
+}
+
+function SectionSubtitle({ title } : { title: string }) {
+  return (
+    <h2 className="text-zinc-500 mb-3 text-sm">{title}</h2>
+  );
+}
 
 export default function Support() {
   return (
     <>
       <PageHeading title="Support" />
-      <p>Coming Soon</p>
-      {/* <p className="text-zinc-500 mb-5">We're here to help! You can find answers to common questions about the Workout Tracker below. If you can't find what you're looking for, you can contact our support team using the form at the bottom of the page.</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div>
-          <h1 className="text-2xl mb-3 font-bold">Frequently Asked Questions</h1>
-          <p className="text-zinc-500 mb-3">Here are some of the most common questions our users have about the Workout Tracker.</p>
-          <Card>
-            <CardHeader className="text-xl font-semibold">How do I track my workouts?</CardHeader>
-            <CardBody className="text-zinc-500">To track your workouts, simply open the Workout Tracker app and click on the "Track Workout" button. Then, you can select the type of workout you want to track and enter the details of your session.</CardBody>
-          </Card>
+      <p className="text-zinc-500 mb-5">We're here to help! You can find answers to common questions about the Workout Tracker below. If you can't find what you're looking for, you can contact our support team using the form at the bottom of the page.</p>
+
+      {supportData.map((section, index) => (
+        <div key={index}>
+          <SectionTitle title={section.title} />
+          <SectionSubtitle title={section.subtitle} />
+          <CustomGrid>
+            {section.cards.map((card, cardIndex) => (
+              <CustomCard key={cardIndex} title={card.title}>{card.content}</CustomCard>
+            ))}
+          </CustomGrid>
         </div>
-
-        <div>
-          <h1 className="text-2xl mb-3 font-bold">Troubleshooting</h1>
-          <p className="text-zinc-500 mb-3">If you're experiencing issues with the Workout Tracker, try the following troubleshooting tips to resolve the problem.</p>
-          <Card>
-            <CardHeader className="text-xl font-semibold">The app is not tracking my workouts correctly.</CardHeader>
-            <CardBody className="text-zinc-500">If you're having trouble with the workout tracking feature, make sure that you have granted the app permission to access your device's GPS or motion sensors. You may also need to enable location services on your phone to ensure accurate tracking.</CardBody>
-          </Card>
-        </div>
-
-
-      </div> */}
+      ))}
     </>
   );
 }
