@@ -106,7 +106,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mb-10 py-5 px-3 md:px-10 hidden">
+      <section className="mb-10 py-5 px-3 md:px-10">
         <h2 className="text-center text-6xl my-10 font-bold">
           The Perfect Plan <span className="text-primary">For Your Needs</span>
         </h2>
@@ -143,7 +143,7 @@ export default function Home() {
               { icon: <IconActivity size={18} />, text: "Unlimited Advnaced Workout Logs" },
               { icon: <IconChartBar size={18} />, text: "Advanced Charts" },
               { icon: <IconUser size={18} />, text: "Advanced Profile" },
-              { icon: <IconBrandOpenai size={18} />, text: "AI Features"}
+              { icon: <IconBrandOpenai size={18} />, text: "AI Features"},
             ]}
           />
 
@@ -161,7 +161,7 @@ export default function Home() {
               { icon: <IconActivity size={18} />, text: "Unlimited Advnaced Workout Logs" },
               { icon: <IconChartBar size={18} />, text: "Advanced Charts" },
               { icon: <IconUser size={18} />, text: "Advanced Profile" },
-              { icon: <IconBrandOpenai size={18} />, text: "AI Features"}
+              { icon: <IconBrandOpenai size={18} />, text: "AI Features"},
             ]}
           />
 
