@@ -6,7 +6,6 @@ import { Button } from "@nextui-org/button";
 import { IconPlus } from "@tabler/icons-react";
 import PageHeading from "@/components/PageHeading/PageHeading";
 import RoutineCards from "./_components/RoutineCards";
-import SystemRoutineDisplay from "./_components/SystemRoutineDisplay";
 import { WorkoutPlan } from "@prisma/client";
 
 type Exercise = {
@@ -90,10 +89,8 @@ export default async function WorkoutPage() {
       <h4 className="font-semibold text-2xl my-3">Your Workout Plans</h4>
       <RoutineCards routines={userRoutines} isSystem={false} />
 
-      <h4 className="font-semibold text-2xl mb-3 mt-10">
-        System Workout Plans
-      </h4>
-      <SystemRoutineDisplay systemRoutines={systemRoutines} />
+      <h4 className="font-semibold text-2xl mb-3 mt-10">System Workout Plans</h4>
+      <RoutineCards routines={systemRoutines} isSystem={true} />
     </>
   );
 }
