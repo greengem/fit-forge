@@ -25,7 +25,7 @@ export default function DashboardCharts({
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-3 mb-3">
       <DashboardChartCard
-        icon={<IconChartBar />}
+        icon={<IconChartBar className="text-danger" />}
         title="Frequency"
         colSpan="col-span-2"
         chartId={1}
@@ -36,7 +36,7 @@ export default function DashboardCharts({
       </DashboardChartCard>
 
       <DashboardChartCard
-        icon={<IconChartAreaFilled />}
+        icon={<IconChartAreaFilled className="text-danger" />}
         title="Progress"
         colSpan="col-span-2"
         chartId={2}
@@ -47,7 +47,7 @@ export default function DashboardCharts({
       </DashboardChartCard>
 
       <DashboardChartCard
-        icon={<IconChartLine />}
+        icon={<IconChartLine className="text-danger" />}
         title="Volume Load"
         colSpan="col-span-2"
         chartId={3}
