@@ -6,7 +6,7 @@ function CustomCard({ title, children } : { title: string, children: React.React
   return (
     <Card shadow="none" className="shadow-md">
       <CardHeader className="text-xl pb-0">{title}</CardHeader>
-      <CardBody className="text-zinc-300">{children}</CardBody>
+      <CardBody className="text-zinc-300 text-sm">{children}</CardBody>
     </Card>
   );
 }
@@ -35,7 +35,7 @@ export default function Support() {
   return (
     <>
       <PageHeading title="Support" />
-      <p className="text-zinc-500 mb-5">We're here to help! You can find answers to common questions about the Workout Tracker below. If you can't find what you're looking for, you can contact our support team using the form at the bottom of the page.</p>
+      <p className="text-zinc-500 mb-5">We're here to help! You can find answers to common questions about Tracktive below. If you can't find what you're looking for, you can contact our support team.</p>
 
       {supportData.map((section, index) => (
         <div key={index}>
