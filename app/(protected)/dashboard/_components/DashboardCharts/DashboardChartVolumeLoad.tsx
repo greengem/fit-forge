@@ -44,14 +44,16 @@ export default async function DashboardChartVolumeLoad({
     },
   });
 
+  let lastKnownVolumeLoad = 0;
+
   let workoutVolumeLoads: WorkoutVolumeLoadData[] = intervals.map(
     (interval) => {
       const { startOfInterval, endOfInterval } = getIntervalStartAndEndDates(
         interval,
         dateRange,
       );
-
-      const volumeLoadInInterval = workoutLogs
+  
+      let volumeLoadInInterval = workoutLogs
         .filter((workoutLog) => {
           const logDate = new Date(workoutLog.date);
           return logDate >= startOfInterval && logDate <= endOfInterval;
@@ -72,13 +74,19 @@ export default async function DashboardChartVolumeLoad({
           );
           return totalVolume + workoutVolume;
         }, 0);
-
+  
+        if (volumeLoadInInterval === 0) {
+          volumeLoadInInterval = lastKnownVolumeLoad;
+        } else {
+          lastKnownVolumeLoad = volumeLoadInInterval;
+        }
+  
       return {
         period: format(startOfInterval, "dd-MM-yyyy"),
         totalVolumeLoad: volumeLoadInInterval,
       };
     },
-  );
+  );  
 
   return <DashboardChartVolumeLoadClient data={workoutVolumeLoads} />;
 }
