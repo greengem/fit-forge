@@ -5,6 +5,7 @@ import DashboardCardDailyStreak from "./DashboardCardDailyStreak";
 import DashboardCardWeeklyPbs from "./DashboardCardWeeklyPbs";
 import DashboardCardWeeklyWorkouts from "./DashboardCardWeeklyWorkouts";
 import { Spinner } from "@nextui-org/spinner";
+import { IconTarget } from "@tabler/icons-react";
 
 export default function DashboardCards() {
   return (
@@ -46,10 +47,18 @@ export default function DashboardCards() {
         <DashboardCardWeeklyPbs />
       </Suspense>
 
-      {/* <DashboardCardTemplate title="Goal One">1</DashboardCardTemplate>
-      <DashboardCardTemplate title="Goal Two">2</DashboardCardTemplate>
-      <DashboardCardTemplate title="Goal Three">3</DashboardCardTemplate>
-      <DashboardCardTemplate title="Goal Four">4</DashboardCardTemplate> */}
+      {/* <DashboardCardTemplate title="Goal One" icon={<IconTarget className="text-primary" />}>
+        1
+      </DashboardCardTemplate>
+      <DashboardCardTemplate title="Goal Two" icon={<IconTarget className="text-primary" />}>
+        2
+      </DashboardCardTemplate>
+      <DashboardCardTemplate title="Goal Three" icon={<IconTarget className="text-primary" />}>
+        3
+      </DashboardCardTemplate>
+      <DashboardCardTemplate title="Goal Four" icon={<IconTarget className="text-primary" />}>
+        4
+      </DashboardCardTemplate> */}
     </div>
   );
 }
