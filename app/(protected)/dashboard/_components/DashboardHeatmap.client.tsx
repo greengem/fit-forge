@@ -1,7 +1,6 @@
 'use client'
 import { subMonths } from 'date-fns';
 import { Card, CardBody, CardHeader } from '@nextui-org/react';
-import HeatMap from '@uiw/react-heat-map';
 import { IconCalendar } from '@tabler/icons-react';
 
 type HeatmapValue = {
@@ -26,7 +25,7 @@ export default function DashboardHeatmapClient({ values }: DashboardHeatmapClien
       <CardBody className='p-3 pb-0 '>
         <div className='overflow-x-scroll relative h-40 no-scrollbar'>
           <div className='absolute right-0 top-0 bottom-0'>
-          <HeatMap
+          {/* <HeatMap
               value={values}
               //weekLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']}
               weekLabels={false}
@@ -42,7 +41,7 @@ export default function DashboardHeatmapClient({ values }: DashboardHeatmapClien
                 2: '#C3FF3F',
                 3: '#A6FF00',
               }}
-            />
+            /> */}
             </div>
         </div>
       </CardBody>
