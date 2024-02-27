@@ -78,7 +78,7 @@ export default async function DashboardRecentActivity() {
                 <Card key={activity.id} shadow="none" className="shadow-md">
                   <CardHeader className="flex gap-3 px-5 pt-4">
                     <div className="flex flex-col flex-grow">
-                      <p className="text-md  leading-5">{activity.WorkoutPlan.name}</p>
+                      <p className="text-md text-primary leading-5">{activity.WorkoutPlan.name}</p>
                       <p className="text-xs text-default-500 leading-5">
                         <span className="flex space-x-1">
                           <time>
@@ -114,7 +114,7 @@ export default async function DashboardRecentActivity() {
             })}
           </div>
           <div className="flex justify-center">
-            <Button color="primary" variant="ghost" as={Link} href="/activity">
+            <Button color="primary" variant="flat" as={Link} href="/activity">
               View all activity
             </Button>
           </div>
