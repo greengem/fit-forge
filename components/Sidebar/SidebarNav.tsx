@@ -68,12 +68,6 @@ export default function SidebarNav() {
         {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">More</li>}
         
         <NavItem
-          icon={<IconBook size={22} className="shrink-0" />}
-          label="Docs"
-          href="/docs"
-          active={pathname === "/docs"}
-        />
-        <NavItem
           icon={<IconHelp size={22} className="shrink-0" />}
           label="Support"
           href="/support"
