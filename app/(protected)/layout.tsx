@@ -12,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <SiteNotice />
+      {/* <SiteNotice /> */}
       <div className="flex">
         <Sidebar />
         <main className="flex-grow w-full">
