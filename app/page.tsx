@@ -9,7 +9,6 @@ import {
   IconActivity,
   IconBrandOpenai,
   IconUser,
-  IconUserBolt,
   IconListCheck,
 } from "@tabler/icons-react";
 import Image from "next/image";
@@ -77,7 +76,7 @@ export default function Home() {
           </div>
           <div className="hidden lg:block">
             <Image
-              src="/ss.webp"
+              src="/ss2.webp"
               alt="Screenshot of NextBoard"
               width={2000}
               height={1250}
