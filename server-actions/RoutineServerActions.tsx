@@ -110,4 +110,34 @@ export async function handleEditRoutine(data: any) {
         return { success: false, message: "Failed to edit routine" };
     }
 }
-  
+
+
+
+
+export async function handleCreateRoutineStepOne(data: FormData) {
+    try {
+        const { userId }: { userId: string | null } = auth();
+
+        if (!userId) {
+            throw new Error("You must be signed in to view this page.");
+        }
+
+        const routineName = data.get('routineName') as string;
+        const notes = data.get('notes') as string | null;
+
+        const createdRoutine = await prisma.workoutPlan.create({
+            data: {
+              name: routineName,
+              userId: userId,
+              notes: notes,
+            },
+        });
+
+        revalidatePath("/workout");
+
+        return { success: true, message: "Routine created successfully", routineId: createdRoutine.id  };
+    } catch (e) {
+        console.error(e);
+        return { success: false, message: "Failed to create routine" };
+    }
+}
