@@ -38,19 +38,21 @@ export default function ExerciseTable({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 mb-3">
+    <div className="space-y-3">
       {selectedExercises.map((exercise, index) => (
         <Card key={index} shadow="none" className="shadow-md">
           <CardBody className="p-3">
-            <p className="mb-3">
-              {index + 1}. {exercise.Exercise.name}
-            </p>
+            <div className="flex gap-2 items-center mb-3">
+              <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">{index + 1}</span>
+              <p className="text-lg">{exercise.Exercise.name}</p>
+            </div>
 
             <RadioGroup
               key={`radio-${exercise.Exercise.id}`}
               orientation="horizontal"
               color="primary"
               className="mb-3"
+              size="sm"
               value={exercise.trackingType}
               onValueChange={(value) => {
                 updateTrackingType(index, value as "reps" | "duration");
