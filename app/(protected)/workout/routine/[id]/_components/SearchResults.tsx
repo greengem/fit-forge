@@ -1,18 +1,20 @@
+'use client'
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell,
+} from "@nextui-org/table";
 import { Button } from "@nextui-org/button";
 import { User } from "@nextui-org/user";
 import { IconPlus } from "@tabler/icons-react";
-
-type SearchExercise = {
-  id: string;
-  name: string;
-  trackingType: string;
-  category: string;
-  image: string;
-};
+import { SearchResult } from "../NewRoutineTypes";
 
 type SearchResultsProps = {
-  searchResults: SearchExercise[];
-  addExerciseToRoutine: (exercise: SearchExercise) => void;
+  searchResults: SearchResult[];
+  addExerciseToRoutine: (exercise: SearchResult) => void;
 };
 
 export default function SearchResults({
@@ -20,31 +22,45 @@ export default function SearchResults({
   addExerciseToRoutine,
 }: SearchResultsProps) {
   return (
-    <div className="max-h-72 overflow-y-auto">
-      <ul className="space-y-2 px-2">
-        {searchResults.map((exercise) => (
-          <li key={exercise.id}>
-            <div className="flex justify-between items-center">
-              <User
-                avatarProps={{
-                  radius: "lg",
-                  src: `/images/exercises/${exercise.image}/images/0.jpg`,
-                }}
-                description={(exercise as any).category}
-                name={exercise.name}
-              />
+    <Table
+    aria-label="Exercises Table"
+    className="mb-3 shadow-md"
+    shadow="none"
+    classNames={{ wrapper: "p-2 md:p-4" }}
+  >
+    <TableHeader>
+      <TableColumn>NAME</TableColumn>
+      <TableColumn><></></TableColumn>
+    </TableHeader>
+    <TableBody emptyContent={"No results found."}>
+      {searchResults.map((exercise) => (
+        <TableRow key={exercise.id}>
+          <TableCell className="capitalize py-1 pl-1">
+            <User
+              avatarProps={{
+                radius: "lg",
+                src: `/images/exercises/${exercise.image}/images/0.jpg`,
+              }}
+              description={
+                <span className="text-zinc-500">{exercise.category}</span>
+              }
+              name={exercise.name}
+            />
+          </TableCell>
+          <TableCell className="flex justify-end py-1 pr-1">
               <Button
                 isIconOnly
-                color="primary"
-                onPress={() => addExerciseToRoutine(exercise)}
                 size="sm"
+                variant="flat"
+                color="success"
+                onPress={() => addExerciseToRoutine(exercise)}
               >
-                <IconPlus size={12} />
+                <IconPlus size={20} />
               </Button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
   );
 }
