@@ -1,107 +1,43 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { useDebouncedCallback } from "use-debounce";
+import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { handleCreateRoutine, handleEditRoutine } from "@/server-actions/RoutineServerActions";
 
+import { Button } from "@nextui-org/react";
 import RoutineDetails from "./RoutineDetails";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import ExerciseTable from "./ExerciseTable";
 import SaveButton from "./SaveButton";
-
-type FavoriteExercise = {
-  exerciseId: string;
-};
-
-type Exercise = {
-  id: string;
-  name: string;
-  category: string;
-};
-
-type WorkoutPlanExercise = {
-  sets: number;
-  reps: number | null;
-  exerciseDuration: number | null;
-  order: number;
-  trackingType: string;
-  Exercise: Exercise;
-};
-
-type ExistingRoutine = {
-  id: string;
-  name: string;
-  notes: string | null;
-  userId: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  isSystemRoutine: boolean;
-  systemRoutineCategory: string | null;
-  WorkoutPlanExercise: WorkoutPlanExercise[];
-} | null;
-
-type SearchExercise = {
-  id: string;
-  name: string;
-  trackingType: string;
-  category: string;
-  image: string;
-};
+import { SearchResult, WorkoutPlanExercise, ExistingRoutine } from "../NewRoutineTypes";
 
 type RoutineBuilderProps = {
+  existingRoutine: ExistingRoutine;
   routineId: string;
-  favoriteExercises: FavoriteExercise[];
-  existingRoutine: ExistingRoutine | null;
+  searchResults: SearchResult[];
 };
 
 export default function RoutineBuilder({
   existingRoutine,
   routineId,
-  favoriteExercises,
+  searchResults,
 }: RoutineBuilderProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<SearchExercise[]>([]);
-  const [selectedExercises, setSelectedExercises] = useState<
-    WorkoutPlanExercise[]
-  >([]);
-  const [routineName, setRoutineName] = useState("");
-  const [notes, setNotes] = useState("");
+  const [selectedExercises, setSelectedExercises] = useState<WorkoutPlanExercise[]>(existingRoutine ? existingRoutine.WorkoutPlanExercise || [] : []);
+  const [routineName, setRoutineName] = useState(existingRoutine ? existingRoutine.name : "");
+  const [notes, setNotes] = useState(existingRoutine ? existingRoutine.notes || "" : "");
   const [isSaving, setIsSaving] = useState(false);
 
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
+  const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    if (existingRoutine) {
-      setRoutineName(existingRoutine.name);
-      setSelectedExercises(existingRoutine.WorkoutPlanExercise || []);
-      setNotes(existingRoutine.notes || "");
-    }
-  }, [existingRoutine]);
-
-  const executeSearch = useDebouncedCallback(async () => {
-    if (!searchTerm.trim()) {
-      setSearchResults([]);
-      return;
-    }
-    const response = await fetch(`/api/exercises/search?q=${searchTerm}`);
-    const data = await response.json();
-    setSearchResults(data);
-  }, 300);
-
-  const addExerciseToRoutine = (exercise: SearchExercise) => {
-    if (selectedExercises.some((e) => e.Exercise.id === exercise.id)) return;
-
+  const addExerciseToRoutine = (exercise: SearchResult) => {
     const defaultReps = 8;
-    const defaultDuration = 30;
-
-    const newExercise: WorkoutPlanExercise = {
+  
+    const newExercise = {
       sets: 1,
-      reps: exercise.trackingType === "reps" ? defaultReps : null,
-      exerciseDuration:
-        exercise.trackingType === "duration" ? defaultDuration : null,
+      reps: defaultReps,
+      exerciseDuration: null,
       order: selectedExercises.length + 1,
       trackingType: "reps",
       Exercise: {
@@ -110,18 +46,12 @@ export default function RoutineBuilder({
         category: exercise.category,
       },
     };
-
-    setSelectedExercises([...selectedExercises, newExercise]);
-    setSearchTerm("");
-    setSearchResults([]);
-    searchInputRef.current?.focus();
+    setSelectedExercises([...selectedExercises, newExercise]);  
+    router.replace(pathname, { scroll: false });
+    router.refresh();
   };
 
-  const updateExercise = (
-    index: number,
-    field: keyof WorkoutPlanExercise,
-    value: string | number | null,
-  ) => {
+  const updateExercise = (index: number, field: string, value: number | string | null) => {
     const updatedExercises = [...selectedExercises];
 
     if (field === "trackingType") {
@@ -135,7 +65,6 @@ export default function RoutineBuilder({
     if (field in updatedExercises[index]) {
       (updatedExercises[index] as any)[field] = value;
     }
-
     setSelectedExercises(updatedExercises);
   };
 
@@ -212,102 +141,57 @@ export default function RoutineBuilder({
 
     setIsSaving(true);
 
-    // Adjust the structure of exercises to match the API's expected format
     const exercisesWithOrder = selectedExercises.map((exercise, index) => {
-      // Extracting id from the Exercise object and renaming it to exerciseId
-      const {
-        Exercise: { id: exerciseId },
-        sets,
-        reps,
-        exerciseDuration,
-        trackingType,
-      } = exercise;
+      const { Exercise: { id: exerciseId }, sets, reps, exerciseDuration, trackingType } = exercise;
 
       return {
-        exerciseId,
-        sets,
-        reps,
-        exerciseDuration,
-        trackingType,
-        order: index + 1,
+        exerciseId, sets, reps, exerciseDuration, trackingType, order: index + 1,
       };
     });
 
-    try {
-      let response;
+    const data = {routineName, routineId, notes, exercisesWithOrder};
 
-      if (routineId === "new") {
-        response = await fetch("/api/routines", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            routineName,
-            exercises: exercisesWithOrder,
-            notes,
-          }),
-        });
-      } else {
-        response = await fetch(`/api/routines/${routineId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            routineName,
-            exercises: exercisesWithOrder,
-            notes,
-          }),
-        });
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        toast.success("Routine saved successfully!");
+    if (routineId === "new") {
+      const response = await handleCreateRoutine(data);
+      if (response.success) {
+        setIsSaving(false);
+        toast.success(response.message);
         router.push("/workout");
-        router.refresh();
       } else {
-        toast.error("Error saving routine.");
+        toast.error(response.message);
       }
-    } catch (error) {
-      toast.error("Unexpected error while saving routine.");
-    } finally {
-      setIsSaving(false);
+    } else {
+      const response = await handleEditRoutine(data);
+      if (response.success) {
+        setIsSaving(false);
+        toast.success(response.message);
+        router.push("/workout");
+      } else {
+        toast.error(response.message);
+      }
     }
-  };
+  }
 
   return (
-    <div className="space-y-2">
+    <>
       <RoutineDetails
         routineName={routineName}
         setRoutineName={setRoutineName}
         notes={notes}
         setNotes={setNotes}
       />
-      <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        handleSearch={executeSearch}
-        setSearchResults={setSearchResults}
-        forwardedRef={searchInputRef}
-      />
-      <SearchResults
-        searchResults={searchResults}
-        addExerciseToRoutine={addExerciseToRoutine}
-      />
-      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5">
+      <SearchBar />
+      {searchResults.length > 0 && <SearchResults searchResults={searchResults} addExerciseToRoutine={addExerciseToRoutine} />}
+      
         <ExerciseTable
           selectedExercises={selectedExercises}
           updateExercise={updateExercise}
           moveUp={moveUp}
           moveDown={moveDown}
           deleteExercise={deleteExercise}
-          favoriteExercises={favoriteExercises}
         />
-      </div>
+        
       <SaveButton handleSave={handleSave} isLoading={isSaving} />
-    </div>
+    </>
   );
 }
