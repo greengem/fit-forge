@@ -1,52 +1,33 @@
-import { ChangeEvent, useState } from "react";
+"use client";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 import { Input } from "@nextui-org/input";
 
-interface SearchBarProps {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  handleSearch: () => void;
-  setSearchResults: (results: any[]) => void;
-  forwardedRef: React.RefObject<HTMLInputElement>;
-}
+export default function SearchBar() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-export default function SearchBar({
-  searchTerm,
-  setSearchTerm,
-  handleSearch,
-  setSearchResults,
-  forwardedRef,
-}: SearchBarProps) {
-  const [timeoutId, setTimeoutId] = useState<ReturnType<
-    typeof setTimeout
-  > | null>(null);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const term = e.target.value;
-    setSearchTerm(term);
-
-    // Clear any previous timeout
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    if (!term.trim()) {
-      setSearchResults([]);
+  const handleSearch = useDebouncedCallback((term) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("search", term);
     } else {
-      // Set a new timeout for the search
-      const id = setTimeout(handleSearch, 300);
-      setTimeoutId(id);
+      params.delete("search");
     }
-  };
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, 300);
 
   return (
     <Input
+      placeholder="Search exercises..."
       label="Search"
-      type="search"
-      name="search"
-      placeholder="Squat"
-      value={searchTerm}
-      onChange={handleChange}
-      ref={forwardedRef}
+      className="grow mb-3"
+      size="sm"
+      onChange={(e) => {
+        handleSearch(e.target.value);
+      }}
+      defaultValue={searchParams.get("search")?.toString()}
     />
   );
 }
