@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { Card, CardBody } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { RadioGroup, Radio } from "@nextui-org/radio";
@@ -8,31 +8,9 @@ import {
   IconArrowUp,
   IconArrowDown,
   IconTrash,
-  IconStar,
-  IconStarFilled,
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { Reorder } from "framer-motion";
-
-type FavoriteExercise = {
-  exerciseId: string;
-};
-
-type Exercise = {
-  id: string;
-  name: string;
-  category: string;
-};
-
-type WorkoutPlanExercise = {
-  sets: number;
-  reps: number | null;
-  exerciseDuration: number | null;
-  order: number;
-  trackingType: string;
-  Exercise: Exercise;
-};
+import { WorkoutPlanExercise } from "../NewRoutineTypes";
 
 type ExerciseTableProps = {
   selectedExercises: WorkoutPlanExercise[];
@@ -44,7 +22,6 @@ type ExerciseTableProps = {
   moveUp: (index: number) => void;
   moveDown: (index: number) => void;
   deleteExercise: (index: number) => void;
-  favoriteExercises: FavoriteExercise[];
 };
 
 export default function ExerciseTable({
@@ -53,62 +30,15 @@ export default function ExerciseTable({
   moveUp,
   moveDown,
   deleteExercise,
-  favoriteExercises,
 }: ExerciseTableProps) {
   const router = useRouter();
-
-  const [loadingFavorite, setLoadingFavorite] = useState<{
-    [key: string]: boolean;
-  }>({});
-  const toggleFavoriteExercise = async (exerciseId: string) => {
-    setLoadingFavorite({ ...loadingFavorite, [exerciseId]: true });
-
-    try {
-      let response;
-
-      if (isFavorite(exerciseId)) {
-        response = await fetch(`/api/users/favorites/${exerciseId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      } else {
-        response = await fetch("/api/users/favorites", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ exerciseId }),
-        });
-      }
-
-      const data = await response.json();
-
-      if (response.ok) {
-        router.refresh();
-      } else {
-        toast.error(data.error || "Error toggling favorite exercise");
-      }
-    } catch (error) {
-      toast.error("An error occurred while communicating with the server.");
-    } finally {
-      setLoadingFavorite({ ...loadingFavorite, [exerciseId]: false });
-    }
-  };
-
-  const isFavorite = (exerciseId: string) => {
-    return favoriteExercises.some(
-      (favExercise) => favExercise.exerciseId === exerciseId,
-    );
-  };
 
   const updateTrackingType = (index: number, type: "reps" | "duration") => {
     updateExercise(index, "trackingType", type);
   };
 
   return (
-    <>
+    <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 mb-3">
       {selectedExercises.map((exercise, index) => (
         <Card key={index} shadow="none" className="shadow-md">
           <CardBody className="p-3">
@@ -194,17 +124,6 @@ export default function ExerciseTable({
                 <IconArrowDown size={18} />
               </Button>
               <Button
-                onPress={() => toggleFavoriteExercise(exercise.Exercise.id)}
-                isIconOnly
-                isLoading={loadingFavorite[exercise.Exercise.id]}
-              >
-                {isFavorite(exercise.Exercise.id) ? (
-                  <IconStarFilled className="text-warning" size={18} />
-                ) : (
-                  <IconStar size={18} />
-                )}
-              </Button>
-              <Button
                 color="danger"
                 isIconOnly
                 onPress={() => deleteExercise(index)}
@@ -215,6 +134,6 @@ export default function ExerciseTable({
           </CardBody>
         </Card>
       ))}
-    </>
+    </div>
   );
 }
