@@ -52,7 +52,6 @@ export default function SearchResults({
                 isIconOnly
                 size="sm"
                 variant="flat"
-                color="success"
                 onPress={() => addExerciseToRoutine(exercise)}
               >
                 <IconPlus size={20} />
