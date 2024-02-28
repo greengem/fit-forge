@@ -74,7 +74,7 @@ export default function RoutineCard({ routine, isSystem, activeWorkoutRoutine } 
           {displayedExercises
             .sort((a, b) => a.order - b.order)
             .map((exerciseDetail) => (
-              <li key={exerciseDetail.Exercise.id}>
+              <li key={exerciseDetail.Exercise.id} className="truncate">
                 {exerciseDetail.sets && exerciseDetail.sets} x{" "}
                 {exerciseDetail.Exercise.name}
               </li>
