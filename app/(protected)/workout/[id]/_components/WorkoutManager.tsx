@@ -293,7 +293,6 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
 
         if (response.success) {
           router.push("/dashboard");
-          router.refresh();
           setWorkoutExercises([]);
           setWorkoutDuration(0);
           setWorkoutStartTime(null);
