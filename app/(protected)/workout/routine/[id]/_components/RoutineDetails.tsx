@@ -15,9 +15,10 @@ export default function RoutineDetails({
   setNotes,
 }: RoutineDetailsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 mb-3">
       <Input
         name="routineName"
+        size="sm"
         placeholder="My Awesome Workout Plan"
         label="Routine Name"
         isRequired
@@ -28,6 +29,7 @@ export default function RoutineDetails({
       />
       <Input
         name="routineNotes"
+        size="sm"
         placeholder="Enter any notes about your workout here..."
         label="Notes"
         value={notes}
