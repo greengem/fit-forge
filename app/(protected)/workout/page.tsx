@@ -74,16 +74,15 @@ export default async function WorkoutPage() {
     <>
       <div className="flex gap-x-4 items-center justify-between">
         <PageHeading title="Start Workout" />
-        {/* <Button
+        <Button
           as={Link}
           href="/workout/routine/new"
-          variant="ghost"
           color="primary"
           className="gap-unit-1 mb-3"
         >
           <IconPlus size={16} />
           New Routine
-        </Button> */}
+        </Button>
       </div>
 
       <h4 className="font-semibold text-2xl my-3">Your Workout Plans</h4>
