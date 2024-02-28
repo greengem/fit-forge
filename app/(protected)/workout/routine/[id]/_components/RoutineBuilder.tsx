@@ -47,8 +47,7 @@ export default function RoutineBuilder({
       },
     };
     setSelectedExercises([...selectedExercises, newExercise]);  
-    router.replace(pathname, { scroll: false });
-    router.refresh();
+    //router.replace(pathname, { scroll: false });
   };
 
   const updateExercise = (index: number, field: string, value: number | string | null) => {
@@ -180,9 +179,12 @@ export default function RoutineBuilder({
         notes={notes}
         setNotes={setNotes}
       />
-      <SearchBar />
-      {searchResults.length > 0 && <SearchResults searchResults={searchResults} addExerciseToRoutine={addExerciseToRoutine} />}
-      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+        <div>
+          <SearchBar />
+          <SearchResults searchResults={searchResults} addExerciseToRoutine={addExerciseToRoutine} />
+          <SaveButton handleSave={handleSave} isLoading={isSaving} />
+        </div>
         <ExerciseTable
           selectedExercises={selectedExercises}
           updateExercise={updateExercise}
@@ -190,8 +192,7 @@ export default function RoutineBuilder({
           moveDown={moveDown}
           deleteExercise={deleteExercise}
         />
-        
-      <SaveButton handleSave={handleSave} isLoading={isSaving} />
+      </div>
     </>
   );
 }
