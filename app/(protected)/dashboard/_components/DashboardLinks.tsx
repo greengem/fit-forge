@@ -23,7 +23,7 @@ export default function DashboardLinks() {
             </CardHeader>
             <Image
               alt="Card background"
-              className="z-0 w-full h-full object-cover"
+              className="z-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
               src={`/card-images/${link.image}`}
               width={800}
               height={800}
