@@ -24,7 +24,7 @@ interface WorkoutPlanExercise {
   reps: number | null;
   exerciseDuration: number | null;
   trackingType: string;
-  order: number;
+  order: number | null;
 }
 
 interface Workout {
