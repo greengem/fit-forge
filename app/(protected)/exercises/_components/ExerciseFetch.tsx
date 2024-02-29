@@ -3,6 +3,7 @@ import prisma from "@/prisma/prisma";
 import ExerciseTable from "./ExerciseTable";
 import { CategoryType, Muscle, LevelType, ForceType } from "@prisma/client";
 import ExercisePagination from "./Filters/ExercisePagination";
+import { Exercise } from "@prisma/client";
 
 interface UserRoutine {
   id: string;
@@ -20,6 +21,9 @@ export default async function ExerciseFetch({
   userRoutines,
   favs,
   equipmentOwned,
+  itemsPerPage,
+  mode,
+  selectedExercises
 }: {
   search: string;
   cat: string[];
@@ -27,9 +31,12 @@ export default async function ExerciseFetch({
   level: string[];
   force: string[];
   currentPage: number;
-  userRoutines: UserRoutine[];
+  userRoutines?: UserRoutine[];
   favs: boolean;
   equipmentOwned: boolean;
+  itemsPerPage: number;
+  mode: string;
+  selectedExercises?: any;
 }) {
   const { userId }: { userId: string | null } = auth();
 
@@ -49,8 +56,6 @@ export default async function ExerciseFetch({
   const userEquipmentOwned = userEquipment.map(
     (equipment) => equipment.equipmentType,
   );
-
-  const itemsPerPage = 15;
 
   const searchWords = search.split(" ");
 
@@ -90,6 +95,16 @@ export default async function ExerciseFetch({
       name: "asc",
     },
   });
+
+  let finalExercises = exercises;
+
+  if (mode === "createRoutine" && selectedExercises) {
+    const filteredExercises = exercises.filter(
+      (exercise) => !selectedExercises.some((selected: Exercise) => selected.id === exercise.id)
+    );
+  
+    finalExercises = [...selectedExercises, ...filteredExercises];
+  }
 
   const numberOfResults = await prisma.exercise.count({
     where: {
@@ -139,9 +154,11 @@ export default async function ExerciseFetch({
   return (
     <>
       <ExerciseTable
-        exercises={exercises}
+        exercises={finalExercises}
         favouriteExercises={favouriteExercisesSet}
         userRoutines={userRoutines}
+        mode={mode}
+        highlightedExercises={mode === "createRoutine" ? selectedExercises : undefined}
       />
       <ExercisePagination
         numberOfResults={numberOfResults}
