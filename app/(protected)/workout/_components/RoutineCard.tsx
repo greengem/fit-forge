@@ -17,7 +17,7 @@ type Exercise = {
 
 type WorkoutPlanExercise = {
   Exercise: Exercise;
-  order: number;
+  order: number | null;
   sets: number;
 };
 
@@ -72,7 +72,7 @@ export default function RoutineCard({ routine, isSystem, activeWorkoutRoutine } 
       <CardBody className="pt-0 px-5">
       <ul className="text-sm">
           {displayedExercises
-            .sort((a, b) => a.order - b.order)
+            .sort((a, b) => (a.order || 0) - (b.order || 0))
             .map((exerciseDetail) => (
               <li key={exerciseDetail.Exercise.id} className="truncate">
                 {exerciseDetail.sets && exerciseDetail.sets} x{" "}
