@@ -16,7 +16,7 @@ type Exercise = {
 
 type WorkoutPlanExercise = {
   Exercise: Exercise;
-  order: number;
+  order: number | null;
   sets: number;
 };
 
@@ -76,7 +76,7 @@ export default async function WorkoutPage() {
         <PageHeading title="Start Workout" />
         <Button
           as={Link}
-          href="/workout/routine/new"
+          href="/edit-routine/step-1"
           color="primary"
           className="gap-unit-1 mb-3"
         >
