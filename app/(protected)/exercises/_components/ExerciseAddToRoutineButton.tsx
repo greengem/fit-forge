@@ -13,7 +13,7 @@ interface UserRoutine {
 
 type ExerciseAddToRoutineButtonProps = {
   exercise: Exercise;
-  userRoutines: UserRoutine[];
+  userRoutines?: UserRoutine[];
 };
 
 export default function ExerciseAddToRoutineButton({
@@ -26,7 +26,7 @@ export default function ExerciseAddToRoutineButton({
 
   const handleClick = () => {
     setExercise(exercise);
-    setUserRoutines(userRoutines);
+    userRoutines && setUserRoutines(userRoutines);
     onOpen();
   };
 
