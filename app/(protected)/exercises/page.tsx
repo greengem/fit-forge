@@ -80,6 +80,8 @@ export default async function ExercisesPage({
         userRoutines={userRoutines}
         favs={favs}
         equipmentOwned={equipmentOwned}
+        mode="exercisePage"
+        itemsPerPage={15}
       />
       {/* </Suspense> */}
       <ExerciseDetailModal />
