@@ -14,6 +14,7 @@ export default function ExerciseFilters({
   searchParams,
 }: {
   searchParams?: {
+    id?: string;
     page?: number;
     search?: string;
     muscle?: string;
@@ -25,7 +26,7 @@ export default function ExerciseFilters({
 }) {
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { page, search, ...otherParams } = searchParams || {};
+  const { page, search, id, ...otherParams } = searchParams || {};
   const hasSearchParams = Object.values(otherParams).some((param) => param);
   const [showFilters, setShowFilters] = useState(hasSearchParams);
 
@@ -34,6 +35,9 @@ export default function ExerciseFilters({
       const params = new URLSearchParams();
       if (search) {
         params.set("search", search);
+      }
+      if (id) {
+        params.set("id", id);
       }
       replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
