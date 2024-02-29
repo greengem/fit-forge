@@ -12,7 +12,7 @@ type Exercise = {
 
 type WorkoutPlanExercise = {
   Exercise: Exercise;
-  order: number;
+  order: number | null;
   sets: number;
 };
 
@@ -23,10 +23,6 @@ type ExtendedWorkoutPlan = WorkoutPlan & {
 type RoutineCardsProps = {
   routines: ExtendedWorkoutPlan[];
   isSystem: boolean;
-};
-
-type ExpandedRoutines = {
-  [routineId: string]: boolean;
 };
 
 export default function RoutineCards({ routines, isSystem } : RoutineCardsProps) {
