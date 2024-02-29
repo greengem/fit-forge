@@ -67,7 +67,7 @@ model WorkoutPlanExercise {
   sets          Int
   reps          Int?
   exerciseDuration  Int?
-  order         Int
+  order         Int?
   trackingType  TrackingType
   Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
   WorkoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
