@@ -134,8 +134,9 @@ export async function handleAddExerciseToExistingRoutine(
       take: 1,
     });
 
-    const order =
-      existingExercises.length > 0 ? existingExercises[0].order + 1 : 1;
+    const order = existingExercises.length > 0 && existingExercises[0].order !== null 
+    ? existingExercises[0].order + 1 
+    : 1;
 
     await prisma.workoutPlanExercise.create({
       data: {
