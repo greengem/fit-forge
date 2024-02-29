@@ -114,7 +114,7 @@ export async function handleEditRoutine(data: any) {
 
 
 
-export async function handleCreateRoutineStepOne(data: FormData) {
+export async function handleCreateRoutineStepOne(data: FormData, routineId: string | null) {
     try {
         const { userId }: { userId: string | null } = auth();
 
@@ -123,21 +123,92 @@ export async function handleCreateRoutineStepOne(data: FormData) {
         }
 
         const routineName = data.get('routineName') as string;
-        const notes = data.get('notes') as string | null;
+        const routineNotes = data.get('routineNotes') as string | null;
 
-        const createdRoutine = await prisma.workoutPlan.create({
-            data: {
-              name: routineName,
-              userId: userId,
-              notes: notes,
+        let routine;
+        if (routineId) {
+            routine = await prisma.workoutPlan.update({
+                where: { id: routineId },
+                data: {
+                    name: routineName,
+                    notes: routineNotes,
+                },
+            });
+        } else {
+            routine = await prisma.workoutPlan.create({
+                data: {
+                    name: routineName,
+                    userId: userId,
+                    notes: routineNotes,
+                },
+            });
+        }
+
+        revalidatePath("/workout");
+
+        return { success: true, message: "Routine created successfully", newRoutineId: routine.id  };
+    } catch (e) {
+        console.error(e);
+        return { success: false, message: "Failed to create routine" };
+    }
+}
+
+
+export async function handleAddExerciseToRoutine({ exerciseId, routineId }: { exerciseId: string, routineId: string }) {
+    try {
+        const { userId }: { userId: string | null } = auth();
+
+        if (!userId) {
+            throw new Error("You must be signed in to view this page.");
+        }
+
+        await prisma.workoutPlan.update({
+            where: {
+                id: routineId
             },
+            data: {
+              WorkoutPlanExercise: {
+                create: {
+                  exerciseId: exerciseId,
+                  sets: 1,
+                  trackingType: 'reps',
+                  reps: 8,
+                  exerciseDuration: null,
+                  //order: 1,
+                }
+              }
+            }
         });
 
         revalidatePath("/workout");
 
-        return { success: true, message: "Routine created successfully", routineId: createdRoutine.id  };
+        return { success: true, message: "Exercise added to routine successfully" };
     } catch (e) {
         console.error(e);
         return { success: false, message: "Failed to create routine" };
+    }
+}
+
+export async function handleRemoveExerciseFromRoutine({ exerciseId, routineId }: { exerciseId: string, routineId: string }) {
+    try {
+        const { userId }: { userId: string | null } = auth();
+
+        if (!userId) {
+            throw new Error("You must be signed in to view this page.");
+        }
+
+        await prisma.workoutPlanExercise.deleteMany({
+            where: {
+                workoutPlanId: routineId,
+                exerciseId: exerciseId
+            }
+        });
+
+        revalidatePath("/workout");
+
+        return { success: true, message: "Exercise removed from routine successfully" };
+    } catch (e) {
+        console.error(e);
+        return { success: false, message: "Failed to remove exercise from routine" };
     }
 }
