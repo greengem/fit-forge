@@ -32,7 +32,7 @@ export default function RoutineMenu({ routineId }: { routineId: string }) {
             handleDelete(routineId);
           }
         } else if (key === "edit") {
-            router.push(`workout/routine/${routineId}`);
+            router.push(`/edit-routine/step-1?id=${routineId}`);
         }
     };
 
