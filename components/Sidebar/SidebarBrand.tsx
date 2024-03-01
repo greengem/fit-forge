@@ -1,6 +1,5 @@
 'use client'
 import { useSidebarToggleContext } from '@/contexts/SidebarToggleContext';
-import { Chip } from "@nextui-org/react";
 import { IconBarbell } from "@tabler/icons-react";
 import Link from "next/link";
 import clsx from 'clsx';
