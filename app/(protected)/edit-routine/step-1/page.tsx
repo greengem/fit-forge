@@ -1,7 +1,5 @@
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
-import PageHeading from "@/components/PageHeading/PageHeading";
-import StepProgress from "../_components/StepProgress";
 import NewRoutineFormStepOneClient from "./form.client";
 
 export default async function NewRoutineFormStepOne({
@@ -21,6 +19,7 @@ export default async function NewRoutineFormStepOne({
 
     let routineName = "";
     let routineNotes = "";
+    let pageTitle = "New Routine";
 
     if (routineId !== null) {
         const routine = await prisma.workoutPlan.findUnique({
@@ -36,17 +35,17 @@ export default async function NewRoutineFormStepOne({
   
         routineName = routine?.name || "";
         routineNotes = routine?.notes || "";
+        pageTitle = `Edit Routine: ${routineName}`;
     }
 
     return (
-        <>
-            <PageHeading title="New Routine Step 1" />
-            <StepProgress routineId={routineId} />
+        <div className="flex flex-col grow justify-center items-center">
             <NewRoutineFormStepOneClient
                 routineId={routineId}
                 routineName={routineName}
                 routineNotes={routineNotes}
+                pageTitle={pageTitle}
             />
-        </>
+        </div>
     );
 }
