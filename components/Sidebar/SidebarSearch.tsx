@@ -1,4 +1,4 @@
-import { Input } from "@nextui-org/react";
+import { Input } from "@nextui-org/input";
 import { IconSearch } from "@tabler/icons-react";
 import { Kbd } from "@nextui-org/kbd";
 
