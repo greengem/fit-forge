@@ -24,7 +24,7 @@ export default function ExerciseFilterPostsPerPage() {
             size="sm" 
             onSelectionChange={handlePostsPerPage} 
             selectedKeys={selectedKeys}
-            className="w-32"
+            className="w-36"
         >
             <SelectItem key="5" value={5}>5</SelectItem>
             <SelectItem key="10" value={10}>10</SelectItem>
