@@ -1,47 +1,18 @@
-"use client";
+import { currentUser } from "@clerk/nextjs";
+import MobileNavbarClient from "./Navbar.client";
 
-import React from "react";
-import { usePathname } from "next/navigation";
-import { Navbar, NavbarContent, NavbarItem } from "@nextui-org/navbar";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
-import NextLink from "next/link";
-import { Link } from "@nextui-org/link";
-import {
-  IconDashboard,
-  IconJumpRope,
-  IconStretching,
-  IconUser,
-  IconActivity,
-} from "@tabler/icons-react";
+export default async function MobileNavbar() {
 
-const NAV_CONTENT_ITEMS = [
-  { label: <IconUser className="mt-2" />, href: "/profile" },
-  { label: <IconActivity className="mt-2" />, href: "/activity" },
-  { label: <IconDashboard className="mt-2" />, href: "/dashboard" },
-  { label: <IconJumpRope className="mt-2" />, href: "/workout" },
-  { label: <IconStretching className="mt-2" />, href: "/exercises" },
-];
+  const user = await currentUser();
 
-export default function MobileNavbar() {
-  const pathname = usePathname();
+  if (!user) {
+    throw new Error("You must be signed in to view this page.");
+  }
+
+  const username = user?.username || undefined;
+  const userImage = user?.imageUrl || undefined;
 
   return (
-    <Navbar className="bg-content1 block md:hidden shadow-md">
-      <NavbarContent className="gap-5">
-        {NAV_CONTENT_ITEMS.map((item) => (
-          <NavbarItem key={item.href} isActive={pathname === item.href}>
-            <Link as={NextLink} color="foreground" href={item.href}>
-              {item.label}
-            </Link>
-          </NavbarItem>
-        ))}
-      </NavbarContent>
-
-      <NavbarContent justify="end">
-        <NavbarItem>
-          <ThemeSwitcher />
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+    <MobileNavbarClient username={username} userImage={userImage} />
   );
 }
