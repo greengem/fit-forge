@@ -42,7 +42,7 @@ export default function RoutineExerciseCard({
   };
 
   return (
-    <Card key={index} shadow="none" className="shadow-md">
+    <Card key={index} shadow="none" className="touch-none shadow-md">
       <CardBody className="p-3">
         <div className="flex gap-2 items-center mb-3">
           <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">{index + 1}</span>
