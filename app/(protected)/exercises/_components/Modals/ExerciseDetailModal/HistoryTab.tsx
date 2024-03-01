@@ -1,6 +1,6 @@
 "use client";
 import useSWR from "swr";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Spinner } from "@nextui-org/spinner";
 import { Set, Exercise, WorkoutLog } from "./ModalChartTypes";
 
