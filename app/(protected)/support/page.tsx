@@ -1,6 +1,6 @@
 import { supportData } from "./supportData";
 import PageHeading from "@/components/PageHeading/PageHeading";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 
 function CustomCard({ title, children } : { title: string, children: React.ReactNode }) {
   return (
