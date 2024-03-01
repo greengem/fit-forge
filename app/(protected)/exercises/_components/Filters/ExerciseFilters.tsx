@@ -9,6 +9,7 @@ import ExerciseFilterMuscle from "./ExerciseFilterMuscle";
 import ExerciseUserFilters from "./ExerciseUserFilters";
 import { Button } from "@nextui-org/button";
 import { IconFilter, IconFilterOff } from "@tabler/icons-react";
+import ExerciseFilterPostsPerPage from "./ExerciseFilterPostsPerPage";
 
 export default function ExerciseFilters({
   searchParams,
@@ -22,6 +23,7 @@ export default function ExerciseFilters({
     level?: string;
     force?: string;
     favs?: string;
+    postsPerPage?: number;
   };
 }) {
   const pathname = usePathname();
@@ -48,6 +50,7 @@ export default function ExerciseFilters({
     <>
       <div className="flex gap-3 mb-3">
         <ExerciseSearch />
+        <ExerciseFilterPostsPerPage />
         <Button isIconOnly size="lg" variant="flat" onClick={toggleFilters}>
           {showFilters ? <IconFilterOff /> : <IconFilter />}
         </Button>
