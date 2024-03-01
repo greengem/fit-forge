@@ -5,23 +5,26 @@ import StepProgress from "../_components/StepProgress";
 import ExerciseFilters from "@/app/(protected)/exercises/_components/Filters/ExerciseFilters";
 import ExerciseFetch from "@/app/(protected)/exercises/_components/ExerciseFetch";
 import ExerciseDetailModal from "@/app/(protected)/exercises/_components/Modals/ExerciseDetailModal/ExerciseDetailModal";
-import { Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
 import Link from "next/link";
+import { IconPlayerTrackNextFilled, IconX } from "@tabler/icons-react";
+import { IconPlayerTrackPrevFilled } from "@tabler/icons-react";
 
 export default async function NewRoutineFormStepTwo({
     searchParams,
 }: {
-  searchParams?: {
-    id?: string;
-    page?: number;
-    search?: string;
-    muscle?: string;
-    cat?: string;
-    level?: string;
-    force?: string;
-    favs?: string;
-    equipmentOwned?: string;
-  };
+    searchParams?: {
+        id?: string;
+        page?: number;
+        postsPerPage?: number;
+        search?: string;
+        muscle?: string;
+        cat?: string;
+        level?: string;
+        force?: string;
+        favs?: string;
+        equipmentOwned?: string;
+    };
 }) {
     const { userId }: { userId: string | null } = auth();
 
@@ -30,12 +33,18 @@ export default async function NewRoutineFormStepTwo({
     }
 
     const routineId = searchParams?.id || "";
+
+    if (!routineId) {
+        throw new Error("Routine ID is required.");
+    }
+
+    const currentPage = Number(searchParams?.page) || 1;
+    const postsPerPage = Number(searchParams?.postsPerPage) || 5;
     const search = searchParams?.search || "";
     const cat = searchParams?.cat ? searchParams?.cat.split(",") : [];
     const muscle = searchParams?.muscle ? searchParams?.muscle.split(",") : [];
     const level = searchParams?.level ? searchParams?.level.split(",") : [];
     const force = searchParams?.force ? searchParams?.force.split(",") : [];
-    const currentPage = Number(searchParams?.page) || 1;
     const favs = searchParams?.favs === "true";
     const equipmentOwned = searchParams?.equipmentOwned === "true";
 
@@ -51,14 +60,13 @@ export default async function NewRoutineFormStepTwo({
             },
         }
     });
-    
+
     const selectedExercises = routine?.WorkoutPlanExercise.map(item => item.Exercise);
 
     return (
         <>
             <PageHeading title="New Routine - Step 2" />
-            <h4>{routine?.name}</h4>
-            <StepProgress routineId={routineId} />
+            {/* <StepProgress routineId={routineId} /> */}
             <ExerciseFilters searchParams={searchParams} />
             <ExerciseFetch
                 search={search}
@@ -70,16 +78,13 @@ export default async function NewRoutineFormStepTwo({
                 favs={favs}
                 equipmentOwned={equipmentOwned}
                 mode="createRoutine"
-                itemsPerPage={10}
+                itemsPerPage={postsPerPage}
                 selectedExercises={selectedExercises}
             />
             <ExerciseDetailModal />
             <div className="flex justify-center gap-3 mb-3">
-                <Button as={Link} href={`/edit-routine/step-1?id=${routineId}`}>Back</Button>
-                <Button as={Link} href={`/edit-routine/step-3?id=${routineId}`}>Next</Button>
-            </div>
-            <div className="flex justify-center gap-3">
-                <Button as={Link} href={`/workout`} color="danger">Cancel</Button>
+                <Button variant="flat" as={Link} href={`/edit-routine/step-1?id=${routineId}`}><IconPlayerTrackPrevFilled size={18} /> Back</Button>
+                <Button variant="flat" as={Link} href={`/edit-routine/step-3?id=${routineId}`} isDisabled={!selectedExercises || selectedExercises.length === 0}>Next <IconPlayerTrackNextFilled size={18} /></Button>
             </div>
         </>
     );
