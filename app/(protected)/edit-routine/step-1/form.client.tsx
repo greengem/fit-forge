@@ -37,7 +37,7 @@ export default function NewRoutineFormStepOneClient({
         <Card className="max-w-screen-sm mx-auto shadow-md" shadow="none">
             <CardHeader className="text-2xl font-semibold tracking-tight p-3 md:p-5 pb-0 md:pb-0">New Routine</CardHeader>
             <CardBody className="p-3 md:p-5">
-                <p className="mb-3 text-sm text-zinc-500">Welcome to the first step in creating your personalized workout plan! This is where your fitness journey begins, and we're excited to be a part of it. Let's start with the basics.</p>
+            <p className="mb-3 text-sm text-zinc-500">Welcome to the first step in creating your personalized workout plan! This is where your fitness journey begins, and we&apos;re excited to be a part of it. Let&apos;s start with the basics.</p>
                 <form className="space-y-3" onSubmit={handleSubmit}>
                     <Input
                         name="routineName"
