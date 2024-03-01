@@ -9,12 +9,8 @@ type SaveButtonProps = {
 
 export default function SaveButton({ handleSave, isLoading }: SaveButtonProps) {
   return (
-    <Button
-      className="gap-unit-1"
-      onPress={handleSave}
-      isLoading={isLoading}
-    >
-      Finish
+    <Button variant="flat" onPress={handleSave} isLoading={isLoading}>
+      <IconDeviceFloppy size={18} /> Finish
     </Button>
   );
 }
