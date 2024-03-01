@@ -31,8 +31,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html lang="en" className="min-h-dvh flex flex-col" suppressHydrationWarning>
+      <body className={`${inter.className} flex flex-col grow`}>
         <Providers>
           <Toaster position="top-center" />
           {children}
