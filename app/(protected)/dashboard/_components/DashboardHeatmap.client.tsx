@@ -1,6 +1,6 @@
 'use client'
 import { subMonths } from 'date-fns';
-import { Card, CardBody, CardHeader } from '@nextui-org/react';
+import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { IconCalendar } from '@tabler/icons-react';
 
 type HeatmapValue = {
