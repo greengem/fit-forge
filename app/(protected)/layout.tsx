@@ -12,10 +12,10 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      {/* <SiteNotice /> */}
-      <div className="flex">
+      <SiteNotice />
+      <div className="flex grow">
         <Sidebar />
-        <main className="flex-grow w-full">
+        <main className="flex flex-col grow w-full">
           <Navbar />
           <LayoutWrapper>
             <ActiveWorkoutWarning />
