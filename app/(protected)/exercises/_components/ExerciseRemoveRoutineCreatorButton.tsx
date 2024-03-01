@@ -24,7 +24,7 @@ export default function ExerciseRemoveRoutineCreatorButton({ exerciseId }: { exe
 
   return (
     <Button isIconOnly onClick={handleClick}>
-      <IconMinus size={20} />
+      <IconMinus className="text-danger" size={20} />
     </Button>
   );
 }
