@@ -40,8 +40,10 @@ export default async function NewRoutineFormStepTwo({
         <>
             <PageHeading title="New Routine - Step 3" />
             <h4>{routine?.name}</h4>
-            <StepProgress routineId={routineId} />
-            <RoutineBuilder routine={routine} />
+            {/* <StepProgress routineId={routineId} /> */}
+            <div className="max-w-screen-sm mx-auto">
+                <RoutineBuilder routine={routine} />
+            </div>
         </>
     );
 }
