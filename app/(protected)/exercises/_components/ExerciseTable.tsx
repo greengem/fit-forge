@@ -46,6 +46,7 @@ export default function ExerciseTable({
       className="mb-3 shadow-md"
       shadow="none"
       classNames={{ wrapper: "p-2 md:p-4" }}
+      isCompact
     >
       <TableHeader>
         <TableColumn>NAME</TableColumn>
