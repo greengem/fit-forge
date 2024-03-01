@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardHeader } from "@nextui-org/react";
+import { Card, CardHeader } from "@nextui-org/card";
 
 export default function DashboardLinks() {
   const links = [
@@ -16,14 +16,14 @@ export default function DashboardLinks() {
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
       {links.map((link, index) => (
         <Link key={index} href={link.href}>
-          <Card key={index} className="w-full aspect-square" isPressable>
+          <Card key={index} className="w-full aspect-square shadow-md" isPressable shadow="none">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start">
               <p className={clsx("text-xs uppercase font-bold", link.titleColour)}>{link.title}</p>
               <h4 className={clsx("font-medium text-lg", link.descriptionColour)}>{link.description}</h4>
             </CardHeader>
             <Image
               alt="Card background"
-              className="z-0 w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+              className="z-0 w-full h-full object-cover"
               src={`/card-images/${link.image}`}
               width={800}
               height={800}
