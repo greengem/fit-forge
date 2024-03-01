@@ -16,6 +16,7 @@ export default async function ExercisesPage({
 }: {
   searchParams?: {
     page?: number;
+    postsPerPage?: number;
     search?: string;
     muscle?: string;
     cat?: string;
@@ -31,6 +32,7 @@ export default async function ExercisesPage({
     throw new Error("You must be signed in to view this page.");
   }
 
+  const postsPerPage = Number(searchParams?.postsPerPage) || 5;
   const search = searchParams?.search || "";
   const cat = searchParams?.cat ? searchParams?.cat.split(",") : [];
   const muscle = searchParams?.muscle ? searchParams?.muscle.split(",") : [];
@@ -81,7 +83,7 @@ export default async function ExercisesPage({
         favs={favs}
         equipmentOwned={equipmentOwned}
         mode="exercisePage"
-        itemsPerPage={15}
+        itemsPerPage={postsPerPage}
       />
       {/* </Suspense> */}
       <ExerciseDetailModal />
