@@ -128,7 +128,7 @@ export default function RoutineBuilder({ routine }: { routine: Routine }) {
     <>
       <Reorder.Group axis="y" values={selectedExercises} onReorder={setSelectedExercises} className="space-y-3 mb-3">
         {selectedExercises.map((exercise, index) => (
-          <Reorder.Item key={exercise.Exercise.id} value={exercise} className="relative">
+          <Reorder.Item key={exercise.Exercise.id} value={exercise} className="relative touch-none">
             <RoutineExerciseCard
               exercise={exercise}
               index={index}
