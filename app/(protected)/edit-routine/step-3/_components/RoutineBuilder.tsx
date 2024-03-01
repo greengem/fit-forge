@@ -7,8 +7,9 @@ import SaveButton from "./SaveButton";
 import { WorkoutPlanExercise, Routine } from "../NewRoutineTypes";
 import RoutineExerciseCard from "./RoutineExerciseCard";
 import { Reorder } from "framer-motion";
-import { Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
 import Link from "next/link";
+import { IconPlayerTrackPrevFilled } from "@tabler/icons-react";
 
 export default function RoutineBuilder({ routine }: { routine: Routine }) {
   const [selectedExercises, setSelectedExercises] = useState<WorkoutPlanExercise[]>(routine.WorkoutPlanExercise || []);
@@ -142,11 +143,8 @@ export default function RoutineBuilder({ routine }: { routine: Routine }) {
       </Reorder.Group>
 
       <div className="flex justify-center gap-3 mb-3">
-        <Button as={Link} href={`/edit-routine/step-2?id=${routine.id}`}>Back</Button>
+        <Button variant="flat" as={Link} href={`/edit-routine/step-2?id=${routine.id}`}><IconPlayerTrackPrevFilled size={18} /> Back</Button>
         <SaveButton handleSave={handleSave} isLoading={isSaving} />
-      </div>
-      <div className="flex justify-center gap-3">
-        <Button as={Link} href={`/workout`} color="danger">Cancel</Button>
       </div>
     </>
   );
