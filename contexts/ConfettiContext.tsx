@@ -23,14 +23,25 @@ interface ConfettiProviderProps {
 
 export const ConfettiProvider = ({ children }: ConfettiProviderProps) => {
   const [confetti, setConfetti] = useState<boolean>(false);
+  const [recycle, setRecycle] = useState<boolean>(true);
 
-  const startConfetti = () => setConfetti(true);
-  const stopConfetti = () => setConfetti(false);
+  const startConfetti = () => {
+    setConfetti(true);
+    setRecycle(true);
+    setTimeout(() => {
+      setRecycle(false);
+    }, 2000);
+  };
+
+  const stopConfetti = () => {
+    setConfetti(false);
+    setRecycle(true);
+  };
 
   return (
     <ConfettiContext.Provider value={{ startConfetti, stopConfetti }}>
       {children}
-      {confetti && <Confetti />}
+      {confetti && <Confetti recycle={recycle} />}
     </ConfettiContext.Provider>
   );
 };
