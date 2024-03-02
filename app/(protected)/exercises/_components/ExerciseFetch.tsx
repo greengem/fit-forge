@@ -21,7 +21,7 @@ export default async function ExerciseFetch({
   userRoutines,
   favs,
   equipmentOwned,
-  itemsPerPage,
+  perPage,
   mode,
   selectedExercises
 }: {
@@ -34,7 +34,7 @@ export default async function ExerciseFetch({
   userRoutines?: UserRoutine[];
   favs: boolean;
   equipmentOwned: boolean;
-  itemsPerPage: number;
+  perPage: number;
   mode: string;
   selectedExercises?: any;
 }) {
@@ -60,8 +60,8 @@ export default async function ExerciseFetch({
   const searchWords = search.split(" ");
 
   const exercises = await prisma.exercise.findMany({
-    take: itemsPerPage,
-    skip: (currentPage - 1) * itemsPerPage,
+    take: perPage,
+    skip: (currentPage - 1) * perPage,
     where: {
       AND: searchWords.map((word) => ({
         name: {
@@ -162,7 +162,7 @@ export default async function ExerciseFetch({
       />
       <ExercisePagination
         numberOfResults={numberOfResults}
-        itemsPerPage={itemsPerPage}
+        perPage={perPage}
       />
     </>
   );
