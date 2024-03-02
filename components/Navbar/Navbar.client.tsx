@@ -1,6 +1,4 @@
 "use client";
-
-import React from "react";
 import { usePathname } from "next/navigation";
 import { Navbar, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import NextLink from "next/link";
@@ -31,7 +29,12 @@ export default function MobileNavbarClient({
 
   return (
     <Navbar className="bg-content1 block md:hidden shadow-md">
-      <NavbarContent className="gap-5">
+
+      <NavbarContent justify="start">
+        <p className="tracking-tight text-lg">Tracktive</p>
+      </NavbarContent>
+
+      <NavbarContent className="gap-5" justify="center">
         {NAV_CONTENT_ITEMS.map((item) => (
           <NavbarItem key={item.href} isActive={pathname === item.href}>
             <Link as={NextLink} color="foreground" href={item.href}>
