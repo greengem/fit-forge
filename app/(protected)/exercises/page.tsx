@@ -5,6 +5,7 @@ import ExerciseFetch from "./_components/ExerciseFetch";
 import ExerciseDetailModal from "./_components/Modals/ExerciseDetailModal/ExerciseDetailModal";
 import ExerciseAddToRoutineModal from "./_components/Modals/ExerciseAddToRoutineModal";
 import ExerciseFilters from "./_components/Filters/ExerciseFilters";
+import { ExerciseAddToRoutineModalProvider } from "@/contexts/ExerciseAddToRoutineModalContext";
 
 interface UserRoutine {
   name: string;
@@ -65,7 +66,7 @@ export default async function ExercisesPage({
       );
 
   return (
-    <>
+    <ExerciseAddToRoutineModalProvider>
       <PageHeading title="Exercises" />
       <ExerciseFilters searchParams={searchParams} />
       {/* <Suspense 
@@ -88,6 +89,6 @@ export default async function ExercisesPage({
       {/* </Suspense> */}
       <ExerciseDetailModal />
       <ExerciseAddToRoutineModal />
-    </>
+    </ExerciseAddToRoutineModalProvider>
   );
 }
