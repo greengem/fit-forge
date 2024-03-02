@@ -42,8 +42,7 @@ export default async function RootLayout({
                 border: "none",
                 color: "white",
 
-              },
-              className: 'class',
+              }
             }}
           />
           {children}
