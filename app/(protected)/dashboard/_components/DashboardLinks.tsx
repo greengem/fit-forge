@@ -13,7 +13,7 @@ export default function DashboardLinks() {
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
       {links.map((link, index) => (
         <Link key={index} href={link.href}>
           <Card key={index} className="w-full aspect-square shadow-md" isPressable shadow="none">
