@@ -4,10 +4,10 @@ import { Pagination } from "@nextui-org/pagination";
 
 export default function ExercisePagination({
   numberOfResults,
-  itemsPerPage,
+  perPage,
 }: {
   numberOfResults: number;
-  itemsPerPage: number;
+  perPage: number;
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -20,7 +20,7 @@ export default function ExercisePagination({
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  const totalPages = Math.ceil(numberOfResults / itemsPerPage);
+  const totalPages = Math.ceil(numberOfResults / perPage);
 
   return (
     <div className="flex justify-center mb-3">
