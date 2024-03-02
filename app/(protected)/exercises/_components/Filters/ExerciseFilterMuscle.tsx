@@ -49,7 +49,7 @@ export default function ExerciseFilterMuscle() {
   return (
     <Select
       key={selectedKeys ? selectedKeys.size : "empty"}
-      label="Muscle"
+      label="Muscle Group"
       placeholder="Select a muscle..."
       size="sm"
       items={muscles}
