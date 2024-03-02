@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs";
 import SidebarNav from "./SidebarNav";
 import SidebarBrand from "./SidebarBrand";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
-import SidebarWorkoutControls from "./SidebarWorkoutControls";
+//import SidebarWorkoutControls from "./SidebarWorkoutControls";
 import SidebarUser from "./SidebarUser";
 import SidebarSearch from "./SidebarSearch";
 import SidebarSocials from "./SidebarSocials";
@@ -24,7 +24,7 @@ export default async function Sidebar() {
       <SidebarUser username={username} userImage={userImage} />
       {/* <SidebarSearch /> */}
       <SidebarNav />
-      <SidebarWorkoutControls />
+      {/* <SidebarWorkoutControls /> */}
       <div className="absolute bottom-0 left-0 right-0 py-5 px-5 flex flex-col items-center">
         <ThemeSwitcher />
         {/* <SidebarSocials /> */}
