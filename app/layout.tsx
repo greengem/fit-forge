@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import Modal from "@/components/Modal/Modal";
 
 export function generateViewport() {
   return {
@@ -46,7 +45,6 @@ export default async function RootLayout({
             }}
           />
           {children}
-          <Modal />
         </Providers>
         <SpeedInsights />
         <Analytics />
