@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import ActivityMenu from "./ActivityMenu";
 import ActivityModal from "./ActivityModal";
+import { ActivityModalProvider } from "@/contexts/ActivityModalContext";
 
 export default async function ActivityList() {
   const { userId }: { userId: string | null } = auth();
@@ -53,7 +54,7 @@ export default async function ActivityList() {
   });
 
   return (
-    <>
+    <ActivityModalProvider>
       {workouts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3">
           {workouts.map((activity) => {
@@ -115,6 +116,6 @@ export default async function ActivityList() {
           .
         </p>
       )}
-    </>
+    </ActivityModalProvider>
   );
 }
