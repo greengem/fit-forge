@@ -85,10 +85,16 @@ export default function ExerciseTable({
                 size="sm"
                 label="Weight"
                 placeholder="0"
-                value={set.weight !== null && set.weight !== undefined ? String(set.weight) : ""}
+                defaultValue={set.weight !== null ? String(set.weight) : ""}
                 endContent={
                   <span className="text-zinc-500">kg</span>
                 }
+                onInput={(e) => {
+                  const value = e.currentTarget.value;
+                  if (!/^(\d*\.?\d{0,2}|\.\d{0,2})$/.test(value)) {
+                    e.currentTarget.value = value.slice(0, -1);
+                  }
+                }}
                 onChange={(e) =>
                   handleWeightChange(index, setIndex, Number(e.target.value))
                 }
@@ -104,11 +110,17 @@ export default function ExerciseTable({
                   endContent={
                     <span className="text-zinc-500">s</span>
                   }
+                  onInput={(e) => {
+                    const value = e.currentTarget.value;
+                    if (!/^\d*$/.test(value)) {
+                      e.currentTarget.value = value.slice(0, -1);
+                    }
+                  }}
                   onChange={(e) =>
                     handleDurationChange(
                       index,
                       setIndex,
-                      Number(e.target.value),
+                      Number(e.currentTarget.value),
                     )
                   }
                   isDisabled={set.completed}
@@ -120,8 +132,14 @@ export default function ExerciseTable({
                   size="sm"
                   label="Reps"
                   placeholder={set.reps !== null ? String(set.reps) : ""}
+                  onInput={(e) => {
+                    const value = e.currentTarget.value;
+                    if (!/^\d*$/.test(value)) {
+                      e.currentTarget.value = value.slice(0, -1);
+                    }
+                  }}
                   onChange={(e) =>
-                    handleRepChange(index, setIndex, Number(e.target.value))
+                    handleRepChange(index, setIndex, Number(e.currentTarget.value))
                   }
                   isDisabled={set.completed}
                 />
