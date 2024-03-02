@@ -9,7 +9,7 @@ import ExerciseFilterMuscle from "./ExerciseFilterMuscle";
 import ExerciseUserFilters from "./ExerciseUserFilters";
 import { Button } from "@nextui-org/button";
 import { IconFilter, IconFilterOff } from "@tabler/icons-react";
-import ExerciseFilterPostsPerPage from "./ExerciseFilterPostsPerPage";
+import ExerciseFilterPerPage from "./ExerciseFilterPerPage";
 
 export default function ExerciseFilters({
   searchParams,
@@ -23,12 +23,12 @@ export default function ExerciseFilters({
     level?: string;
     force?: string;
     favs?: string;
-    postsPerPage?: number;
+    perPage?: number;
   };
 }) {
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { page, search, id, ...otherParams } = searchParams || {};
+  const { page, search, id, perPage, ...otherParams } = searchParams || {};
   const hasSearchParams = Object.values(otherParams).some((param) => param);
   const [showFilters, setShowFilters] = useState(hasSearchParams);
 
@@ -41,6 +41,9 @@ export default function ExerciseFilters({
       if (id) {
         params.set("id", id);
       }
+      if (perPage) {
+        params.set("perPage", perPage.toString());
+      }
       replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
     setShowFilters(!showFilters);
@@ -50,7 +53,7 @@ export default function ExerciseFilters({
     <>
       <div className="flex gap-3 mb-3">
         <ExerciseSearch />
-        <ExerciseFilterPostsPerPage />
+        <ExerciseFilterPerPage />
         <Button isIconOnly size="lg" variant="flat" onClick={toggleFilters}>
           {showFilters ? <IconFilterOff /> : <IconFilter />}
         </Button>
