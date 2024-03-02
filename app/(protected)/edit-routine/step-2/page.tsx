@@ -16,7 +16,7 @@ export default async function NewRoutineFormStepTwo({
     searchParams?: {
         id?: string;
         page?: number;
-        postsPerPage?: number;
+        perPage?: number;
         search?: string;
         muscle?: string;
         cat?: string;
@@ -39,7 +39,7 @@ export default async function NewRoutineFormStepTwo({
     }
 
     const currentPage = Number(searchParams?.page) || 1;
-    const postsPerPage = Number(searchParams?.postsPerPage) || 5;
+    const perPage = Number(searchParams?.perPage) || 5;
     const search = searchParams?.search || "";
     const cat = searchParams?.cat ? searchParams?.cat.split(",") : [];
     const muscle = searchParams?.muscle ? searchParams?.muscle.split(",") : [];
@@ -78,7 +78,7 @@ export default async function NewRoutineFormStepTwo({
                 favs={favs}
                 equipmentOwned={equipmentOwned}
                 mode="createRoutine"
-                itemsPerPage={postsPerPage}
+                perPage={perPage}
                 selectedExercises={selectedExercises}
             />
             <ExerciseDetailModal />
