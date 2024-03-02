@@ -20,11 +20,11 @@ export default function ExerciseFilterPerPage() {
 
     return (
         <Select 
-            label="Per page" 
+            label="Per Page" 
             size="sm" 
             onSelectionChange={handlePerPage} 
             selectedKeys={selectedKeys}
-            className="w-36"
+            className="w-24 shrink-0"
         >
             <SelectItem key="5" value={5}>5</SelectItem>
             <SelectItem key="10" value={10}>10</SelectItem>
