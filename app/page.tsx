@@ -14,7 +14,7 @@ import {
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import PricingCard from "./PricingCard";
+import PricingCard from "@/components/LandingPage/PricingCard";
 
 export default function Home() {
   const cardData = [
