@@ -4,8 +4,8 @@ import SidebarBrand from "./SidebarBrand";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
 //import SidebarWorkoutControls from "./SidebarWorkoutControls";
 import SidebarUser from "./SidebarUser";
-import SidebarSearch from "./SidebarSearch";
-import SidebarSocials from "./SidebarSocials";
+//import SidebarSearch from "./SidebarSearch";
+//import SidebarSocials from "./SidebarSocials";
 import SidebarWrapper from "./SidebarWrapper.client";
 
 export default async function Sidebar() {
