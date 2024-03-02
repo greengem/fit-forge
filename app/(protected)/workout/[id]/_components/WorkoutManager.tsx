@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useConfetti } from "@/contexts/ConfettiContext";
+
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import { IconPlus, IconX } from "@tabler/icons-react";
@@ -49,10 +51,12 @@ interface WorkoutExercise {
 }
 
 export default function WorkoutManager({ workout }: { workout: Workout }) {
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-
   const router = useRouter();
   const workoutPlanId = workout.id;
+
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  const { startConfetti } = useConfetti();
   const { workoutExercises, setWorkoutExercises } = useWorkoutData();
   const {
     setIsSaving,
@@ -160,7 +164,6 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     });
   };
 
-  // Handle changing weight for a set
   const handleWeightChange = (
     exerciseIndex: number,
     setIndex: number,
@@ -292,6 +295,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
         const response = await handleSaveWorkout(data);
 
         if (response.success) {
+          startConfetti();
           router.push("/dashboard");
           setWorkoutExercises([]);
           setWorkoutDuration(0);
