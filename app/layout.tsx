@@ -31,7 +31,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className="min-h-dvh flex flex-col" suppressHydrationWarning>
-      <body className={`${inter.className} flex flex-col grow`}>
+      <body className={`${inter.className} flex flex-col grow overflow-x-hidden`}>
         <Providers>
           <Toaster 
             position="top-center" 
