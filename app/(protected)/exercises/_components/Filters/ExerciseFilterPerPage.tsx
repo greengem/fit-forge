@@ -3,26 +3,26 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import {Select, SelectItem} from "@nextui-org/select";
 import { Selection } from "@react-types/shared";
 
-export default function ExerciseFilterPostsPerPage() {
+export default function ExerciseFilterPerPage() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    function handlePostsPerPage(selection: Selection) {
+    function handlePerPage(selection: Selection) {
         const params = new URLSearchParams(searchParams);
         params.set("page", "1");
-        params.set("postsPerPage", Array.from(selection)[0].toString());
+        params.set("perPage", Array.from(selection)[0].toString());
         replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
 
-    const postsPerPage = searchParams.get("postsPerPage") || "5";
-    const selectedKeys = new Set([postsPerPage]);
+    const perPage = searchParams.get("perPage") || "5";
+    const selectedKeys = new Set([perPage]);
 
     return (
         <Select 
             label="Per page" 
             size="sm" 
-            onSelectionChange={handlePostsPerPage} 
+            onSelectionChange={handlePerPage} 
             selectedKeys={selectedKeys}
             className="w-36"
         >
