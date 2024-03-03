@@ -16,7 +16,7 @@ export default function DashboardLinks() {
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
       {links.map((link, index) => (
         <Link key={index} href={link.href}>
-          <Card key={index} className="w-full aspect-square shadow-md" isPressable shadow="none">
+          <Card key={index} className="w-full aspect-square 2xl:aspect-video shadow-md" isPressable shadow="none">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start">
               <p className={clsx("text-xs uppercase font-bold", link.titleColour)}>{link.title}</p>
               <h4 className={clsx("font-medium text-lg", link.descriptionColour)}>{link.description}</h4>
@@ -25,8 +25,8 @@ export default function DashboardLinks() {
               alt="Card background"
               className="z-0 w-full h-full object-cover"
               src={`/card-images/${link.image}`}
-              width={800}
-              height={800}
+              width={640}
+              height={640}
             />
           </Card>
         </Link>
