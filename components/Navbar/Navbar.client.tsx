@@ -8,6 +8,7 @@ import {
   IconJumpRope,
   IconStretching,
   IconActivity,
+  IconBarbell,
 } from "@tabler/icons-react";
 import NavbarUser from "./NavbarUser";
 
@@ -31,7 +32,11 @@ export default function MobileNavbarClient({
     <Navbar className="bg-content1 block md:hidden shadow-md">
 
       <NavbarContent justify="start">
-        <p className="tracking-tight text-lg">Tracktive</p>
+        <Link href="/" className="text-white">
+          <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
+            <IconBarbell className="text-primary" /> Tracktive
+          </h4>
+        </Link>
       </NavbarContent>
 
       <NavbarContent className="gap-5" justify="center">
