@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <main className="min-h-dvh text-white bg-gradient-to-b from-black to-zinc-900">
       <nav className="px-3 md:px-10 py-3 mb-5 flex justify-between items-center">
-        <h4 className="flex items-center text-lg gap-3 font-semibold tracking-tight">
+        <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
           <IconBarbell className="text-primary" /> Tracktive
         </h4>
       </nav>
