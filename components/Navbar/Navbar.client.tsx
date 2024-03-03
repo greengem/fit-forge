@@ -1,8 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { Navbar, NavbarContent, NavbarItem } from "@nextui-org/navbar";
-import NextLink from "next/link";
-import { Link } from "@nextui-org/link";
+import Link from "next/link";
 import {
   IconDashboard,
   IconJumpRope,
@@ -13,10 +12,10 @@ import {
 import NavbarUser from "./NavbarUser";
 
 const NAV_CONTENT_ITEMS = [
-  { label: <IconDashboard className="mt-2" />, href: "/dashboard" },
-  { label: <IconActivity className="mt-2" />, href: "/activity" },
-  { label: <IconJumpRope className="mt-2" />, href: "/workout" },
-  { label: <IconStretching className="mt-2" />, href: "/exercises" },
+  { label: <IconDashboard />, href: "/dashboard" },
+  { label: <IconActivity />, href: "/activity" },
+  { label: <IconJumpRope />, href: "/workout" },
+  { label: <IconStretching />, href: "/exercises" },
 ];
 
 export default function MobileNavbarClient({
@@ -34,7 +33,7 @@ export default function MobileNavbarClient({
       <NavbarContent justify="start">
         <Link href="/" className="text-white">
           <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
-            <IconBarbell className="text-primary" /> Tracktive
+            <IconBarbell className="text-primary" />
           </h4>
         </Link>
       </NavbarContent>
@@ -42,7 +41,7 @@ export default function MobileNavbarClient({
       <NavbarContent className="gap-5" justify="center">
         {NAV_CONTENT_ITEMS.map((item) => (
           <NavbarItem key={item.href} isActive={pathname === item.href}>
-            <Link as={NextLink} color="foreground" href={item.href}>
+            <Link href={item.href}>
               {item.label}
             </Link>
           </NavbarItem>
