@@ -66,6 +66,7 @@ export default function ExerciseTable({
                   avatarProps={{
                     radius: "lg",
                     src: `/images/exercises/${exercise.image}/images/0.jpg`,
+                    className: "hidden md:block"
                   }}
                   description={
                     <span className="text-zinc-500">{exercise.category}</span>
