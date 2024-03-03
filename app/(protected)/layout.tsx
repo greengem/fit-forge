@@ -12,7 +12,11 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <SiteNotice />
+      <SiteNotice 
+        message="Beta: Data may be subject to change or loss."
+        variant="danger" 
+        visible={true}
+      />
       <div className="flex grow">
         <Sidebar />
         <main className="flex flex-col grow w-full">
