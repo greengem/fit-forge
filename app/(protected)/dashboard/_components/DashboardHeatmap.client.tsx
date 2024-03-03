@@ -2,6 +2,8 @@
 import { subMonths } from 'date-fns';
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { IconCalendar } from '@tabler/icons-react';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import 'react-calendar-heatmap/dist/styles.css';
 
 type HeatmapValue = {
   date: string;
@@ -19,30 +21,22 @@ export default function DashboardHeatmapClient({ values }: DashboardHeatmapClien
 
   return (
     <Card className='mb-3 shadow-md' shadow='none'>
-      <CardHeader className="p-3 gap-x-3">
+      <CardHeader className="p-3 gap-x-3 flex items-center gap-x-3 truncate text-xs uppercase">
           <span className="text-primary"><IconCalendar /></span> Heatmap
       </CardHeader>
-      <CardBody className='p-3 pb-0 '>
-        <div className='overflow-x-scroll relative h-40 no-scrollbar'>
-          <div className='absolute right-0 top-0 bottom-0'>
-          {/* <HeatMap
-              value={values}
-              //weekLabels={['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']}
-              weekLabels={false}
-              startDate={startDate}
-              legendCellSize={5}
-              endDate={endDate}
-              rectSize={16}
-              width={1200}
-              style={{ color: '#71717a', '--rhm-rect-active': '#A6FF00' } as React.CSSProperties}
-              panelColors={{
-                0: '#27272a',
-                1: '#D4FF66',
-                2: '#C3FF3F',
-                3: '#A6FF00',
-              }}
-            /> */}
-            </div>
+      <CardBody className='p-3 pt-0'>
+        <div className='overflow-x-scroll relative no-scrollbar text-xs'>
+          <CalendarHeatmap
+            startDate={startDate}
+            endDate={endDate}
+            values={values}
+            classForValue={(value) => {
+              if (!value) {
+                return 'fill-zinc-800';
+              }
+              return `fill-primary`;
+            }}
+          />
         </div>
       </CardBody>
     </Card>
