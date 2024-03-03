@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import DashboardChartExerciseCategoryDistribution from "./DashboardChartExerciseCategoryDistribution";
+//import DashboardChartExerciseCategoryDistribution from "./DashboardChartExerciseCategoryDistribution";
 import DashboardChartProgressOverTime from "./DashboardChartProgressOverTime";
 import DashboardChartVolumeLoad from "./DashboardChartVolumeLoad";
 import DashboardChartWorkoutFrequency from "./DashboardChartWorkoutFrequency";
@@ -8,6 +8,7 @@ import {
   IconChartAreaFilled,
   IconChartBar,
   IconChartLine,
+  IconChartPie,
   IconChartRadar,
 } from "@tabler/icons-react";
 
