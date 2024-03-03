@@ -84,11 +84,11 @@ export default function RoutineCard({ routine, isSystem, activeWorkoutRoutine } 
       </CardBody>
       <CardFooter className="pt-0 px-5 pb-4 block">
         <Button
-          variant="ghost"
+          variant="flat"
           as={Link}
           href={`/workout/${routine.id}`}
           size="sm"
-          color={isAnotherWorkoutInProgress ? "danger" : "primary"}
+          //color={isAnotherWorkoutInProgress ? "danger" : "primary"}
           className="gap-unit-1"
           isDisabled={isAnotherWorkoutInProgress}
         >
