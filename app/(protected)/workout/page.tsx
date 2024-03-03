@@ -72,23 +72,16 @@ export default async function WorkoutPage() {
 
   return (
     <>
-      <div className="flex gap-x-4 items-center justify-between">
-        <PageHeading title="Start Workout" />
-        <Button
-          as={Link}
-          href="/edit-routine/step-1"
-          color="primary"
-          className="gap-unit-1 mb-3"
-        >
-          <IconPlus size={16} />
-          New Routine
+      <PageHeading title="Start Workout" />
+      <h4 className="font-semibold text-2xl mb-3">Your Routines</h4>
+      <RoutineCards routines={userRoutines} isSystem={false} />
+      <div>
+        <Button as={Link} href="/edit-routine/step-1" color="primary" className="gap-unit-1 mb-3">
+          <IconPlus size={16} /> New Routine
         </Button>
       </div>
 
-      <h4 className="font-semibold text-2xl my-3">Your Workout Plans</h4>
-      <RoutineCards routines={userRoutines} isSystem={false} />
-
-      <h4 className="font-semibold text-2xl mb-3 mt-10">System Workout Plans</h4>
+      <h4 className="font-semibold text-2xl mb-3 mt-10">System Routines</h4>
       <RoutineCards routines={systemRoutines} isSystem={true} />
     </>
   );
