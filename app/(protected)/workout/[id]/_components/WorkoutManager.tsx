@@ -143,6 +143,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     exerciseIndex: number,
     setIndex: number,
     exerciseName: string,
+    isSelected: boolean
   ) => {
     if (!workoutStartTime) {
       startWorkout(workoutPlanId);
@@ -152,7 +153,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
       const updatedWorkoutExercises = [...prevWorkoutExercises];
       const exerciseToUpdate = { ...updatedWorkoutExercises[exerciseIndex] };
       const setToUpdate = { ...exerciseToUpdate.sets[setIndex] };
-      setToUpdate.completed = !setToUpdate.completed;
+      setToUpdate.completed = isSelected;
       exerciseToUpdate.sets[setIndex] = setToUpdate;
       updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
       if (setToUpdate.completed) {
