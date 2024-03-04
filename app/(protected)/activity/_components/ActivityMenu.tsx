@@ -15,6 +15,7 @@ import {
   IconEdit,
   IconInfoCircle,
   IconMenu2,
+  IconShare,
   IconTrash,
 } from "@tabler/icons-react";
 import { toast } from "sonner";
@@ -73,6 +74,8 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
       onOpen();
     } else if (key === "edit") {
       router.push('/activity/' + activity.id);
+    } else if (key === "share") {
+      console.log("share");
     }
   };
 
@@ -84,8 +87,9 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
         </button>
       </DropdownTrigger>
       <DropdownMenu
-        disabledKeys={["edit"]}
-        aria-label="Static Actions"
+        color="primary"
+        //disabledKeys={["edit"]}
+        aria-label="Activity Actions"
         topContent={
           <h4 className="text-zinc-500 uppercase font-semibold text-xs px-2 pt-2">
             Activity Actions
@@ -99,6 +103,12 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
             key="details"
           >
             View Details
+          </DropdownItem>
+          <DropdownItem
+            startContent={<IconShare size={20} />}
+            key="share"
+          >
+            Share
           </DropdownItem>
           <DropdownItem startContent={<IconEdit size={20} />} key="edit">
             Edit
