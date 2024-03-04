@@ -92,6 +92,7 @@ model WorkoutLogExercise {
   id            String @id @default(uuid())
   workoutLogId  String
   exerciseId    String
+  trackingType  TrackingType
   Exercise      Exercise   @relation(fields: [exerciseId], references: [id])
   WorkoutLog    WorkoutLog @relation(fields: [workoutLogId], references: [id], onDelete: Cascade)
   sets          SetLog[]
