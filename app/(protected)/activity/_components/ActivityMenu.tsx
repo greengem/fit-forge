@@ -84,6 +84,7 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
         </button>
       </DropdownTrigger>
       <DropdownMenu
+        disabledKeys={["edit"]}
         aria-label="Static Actions"
         topContent={
           <h4 className="text-zinc-500 uppercase font-semibold text-xs px-2 pt-2">
