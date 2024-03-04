@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from "next/navigation";
 import { TrackingType } from "@prisma/client";
 import { useState } from "react";
 import { DayPicker } from 'react-day-picker';
@@ -46,11 +47,10 @@ type Workout = {
 };
 
 export default function EditWorkout({ workout } : { workout: Workout }) {
-    console.log(workout);
+    const router = useRouter();
 
     const [minutes, setMinutes] = useState(Math.floor(workout.duration / 60).toString() || "0");
     const [seconds, setSeconds] = useState((workout.duration % 60).toString() || "0");
-
     const [selectedDate, setSelectedDate] = useState<Date>(workout.date);
     const [exerciseSets, setExerciseSets] = useState(workout.exercises.map(exercise => exercise.sets));
 
@@ -78,8 +78,47 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
         }
     };
 
+    const handleAddSet = (exerciseIndex: number) => {
+        const newExerciseSets = [...exerciseSets];
+        newExerciseSets[exerciseIndex].push({ weight: null, reps: null, exerciseDuration: null });
+        setExerciseSets(newExerciseSets);
+    };
+    
+    const handleRemoveSet = (exerciseIndex: number) => {
+        const newExerciseSets = [...exerciseSets];
+        if (newExerciseSets[exerciseIndex].length > 1) {
+            newExerciseSets[exerciseIndex].pop();
+            setExerciseSets(newExerciseSets);
+        } else {
+            toast.error("Cannot remove all sets");
+        }
+    };
+
+    const validateForm = (): boolean => {
+        if ((!minutes && !seconds) || !selectedDate) {
+            toast.error("Please fill in all fields");
+            return false;
+        }
+    
+        for (let i = 0; i < exerciseSets.length; i++) {
+            for (let j = 0; j < exerciseSets[i].length; j++) {
+                const set = exerciseSets[i][j];
+                if (set.weight === null || (workout.exercises[i].trackingType === 'reps' ? set.reps === null : set.exerciseDuration === null)) {
+                    toast.error(`Please fill in all fields for exercise ${i + 1}, set ${j + 1}`);
+                    return false;
+                }
+            }
+        }
+    
+        return true;
+    };
+
     const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
     
         const formData = {
             workoutPlanId: workout.WorkoutPlan.id,
@@ -95,11 +134,10 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
             })),
         };
     
-        console.log(formData);
-    
         const response = await handleUpdateWorkout(workout.id, formData);
         if (response.success) {
             toast.success(response.message);
+            router.push('/activity');
         } else {
             toast.error(response.message);
         }
@@ -108,31 +146,27 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
     return (
         <form onSubmit={handleSave}>
             <Card shadow="none" className="mb-3 shadow-md">
-                <CardHeader className="text-lg px-5">Duration</CardHeader>
-                <CardBody className="grid grid-cols-2 gap-3 pt-0">
+                <CardHeader className="text-lg px-5">Date & Duration</CardHeader>
+                <CardBody className="grid grid-cols-3 gap-3 pt-0">
                     <Input
                         type="number"
+                        size="sm"
                         label="Duration (Mins)"
                         value={minutes}
                         onChange={handleMinutesChange}
                     />
                     <Input
                         type="number"
+                        size="sm"
                         label="Duration (Seconds)"
                         value={seconds}
                         onChange={handleSecondsChange}
                     />
-                </CardBody>
-            </Card>
-
-            <Card shadow="none" className="shadow-md mb-3">
-                <CardHeader className="text-lg px-5">Date</CardHeader>
-                <CardBody className="pt-0">
                     <Input 
                         label="Date"
                         size="sm"
                         readOnly 
-                        value={format(selectedDate, 'PP')}
+                        value={format(selectedDate, 'dd-MM-yyyy')}
                         endContent={
                             <Popover placement="left">
                                 <PopoverTrigger>
@@ -178,6 +212,7 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
                                                 <Input
                                                     label="Weight"
                                                     type="number"
+                                                    placeholder="0"
                                                     size="sm"
                                                     defaultValue={set.weight ? set.weight.toString() : ''}
                                                     onChange={(e) => handleSetChange(exerciseIndex, setIndex, 'weight', parseFloat(e.target.value))}
@@ -187,6 +222,7 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
                                                 {exercise.trackingType === 'reps' ? 
                                                     <Input
                                                         label="Reps"
+                                                        placeholder="0"
                                                         type="number"
                                                         size="sm"
                                                         defaultValue={set.reps ? set.reps.toString() : ''}
@@ -195,6 +231,7 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
                                                     <Input
                                                         label="Duration"
                                                         type="number"
+                                                        placeholder="0"
                                                         size="sm"
                                                         defaultValue={set.exerciseDuration ? set.exerciseDuration.toString() : ''}
                                                         onChange={(e) => handleSetChange(exerciseIndex, setIndex, 'exerciseDuration', parseFloat(e.target.value))}
@@ -208,10 +245,10 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
                         </CardBody>
                         <CardFooter className="gap-2 px-5 bg-default-100">
                             <ButtonGroup>
-                                <Button className="gap-unit-1" size="sm">
+                                <Button className="gap-unit-1" size="sm" onClick={() => handleAddSet(exerciseIndex)}>
                                     <IconPlus size={16} />Add Set
                                 </Button>
-                                <Button className="gap-unit-1" size="sm">
+                                <Button className="gap-unit-1" size="sm" onClick={() => handleRemoveSet(exerciseIndex)}>
                                     <IconX size={16} />Remove Set
                                 </Button>
                             </ButtonGroup>
