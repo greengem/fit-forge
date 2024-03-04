@@ -8,8 +8,8 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
-import { IconSquare, IconSquareCheck } from "@tabler/icons-react";
+import { IconSquareCheck } from "@tabler/icons-react";
+import { Checkbox } from "@nextui-org/checkbox";
 
 interface Set {
   weight: number | "" | null;
@@ -27,11 +27,7 @@ interface ExerciseDetail {
 interface ExerciseTableProps {
   exerciseDetail: ExerciseDetail;
   index: number;
-  handleCompleteSet: (
-    exerciseIndex: number,
-    setIndex: number,
-    exerciseName: string,
-  ) => void;
+  handleCompleteSet: (exerciseIndex: number, setIndex: number, exerciseName: string, isSelected: boolean) => void;
   handleWeightChange: (
     exerciseIndex: number,
     setIndex: number,
@@ -147,7 +143,7 @@ export default function ExerciseTable({
             )}
 
             <TableCell className="text-center">
-              <Button
+              {/* <Button
                 isIconOnly
                 radius="sm"
                 size="lg"
@@ -165,7 +161,20 @@ export default function ExerciseTable({
                 ) : (
                   <IconSquare />
                 )}
-              </Button>
+              </Button> */}
+              <Checkbox 
+                size="lg"
+                color={set.completed ? "primary" : "danger"}
+                isSelected={set.completed}
+                onValueChange={(isSelected) =>
+                  handleCompleteSet(
+                    index,
+                    setIndex,
+                    exerciseDetail.exerciseName,
+                    isSelected
+                  )
+                }
+              />
             </TableCell>
           </TableRow>
         ))}
