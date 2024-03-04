@@ -18,7 +18,6 @@ interface Exercise {
 }
 
 interface WorkoutData {
-  name: string;
   date: string;
   duration: number;
   workoutPlanId: string;
@@ -64,5 +63,50 @@ export async function handleSaveWorkout(data: WorkoutData) {
   } catch (e) {
     console.error(e);
     return { success: false, message: "Failed to save workout" };
+  }
+}
+
+
+export async function handleUpdateWorkout(id: string, data: WorkoutData) {
+  try {
+    const { userId }: { userId: string | null } = auth();
+
+    if (!userId) {
+      throw new Error("You must be signed in to view this page.");
+    }
+
+    const { workoutPlanId, date, duration, exercises } = data;
+
+    await prisma.workoutLog.update({
+      where: { id: id },
+      data: {
+        userId: userId,
+        workoutPlanId: workoutPlanId,
+        date: new Date(date),
+        duration: duration,
+        inProgress: false,
+        exercises: {
+          deleteMany: {},
+          create: exercises.map((exercise) => ({
+            exerciseId: exercise.exerciseId,
+            trackingType: exercise.trackingType,
+            sets: {
+              create: exercise.sets.map((set) => ({
+                weight: set.weight,
+                reps: set.reps,
+                exerciseDuration: set.duration,
+              })),
+            },
+          })),
+        },
+      },
+    });
+
+    revalidatePath("/activity");
+
+    return { success: true, message: "Workout Updated" };
+  } catch (e) {
+    console.error(e);
+    return { success: false, message: "Failed to update workout" };
   }
 }
