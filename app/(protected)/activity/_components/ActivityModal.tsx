@@ -19,21 +19,7 @@ import {
 } from "@nextui-org/table";
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
-
-interface Set {
-  weight: number | null;
-  reps: number | null;
-  exerciseDuration: number | null;
-}
-
-interface Exercise {
-  id: string;
-  exerciseId: string;
-  Exercise: {
-    name: string;
-  };
-  sets: Set[];
-}
+import FormatDuration from "@/utils/FormatDuration";
 
 export default function ActivityModal() {
   const { activity, isOpen, onOpenChange } = useContext(ActivityModalContext);
@@ -59,34 +45,34 @@ export default function ActivityModal() {
                 <span>{activity?.WorkoutPlan.name}</span>
               </h2>
 
-              <p className="text-sm">{activity?.duration} Mins</p>
+              <p className="text-sm"><FormatDuration seconds={activity?.duration || 0} /></p>
             </ModalHeader>
             <ModalBody className="gap-1">
               <Divider />
               {activity?.exercises.map((exercise, i) => (
                 <div key={i}>
-                  <h2 className="text-md mb-2">{exercise.Exercise.name}</h2>
-                  <Table removeWrapper>
-                    <TableHeader>
-                      <TableColumn>Set</TableColumn>
-                      <TableColumn>Reps</TableColumn>
-                      <TableColumn>Weight</TableColumn>
-                      <TableColumn>Duration</TableColumn>
-                    </TableHeader>
-                    <TableBody emptyContent={"No rows to display."}>
-                      {exercise.sets.map((set, j) => (
-                        <TableRow key={j}>
-                          <TableCell>{j + 1}</TableCell>
-                          <TableCell>{set.reps}</TableCell>
-                          <TableCell>{set.weight}</TableCell>
-                          <TableCell>{set.exerciseDuration}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                  <Divider className="my-2" />
+                    <h2 className="text-md mb-2">{exercise.Exercise.name}</h2>
+                    <Table removeWrapper aria-label="Exercise Details">
+                        <TableHeader>
+                            <TableColumn>Set</TableColumn>
+                            <TableColumn>{exercise.trackingType === 'reps' ? 'Reps' : 'Duration'}</TableColumn>
+                            <TableColumn>Weight</TableColumn>
+                        </TableHeader>
+                        <TableBody emptyContent={"No rows to display."}>
+                          {exercise.sets.map((set, j) => (
+                            <TableRow key={j}>
+                              <TableCell>{j + 1}</TableCell>
+                              <TableCell>
+                                {exercise.trackingType === 'reps' ? (set.reps !== null ? set.reps : 'N/A') : (set.exerciseDuration !== null ? <FormatDuration seconds={set.exerciseDuration} /> : 'N/A')}
+                              </TableCell>
+                              <TableCell>{set.weight}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                    </Table>
+                    <Divider className="my-2" />
                 </div>
-              ))}
+            ))}
             </ModalBody>
             <ModalFooter className="pt-0">
               <Button color="danger" variant="light" onPress={onClose}>
