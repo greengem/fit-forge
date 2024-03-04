@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import EditWorkout from "./EditWorkout";
+import PageHeading from "@/components/PageHeading/PageHeading";
 
 export default async function EditActivity({ params } : { params: { id: string } }) {
     const { userId }: { userId: string | null } = auth();
@@ -25,6 +26,7 @@ export default async function EditActivity({ params } : { params: { id: string }
           WorkoutPlan: {
             select: {
               name: true,
+              id: true,
             },
           },
           exercises: {
@@ -54,6 +56,9 @@ export default async function EditActivity({ params } : { params: { id: string }
     }
 
     return (
+      <>
+        <PageHeading title="Edit Workout" />
         <EditWorkout workout={workout} />
+      </>
     )
 }
