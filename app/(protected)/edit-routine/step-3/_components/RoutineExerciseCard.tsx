@@ -121,7 +121,7 @@ export default function RoutineExerciseCard({
         </div>
 
         <ButtonGroup className="justify-start" size="sm">
-        <Button isIconOnly onPress={() => moveUp(index)} isDisabled={index === 0}>
+          <Button isIconOnly onPress={() => moveUp(index)} isDisabled={index === 0}>
             <IconArrowUp size={18} />
           </Button>
           <Button isIconOnly onPress={() => moveDown(index)} isDisabled={index === totalExercises - 1}>
