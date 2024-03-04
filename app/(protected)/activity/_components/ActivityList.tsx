@@ -36,6 +36,7 @@ export default async function ActivityList() {
         select: {
           id: true,
           exerciseId: true,
+          trackingType: true,
           Exercise: {
             select: {
               name: true,
