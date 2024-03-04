@@ -65,7 +65,7 @@ export default function ActivityModal() {
                               <TableCell>
                                 {exercise.trackingType === 'reps' ? (set.reps !== null ? set.reps : 'N/A') : (set.exerciseDuration !== null ? <FormatDuration seconds={set.exerciseDuration} /> : 'N/A')}
                               </TableCell>
-                              <TableCell>{set.weight}</TableCell>
+                              <TableCell>{set.weight} kg</TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
