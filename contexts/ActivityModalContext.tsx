@@ -1,6 +1,7 @@
 "use client";
 import React, { ReactNode, useState } from "react";
 import { useDisclosure } from "@nextui-org/use-disclosure";
+import { TrackingType } from "@prisma/client";
 
 interface Set {
   weight: number | null;
@@ -15,6 +16,7 @@ interface Exercise {
     name: string;
   };
   sets: Set[];
+  trackingType: TrackingType
 }
 
 interface WorkoutPlan {
