@@ -3,7 +3,6 @@ import { Workout } from "./WorkoutTypes";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { handleSaveWorkoutV2 } from "@/server-actions/WorkoutServerActions";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell,} from "@nextui-org/table";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Button, ButtonGroup } from "@nextui-org/button";
@@ -131,7 +130,8 @@ export default function WorkoutManagerV2({ workout }: { workout: Workout }) {
       exercises: structuredData,
     };
 
-    const response = await handleSaveWorkoutV2(dataToSend);
+    //const response = await handleSaveWorkoutV2(dataToSend);
+    const response = { success: true, message: "Workout saved successfully." }; // Placeholder response
     if (response.success) {
       router.push("/dashboard");
       toast.success(response.message);
