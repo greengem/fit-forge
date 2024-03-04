@@ -24,7 +24,7 @@ export default function ExerciseAddToRoutineCreatorButton({ exerciseId }: { exer
 
   return (
     <Button isIconOnly onClick={handleClick}>
-      <IconPlus size={20} />
+      <IconPlus className="hover:text-primary" size={20} />
     </Button>
   );
 }
