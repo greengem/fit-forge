@@ -88,7 +88,7 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
       </DropdownTrigger>
       <DropdownMenu
         color="primary"
-        //disabledKeys={["edit"]}
+        disabledKeys={["share"]}
         aria-label="Activity Actions"
         topContent={
           <h4 className="text-zinc-500 uppercase font-semibold text-xs px-2 pt-2">
@@ -104,14 +104,14 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
           >
             View Details
           </DropdownItem>
+          <DropdownItem startContent={<IconEdit size={20} />} key="edit">
+            Edit
+          </DropdownItem>
           <DropdownItem
             startContent={<IconShare size={20} />}
             key="share"
           >
             Share
-          </DropdownItem>
-          <DropdownItem startContent={<IconEdit size={20} />} key="edit">
-            Edit
           </DropdownItem>
         </DropdownSection>
         <DropdownItem
