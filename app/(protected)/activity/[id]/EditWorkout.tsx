@@ -3,10 +3,10 @@ import { useState } from "react";
 import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
 import 'react-day-picker/dist/style.css';
-import FormatDuration from "@/utils/FormatDuration";
 import { Input } from "@nextui-org/react";
 import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell} from "@nextui-org/table";
 import PageHeading from "@/components/PageHeading/PageHeading";
+import { TrackingType } from "@prisma/client";
 
 type ExerciseSet = {
     weight: number | null;
@@ -21,6 +21,7 @@ type Exercise = {
         name: string;
     };
     sets: ExerciseSet[];
+    trackingType: TrackingType;
 };
 
 type Workout = {
@@ -66,7 +67,7 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
 
     return (
         <>
-            <PageHeading title="Edit Workout" />
+            <PageHeading title="Edit Workout - WIP" />
 
             <div className="flex gap-3">
                 <Input
@@ -80,7 +81,6 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
                     onChange={handleSecondsChange}
                 />
             </div>
-            <p>Date: {new Date(workout.date).toLocaleString()}</p>
 
             <DayPicker
                 mode="single"
@@ -92,29 +92,42 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
                 fixedWeeks
             />
 
-
             {workout.exercises.map((exercise, exerciseIndex) => (
-                <div key={exerciseIndex}>
-                    <h2>{exercise.Exercise.name}</h2>
-                    <Table aria-label="Example static collection table">
-                        <TableHeader>
-                            <TableColumn>SET</TableColumn>
-                            <TableColumn>WEIGHT</TableColumn>
-                            <TableColumn>REPS</TableColumn>
-                            <TableColumn>DURATION</TableColumn>
-                        </TableHeader>
-                        <TableBody>
-                            {exercise.sets.map((set, setIndex) => (
-                                <TableRow key={setIndex}>
-                                    <TableCell>{setIndex + 1}</TableCell>
-                                    <TableCell>{set.weight}kg</TableCell>
-                                    <TableCell>{set.reps}</TableCell>
-                                    <TableCell>{set.exerciseDuration ? <FormatDuration seconds={set.exerciseDuration} /> : 'N/A'}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </div>
+            <div key={exerciseIndex}>
+                <h2>{exercise.Exercise.name}</h2>
+                <Table aria-label="Example static collection table">
+                <TableHeader>
+                    <TableColumn>SET</TableColumn>
+                    <TableColumn>WEIGHT</TableColumn>
+                    <TableColumn>{exercise.trackingType.toUpperCase()}</TableColumn>
+                </TableHeader>
+                <TableBody>
+                    {exercise.sets.map((set, setIndex) => (
+                    <TableRow key={setIndex}>
+                        <TableCell>{setIndex + 1}</TableCell>
+                        <TableCell>
+                        <Input
+                            type="number"
+                            defaultValue={set.weight ? set.weight.toString() : ''}
+                        />
+                        </TableCell>
+                        <TableCell>
+                        {exercise.trackingType === 'reps' ? 
+                            <Input
+                            type="number"
+                            defaultValue={set.reps ? set.reps.toString() : ''}
+                            /> : 
+                            <Input
+                            type="number"
+                            defaultValue={set.exerciseDuration ? set.exerciseDuration.toString() : ''}
+                            />
+                        }
+                        </TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+                </Table>
+            </div>
             ))}
         </>
     )
