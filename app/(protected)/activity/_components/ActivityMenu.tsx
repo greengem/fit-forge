@@ -1,7 +1,9 @@
 "use client";
 import { useContext } from "react";
+import { useRouter } from "next/navigation";
 import { ActivityModalContext } from "@/contexts/ActivityModalContext";
 import { handleDeleteActivity } from "@/server-actions/ActivityServerActions";
+import { TrackingType } from "@prisma/client";
 import {
   Dropdown,
   DropdownTrigger,
@@ -17,8 +19,6 @@ import {
 } from "@tabler/icons-react";
 import { toast } from "sonner";
 
-
-
 interface Set {
   weight: number | null;
   reps: number | null;
@@ -28,6 +28,7 @@ interface Set {
 interface Exercise {
   id: string;
   exerciseId: string;
+  trackingType: TrackingType;
   Exercise: {
     name: string;
   };
@@ -47,6 +48,7 @@ interface Activity {
 }
 
 export default function ActivityMenu({ activity }: { activity: Activity }) {
+  const router = useRouter();
   const { setActivity, onOpen } = useContext(ActivityModalContext);
 
   const handleDelete = async (activityId: string) => {
@@ -69,6 +71,8 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
     } else if (key === "details") {
       setActivity(activity);
       onOpen();
+    } else if (key === "edit") {
+      router.push('/activity/' + activity.id);
     }
   };
 
@@ -80,7 +84,6 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
         </button>
       </DropdownTrigger>
       <DropdownMenu
-        disabledKeys={["edit"]}
         aria-label="Static Actions"
         topContent={
           <h4 className="text-zinc-500 uppercase font-semibold text-xs px-2 pt-2">
@@ -97,7 +100,7 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
             View Details
           </DropdownItem>
           <DropdownItem startContent={<IconEdit size={20} />} key="edit">
-            Edit (Coming soon)
+            Edit
           </DropdownItem>
         </DropdownSection>
         <DropdownItem
