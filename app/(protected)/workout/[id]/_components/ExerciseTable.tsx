@@ -79,6 +79,7 @@ export default function ExerciseTable({
             <TableCell>
               <Input
                 size="sm"
+                type="number"
                 label="Weight"
                 placeholder="0"
                 defaultValue={set.weight !== null ? String(set.weight) : ""}
@@ -101,8 +102,10 @@ export default function ExerciseTable({
               <TableCell>
                 <Input
                   size="sm"
+                  type="number"
                   label="Duration"
-                  placeholder={set.duration !== null ? String(set.duration) : ""}
+                  defaultValue={set.duration !== null ? String(set.duration) : ""}
+                  placeholder="0"
                   endContent={
                     <span className="text-zinc-500">s</span>
                   }
@@ -127,7 +130,9 @@ export default function ExerciseTable({
                 <Input
                   size="sm"
                   label="Reps"
-                  placeholder={set.reps !== null ? String(set.reps) : ""}
+                  type="number"
+                  placeholder="0"
+                  defaultValue={set.reps !== null ? String(set.reps) : ""}
                   onInput={(e) => {
                     const value = e.currentTarget.value;
                     if (!/^\d*$/.test(value)) {
@@ -143,25 +148,6 @@ export default function ExerciseTable({
             )}
 
             <TableCell className="text-center">
-              {/* <Button
-                isIconOnly
-                radius="sm"
-                size="lg"
-                color={set.completed ? "primary" : "danger"}
-                onPress={() =>
-                  handleCompleteSet(
-                    index,
-                    setIndex,
-                    exerciseDetail.exerciseName,
-                  )
-                }
-              >
-                {set.completed ? (
-                  <IconSquareCheck />
-                ) : (
-                  <IconSquare />
-                )}
-              </Button> */}
               <Checkbox 
                 size="lg"
                 color={set.completed ? "primary" : "danger"}
