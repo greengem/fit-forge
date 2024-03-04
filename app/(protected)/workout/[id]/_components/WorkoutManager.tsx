@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useConfetti } from "@/contexts/ConfettiContext";
+import { TrackingType } from "@prisma/client";
 
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Button, ButtonGroup } from "@nextui-org/button";
@@ -34,20 +35,6 @@ interface Workout {
   name: string;
   notes: string | null;
   WorkoutPlanExercise: WorkoutPlanExercise[];
-}
-
-interface Set {
-  completed: boolean;
-  reps: number | null;
-  duration: number | null;
-  weight: number | null;
-}
-
-interface WorkoutExercise {
-  exerciseId: string;
-  exerciseName: string;
-  sets: Set[];
-  trackingType: string;
 }
 
 export default function WorkoutManager({ workout }: { workout: Workout }) {
@@ -90,54 +77,6 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     }
   }, [workout, activeWorkoutRoutine, setWorkoutExercises, isDataLoaded]);
 
-  // Add Sets to exercise
-  const addSet = (exerciseIndex: number, exerciseName: string) => {
-    setWorkoutExercises((prevWorkoutExercises) => {
-      if (!prevWorkoutExercises) return prevWorkoutExercises;
-      const updatedWorkoutExercises = [...prevWorkoutExercises];
-      const exerciseToUpdate = { ...updatedWorkoutExercises[exerciseIndex] };
-      const newSet = {
-        completed: false,
-        reps: workout.WorkoutPlanExercise[exerciseIndex].reps || null,
-        duration:
-          workout.WorkoutPlanExercise[exerciseIndex].exerciseDuration || null,
-        weight: null,
-      };
-      exerciseToUpdate.sets = [...exerciseToUpdate.sets, newSet];
-      updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
-      toast.success(`Set added to ${exerciseName}`);
-      return updatedWorkoutExercises;
-    });
-  };
-
-  //Remove Sets from exercise
-  const removeSet = (exerciseIndex: number, exerciseName: string) => {
-    setWorkoutExercises((prevWorkoutExercises) => {
-      if (!prevWorkoutExercises) return prevWorkoutExercises;
-      const updatedWorkoutExercises = [...prevWorkoutExercises];
-      if (updatedWorkoutExercises[exerciseIndex].sets.length > 1) {
-        if (
-          window.confirm(
-            `Are you sure you want to delete the last set from ${exerciseName}?`,
-          )
-        ) {
-          const exerciseToUpdate = {
-            ...updatedWorkoutExercises[exerciseIndex],
-          };
-          exerciseToUpdate.sets.pop();
-          updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
-          toast.success(`Set removed from ${exerciseName}`);
-          return updatedWorkoutExercises;
-        }
-      } else {
-        toast.error(
-          `Cannot remove. At least one set is required for ${exerciseName}.`,
-        );
-      }
-      return prevWorkoutExercises;
-    });
-  };
-
   // Handle clicking complete set button
   const handleCompleteSet = (
     exerciseIndex: number,
@@ -145,6 +84,30 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     exerciseName: string,
     isSelected: boolean
   ) => {
+    if (!workoutExercises) {
+      toast.error('Workout exercises data is not loaded yet');
+      return;
+    }
+  
+    const exerciseDetail = workoutExercises[exerciseIndex];
+    const set = exerciseDetail.sets[setIndex];
+  
+    if (
+      set.weight === null || 
+      !Number(set.weight) || 
+      (
+        exerciseDetail.trackingType === "reps" && 
+        (set.reps === null || !Number(set.reps))
+      ) || 
+      (
+        exerciseDetail.trackingType === "duration" && 
+        (set.duration === null || !Number(set.duration))
+      )
+    ) {
+      toast.error('Please fill in all fields before marking the set as completed');
+      return;
+    }
+
     if (!workoutStartTime) {
       startWorkout(workoutPlanId);
     }
@@ -221,6 +184,54 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     });
   };
 
+  // Add Sets to exercise
+  const addSet = (exerciseIndex: number, exerciseName: string) => {
+    setWorkoutExercises((prevWorkoutExercises) => {
+      if (!prevWorkoutExercises) return prevWorkoutExercises;
+      const updatedWorkoutExercises = [...prevWorkoutExercises];
+      const exerciseToUpdate = { ...updatedWorkoutExercises[exerciseIndex] };
+      const newSet = {
+        completed: false,
+        reps: workout.WorkoutPlanExercise[exerciseIndex].reps || null,
+        duration:
+          workout.WorkoutPlanExercise[exerciseIndex].exerciseDuration || null,
+        weight: null,
+      };
+      exerciseToUpdate.sets = [...exerciseToUpdate.sets, newSet];
+      updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
+      toast.success(`Set added to ${exerciseName}`);
+      return updatedWorkoutExercises;
+    });
+  };
+
+  //Remove Sets from exercise
+  const removeSet = (exerciseIndex: number, exerciseName: string) => {
+    setWorkoutExercises((prevWorkoutExercises) => {
+      if (!prevWorkoutExercises) return prevWorkoutExercises;
+      const updatedWorkoutExercises = [...prevWorkoutExercises];
+      if (updatedWorkoutExercises[exerciseIndex].sets.length > 1) {
+        if (
+          window.confirm(
+            `Are you sure you want to delete the last set from ${exerciseName}?`,
+          )
+        ) {
+          const exerciseToUpdate = {
+            ...updatedWorkoutExercises[exerciseIndex],
+          };
+          exerciseToUpdate.sets.pop();
+          updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
+          toast.success(`Set removed from ${exerciseName}`);
+          return updatedWorkoutExercises;
+        }
+      } else {
+        toast.error(
+          `Cannot remove. At least one set is required for ${exerciseName}.`,
+        );
+      }
+      return prevWorkoutExercises;
+    });
+  };
+
   // Cancel workout and reset states
   const cancelWorkout = () => {
     if (
@@ -237,26 +248,23 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     }
   };
 
-  // Save the workout
+
   const completeWorkout = async () => {
-    // Ensure workoutExercises is not null before proceeding
     if (workoutExercises) {
-      // Check if there's at least one set not completed
       const hasIncompleteSets = workoutExercises.some((exercise) =>
         exercise.sets.some((set) => !set.completed),
       );
 
-      // Warn the user if there are incomplete sets
+
       if (hasIncompleteSets) {
         const proceedWithIncompleteSets = window.confirm(
           "There are incomplete sets. These will not be saved. Do you want to proceed?",
         );
         if (!proceedWithIncompleteSets) {
-          return; // Stop the save operation if the user does not want to proceed
+          return;
         }
       }
 
-      // Filter exercises to only include those with at least one set completed
       const filteredExercises = workoutExercises
         .filter((exercise) => exercise.sets.some((set) => set.completed))
         .map((exercise) => ({
@@ -264,7 +272,6 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
           sets: exercise.sets.filter((set) => set.completed),
         }));
 
-      // Proceed with save operation if there are exercises with completed sets
       if (filteredExercises.length === 0) {
         toast.error(
           "You need to complete at least one set to save the workout.",
@@ -272,11 +279,12 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
         return;
       }
 
-      setIsSaving(true);
-
       try {
+        setIsSaving(true);
+        
         const exercisesData = filteredExercises.map((exercise) => ({
           exerciseId: exercise.exerciseId,
+          trackingType: TrackingType[exercise.trackingType as keyof typeof TrackingType],
           sets: exercise.sets.map((set) => ({
             reps: set.reps,
             weight: set.weight,
