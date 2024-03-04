@@ -19,7 +19,7 @@ export default function ExerciseInfoButton({
 
   return (
     <Button isIconOnly onPress={handleClick}>
-      <IconInfoCircle size={20} />
+      <IconInfoCircle className="hover:text-primary" size={20} />
     </Button>
   );
 }
