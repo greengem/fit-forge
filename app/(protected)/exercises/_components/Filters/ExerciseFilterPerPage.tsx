@@ -15,7 +15,7 @@ export default function ExerciseFilterPerPage() {
         replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
 
-    const perPage = searchParams.get("perPage") || "5";
+    const perPage = searchParams.get("perPage") || "10";
     const selectedKeys = new Set([perPage]);
 
     return (
