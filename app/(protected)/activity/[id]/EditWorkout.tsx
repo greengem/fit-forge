@@ -104,7 +104,7 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
             for (let j = 0; j < exerciseSets[i].length; j++) {
                 const set = exerciseSets[i][j];
                 if (set.weight === null || (workout.exercises[i].trackingType === 'reps' ? set.reps === null : set.exerciseDuration === null)) {
-                    toast.error(`Please fill in all fields for exercise ${i + 1}, set ${j + 1}`);
+                    toast.error(`Please fill in all fields for Exercise ${i + 1}, Set ${j + 1}`);
                     return false;
                 }
             }
@@ -146,8 +146,8 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
     return (
         <form onSubmit={handleSave}>
             <Card shadow="none" className="mb-3 shadow-md">
-                <CardHeader className="text-lg px-5">Date & Duration</CardHeader>
-                <CardBody className="grid grid-cols-3 gap-3 pt-0">
+                <CardHeader className="text-lg px-3">Date & Duration</CardHeader>
+                <CardBody className="grid grid-cols-3 gap-3 px-3 pt-0">
                     <Input
                         type="number"
                         size="sm"
@@ -191,13 +191,13 @@ export default function EditWorkout({ workout } : { workout: Workout }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3 mb-3">
                 {workout.exercises.map((exercise, exerciseIndex) => (
                     <Card key={exerciseIndex} shadow="none" className="shadow-md">
-                        <CardHeader className="text-lg px-5">
+                        <CardHeader className="text-lg px-3">
                             <div className="flex gap-2 items-center mb-3">
                                 <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">{exerciseIndex + 1}</span>
                                 <p className="text-lg">{exercise.Exercise.name}</p>
                             </div>
                         </CardHeader>
-                        <CardBody className="pt-0">
+                        <CardBody className="pt-0 px-3">
                             <Table aria-label="Example static collection table" removeWrapper shadow="none">
                                 <TableHeader>
                                     <TableColumn>SET</TableColumn>
