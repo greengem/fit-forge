@@ -15,6 +15,7 @@ interface WorkoutExercise {
     reps: number | null;
     duration: number | null;
     weight: number | null;
+    isWarmUp: boolean;
   }[];
   trackingType: string;
 }
