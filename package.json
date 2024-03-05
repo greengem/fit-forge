@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.7",
-    "@nextui-org/react": "^2.1.13",
+    "@nextui-org/react": "2.2.9",
     "@prisma/client": "^5.9.1",
     "@tabler/icons-react": "^2.39.0",
     "@uiw/react-heat-map": "^2.2.2",
