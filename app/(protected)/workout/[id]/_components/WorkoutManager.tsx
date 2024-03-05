@@ -68,7 +68,6 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
             reps: exerciseDetail.reps || null,
             duration: exerciseDetail.exerciseDuration || null,
             weight: null,
-            isWarmUp: false,
           })),
           trackingType: exerciseDetail.trackingType,
         }),
@@ -186,7 +185,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
   };
 
   // Add Sets to exercise
-  const addSet = (exerciseIndex: number, exerciseName: string, isWarmUp = false) => {
+  const addSet = (exerciseIndex: number, exerciseName: string) => {
     setWorkoutExercises((prevWorkoutExercises) => {
       if (!prevWorkoutExercises) return prevWorkoutExercises;
       const updatedWorkoutExercises = [...prevWorkoutExercises];
@@ -196,11 +195,10 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
         reps: workout.WorkoutPlanExercise[exerciseIndex].reps || null,
         duration: workout.WorkoutPlanExercise[exerciseIndex].exerciseDuration || null,
         weight: null,
-        isWarmUp,
       };
       exerciseToUpdate.sets = [...exerciseToUpdate.sets, newSet];
       updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
-      toast.success(`Set added to ${exerciseName}` + (isWarmUp ? " as warm-up" : ""));
+      toast.success(`Set added to ${exerciseName}`);
       return updatedWorkoutExercises;
     });
   };
@@ -292,7 +290,6 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
             weight: set.weight,
             duration: set.duration,
             completed: set.completed,
-            isWarmUp: set.isWarmUp,
           })),
         }));
 
@@ -372,7 +369,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
               <ButtonGroup className="shrink-0">
                 <Button
                   size="sm"
-                  onPress={() => addSet(index, exercise.exerciseName, false)}
+                  onPress={() => addSet(index, exercise.exerciseName)}
                 >
                   <IconPlus size={16} />
                   Add Set
