@@ -46,7 +46,7 @@ export default function DashboardChartDateRange({
       }}
       size="sm"
       step={10}
-      color="foreground"
+      color="danger"
       showSteps={true}
       defaultValue={20}
       maxValue={50}
