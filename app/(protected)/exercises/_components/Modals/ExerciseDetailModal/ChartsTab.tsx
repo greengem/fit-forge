@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import {
   parseISO,
   startOfWeek,
-  endOfWeek,
   eachWeekOfInterval,
   format,
   subMonths,
@@ -13,10 +12,7 @@ import {
   LineChart,
   Line,
   XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import { TooltipProps } from "recharts";
