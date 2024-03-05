@@ -105,6 +105,7 @@ model SetLog {
   reps                Int?
   exerciseDuration            Int?
   order               Int?
+  isWarmUp            Boolean           @default(false)
   WorkoutLogExercise  WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
 }
 
