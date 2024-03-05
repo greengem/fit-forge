@@ -39,7 +39,7 @@ export default async function NewRoutineFormStepTwo({
     }
 
     const currentPage = Number(searchParams?.page) || 1;
-    const perPage = Number(searchParams?.perPage) || 5;
+    const perPage = Number(searchParams?.perPage) || 10;
     const search = searchParams?.search || "";
     const cat = searchParams?.cat ? searchParams?.cat.split(",") : [];
     const muscle = searchParams?.muscle ? searchParams?.muscle.split(",") : [];
@@ -66,7 +66,7 @@ export default async function NewRoutineFormStepTwo({
     return (
         <>
             <PageHeading title="New Routine - Step 2" />
-            {/* <StepProgress routineId={routineId} /> */}
+            <p className="text-zinc-500 mb-3">Add exercises to your routine by clicking the plus button to the right</p>
             <ExerciseFilters searchParams={searchParams} />
             <ExerciseFetch
                 search={search}
