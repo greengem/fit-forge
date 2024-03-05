@@ -54,6 +54,8 @@ export default async function ActivityList() {
     },
   });
 
+  //console.log(JSON.stringify(workouts, null, 2));
+
   return (
     <ActivityModalProvider>
       {workouts.length > 0 ? (
