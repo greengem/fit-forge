@@ -23,7 +23,7 @@ export default function DashboardLinks() {
             </CardHeader>
             <Image
               alt="Card background"
-              className="z-0 w-full h-full object-cover"
+              className="z-0 w-full h-full object-cover saturate-50"
               src={`/card-images/${link.image}`}
               width={640}
               height={640}
