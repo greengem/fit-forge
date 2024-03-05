@@ -111,7 +111,7 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
             startContent={<IconShare size={20} />}
             key="share"
           >
-            Share
+            Share (Coming Soon)
           </DropdownItem>
         </DropdownSection>
         <DropdownItem
