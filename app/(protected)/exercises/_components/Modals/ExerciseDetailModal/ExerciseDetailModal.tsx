@@ -26,6 +26,7 @@ export default function ExerciseDetailModal() {
       onOpenChange={onOpenChange}
       isKeyboardDismissDisabled
       scrollBehavior="outside"
+      size="lg"
     >
       <ModalContent>
         {(onClose) => (
