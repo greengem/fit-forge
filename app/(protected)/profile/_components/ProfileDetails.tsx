@@ -58,8 +58,8 @@ export default function ProfileDetails({
       <CardBody className="gap-y-3 px-5">
         <Input
           type="text"
-          label="Name"
-          placeholder="Enter your name"
+          label="Username"
+          placeholder="Enter your username"
           value={username || ""}
           isRequired
           isDisabled
