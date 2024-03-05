@@ -9,6 +9,7 @@ interface Set {
   weight: number | null;
   duration: number | null;
   completed: boolean;
+  isWarmUp: boolean;
 }
 
 interface Exercise {
@@ -50,6 +51,7 @@ export async function handleSaveWorkout(data: WorkoutData) {
                 weight: set.weight,
                 reps: set.reps,
                 exerciseDuration: set.duration,
+                isWarmUp: set.isWarmUp,
               })),
             },
           })),
@@ -95,6 +97,7 @@ export async function handleUpdateWorkout(id: string, data: WorkoutData) {
                 weight: set.weight,
                 reps: set.reps,
                 exerciseDuration: set.duration,
+                isWarmUp: set.isWarmUp,
               })),
             },
           })),
