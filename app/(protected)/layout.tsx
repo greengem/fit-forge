@@ -15,7 +15,7 @@ export default function RootLayout({
       <SiteNotice 
         message="Beta: Data may be subject to change or loss."
         variant="danger" 
-        visible={true}
+        visible={false}
       />
       <div className="flex grow">
         <Sidebar />
