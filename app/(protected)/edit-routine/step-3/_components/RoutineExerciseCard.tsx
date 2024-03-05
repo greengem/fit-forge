@@ -120,21 +120,24 @@ export default function RoutineExerciseCard({
           )}
         </div>
 
-        <ButtonGroup className="justify-start" size="sm">
-          <Button isIconOnly onPress={() => moveUp(index)} isDisabled={index === 0}>
-            <IconArrowUp size={18} />
-          </Button>
-          <Button isIconOnly onPress={() => moveDown(index)} isDisabled={index === totalExercises - 1}>
-            <IconArrowDown size={18} />
-          </Button>
+        <div className="flex justify-between">
+          <ButtonGroup size="sm">
+            <Button isIconOnly onPress={() => moveUp(index)} isDisabled={index === 0}>
+              <IconArrowUp size={18} />
+            </Button>
+            <Button isIconOnly onPress={() => moveDown(index)} isDisabled={index === totalExercises - 1}>
+              <IconArrowDown size={18} />
+            </Button>
+          </ButtonGroup>
           <Button
             color="danger"
             isIconOnly
+            size="sm"
             onPress={() => deleteExercise(index)}
           >
             <IconTrash size={18} />
           </Button>
-        </ButtonGroup>
+        </div>
       </CardBody>
     </Card>
   );
