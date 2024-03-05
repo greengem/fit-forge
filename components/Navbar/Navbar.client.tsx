@@ -8,6 +8,7 @@ import {
   IconBook,
   IconActivity,
   IconBarbell,
+  IconFlame,
 } from "@tabler/icons-react";
 import NavbarUser from "./NavbarUser";
 
@@ -33,7 +34,7 @@ export default function MobileNavbarClient({
       <NavbarContent justify="start">
         <Link href="/" className="text-white">
           <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
-            <IconBarbell className="text-primary" />
+            <IconFlame className="text-primary" />
           </h4>
         </Link>
       </NavbarContent>
