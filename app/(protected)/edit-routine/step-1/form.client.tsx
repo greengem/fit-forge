@@ -6,7 +6,7 @@ import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { handleCreateRoutineStepOne } from "@/server-actions/RoutineServerActions";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import { IconPlayerTrackNextFilled, IconX } from "@tabler/icons-react";
+import { IconPlayerTrackNextFilled } from "@tabler/icons-react";
 
 export default function NewRoutineFormStepOneClient({ 
     routineId, routineName, routineNotes, pageTitle 
@@ -35,7 +35,7 @@ export default function NewRoutineFormStepOneClient({
 
     return (
         <Card className="max-w-screen-sm mx-auto shadow-md" shadow="none">
-            <CardHeader className="text-2xl font-semibold tracking-tight p-3 md:p-5 pb-0 md:pb-0">New Routine</CardHeader>
+            <CardHeader className="text-2xl font-semibold tracking-tight p-3 md:p-5 pb-0 md:pb-0">{pageTitle}</CardHeader>
             <CardBody className="p-3 md:p-5">
             <p className="mb-3 text-sm text-zinc-500">Welcome to the first step in creating your personalized workout plan! This is where your fitness journey begins, and we&apos;re excited to be a part of it. Let&apos;s start with the basics.</p>
                 <form className="space-y-3" onSubmit={handleSubmit}>
