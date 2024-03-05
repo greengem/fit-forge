@@ -7,13 +7,13 @@ import { useSidebarToggleContext } from '@/contexts/SidebarToggleContext';
 import {
   IconDashboard,
   IconJumpRope,
-  IconStretching,
   IconActivity,
   IconUser,
   IconBook,
   IconHelp,
   IconLayoutSidebarLeftExpand,
   IconLayoutSidebarLeftCollapse,
+  IconClipboardList,
 } from "@tabler/icons-react";
 import SidebarToggleButton from "./SidebarToggleButton";
 
@@ -36,7 +36,7 @@ export default function SidebarNav() {
           />
           <NavItem
             icon={<IconActivity size={22} className="shrink-0" />}
-            label="Activity"
+            label="Activity Log"
             href="/activity"
             active={pathname === "/activity"}
           />
@@ -58,7 +58,13 @@ export default function SidebarNav() {
             active={pathname.startsWith("/workout")}
           />
           <NavItem
-            icon={<IconStretching size={22} className="shrink-0" />}
+            icon={<IconClipboardList size={22} className="shrink-0" />}
+            label="Routine Creator"
+            href="/edit-routine/step-1"
+            active={pathname.startsWith("/edit-routine/")}
+          />
+          <NavItem
+            icon={<IconBook size={22} className="shrink-0" />}
             label="Browse Exercises"
             href="/exercises"
             active={pathname === "/exercises"}
@@ -67,25 +73,26 @@ export default function SidebarNav() {
 
         {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">More</li>}
         
-        <NavItem
-          icon={<IconHelp size={22} className="shrink-0" />}
-          label="Support"
-          href="/support"
-          active={pathname === "/support"}
-        />
-        <li onClick={toggleSidebar} className='cursor-pointer'>
-          <div className={clsx(
-            "flex items-center space-x-3 p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-colors duration-200 ease-in-out",
-            sidebarCollapse ? "justify-center" : ""
-          )}>
-            {sidebarCollapse ? 
-                <IconLayoutSidebarLeftExpand size={22} className='shrink-0' /> :
-                <IconLayoutSidebarLeftCollapse size={22} className='shrink-0' />
-            }
-            {!sidebarCollapse && <div>Collapse Sidebar</div>}
-          </div>
-        </li>
-        
+        <div className="space-y-1">
+          <NavItem
+            icon={<IconHelp size={22} className="shrink-0" />}
+            label="Support"
+            href="/support"
+            active={pathname === "/support"}
+          />
+          <li onClick={toggleSidebar} className='cursor-pointer'>
+            <div className={clsx(
+              "flex items-center space-x-3 p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-colors duration-200 ease-in-out",
+              sidebarCollapse ? "justify-center" : ""
+            )}>
+              {sidebarCollapse ? 
+                  <IconLayoutSidebarLeftExpand size={22} className='shrink-0' /> :
+                  <IconLayoutSidebarLeftCollapse size={22} className='shrink-0' />
+              }
+              {!sidebarCollapse && <div>Collapse Sidebar</div>}
+            </div>
+          </li>
+        </div>
       </ul>
     </div>
   );
