@@ -33,7 +33,7 @@ export default async function ExercisesPage({
     throw new Error("You must be signed in to view this page.");
   }
 
-  const perPage = Number(searchParams?.perPage) || 5;
+  const perPage = Number(searchParams?.perPage) || 10;
   const search = searchParams?.search || "";
   const cat = searchParams?.cat ? searchParams?.cat.split(",") : [];
   const muscle = searchParams?.muscle ? searchParams?.muscle.split(",") : [];
