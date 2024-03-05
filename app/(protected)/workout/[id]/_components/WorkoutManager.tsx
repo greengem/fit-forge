@@ -68,6 +68,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
             reps: exerciseDetail.reps || null,
             duration: exerciseDetail.exerciseDuration || null,
             weight: null,
+            isWarmUp: false,
           })),
           trackingType: exerciseDetail.trackingType,
         }),
@@ -185,7 +186,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
   };
 
   // Add Sets to exercise
-  const addSet = (exerciseIndex: number, exerciseName: string) => {
+  const addSet = (exerciseIndex: number, exerciseName: string, isWarmUp = false) => {
     setWorkoutExercises((prevWorkoutExercises) => {
       if (!prevWorkoutExercises) return prevWorkoutExercises;
       const updatedWorkoutExercises = [...prevWorkoutExercises];
@@ -193,16 +194,17 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
       const newSet = {
         completed: false,
         reps: workout.WorkoutPlanExercise[exerciseIndex].reps || null,
-        duration:
-          workout.WorkoutPlanExercise[exerciseIndex].exerciseDuration || null,
+        duration: workout.WorkoutPlanExercise[exerciseIndex].exerciseDuration || null,
         weight: null,
+        isWarmUp,
       };
       exerciseToUpdate.sets = [...exerciseToUpdate.sets, newSet];
       updatedWorkoutExercises[exerciseIndex] = exerciseToUpdate;
-      toast.success(`Set added to ${exerciseName}`);
+      toast.success(`Set added to ${exerciseName}` + (isWarmUp ? " as warm-up" : ""));
       return updatedWorkoutExercises;
     });
   };
+  
 
   //Remove Sets from exercise
   const removeSet = (exerciseIndex: number, exerciseName: string) => {
@@ -290,6 +292,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
             weight: set.weight,
             duration: set.duration,
             completed: set.completed,
+            isWarmUp: set.isWarmUp,
           })),
         }));
 
@@ -366,17 +369,15 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
               />
             </CardBody>
             <CardFooter className="gap-2 px-5 bg-default-100">
-              <ButtonGroup>
+              <ButtonGroup className="shrink-0">
                 <Button
-                  className="gap-unit-1"
                   size="sm"
-                  onPress={() => addSet(index, exercise.exerciseName)}
+                  onPress={() => addSet(index, exercise.exerciseName, false)}
                 >
                   <IconPlus size={16} />
                   Add Set
                 </Button>
                 <Button
-                  className="gap-unit-1"
                   size="sm"
                   onPress={() => removeSet(index, exercise.exerciseName)}
                 >
