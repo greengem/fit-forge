@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   IconChartBar,
   IconBook,
-  IconBarbell,
   IconPlayerPlayFilled,
   IconStretching,
   IconJumpRope,
