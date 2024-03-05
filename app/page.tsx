@@ -10,6 +10,7 @@ import {
   IconBrandOpenai,
   IconUser,
   IconListCheck,
+  IconFlame,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
@@ -44,7 +45,7 @@ export default function Home() {
     <main className="min-h-dvh text-white bg-gradient-to-b from-black to-zinc-900">
       <nav className="px-3 md:px-10 py-3 mb-5 flex justify-between items-center">
         <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
-          <IconBarbell className="text-primary" /> Tracktive
+          <IconFlame className="text-primary" /> {process.env.NEXT_PUBLIC_BRAND_NAME}
         </h4>
       </nav>
 
