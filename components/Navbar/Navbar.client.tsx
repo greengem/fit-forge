@@ -5,7 +5,7 @@ import Link from "next/link";
 import {
   IconDashboard,
   IconJumpRope,
-  IconStretching,
+  IconBook,
   IconActivity,
   IconBarbell,
 } from "@tabler/icons-react";
@@ -15,7 +15,7 @@ const NAV_CONTENT_ITEMS = [
   { label: <IconDashboard />, href: "/dashboard" },
   { label: <IconActivity />, href: "/activity" },
   { label: <IconJumpRope />, href: "/workout" },
-  { label: <IconStretching />, href: "/exercises" },
+  { label: <IconBook />, href: "/exercises" },
 ];
 
 export default function MobileNavbarClient({
