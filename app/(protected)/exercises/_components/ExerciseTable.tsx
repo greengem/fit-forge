@@ -45,7 +45,6 @@ export default function ExerciseTable({
       aria-label="Exercises Table"
       className="mb-3 shadow-md"
       shadow="none"
-      classNames={{ wrapper: "p-2 md:p-4" }}
       isCompact
     >
       <TableHeader>
