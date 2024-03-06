@@ -21,7 +21,7 @@ export default async function ActivityList() {
       inProgress: false,
     },
     orderBy: {
-      createdAt: "desc",
+      date: "desc",
     },
     select: {
       id: true,
