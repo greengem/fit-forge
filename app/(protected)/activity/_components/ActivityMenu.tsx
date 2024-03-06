@@ -43,7 +43,7 @@ interface WorkoutPlan {
 interface Activity {
   id: string;
   duration: number;
-  createdAt: Date;
+  date: Date;
   WorkoutPlan: WorkoutPlan;
   exercises: Exercise[];
 }
