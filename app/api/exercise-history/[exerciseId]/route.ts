@@ -33,6 +33,11 @@ export async function GET(
             sets: true,
           },
         },
+        WorkoutPlan: {
+          select: {
+            name: true,
+          },
+        },
       },
       orderBy: {
         date: "desc",
