@@ -47,7 +47,7 @@ export default async function AdminDashboard(params: {
                 avatarProps={{
                   src: user.imageUrl,
                 }}
-                classNames={{ description: "text-gray-500" }}
+                classNames={{ description: "text-zinc-500" }}
               />
               <div className="flex gap-3">
                 <form action={setRole}>
