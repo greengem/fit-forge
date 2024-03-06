@@ -76,7 +76,7 @@ export default function Home() {
           </div>
           <div className="hidden lg:block">
             <Image
-              src="/ss2.webp"
+              src="/ss.webp"
               alt="Screenshot of NextBoard"
               width={2000}
               height={1250}
