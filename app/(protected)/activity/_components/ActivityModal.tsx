@@ -39,7 +39,7 @@ export default function ActivityModal() {
             <ModalHeader className="flex-col gap-1 pb-0">
               <h2 className="flex gap-1">
                 <time>
-                  {format(activity?.createdAt || new Date(), "dd/MM/yyyy")}
+                  {format(activity?.date || new Date(), "dd/MM/yyyy")}
                 </time>
                 <span>-</span>
                 <span>{activity?.WorkoutPlan.name}</span>
