@@ -1,10 +1,36 @@
 "use server";
 import { auth } from "@clerk/nextjs";
+import { clerkClient } from '@clerk/nextjs/server';
 import prisma from "@/prisma/prisma";
 import { EquipmentType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export async function handleUpdateUserInfo(data: {
+export async function handleUpdateUserDetails(data: {
+  username: string;
+  firstName: string;
+  lastName: string;
+}) {
+  const { userId }: { userId: string | null } = auth();
+
+  if (!userId) {
+    throw new Error("You must be signed in to view this page.");
+  }
+
+  try {
+    await clerkClient.users.updateUser(userId, {
+      username: data.username,
+      firstName: data.firstName,
+      lastName: data.lastName,
+    });
+
+    revalidatePath("/profile");
+    return { success: true, message: "User info updated" };
+  } catch (e) {
+    return { success: false, message: "Failed to update user info" };
+  }
+}
+
+export async function handleUpdateUserMeasurements(data: {
   age: string;
   height: string;
   weight: string;
@@ -63,6 +89,7 @@ export async function handleUpdateUserEquipment(
       });
     }
 
+    revalidatePath("/profile");
     return { success: true, message: "User equipment updated" };
   } catch (e) {
     return { success: false, message: "Failed to update user equipment" };
