@@ -4,8 +4,9 @@ import prisma from "@/prisma/prisma";
 import ProfileHero from "./_components/ProfileHero";
 import ProfileStats from "./_components/ProfileStats";
 import ProfileEquipment from "./_components/ProfileEquipment";
-import ProfileDetails from "./_components/ProfileDetails";
 import ProfileActions from "./_components/ProfileActions";
+import ProfileMeasurements from "./_components/ProfileMeasurements";
+import ProfileDetails from "./_components/ProfileDetails";
 
 export default async function ProfilePage() {
   const user = await currentUser();
@@ -16,8 +17,10 @@ export default async function ProfilePage() {
 
   const userId = user.id;
   const username = user?.username || undefined;
+  const firstName = user?.firstName || undefined;
+  const lastName = user?.lastName || undefined;
   const userImage = user?.imageUrl || undefined;
-  const userEmailAddress = user?.emailAddresses[0]?.emailAddress || undefined;
+  
 
   const userMeasurements = await prisma.userInfo.findUnique({
     where: {
@@ -44,15 +47,16 @@ export default async function ProfilePage() {
   return (
     <>
       <ProfileHero userImage={userImage} username={username} />
+
       {userMeasurements && <ProfileStats userMeasurements={userMeasurements} />}
+
+      <ProfileDetails username={username} firstName={firstName} lastName={lastName} />
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
-        <ProfileDetails
-          username={username}
-          userEmailAddress={userEmailAddress}
-          userMeasurements={userMeasurements}
-        />
+        <ProfileMeasurements userMeasurements={userMeasurements}/>
         <ProfileEquipment equipment={equipment} />
       </div>
+
       <ProfileActions />
     </>
   );
