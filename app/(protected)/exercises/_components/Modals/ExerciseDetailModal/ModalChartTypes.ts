@@ -14,10 +14,15 @@ export interface Exercise {
   sets: Set[];
 }
 
+export interface WorkoutPlan {
+  name: string;
+}
+
 export interface WorkoutLog {
   id: string;
   userId: string;
   workoutPlanId?: string | null;
+  WorkoutPlan: WorkoutPlan;
   name: string;
   date: string;
   duration: number;
