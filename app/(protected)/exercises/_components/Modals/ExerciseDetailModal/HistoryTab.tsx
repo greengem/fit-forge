@@ -31,6 +31,8 @@ export default function HistoryTab({
       </div>
     );
 
+    console.log(data);
+
   return (
     <div className="space-y-3">
       {data.map((log: WorkoutLog) => (
@@ -40,7 +42,7 @@ export default function HistoryTab({
           className="shadow-md ring-2 ring-zinc-800"
         >
           <CardHeader className="flex-col items-start">
-            <h4 className="text-lg">{log.name}</h4>
+            <h4>{log.WorkoutPlan.name}</h4>
             <p className="text-sm text-zinc-500">
               {new Date(log.date).toLocaleDateString()}
             </p>
