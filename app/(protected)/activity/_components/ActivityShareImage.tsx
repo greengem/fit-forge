@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ShareImageServerAction } from "@/server-actions/ShareImageServerAction";
 import { Button } from "@nextui-org/react";
+import Image from "next/image";
 
 export default function ActivityShareImage() {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -25,7 +26,7 @@ export default function ActivityShareImage() {
     return (
         <div>
             <Button onClick={downloadImage}>Download Image</Button>
-            {imageSrc && <img src={imageSrc} alt="Workout" />}
+            {imageSrc && <Image src={imageSrc} width={640} height={240} alt="Workout Summary" />}
         </div>
     )
 }
