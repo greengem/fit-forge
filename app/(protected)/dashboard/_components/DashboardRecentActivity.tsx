@@ -84,9 +84,9 @@ export default async function DashboardRecentActivity() {
                           <time>
                             {format(new Date(activity.createdAt), "MM/dd/yyyy")}
                           </time>
-                          <span className="text-gray-400">|</span>
+                          <span className="text-zinc-500">|</span>
                           <span>{formatDuration(activity.duration)}</span>
-                          <span className="text-gray-400">|</span>
+                          <span className="text-zinc-500">|</span>
                           <span>{totalWeight} KG</span>
                         </span>
                       </p>
