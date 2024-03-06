@@ -75,11 +75,11 @@ export default async function ActivityList() {
                       <time>
                         {format(new Date(activity.createdAt), "dd/MM/yyyy")}
                       </time>
-                      <span className="text-gray-400"> | </span>
+                      <span className="text-zinc-500"> | </span>
                       <span>
                         <FormatDuration seconds={activity.duration} />
                       </span>
-                      <span className="text-gray-400"> | </span>
+                      <span className="text-zinc-500"> | </span>
                       <span>{totalWeight} Kg</span>
                     </div>
                     <ActivityMenu activity={activity} />
