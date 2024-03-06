@@ -1,118 +1,87 @@
-"use client";
+'use client'
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { handleUpdateUserInfo } from "@/server-actions/UserServerActions";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { IconUser, IconDeviceFloppy } from "@tabler/icons-react";
+import { IconDeviceFloppy, IconSettings, IconUser } from "@tabler/icons-react";
+import { handleUpdateUserDetails } from "@/server-actions/UserServerActions";
+import { toast } from "sonner";
+import { UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
-interface UserMeasurements {
-  weight?: number | null;
-  height?: number | null;
-  age?: number | null;
-}
-
-export default function ProfileDetails({
-  username,
-  userEmailAddress,
-  userMeasurements,
-}: {
-  username: string | undefined;
-  userEmailAddress: string | undefined;
-  userMeasurements: UserMeasurements | null;
+export default function ProfileDetails({ 
+    username, firstName, lastName
+} : { 
+    username: string | undefined; firstName: string | undefined; lastName: string | undefined
 }) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [age, setAge] = useState(userMeasurements?.age || "");
-  const [height, setHeight] = useState(userMeasurements?.height || "");
-  const [weight, setWeight] = useState(userMeasurements?.weight || "");
+    const [inputName, setInputName] = useState(username || "");
+    const [inputFirstName, setInputFirstName] = useState(firstName || "");
+    const [inputLastName, setInputLastName] = useState(lastName || "");
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+    
+        const data = {
+          username: inputName,
+          firstName: inputFirstName,
+          lastName: inputLastName,
+        };
+    
+        console.log(data);
 
-    const data = {
-      age: age.toString(),
-      height: height.toString(),
-      weight: weight.toString(),
-    };
+        const response = await handleUpdateUserDetails(data);
+        if (response.success) {
+            toast.success("User info updated");
+        } else {
+            toast.error("Failed to update user info");
+        }
+      };
 
-    const response = await handleUpdateUserInfo(data);
+    return (
+        <>
+        <form onSubmit={handleSubmit}>
+            <Card shadow="none" className="shadow-md mb-3">
+                <CardHeader className="text-xl font-semibold px-5 pb-0 gap-x-3 items-center">
+                    <IconUser className="text-danger" />
+                    Details
+                </CardHeader>
+                <CardBody className="px-5">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <Input
+                            type="text"
+                            label="Username"
+                            size="sm"
+                            placeholder="Enter your username"
+                            value={inputName}
+                            onChange={(e) => setInputName(e.target.value)}
+                            isRequired
+                        />
 
-    if (response.success) {
-      toast.success(response.message);
-    } else {
-      toast.error(response.message);
-    }
+                        <Input
+                            type="text"
+                            label="First Name"
+                            size="sm"
+                            placeholder="Enter your first name"
+                            value={inputFirstName}
+                            onChange={(e) => setInputFirstName(e.target.value)}
+                        />
 
-    setIsLoading(false);
-  };
-
-  return (
-    <Card shadow="none" className="shadow-md">
-      <CardHeader className="text-xl font-semibold px-5 pb-0 gap-x-3">
-        <IconUser />
-        Details
-      </CardHeader>
-      <CardBody className="gap-y-3 px-5">
-        <Input
-          type="text"
-          label="Username"
-          placeholder="Enter your username"
-          value={username || ""}
-          isRequired
-          isDisabled
-        />
-
-        <Input
-          type="email"
-          label="Email"
-          placeholder="Enter your email"
-          value={userEmailAddress || ""}
-          isRequired
-          isDisabled
-        />
-
-        <Input
-          type="number"
-          label="Age"
-          placeholder="Enter your Age"
-          value={age.toString()}
-          onChange={(e) => setAge(e.target.value)}
-        />
-
-        <Input
-          type="number"
-          label="Height (cm)"
-          placeholder="Enter your Height"
-          value={height.toString()}
-          onChange={(e) => setHeight(e.target.value)}
-        />
-
-        <Input
-          type="number"
-          label="Weight (kg)"
-          placeholder="Enter your Weight"
-          value={weight.toString()}
-          onChange={(e) => setWeight(e.target.value)}
-        />
-
-        <p className="text-xs text-gray-500">
-          Your data is secure with us. We only use your information to enhance
-          your user experience and never share it with third parties.
-        </p>
-      </CardBody>
-      <CardFooter className="px-5">
-        <Button
-          color="primary"
-          onPress={handleSubmit}
-          isLoading={isLoading}
-          startContent={<IconDeviceFloppy />}
-        >
-          Save
-        </Button>
-      </CardFooter>
-    </Card>
-  );
+                        <Input
+                            type="text"
+                            label="Last Name"
+                            size="sm"
+                            placeholder="Enter your last name"
+                            value={inputLastName}
+                            onChange={(e) => setInputLastName(e.target.value)}
+                        />
+                    </div>
+                </CardBody>
+                <CardFooter className="px-5 gap-3">
+                    <Button type="submit" variant="flat" startContent={<IconDeviceFloppy size={20} />}>Save</Button>
+                    <Button as={Link} href="/profile/advanced" variant="flat" startContent={<IconSettings size={20} />}>Advanced</Button>
+                </CardFooter>
+            </Card>
+        </form>
+      </>
+    );
 }
