@@ -10,14 +10,14 @@ export default function ProfileStats({
   userMeasurements: UserMeasurements;
 }) {
   return (
-    <div className="grid grid-flow-col lg:px-40 mb-20">
+    <div className="grid grid-flow-col lg:px-40 mb-3">
       {userMeasurements.weight && (
         <div className="text-center">
           <div className="mb-1 space-x-1">
             <span className="text-5xl">{userMeasurements.weight}</span>
-            <span className="text-gray-500">kg</span>
+            <span className="text-zinc-500">kg</span>
           </div>
-          <div className="text-sm text-gray-500">Weight</div>
+          <div className="text-sm text-zinc-500">Weight</div>
         </div>
       )}
 
@@ -25,9 +25,9 @@ export default function ProfileStats({
         <div className="text-center">
           <div className="mb-1 space-x-1">
             <span className="text-5xl">{userMeasurements.height}</span>
-            <span className="text-gray-500">cm</span>
+            <span className="text-zinc-500">cm</span>
           </div>
-          <div className="text-sm text-gray-500">Height</div>
+          <div className="text-sm text-zinc-500">Height</div>
         </div>
       )}
 
@@ -35,9 +35,9 @@ export default function ProfileStats({
         <div className="text-center">
           <div className="mb-1 space-x-1">
             <span className="text-5xl">{userMeasurements.age}</span>
-            <span className="text-gray-500">y.o</span>
+            <span className="text-zinc-500">y.o</span>
           </div>
-          <div className="text-sm text-gray-500">Age</div>
+          <div className="text-sm text-zinc-500">Age</div>
         </div>
       )}
     </div>
