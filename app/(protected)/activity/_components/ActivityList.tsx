@@ -26,7 +26,7 @@ export default async function ActivityList() {
     select: {
       id: true,
       duration: true,
-      createdAt: true,
+      date: true,
       WorkoutPlan: {
         select: {
           name: true,
@@ -73,7 +73,7 @@ export default async function ActivityList() {
                   <div className="flex justify-between gap-2 w-full items-center">
                     <div className="tracking-tight grow">
                       <time>
-                        {format(new Date(activity.createdAt), "dd/MM/yyyy")}
+                        {format(new Date(activity.date), "dd/MM/yyyy")}
                       </time>
                       <span className="text-zinc-500"> | </span>
                       <span>
