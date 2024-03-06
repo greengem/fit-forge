@@ -342,7 +342,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     totalSets > 0 ? Math.round((completedSets / totalSets) * 100) : 0;
 
   return (
-    <div className="pb-40">
+    <div className="pb-32">
       {workout.notes && (
         <p className="mb-3 text-sm text-zinc-500">{workout.notes}</p>
       )}
