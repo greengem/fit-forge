@@ -32,6 +32,13 @@ type ExerciseProps = {
   highlightedExercises?: any;
 };
 
+function formatDisplayName(name: string): string {
+  return name
+    .split('_')
+    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 export default function ExerciseTable({
   exercises,
   favouriteExercises,
@@ -68,7 +75,7 @@ export default function ExerciseTable({
                     className: "hidden md:block"
                   }}
                   description={
-                    <span className="text-zinc-500">{exercise.category}</span>
+                    <span className="text-zinc-500">{formatDisplayName(exercise.category)}</span>
                   }
                   name={exercise.name}
                 />
@@ -78,10 +85,10 @@ export default function ExerciseTable({
               })}>
                 <div className="flex flex-col">
                   <p className="text-bold text-small">
-                    {exercise.primary_muscles.join(", ")}
+                    {exercise.primary_muscles.map(muscle => formatDisplayName(muscle)).join(", ")}
                   </p>
                   <p className="text-bold text-tiny text-zinc-500">
-                    {exercise.secondary_muscles.join(", ")}
+                    {exercise.secondary_muscles.map(muscle => formatDisplayName(muscle)).join(", ")}
                   </p>
                 </div>
               </TableCell>
