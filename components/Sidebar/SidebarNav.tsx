@@ -25,7 +25,7 @@ export default function SidebarNav() {
     <div className="px-5">
       <ul className="text-sm">
 
-      {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">Data</li>}
+      {!sidebarCollapse && <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 px-2">Data</li>}
 
         <div className="space-y-1 mb-4">
           <NavItem
@@ -48,7 +48,7 @@ export default function SidebarNav() {
           />
         </div>
 
-        {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 mt-4 px-2">Workout</li>}
+        {!sidebarCollapse && <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 mt-4 px-2">Workout</li>}
 
         <div className="space-y-1 mb-4">
           <NavItem
@@ -71,7 +71,7 @@ export default function SidebarNav() {
           />
         </div>
 
-        {!sidebarCollapse && <li className="uppercase text-xs text-gray-500 font-semibold mb-1 px-2">More</li>}
+        {!sidebarCollapse && <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 px-2">More</li>}
         
         <div className="space-y-1">
           <NavItem
