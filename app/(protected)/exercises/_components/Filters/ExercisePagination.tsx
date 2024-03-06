@@ -23,7 +23,7 @@ export default function ExercisePagination({
   const totalPages = Math.ceil(numberOfResults / perPage);
 
   return (
-    <div className="flex justify-center mb-3">
+    <div className="flex justify-center">
       <Pagination
         showControls
         isCompact
