@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import PageHeading from "@/components/PageHeading/PageHeading";
-import StepProgress from "../_components/StepProgress";
+//import StepProgress from "../_components/StepProgress";
 import RoutineBuilder from "./_components/RoutineBuilder";
 
 export default async function NewRoutineFormStepTwo({
@@ -39,11 +39,8 @@ export default async function NewRoutineFormStepTwo({
     return (
         <>
             <PageHeading title="New Routine - Step 3" />
-            <h4>{routine?.name}</h4>
-            {/* <StepProgress routineId={routineId} /> */}
-            <div className="max-w-screen-sm mx-auto">
-                <RoutineBuilder routine={routine} />
-            </div>
+            <p className="mb-3 text-zinc-500 text-sm">You&apos;re almost there! Now, select how you want to track each exercise: by repetitions or duration. Then, arrange the exercises in your preferred order. For each exercise, specify the number of reps or the duration (in minutes or seconds) and the sets you aim to complete.</p>
+            <RoutineBuilder routine={routine} />
         </>
     );
 }
