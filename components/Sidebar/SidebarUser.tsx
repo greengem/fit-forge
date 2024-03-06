@@ -16,7 +16,7 @@ export default function SidebarUser({ username, userImage} : { username?: string
             src: userImage || 'default-image-url',
           }}
           classNames={{
-            description: "text-gray-500",
+            description: "text-zinc-500",
           }}
         />
       }
