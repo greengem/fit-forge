@@ -68,8 +68,8 @@ export default function Home() {
               Tracktive.
             </p>
             <div className="flex gap-3">
-              <Button color="primary" as={Link} prefetch={false} href="/dashboard">
-                <IconPlayerPlayFilled />
+              <Button color="primary" as={Link} prefetch={false} href="/dashboard" size="lg">
+                <IconPlayerPlayFilled size={18} />
                 Get Started
               </Button>
             </div>
