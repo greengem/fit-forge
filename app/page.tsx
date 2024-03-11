@@ -3,18 +3,18 @@ import {
   IconChartBar,
   IconBook,
   IconPlayerPlayFilled,
-  IconStretching,
-  IconJumpRope,
+  //IconStretching,
+  //IconJumpRope,
   IconActivity,
-  IconBrandOpenai,
-  IconUser,
+  //IconBrandOpenai,
+  //IconUser,
   IconListCheck,
   IconFlame,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import PricingCard from "@/components/LandingPage/PricingCard";
+//import PricingCard from "@/components/LandingPage/PricingCard";
 
 export default function Home() {
   const cardData = [
@@ -106,7 +106,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mb-10 py-5 px-3 md:px-10">
+      {/* <section className="mb-10 py-5 px-3 md:px-10">
         <h2 className="text-center text-6xl my-10 font-bold">
           The Perfect Plan <span className="text-primary">For Your Needs</span>
         </h2>
@@ -166,7 +166,7 @@ export default function Home() {
           />
 
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }
