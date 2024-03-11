@@ -4,7 +4,7 @@ import DashboardLinks from "./_components/DashboardLinks";
 import DashboardRecentActivity from "./_components/DashboardRecentActivity";
 import DashboardCards from "./_components/DashboardCards/DashboardCards";
 import DashboardCharts from "./_components/DashboardCharts/DashboardCharts";
-//import DashboardHeatmap from "./_components/DashboardHeatmap";
+//import DashboardGoals from "./_components/DashboardGoals/DashboardGoals";
 
 export default function DashboardPage({
   searchParams,
@@ -31,8 +31,11 @@ export default function DashboardPage({
         chart3DateRange={chart3DateRange}
         chart4DateRange={chart4DateRange}
       />
-      {/* <DashboardHeatmap /> */}
+      
       <DashboardLinks />
+
+      {/* <DashboardGoals /> */}
+
       <Suspense fallback={<div>Loading Recent Activity...</div>}>
         <DashboardRecentActivity />
       </Suspense>
