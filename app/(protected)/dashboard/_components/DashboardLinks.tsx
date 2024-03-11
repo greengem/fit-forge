@@ -12,7 +12,7 @@ export default function DashboardLinks() {
       image: "02.webp",
       href: "/exercises",
       titleColour: "text-white/60",
-      descriptionColour: "text-danger",
+      descriptionColour: "text-primary",
     },
     {
       title: "Routine",
@@ -20,7 +20,7 @@ export default function DashboardLinks() {
       image: "21.webp",
       href: "/workout/routine/new",
       titleColour: "text-white/60",
-      descriptionColour: "text-white",
+      descriptionColour: "text-primary",
     },
     {
       title: "Workout",
@@ -36,12 +36,12 @@ export default function DashboardLinks() {
       image: "22.webp",
       href: "/activity",
       titleColour: "text-white/60",
-      descriptionColour: "text-white",
+      descriptionColour: "text-primary",
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
       {links.map((link, index) => (
         <Link key={index} href={link.href}>
           <Card
@@ -67,7 +67,7 @@ export default function DashboardLinks() {
             </CardHeader>
             <Image
               alt="Card background"
-              className="z-0 w-full h-full object-cover"
+              className="z-0 w-full h-full object-cover brightness-50 grayscale"
               src={`/card-images/${link.image}`}
               width={640}
               height={640}
