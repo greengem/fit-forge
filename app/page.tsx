@@ -48,7 +48,7 @@ export default function Home() {
         </h4>
       </nav>
 
-      <section className="mb-10 py-5 px-3 md:px-10">
+      <section className="mb-10 py-5 px-3 md:px-10  max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <div className="flex flex-col justify-center">
             <h1 className="text-4xl md:text-6xl xl:text-7xl tracking-tight font-bold">
@@ -76,17 +76,17 @@ export default function Home() {
           </div>
           <div className="hidden lg:block">
             <Image
-              src="/ss.webp"
-              alt="Screenshot of NextBoard"
-              width={2000}
-              height={1250}
+              src="/images/screenshots/ss_exercise.webp"
+              alt="Screenshot of Tracktive"
+              width={1436}
+              height={957}
               className="w-full h-auto rounded-xl shadow-xl"
             />
           </div>
         </div>
       </section>
 
-      <section className="mb-10 py-5 px-3 md:px-10">
+      <section className="mb-10 py-5 px-3 md:px-10  max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {cardData.map((card, index) => (
             <Card
