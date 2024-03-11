@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import DashboardCardTemplate from "./DashboardCardTemplate";
 import { subDays } from "date-fns";
+import { IconHourglass } from "@tabler/icons-react";
 
 export default async function DashboardCardAverageWorkoutDuration() {
   const { userId }: { userId: string | null } = auth();
@@ -31,7 +32,7 @@ export default async function DashboardCardAverageWorkoutDuration() {
     workouts.length > 0 ? Math.round(totalDuration / workouts.length) : 0;
 
   return (
-    <DashboardCardTemplate title="Avg Workout Time">
+    <DashboardCardTemplate title="Avg Workout Time" icon={<IconHourglass className="text-danger" />}>
       {averageDuration}
     </DashboardCardTemplate>
   );
