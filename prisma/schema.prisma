@@ -36,6 +36,7 @@ model Exercise {
   logExercises  WorkoutLogExercise[]
   userPBs UserExercisePB[]
   favouritedBy FavouriteExercise[]
+  userGoals           UserGoal[]
 }
 
 model FavouriteExercise {
@@ -87,7 +88,6 @@ model WorkoutLog {
   UserExercisePB  UserExercisePB[]    @relation("WorkoutLogToUserExercisePB")
 }
 
-
 model WorkoutLogExercise {
   id            String @id @default(uuid())
   workoutLogId  String
@@ -121,6 +121,25 @@ model UserExercisePB {
   WorkoutLog        WorkoutLog? @relation("WorkoutLogToUserExercisePB", fields: [workoutLogId], references: [id], onDelete: Cascade)
 
   @@id([userId, exerciseId])
+}
+
+model UserGoal {
+  id          String   @id @default(uuid())
+  userId      String
+  exerciseId  String
+  goalType    GoalType
+  goalValue   Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Exercise    Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@unique([userId, exerciseId, goalType])
+}
+
+enum GoalType {
+  WEIGHT
+  REPS
+  DURATION
 }
 
 model UserEquipment {
