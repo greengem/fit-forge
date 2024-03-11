@@ -18,7 +18,7 @@ export default function DashboardLinks() {
       title: "Routine",
       description: "Create a Routine",
       image: "21.webp",
-      href: "/workout/routine/new",
+      href: "edit-routine/step-1",
       titleColour: "text-white/60",
       descriptionColour: "text-primary",
     },
