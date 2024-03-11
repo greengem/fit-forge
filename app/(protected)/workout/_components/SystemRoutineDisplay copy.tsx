@@ -30,8 +30,12 @@ type SystemRoutineDisplayProps = {
   systemRoutines: ExtendedWorkoutPlan[];
 };
 
-export default function SystemRoutineDisplay({ systemRoutines }: SystemRoutineDisplayProps) {
-  const strengthRoutines = systemRoutines.filter(routine => routine.systemRoutineCategory === 'Strength');
+export default function SystemRoutineDisplay({
+  systemRoutines,
+}: SystemRoutineDisplayProps) {
+  const strengthRoutines = systemRoutines.filter(
+    (routine) => routine.systemRoutineCategory === "Strength",
+  );
 
   return (
     <div className="flex w-full flex-col">

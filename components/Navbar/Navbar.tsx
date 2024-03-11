@@ -1,7 +1,6 @@
 import { currentUser } from "@clerk/nextjs";
 import MobileNavbarClient from "./Navbar.client";
 export default async function MobileNavbar() {
-
   const user = await currentUser();
 
   if (!user) {
@@ -11,7 +10,5 @@ export default async function MobileNavbar() {
   const username = user?.username || undefined;
   const userImage = user?.imageUrl || undefined;
 
-  return (
-    <MobileNavbarClient username={username} userImage={userImage} />
-  );
+  return <MobileNavbarClient username={username} userImage={userImage} />;
 }

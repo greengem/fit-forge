@@ -66,7 +66,6 @@ export async function handleSaveWorkout(data: WorkoutData) {
   }
 }
 
-
 export async function handleUpdateWorkout(id: string, data: WorkoutData) {
   try {
     const { userId }: { userId: string | null } = auth();

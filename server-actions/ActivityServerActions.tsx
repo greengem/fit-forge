@@ -8,7 +8,7 @@ export async function handleDeleteActivity(activityId: string) {
     const { userId }: { userId: string | null } = auth();
 
     if (!userId) {
-        throw new Error("You must be signed in to view this page.");
+      throw new Error("You must be signed in to view this page.");
     }
 
     await prisma.workoutLog.delete({

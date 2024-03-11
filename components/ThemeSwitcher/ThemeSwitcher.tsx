@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { useSidebarToggleContext } from '@/contexts/SidebarToggleContext';
+import { useSidebarToggleContext } from "@/contexts/SidebarToggleContext";
 import { Switch } from "@nextui-org/switch";
 import { MoonIcon } from "./MoonIcon";
 import { SunIcon } from "./SunIcon";
@@ -21,7 +21,7 @@ export function ThemeSwitcher() {
 
   return (
     <>
-      {!sidebarCollapse &&
+      {!sidebarCollapse && (
         <Switch
           isSelected={isDarkMode}
           size="lg"
@@ -37,7 +37,7 @@ export function ThemeSwitcher() {
             setTheme(isDarkMode ? "light" : "dark");
           }}
         ></Switch>
-      }
+      )}
     </>
   );
 }

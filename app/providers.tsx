@@ -17,13 +17,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
       >
         <WorkoutControlsProvider>
           <WorkoutDataProvider>
-              <ExerciseDetailModalProvider>
-                <SidebarToggleProvider>
-                  <ConfettiProvider>
-                    {children}
-                  </ConfettiProvider>
-                </SidebarToggleProvider>
-              </ExerciseDetailModalProvider>
+            <ExerciseDetailModalProvider>
+              <SidebarToggleProvider>
+                <ConfettiProvider>{children}</ConfettiProvider>
+              </SidebarToggleProvider>
+            </ExerciseDetailModalProvider>
           </WorkoutDataProvider>
         </WorkoutControlsProvider>
       </NextThemesProvider>

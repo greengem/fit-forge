@@ -48,7 +48,9 @@ export const WorkoutControlsProvider = ({
     const handleWorkoutTimer = () => {
       if (workoutStartTime && !isPaused) {
         const currentTime = Date.now();
-        const elapsedSeconds = Math.floor((currentTime - workoutStartTime) / 1000);
+        const elapsedSeconds = Math.floor(
+          (currentTime - workoutStartTime) / 1000,
+        );
         setWorkoutDuration(elapsedSeconds);
       }
     };

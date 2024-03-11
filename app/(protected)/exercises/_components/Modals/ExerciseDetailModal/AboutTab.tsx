@@ -48,9 +48,9 @@ export default function AboutTab({ exercise }: { exercise: Exercise | null }) {
               <button
                 key={index}
                 onClick={() => emblaApi.scrollTo(index)}
-                className={clsx('h-1 w-10 rounded-full', {
-                  'bg-primary': selectedIndex === index,
-                  'bg-zinc-500': selectedIndex !== index
+                className={clsx("h-1 w-10 rounded-full", {
+                  "bg-primary": selectedIndex === index,
+                  "bg-zinc-500": selectedIndex !== index,
                 })}
               />
             ))}

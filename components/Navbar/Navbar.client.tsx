@@ -30,7 +30,6 @@ export default function MobileNavbarClient({
 
   return (
     <Navbar className="bg-content1 block md:hidden shadow-md">
-
       <NavbarContent justify="start">
         <Link href="/" className="text-white">
           <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
@@ -42,9 +41,7 @@ export default function MobileNavbarClient({
       <NavbarContent className="gap-5" justify="center">
         {NAV_CONTENT_ITEMS.map((item) => (
           <NavbarItem key={item.href} isActive={pathname === item.href}>
-            <Link href={item.href}>
-              {item.label}
-            </Link>
+            <Link href={item.href}>{item.label}</Link>
           </NavbarItem>
         ))}
       </NavbarContent>
@@ -62,7 +59,6 @@ export default function MobileNavbarClient({
           </Link>
         </NavbarItem>
       </NavbarContent>
-
     </Navbar>
   );
 }

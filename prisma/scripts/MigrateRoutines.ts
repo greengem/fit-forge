@@ -1,14 +1,14 @@
 // Run with
 // npx ts-node --compiler-options '{"module":"commonjs"}' prisma/scripts/MigrateRoutines.ts
 
-import { PrismaClient } from '@prisma/client';
-import { predefinedWorkouts } from './predefinedWorkouts';
+import { PrismaClient } from "@prisma/client";
+import { predefinedWorkouts } from "./predefinedWorkouts";
 
 const prisma = new PrismaClient();
 
 async function main() {
   // Identify names of predefined workout plans for comparison
-  const predefinedNames = predefinedWorkouts.map(plan => plan.name);
+  const predefinedNames = predefinedWorkouts.map((plan) => plan.name);
 
   // Insert or update predefined workout plans
   for (const plan of predefinedWorkouts) {
@@ -20,20 +20,30 @@ async function main() {
     });
 
     if (!existingPlan) {
-      const workoutPlanExercisesData = plan.WorkoutPlanExercises.map(exercise => {
-        const baseData = {
-          sets: exercise.sets,
-          order: exercise.order,
-          trackingType: exercise.trackingType,
-          Exercise: {
-            connect: { id: exercise.exerciseId },
-          },
-        };
+      const workoutPlanExercisesData = plan.WorkoutPlanExercises.map(
+        (exercise) => {
+          const baseData = {
+            sets: exercise.sets,
+            order: exercise.order,
+            trackingType: exercise.trackingType,
+            Exercise: {
+              connect: { id: exercise.exerciseId },
+            },
+          };
 
-        return exercise.trackingType === 'reps'
-          ? { ...baseData, reps: exercise.reps ?? null, exerciseDuration: null }
-          : { ...baseData, reps: null, exerciseDuration: exercise.duration ?? null };
-      });
+          return exercise.trackingType === "reps"
+            ? {
+                ...baseData,
+                reps: exercise.reps ?? null,
+                exerciseDuration: null,
+              }
+            : {
+                ...baseData,
+                reps: null,
+                exerciseDuration: exercise.duration ?? null,
+              };
+        },
+      );
 
       await prisma.workoutPlan.create({
         data: {
@@ -72,10 +82,10 @@ async function main() {
 }
 
 main()
-.catch(e => {
-  console.error(e);
-  process.exit(1);
-})
-.finally(async () => {
-  await prisma.$disconnect();
-});
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

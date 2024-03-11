@@ -76,7 +76,12 @@ export default async function WorkoutPage() {
       <h4 className="font-semibold text-2xl mb-3">Your Routines</h4>
       <RoutineCards routines={userRoutines} isSystem={false} />
       <div>
-        <Button as={Link} href="/edit-routine/step-1" color="primary" className="gap-unit-1 mb-3">
+        <Button
+          as={Link}
+          href="/edit-routine/step-1"
+          color="primary"
+          className="gap-unit-1 mb-3"
+        >
           <IconPlus size={16} /> New Routine
         </Button>
       </div>

@@ -5,20 +5,27 @@ import { IconPlus } from "@tabler/icons-react";
 import { handleAddExerciseToRoutine } from "@/server-actions/RoutineServerActions";
 import { toast } from "sonner";
 
-export default function ExerciseAddToRoutineCreatorButton({ exerciseId }: { exerciseId: string }) {
+export default function ExerciseAddToRoutineCreatorButton({
+  exerciseId,
+}: {
+  exerciseId: string;
+}) {
   const searchParams = useSearchParams();
   const routineId = searchParams.get("id");
 
   const handleClick = async () => {
     if (routineId) {
-      const response = await handleAddExerciseToRoutine({ exerciseId, routineId });
+      const response = await handleAddExerciseToRoutine({
+        exerciseId,
+        routineId,
+      });
       if (response.success) {
         toast.success(response.message);
       } else {
         toast.error(response.message);
       }
     } else {
-      console.error('routineId is null');
+      console.error("routineId is null");
     }
   };
 

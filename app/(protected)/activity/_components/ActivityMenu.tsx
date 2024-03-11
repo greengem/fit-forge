@@ -73,7 +73,7 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
       setActivity(activity);
       onOpen();
     } else if (key === "edit") {
-      router.push('/activity/' + activity.id);
+      router.push("/activity/" + activity.id);
     } else if (key === "share") {
       console.log("share");
     }
@@ -107,10 +107,7 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
           <DropdownItem startContent={<IconEdit size={20} />} key="edit">
             Edit
           </DropdownItem>
-          <DropdownItem
-            startContent={<IconShare size={20} />}
-            key="share"
-          >
+          <DropdownItem startContent={<IconShare size={20} />} key="share">
             Share (Coming Soon)
           </DropdownItem>
         </DropdownSection>

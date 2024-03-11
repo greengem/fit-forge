@@ -65,7 +65,9 @@ export default async function DashboardChartExerciseCategoryDistribution({
       );
       return {
         category,
-        count: categoryData ? Math.max(categoryData._count.id, minCount) : minCount,
+        count: categoryData
+          ? Math.max(categoryData._count.id, minCount)
+          : minCount,
       };
     },
   );

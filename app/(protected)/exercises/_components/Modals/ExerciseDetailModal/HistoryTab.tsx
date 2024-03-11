@@ -31,7 +31,7 @@ export default function HistoryTab({
       </div>
     );
 
-    console.log(data);
+  console.log(data);
 
   return (
     <div className="space-y-3">

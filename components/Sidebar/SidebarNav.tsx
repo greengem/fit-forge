@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
-import { useSidebarToggleContext } from '@/contexts/SidebarToggleContext';
+import { useSidebarToggleContext } from "@/contexts/SidebarToggleContext";
 
 import {
   IconDashboard,
@@ -24,8 +24,11 @@ export default function SidebarNav() {
   return (
     <div className="px-5">
       <ul className="text-sm">
-
-      {!sidebarCollapse && <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 px-2">Data</li>}
+        {!sidebarCollapse && (
+          <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 px-2">
+            Data
+          </li>
+        )}
 
         <div className="space-y-1 mb-4">
           <NavItem
@@ -48,7 +51,11 @@ export default function SidebarNav() {
           />
         </div>
 
-        {!sidebarCollapse && <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 mt-4 px-2">Workout</li>}
+        {!sidebarCollapse && (
+          <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 mt-4 px-2">
+            Workout
+          </li>
+        )}
 
         <div className="space-y-1 mb-4">
           <NavItem
@@ -71,8 +78,12 @@ export default function SidebarNav() {
           />
         </div>
 
-        {!sidebarCollapse && <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 px-2">More</li>}
-        
+        {!sidebarCollapse && (
+          <li className="uppercase text-xs text-zinc-500 font-semibold mb-1 px-2">
+            More
+          </li>
+        )}
+
         <div className="space-y-1">
           <NavItem
             icon={<IconHelp size={22} className="shrink-0" />}
@@ -80,15 +91,18 @@ export default function SidebarNav() {
             href="/support"
             active={pathname === "/support"}
           />
-          <li onClick={toggleSidebar} className='cursor-pointer'>
-            <div className={clsx(
-              "flex items-center space-x-3 p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-colors duration-200 ease-in-out",
-              sidebarCollapse ? "justify-center" : ""
-            )}>
-              {sidebarCollapse ? 
-                  <IconLayoutSidebarLeftExpand size={22} className='shrink-0' /> :
-                  <IconLayoutSidebarLeftCollapse size={22} className='shrink-0' />
-              }
+          <li onClick={toggleSidebar} className="cursor-pointer">
+            <div
+              className={clsx(
+                "flex items-center space-x-3 p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-800 transition-colors duration-200 ease-in-out",
+                sidebarCollapse ? "justify-center" : "",
+              )}
+            >
+              {sidebarCollapse ? (
+                <IconLayoutSidebarLeftExpand size={22} className="shrink-0" />
+              ) : (
+                <IconLayoutSidebarLeftCollapse size={22} className="shrink-0" />
+              )}
               {!sidebarCollapse && <div>Collapse Sidebar</div>}
             </div>
           </li>
@@ -106,13 +120,7 @@ interface NavItemProps {
   children?: React.ReactNode;
 }
 
-function NavItem({
-  icon,
-  label,
-  href,
-  active,
-  children,
-}: NavItemProps) {
+function NavItem({ icon, label, href, active, children }: NavItemProps) {
   const { sidebarCollapse } = useSidebarToggleContext();
 
   const content = (

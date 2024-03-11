@@ -1,22 +1,30 @@
-'use client'
-import React, { useState, useContext } from 'react';
+"use client";
+import React, { useState, useContext } from "react";
 
 interface SidebarToggleContextProps {
   sidebarCollapse: boolean;
   toggleSidebar: () => void;
 }
 
-const SidebarToggleContext = React.createContext<SidebarToggleContextProps | undefined>(undefined);
+const SidebarToggleContext = React.createContext<
+  SidebarToggleContextProps | undefined
+>(undefined);
 
 export const useSidebarToggleContext = () => {
   const context = useContext(SidebarToggleContext);
   if (!context) {
-    throw new Error('useSidebarToggleContext must be used within a SidebarToggleProvider');
+    throw new Error(
+      "useSidebarToggleContext must be used within a SidebarToggleProvider",
+    );
   }
   return context;
 };
 
-export function SidebarToggleProvider({ children }: { children: React.ReactNode }) {
+export function SidebarToggleProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [sidebarCollapse, setSidebarCollapse] = useState(false);
 
   const toggleSidebar = () => {
@@ -28,4 +36,4 @@ export function SidebarToggleProvider({ children }: { children: React.ReactNode 
       {children}
     </SidebarToggleContext.Provider>
   );
-};
+}

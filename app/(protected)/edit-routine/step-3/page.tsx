@@ -5,42 +5,47 @@ import PageHeading from "@/components/PageHeading/PageHeading";
 import RoutineBuilder from "./_components/RoutineBuilder";
 
 export default async function NewRoutineFormStepTwo({
-    searchParams,
+  searchParams,
 }: {
   searchParams?: {
     id?: string;
   };
 }) {
-    const { userId }: { userId: string | null } = auth();
+  const { userId }: { userId: string | null } = auth();
 
-    if (!userId) {
-      throw new Error("You must be signed in to view this page.");
-    }
+  if (!userId) {
+    throw new Error("You must be signed in to view this page.");
+  }
 
-    const routineId = searchParams?.id || "";
+  const routineId = searchParams?.id || "";
 
-    const routine = await prisma.workoutPlan.findUnique({
-        where: {
-            id: routineId,
-        },
+  const routine = await prisma.workoutPlan.findUnique({
+    where: {
+      id: routineId,
+    },
+    include: {
+      WorkoutPlanExercise: {
         include: {
-            WorkoutPlanExercise: {
-                include: {
-                    Exercise: true,
-                },
-            },
-        }
-    });
+          Exercise: true,
+        },
+      },
+    },
+  });
 
-    if (!routine) {
-        throw new Error("No Routine found.");
-    }
+  if (!routine) {
+    throw new Error("No Routine found.");
+  }
 
-    return (
-        <>
-            <PageHeading title="New Routine - Step 3" />
-            <p className="mb-3 text-zinc-500 text-sm">You&apos;re almost there! Now, select how you want to track each exercise: by repetitions or duration. Then, arrange the exercises in your preferred order. For each exercise, specify the number of reps or the duration (in minutes or seconds) and the sets you aim to complete.</p>
-            <RoutineBuilder routine={routine} />
-        </>
-    );
+  return (
+    <>
+      <PageHeading title="New Routine - Step 3" />
+      <p className="mb-3 text-zinc-500 text-sm">
+        You&apos;re almost there! Now, select how you want to track each
+        exercise: by repetitions or duration. Then, arrange the exercises in
+        your preferred order. For each exercise, specify the number of reps or
+        the duration (in minutes or seconds) and the sets you aim to complete.
+      </p>
+      <RoutineBuilder routine={routine} />
+    </>
+  );
 }

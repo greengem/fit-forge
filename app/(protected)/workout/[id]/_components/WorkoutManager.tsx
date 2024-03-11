@@ -82,29 +82,27 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     exerciseIndex: number,
     setIndex: number,
     exerciseName: string,
-    isSelected: boolean
+    isSelected: boolean,
   ) => {
     if (!workoutExercises) {
-      toast.error('Workout exercises data is not loaded yet');
+      toast.error("Workout exercises data is not loaded yet");
       return;
     }
-  
+
     const exerciseDetail = workoutExercises[exerciseIndex];
     const set = exerciseDetail.sets[setIndex];
-  
+
     if (
-      set.weight === null || 
-      !Number(set.weight) || 
-      (
-        exerciseDetail.trackingType === "reps" && 
-        (set.reps === null || !Number(set.reps))
-      ) || 
-      (
-        exerciseDetail.trackingType === "duration" && 
-        (set.duration === null || !Number(set.duration))
-      )
+      set.weight === null ||
+      !Number(set.weight) ||
+      (exerciseDetail.trackingType === "reps" &&
+        (set.reps === null || !Number(set.reps))) ||
+      (exerciseDetail.trackingType === "duration" &&
+        (set.duration === null || !Number(set.duration)))
     ) {
-      toast.error('Please fill in all fields before marking the set as completed');
+      toast.error(
+        "Please fill in all fields before marking the set as completed",
+      );
       return;
     }
 
@@ -193,7 +191,8 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
       const newSet = {
         completed: false,
         reps: workout.WorkoutPlanExercise[exerciseIndex].reps || null,
-        duration: workout.WorkoutPlanExercise[exerciseIndex].exerciseDuration || null,
+        duration:
+          workout.WorkoutPlanExercise[exerciseIndex].exerciseDuration || null,
         weight: null,
       };
       exerciseToUpdate.sets = [...exerciseToUpdate.sets, newSet];
@@ -202,7 +201,6 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
       return updatedWorkoutExercises;
     });
   };
-  
 
   //Remove Sets from exercise
   const removeSet = (exerciseIndex: number, exerciseName: string) => {
@@ -248,13 +246,11 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
     }
   };
 
-
   const completeWorkout = async () => {
     if (workoutExercises) {
       const hasIncompleteSets = workoutExercises.some((exercise) =>
         exercise.sets.some((set) => !set.completed),
       );
-
 
       if (hasIncompleteSets) {
         const proceedWithIncompleteSets = window.confirm(
@@ -281,10 +277,11 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
 
       try {
         setIsSaving(true);
-        
+
         const exercisesData = filteredExercises.map((exercise) => ({
           exerciseId: exercise.exerciseId,
-          trackingType: TrackingType[exercise.trackingType as keyof typeof TrackingType],
+          trackingType:
+            TrackingType[exercise.trackingType as keyof typeof TrackingType],
           sets: exercise.sets.map((set) => ({
             reps: set.reps,
             weight: set.weight,
@@ -349,11 +346,13 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-3">
         {workoutExercises?.map((exercise, index) => (
           <Card shadow="none" className="shadow-md" key={exercise.exerciseId}>
-              <CardHeader className="text-lg px-5">
-                <div className="flex gap-2 items-center mb-3">
-                    <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">{index + 1}</span>
-                    <p className="text-lg">{exercise.exerciseName}</p>
-                </div>
+            <CardHeader className="text-lg px-5">
+              <div className="flex gap-2 items-center mb-3">
+                <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">
+                  {index + 1}
+                </span>
+                <p className="text-lg">{exercise.exerciseName}</p>
+              </div>
             </CardHeader>
             <CardBody className="pb-1 pt-0">
               <ExerciseTable

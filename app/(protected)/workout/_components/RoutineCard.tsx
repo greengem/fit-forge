@@ -31,7 +31,13 @@ type RoutineCardProps = {
   activeWorkoutRoutine: string | null;
 };
 
-type Color = "default" | "success" | "secondary" | "warning" | "primary" | "danger";
+type Color =
+  | "default"
+  | "success"
+  | "secondary"
+  | "warning"
+  | "primary"
+  | "danger";
 
 const categoryColorMap: Record<string, Color> = {
   strength: "success",
@@ -43,9 +49,13 @@ const categoryColorMap: Record<string, Color> = {
   olympic_weightlifting: "secondary",
 };
 
-export default function RoutineCard({ routine, isSystem, activeWorkoutRoutine } : RoutineCardProps) {
-  
-  const isAnotherWorkoutInProgress = activeWorkoutRoutine !== null && activeWorkoutRoutine !== routine.id;
+export default function RoutineCard({
+  routine,
+  isSystem,
+  activeWorkoutRoutine,
+}: RoutineCardProps) {
+  const isAnotherWorkoutInProgress =
+    activeWorkoutRoutine !== null && activeWorkoutRoutine !== routine.id;
   const isCurrentWorkout = activeWorkoutRoutine === routine.id;
   const uniqueCategories = new Set();
 
@@ -70,7 +80,7 @@ export default function RoutineCard({ routine, isSystem, activeWorkoutRoutine } 
       </CardHeader>
 
       <CardBody className="pt-0 px-5">
-      <ul className="text-sm">
+        <ul className="text-sm">
           {displayedExercises
             .sort((a, b) => (a.order || 0) - (b.order || 0))
             .map((exerciseDetail) => (
@@ -80,7 +90,6 @@ export default function RoutineCard({ routine, isSystem, activeWorkoutRoutine } 
               </li>
             ))}
         </ul>
-
       </CardBody>
       <CardFooter className="pt-0 px-5 pb-4 block">
         <Button
@@ -107,17 +116,22 @@ export default function RoutineCard({ routine, isSystem, activeWorkoutRoutine } 
           )}
         </Button>
         <div className="lex-wrap gap-1 hidden">
-          {Array.from(uniqueCategories as Set<string>).map((category: string, index: number) => (
-            <Chip
-              radius="sm"
-              size="sm"
-              className="capitalize"
-              color={categoryColorMap[category as keyof typeof categoryColorMap] || "default"}
-              key={index}
-            >
-              {category}
-            </Chip>
-          ))}
+          {Array.from(uniqueCategories as Set<string>).map(
+            (category: string, index: number) => (
+              <Chip
+                radius="sm"
+                size="sm"
+                className="capitalize"
+                color={
+                  categoryColorMap[category as keyof typeof categoryColorMap] ||
+                  "default"
+                }
+                key={index}
+              >
+                {category}
+              </Chip>
+            ),
+          )}
         </div>
       </CardFooter>
     </Card>

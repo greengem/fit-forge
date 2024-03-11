@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import ActiveWorkoutWarning from "@/components/Notices/ActiveWorkoutWarning";
 import LayoutWrapper from "./LayoutWrapper.client";
 import SiteNotice from "./SiteNotice";
-import { dark } from '@clerk/themes';
+import { dark } from "@clerk/themes";
 
 export default function RootLayout({
   children,
@@ -14,12 +14,12 @@ export default function RootLayout({
   return (
     <ClerkProvider
       appearance={{
-        baseTheme: dark
+        baseTheme: dark,
       }}
     >
-      <SiteNotice 
+      <SiteNotice
         message="Beta: Data may be subject to change or loss."
-        variant="danger" 
+        variant="danger"
         visible={false}
       />
       <div className="flex grow">

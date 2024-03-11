@@ -1,6 +1,6 @@
-'use client';
+"use client";
 import ProgressBar from "./ProgressBar";
-import { useSidebarToggleContext } from '@/contexts/SidebarToggleContext';
+import { useSidebarToggleContext } from "@/contexts/SidebarToggleContext";
 import clsx from "clsx";
 import { Button } from "@nextui-org/button";
 import {
@@ -34,11 +34,14 @@ export default function StatusBar({
   } = useWorkoutControls();
 
   const { sidebarCollapse } = useSidebarToggleContext();
-  
-  const statusBarClass = clsx('fixed bottom-0 right-0 left-0 p-5 bg-white dark:bg-content1 z-10', {
-    'md:left-20': sidebarCollapse,
-    'md:left-64': !sidebarCollapse,
-  });
+
+  const statusBarClass = clsx(
+    "fixed bottom-0 right-0 left-0 p-5 bg-white dark:bg-content1 z-10",
+    {
+      "md:left-20": sidebarCollapse,
+      "md:left-64": !sidebarCollapse,
+    },
+  );
 
   const handlePauseToggle = () => {
     togglePause();
@@ -92,7 +95,7 @@ export default function StatusBar({
             </div>
           </>
         )}
-        <p className={clsx('text-3xl', { 'text-warning': isPaused })}>
+        <p className={clsx("text-3xl", { "text-warning": isPaused })}>
           {formatDuration(workoutDuration)}
         </p>
       </div>

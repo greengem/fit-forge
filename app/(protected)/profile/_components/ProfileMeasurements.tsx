@@ -50,7 +50,6 @@ export default function ProfileMeasurements({
         Measurements
       </CardHeader>
       <CardBody className="gap-y-3 px-5">
-
         <Input
           type="number"
           label="Height (cm)"
@@ -73,7 +72,7 @@ export default function ProfileMeasurements({
           type="number"
           label="BMI"
           size="sm"
-          value={((Number(weight) / (Number(height) / 100) ** 2).toFixed(2))}
+          value={(Number(weight) / (Number(height) / 100) ** 2).toFixed(2)}
           isDisabled
         />
 
@@ -90,7 +89,6 @@ export default function ProfileMeasurements({
           Your data is secure with us. We only use your information to enhance
           your user experience and never share it with third parties.
         </p>
-
       </CardBody>
       <CardFooter className="px-5">
         <Button

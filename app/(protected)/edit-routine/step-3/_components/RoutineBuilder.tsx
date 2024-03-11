@@ -12,12 +12,18 @@ import Link from "next/link";
 import { IconPlayerTrackPrevFilled } from "@tabler/icons-react";
 
 export default function RoutineBuilder({ routine }: { routine: Routine }) {
-  const [selectedExercises, setSelectedExercises] = useState<WorkoutPlanExercise[]>(routine.WorkoutPlanExercise || []);
+  const [selectedExercises, setSelectedExercises] = useState<
+    WorkoutPlanExercise[]
+  >(routine.WorkoutPlanExercise || []);
   const [isSaving, setIsSaving] = useState(false);
 
   const router = useRouter();
 
-  const updateExercise = (index: number, field: string, value: number | string | null) => {
+  const updateExercise = (
+    index: number,
+    field: string,
+    value: number | string | null,
+  ) => {
     const updatedExercises = [...selectedExercises];
 
     if (field === "trackingType") {
@@ -33,7 +39,6 @@ export default function RoutineBuilder({ routine }: { routine: Routine }) {
     }
     setSelectedExercises(updatedExercises);
   };
-
 
   const moveUp = (index: number) => {
     if (index === 0) return;
@@ -66,7 +71,6 @@ export default function RoutineBuilder({ routine }: { routine: Routine }) {
   };
 
   const validateForm = () => {
-
     if (selectedExercises.length === 0) {
       toast.error("At least one exercise is required.");
       return false;
@@ -103,16 +107,27 @@ export default function RoutineBuilder({ routine }: { routine: Routine }) {
     setIsSaving(true);
 
     const exercisesWithOrder = selectedExercises.map((exercise, index) => {
-      const { Exercise: { id: exerciseId }, sets, reps, exerciseDuration, trackingType } = exercise;
+      const {
+        Exercise: { id: exerciseId },
+        sets,
+        reps,
+        exerciseDuration,
+        trackingType,
+      } = exercise;
 
       return {
-        exerciseId, sets, reps, exerciseDuration, trackingType, order: index + 1,
+        exerciseId,
+        sets,
+        reps,
+        exerciseDuration,
+        trackingType,
+        order: index + 1,
       };
     });
 
     const routineId = routine.id;
-    
-    const data = {routineId, exercisesWithOrder};
+
+    const data = { routineId, exercisesWithOrder };
 
     const response = await handleEditRoutine(data);
     if (response.success) {
@@ -122,13 +137,22 @@ export default function RoutineBuilder({ routine }: { routine: Routine }) {
     } else {
       toast.error(response.message);
     }
-  }
+  };
 
   return (
     <>
-      <Reorder.Group axis="y" values={selectedExercises} onReorder={setSelectedExercises} className="space-y-3 mb-3">
+      <Reorder.Group
+        axis="y"
+        values={selectedExercises}
+        onReorder={setSelectedExercises}
+        className="space-y-3 mb-3"
+      >
         {selectedExercises.map((exercise, index) => (
-          <Reorder.Item key={exercise.Exercise.id} value={exercise} className="relative touch-none">
+          <Reorder.Item
+            key={exercise.Exercise.id}
+            value={exercise}
+            className="relative touch-none"
+          >
             <RoutineExerciseCard
               exercise={exercise}
               index={index}
@@ -143,7 +167,13 @@ export default function RoutineBuilder({ routine }: { routine: Routine }) {
       </Reorder.Group>
 
       <div className="flex justify-center gap-3 mb-3">
-        <Button variant="flat" as={Link} href={`/edit-routine/step-2?id=${routine.id}`}><IconPlayerTrackPrevFilled size={18} /> Back</Button>
+        <Button
+          variant="flat"
+          as={Link}
+          href={`/edit-routine/step-2?id=${routine.id}`}
+        >
+          <IconPlayerTrackPrevFilled size={18} /> Back
+        </Button>
         <SaveButton handleSave={handleSave} isLoading={isSaving} />
       </div>
     </>

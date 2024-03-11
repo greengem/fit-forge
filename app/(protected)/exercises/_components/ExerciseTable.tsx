@@ -34,9 +34,9 @@ type ExerciseProps = {
 
 function formatDisplayName(name: string): string {
   return name
-    .split('_')
+    .split("_")
     .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 export default function ExerciseTable({
@@ -44,9 +44,8 @@ export default function ExerciseTable({
   favouriteExercises,
   userRoutines,
   mode,
-  highlightedExercises
+  highlightedExercises,
 }: ExerciseProps) {
-  
   return (
     <Table
       aria-label="Exercises Table"
@@ -57,45 +56,65 @@ export default function ExerciseTable({
       <TableHeader>
         <TableColumn>NAME</TableColumn>
         <TableColumn className="hidden lg:table-cell">MUSCLES</TableColumn>
-        <TableColumn><></></TableColumn>
+        <TableColumn>
+          <></>
+        </TableColumn>
       </TableHeader>
       <TableBody emptyContent={"No results found."}>
         {exercises.map((exercise, index) => {
-          const isHighlighted = highlightedExercises?.some((highlightedExercise: Exercise) => highlightedExercise.id === exercise.id);
+          const isHighlighted = highlightedExercises?.some(
+            (highlightedExercise: Exercise) =>
+              highlightedExercise.id === exercise.id,
+          );
           return (
             <TableRow key={exercise.id}>
-              <TableCell className={clsx('capitalize', {
-                'bg-zinc-700/20 text-primary': isHighlighted,
-                'rounded-tl-lg': isHighlighted && index === 0
-              })}>
+              <TableCell
+                className={clsx("capitalize", {
+                  "bg-zinc-700/20 text-primary": isHighlighted,
+                  "rounded-tl-lg": isHighlighted && index === 0,
+                })}
+              >
                 <User
                   avatarProps={{
                     radius: "lg",
                     src: `/images/exercises/${exercise.image}/images/0.jpg`,
-                    className: "hidden md:block"
+                    className: "hidden md:block",
                   }}
                   description={
-                    <span className="text-zinc-500">{formatDisplayName(exercise.category)}</span>
+                    <span className="text-zinc-500">
+                      {formatDisplayName(exercise.category)}
+                    </span>
                   }
                   name={exercise.name}
                 />
               </TableCell>
-              <TableCell className={clsx('capitalize hidden lg:table-cell', {
-                'bg-zinc-700/20 text-primary': isHighlighted
-              })}>
+              <TableCell
+                className={clsx("capitalize hidden lg:table-cell", {
+                  "bg-zinc-700/20 text-primary": isHighlighted,
+                })}
+              >
                 <div className="flex flex-col">
                   <p className="text-bold text-small">
-                    {exercise.primary_muscles.map(muscle => formatDisplayName(muscle)).join(", ")}
+                    {exercise.primary_muscles
+                      .map((muscle) => formatDisplayName(muscle))
+                      .join(", ")}
                   </p>
                   <p className="text-bold text-tiny text-zinc-500">
-                    {exercise.secondary_muscles.map(muscle => formatDisplayName(muscle)).join(", ")}
+                    {exercise.secondary_muscles
+                      .map((muscle) => formatDisplayName(muscle))
+                      .join(", ")}
                   </p>
                 </div>
               </TableCell>
-              <TableCell className={clsx('flex h-full justify-end items-center h-[61px]', {
-                'bg-zinc-700/20 text-primary': isHighlighted,
-                'rounded-tr-lg': isHighlighted && index === 0
-              })}>
+              <TableCell
+                className={clsx(
+                  "flex h-full justify-end items-center h-[61px]",
+                  {
+                    "bg-zinc-700/20 text-primary": isHighlighted,
+                    "rounded-tr-lg": isHighlighted && index === 0,
+                  },
+                )}
+              >
                 <ButtonGroup size="sm" variant="flat">
                   <ExerciseInfoButton exercise={exercise} />
                   <Button
@@ -109,15 +128,19 @@ export default function ExerciseTable({
                     )}
                   </Button>
                   {isHighlighted ? (
-                    <ExerciseRemoveRoutineCreatorButton exerciseId={exercise.id} />
+                    <ExerciseRemoveRoutineCreatorButton
+                      exerciseId={exercise.id}
+                    />
+                  ) : mode === "exercisePage" ? (
+                    <ExerciseAddToRoutineButton
+                      exercise={exercise}
+                      userRoutines={userRoutines}
+                    />
                   ) : (
-                    mode === 'exercisePage' ? (
-                      <ExerciseAddToRoutineButton
-                        exercise={exercise}
-                        userRoutines={userRoutines}
+                    mode === "createRoutine" && (
+                      <ExerciseAddToRoutineCreatorButton
+                        exerciseId={exercise.id}
                       />
-                    ) : (
-                      mode === 'createRoutine' && <ExerciseAddToRoutineCreatorButton exerciseId={exercise.id} />
                     )
                   )}
                 </ButtonGroup>

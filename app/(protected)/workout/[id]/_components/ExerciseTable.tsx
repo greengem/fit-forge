@@ -27,7 +27,12 @@ interface ExerciseDetail {
 interface ExerciseTableProps {
   exerciseDetail: ExerciseDetail;
   index: number;
-  handleCompleteSet: (exerciseIndex: number, setIndex: number, exerciseName: string, isSelected: boolean) => void;
+  handleCompleteSet: (
+    exerciseIndex: number,
+    setIndex: number,
+    exerciseName: string,
+    isSelected: boolean,
+  ) => void;
   handleWeightChange: (
     exerciseIndex: number,
     setIndex: number,
@@ -83,9 +88,7 @@ export default function ExerciseTable({
                 label="Weight"
                 placeholder="0"
                 defaultValue={set.weight !== null ? String(set.weight) : ""}
-                endContent={
-                  <span className="text-zinc-500">kg</span>
-                }
+                endContent={<span className="text-zinc-500">kg</span>}
                 onInput={(e) => {
                   const value = e.currentTarget.value;
                   if (!/^(\d*\.?\d{0,2}|\.\d{0,2})$/.test(value)) {
@@ -104,11 +107,11 @@ export default function ExerciseTable({
                   size="sm"
                   type="number"
                   label="Duration"
-                  defaultValue={set.duration !== null ? String(set.duration) : ""}
-                  placeholder="0"
-                  endContent={
-                    <span className="text-zinc-500">s</span>
+                  defaultValue={
+                    set.duration !== null ? String(set.duration) : ""
                   }
+                  placeholder="0"
+                  endContent={<span className="text-zinc-500">s</span>}
                   onInput={(e) => {
                     const value = e.currentTarget.value;
                     if (!/^\d*$/.test(value)) {
@@ -140,7 +143,11 @@ export default function ExerciseTable({
                     }
                   }}
                   onChange={(e) =>
-                    handleRepChange(index, setIndex, Number(e.currentTarget.value))
+                    handleRepChange(
+                      index,
+                      setIndex,
+                      Number(e.currentTarget.value),
+                    )
                   }
                   isDisabled={set.completed}
                 />
@@ -148,7 +155,7 @@ export default function ExerciseTable({
             )}
 
             <TableCell className="text-center">
-              <Checkbox 
+              <Checkbox
                 size="lg"
                 color={set.completed ? "primary" : "danger"}
                 isSelected={set.completed}
@@ -157,7 +164,7 @@ export default function ExerciseTable({
                     index,
                     setIndex,
                     exerciseDetail.exerciseName,
-                    isSelected
+                    isSelected,
                   )
                 }
               />

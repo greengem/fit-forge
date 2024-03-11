@@ -23,7 +23,7 @@ export default async function ExerciseFetch({
   equipmentOwned,
   perPage,
   mode,
-  selectedExercises
+  selectedExercises,
 }: {
   search: string;
   cat: string[];
@@ -100,9 +100,12 @@ export default async function ExerciseFetch({
 
   if (mode === "createRoutine" && selectedExercises) {
     const filteredExercises = exercises.filter(
-      (exercise) => !selectedExercises.some((selected: Exercise) => selected.id === exercise.id)
+      (exercise) =>
+        !selectedExercises.some(
+          (selected: Exercise) => selected.id === exercise.id,
+        ),
     );
-  
+
     finalExercises = [...selectedExercises, ...filteredExercises];
   }
 
@@ -158,12 +161,11 @@ export default async function ExerciseFetch({
         favouriteExercises={favouriteExercisesSet}
         userRoutines={userRoutines}
         mode={mode}
-        highlightedExercises={mode === "createRoutine" ? selectedExercises : undefined}
+        highlightedExercises={
+          mode === "createRoutine" ? selectedExercises : undefined
+        }
       />
-      <ExercisePagination
-        numberOfResults={numberOfResults}
-        perPage={perPage}
-      />
+      <ExercisePagination numberOfResults={numberOfResults} perPage={perPage} />
     </>
   );
 }

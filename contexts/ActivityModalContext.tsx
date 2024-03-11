@@ -16,7 +16,7 @@ interface Exercise {
     name: string;
   };
   sets: Set[];
-  trackingType: TrackingType
+  trackingType: TrackingType;
 }
 
 interface WorkoutPlan {

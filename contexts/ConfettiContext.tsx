@@ -1,18 +1,20 @@
-'use client'
-import { createContext, useContext, useState, ReactNode } from 'react';
-import Confetti from 'react-confetti';
+"use client";
+import { createContext, useContext, useState, ReactNode } from "react";
+import Confetti from "react-confetti";
 
 interface ConfettiContextType {
   startConfetti: () => void;
   stopConfetti: () => void;
 }
 
-const ConfettiContext = createContext<ConfettiContextType | undefined>(undefined);
+const ConfettiContext = createContext<ConfettiContextType | undefined>(
+  undefined,
+);
 
 export const useConfetti = (): ConfettiContextType => {
   const context = useContext(ConfettiContext);
   if (context === undefined) {
-    throw new Error('useConfetti must be used within a ConfettiProvider');
+    throw new Error("useConfetti must be used within a ConfettiProvider");
   }
   return context;
 };

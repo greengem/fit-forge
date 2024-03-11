@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@clerk/nextjs";
-import { clerkClient } from '@clerk/nextjs/server';
+import { clerkClient } from "@clerk/nextjs/server";
 import prisma from "@/prisma/prisma";
 import { EquipmentType } from "@prisma/client";
 import { revalidatePath } from "next/cache";

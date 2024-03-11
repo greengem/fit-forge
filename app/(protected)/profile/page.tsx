@@ -20,7 +20,6 @@ export default async function ProfilePage() {
   const firstName = user?.firstName || undefined;
   const lastName = user?.lastName || undefined;
   const userImage = user?.imageUrl || undefined;
-  
 
   const userMeasurements = await prisma.userInfo.findUnique({
     where: {
@@ -50,10 +49,14 @@ export default async function ProfilePage() {
 
       {userMeasurements && <ProfileStats userMeasurements={userMeasurements} />}
 
-      <ProfileDetails username={username} firstName={firstName} lastName={lastName} />
+      <ProfileDetails
+        username={username}
+        firstName={firstName}
+        lastName={lastName}
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
-        <ProfileMeasurements userMeasurements={userMeasurements}/>
+        <ProfileMeasurements userMeasurements={userMeasurements} />
         <ProfileEquipment equipment={equipment} />
       </div>
 

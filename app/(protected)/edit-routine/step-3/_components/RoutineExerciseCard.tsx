@@ -4,11 +4,7 @@ import { Card, CardBody } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { RadioGroup, Radio } from "@nextui-org/radio";
 import { Button, ButtonGroup } from "@nextui-org/button";
-import {
-  IconArrowUp,
-  IconArrowDown,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconArrowUp, IconArrowDown, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { WorkoutPlanExercise } from "../NewRoutineTypes";
 
@@ -45,7 +41,9 @@ export default function RoutineExerciseCard({
     <Card key={index} shadow="none" className="touch-none shadow-md">
       <CardBody className="p-3">
         <div className="flex gap-2 items-center mb-3">
-          <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">{index + 1}</span>
+          <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">
+            {index + 1}
+          </span>
           <p className="text-lg">{exercise.Exercise.name}</p>
         </div>
 
@@ -122,10 +120,18 @@ export default function RoutineExerciseCard({
 
         <div className="flex justify-between">
           <ButtonGroup size="sm">
-            <Button isIconOnly onPress={() => moveUp(index)} isDisabled={index === 0}>
+            <Button
+              isIconOnly
+              onPress={() => moveUp(index)}
+              isDisabled={index === 0}
+            >
               <IconArrowUp size={18} />
             </Button>
-            <Button isIconOnly onPress={() => moveDown(index)} isDisabled={index === totalExercises - 1}>
+            <Button
+              isIconOnly
+              onPress={() => moveDown(index)}
+              isDisabled={index === totalExercises - 1}
+            >
               <IconArrowDown size={18} />
             </Button>
           </ButtonGroup>

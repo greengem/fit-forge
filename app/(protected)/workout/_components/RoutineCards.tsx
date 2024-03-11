@@ -25,8 +25,10 @@ type RoutineCardsProps = {
   isSystem: boolean;
 };
 
-export default function RoutineCards({ routines, isSystem } : RoutineCardsProps) {
-
+export default function RoutineCards({
+  routines,
+  isSystem,
+}: RoutineCardsProps) {
   const { activeWorkoutRoutine } = useWorkoutControls();
 
   return (
