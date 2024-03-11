@@ -14,7 +14,7 @@
     "@clerk/themes": "^1.7.9",
     "@nextui-org/react": "2.2.9",
     "@prisma/client": "^5.9.1",
-    "@tabler/icons-react": "^2.39.0",
+    "@tabler/icons-react": "^3.0.0",
     "@vercel/analytics": "^1.1.1",
     "@vercel/speed-insights": "^1.0.9",
     "ai": "^3.0.8",
