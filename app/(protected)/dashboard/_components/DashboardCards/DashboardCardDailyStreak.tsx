@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import DashboardCardTemplate from "./DashboardCardTemplate";
 import { differenceInCalendarDays } from "date-fns";
+import { IconFlame } from "@tabler/icons-react";
 
 export default async function DashboardCardDailyStreak() {
   const { userId }: { userId: string | null } = auth();
@@ -37,6 +38,6 @@ export default async function DashboardCardDailyStreak() {
   }
 
   return (
-    <DashboardCardTemplate title="Daily Streak">{streak}</DashboardCardTemplate>
+    <DashboardCardTemplate title="Daily Streak" icon={<IconFlame className="text-danger" />}>{streak}</DashboardCardTemplate>
   );
 }
