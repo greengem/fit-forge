@@ -51,13 +51,13 @@ export default function Home() {
       <section className="mb-10 py-5 px-3 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <div className="flex flex-col justify-center">
-            <h1 className="text-4xl md:text-6xl xl:text-7xl tracking-tighter font-bold">
+            <h1 className="text-4xl md:text-6xl xl:text-7xl tracking-tight font-bold">
               Track every{" "}
               <span className="from-primary to-primary-600 bg-clip-text text-transparent bg-gradient-to-b">
                 Rep{" "}
               </span>
             </h1>
-            <h1 className="text-4xl md:text-6xl xl:text-7xl tracking-tighter font-bold mb-5">
+            <h1 className="text-4xl md:text-6xl xl:text-7xl tracking-tight font-bold mb-5">
               Achieve every{" "}
               <span className="from-primary to-primary-600 bg-clip-text text-transparent bg-gradient-to-b">
                 Goal{" "}
