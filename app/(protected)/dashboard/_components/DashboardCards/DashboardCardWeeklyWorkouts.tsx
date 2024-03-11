@@ -2,6 +2,7 @@
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/prisma";
 import DashboardCardTemplate from "./DashboardCardTemplate";
+import { IconCalendarWeek } from "@tabler/icons-react";
 
 export default async function DashboardCardWeeklyWorkouts() {
   const { userId }: { userId: string | null } = auth();
@@ -20,7 +21,7 @@ export default async function DashboardCardWeeklyWorkouts() {
   });
 
   return (
-    <DashboardCardTemplate title="Weekly Workouts">
+    <DashboardCardTemplate title="Weekly Workouts" icon={<IconCalendarWeek className="text-danger"/>}>
       {workouts.length}
     </DashboardCardTemplate>
   );
