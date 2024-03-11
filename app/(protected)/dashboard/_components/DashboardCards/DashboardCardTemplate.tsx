@@ -10,7 +10,7 @@ export default function DashboardCardTemplate({
 }) {
   return (
     <Card shadow="none" className="shadow-md">
-      <CardHeader className="px-3 text-xs uppercase block w-full truncate flex gap-x-1">
+      <CardHeader className="px-3 text-xs uppercase block w-full truncate flex gap-3">
         {icon}
         {title}
       </CardHeader>
