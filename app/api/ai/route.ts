@@ -1,6 +1,5 @@
 import { experimental_AssistantResponse } from 'ai';
 import OpenAI from 'openai';
-import { checkRole } from "@/utils/roles";
 
 interface MessageContentText {
     type: 'text';
@@ -10,9 +9,6 @@ interface MessageContentText {
     };
 }
 
-if (!checkRole("admin")) {
-    throw new Error("Unauthorized");
-}
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
