@@ -64,21 +64,8 @@ export default async function DashboardGoals() {
     for (const workoutLog of workoutLogs) {
       for (const exercise of workoutLog.exercises) {
         for (const set of exercise.sets) {
-          if (
-            goal.goalType === GoalType.WEIGHT &&
-            (set.weight ?? 0) > bestValue
-          ) {
+          if ((set.weight ?? 0) > bestValue) {
             bestValue = set.weight ?? 0;
-          } else if (
-            goal.goalType === GoalType.REPS &&
-            (set.reps ?? 0) > bestValue
-          ) {
-            bestValue = set.reps ?? 0;
-          } else if (
-            goal.goalType === GoalType.DURATION &&
-            (set.exerciseDuration ?? 0) > bestValue
-          ) {
-            bestValue = set.exerciseDuration ?? 0;
           }
         }
       }
@@ -86,7 +73,7 @@ export default async function DashboardGoals() {
 
     goal.progress = bestValue / goal.goalValue;
     goal.bestValue = bestValue;
-  }
+}
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 mb-3">
