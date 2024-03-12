@@ -6,7 +6,7 @@ export default function DashboardGoalTemplate({
   title,
   icon,
   showSettings,
-  id
+  id,
 }: {
   children: React.ReactNode;
   title: string;
@@ -17,7 +17,10 @@ export default function DashboardGoalTemplate({
   return (
     <Card shadow="none" className="shadow-md min-h-[148px]">
       <CardHeader className="px-3 text-xs uppercase block w-full truncate flex justify-between items-center">
-        <div className="flex gap-3 items-center">{icon}{title}</div>
+        <div className="flex gap-3 items-center">
+          {icon}
+          {title}
+        </div>
         {showSettings && id && <DeleteDashboardGoal id={id} />}
       </CardHeader>
       <CardBody className="px-3 pt-0 relative">

@@ -31,7 +31,7 @@ export default function DashboardPage({
         chart3DateRange={chart3DateRange}
         chart4DateRange={chart4DateRange}
       />
-      
+
       <DashboardLinks />
 
       <DashboardGoals />

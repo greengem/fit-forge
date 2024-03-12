@@ -5,14 +5,23 @@ import DashboardCardDailyStreak from "./DashboardCardDailyStreak";
 import DashboardCardWeeklyPbs from "./DashboardCardWeeklyPbs";
 import DashboardCardWeeklyWorkouts from "./DashboardCardWeeklyWorkouts";
 import { Spinner } from "@nextui-org/spinner";
-import { IconCalendarWeek, IconFlame, IconHourglass, IconTarget, IconTrophy } from "@tabler/icons-react";
+import {
+  IconCalendarWeek,
+  IconFlame,
+  IconHourglass,
+  IconTarget,
+  IconTrophy,
+} from "@tabler/icons-react";
 
 export default function DashboardCards() {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 mb-3">
       <Suspense
         fallback={
-          <DashboardCardTemplate title="Weekly Workouts" icon={<IconCalendarWeek className="text-danger" />}>
+          <DashboardCardTemplate
+            title="Weekly Workouts"
+            icon={<IconCalendarWeek className="text-danger" />}
+          >
             <Spinner color="primary" />
           </DashboardCardTemplate>
         }
@@ -21,7 +30,10 @@ export default function DashboardCards() {
       </Suspense>
       <Suspense
         fallback={
-          <DashboardCardTemplate title="Avg Workout Time" icon={<IconHourglass className="text-danger" />}>
+          <DashboardCardTemplate
+            title="Avg Workout Time"
+            icon={<IconHourglass className="text-danger" />}
+          >
             <Spinner color="primary" />
           </DashboardCardTemplate>
         }
@@ -30,7 +42,10 @@ export default function DashboardCards() {
       </Suspense>
       <Suspense
         fallback={
-          <DashboardCardTemplate title="Daily Streak" icon={<IconFlame className="text-danger" />}>
+          <DashboardCardTemplate
+            title="Daily Streak"
+            icon={<IconFlame className="text-danger" />}
+          >
             <Spinner color="primary" />
           </DashboardCardTemplate>
         }
@@ -39,7 +54,10 @@ export default function DashboardCards() {
       </Suspense>
       <Suspense
         fallback={
-          <DashboardCardTemplate title="Weekly PBs" icon={<IconTrophy className="text-danger" />}>
+          <DashboardCardTemplate
+            title="Weekly PBs"
+            icon={<IconTrophy className="text-danger" />}
+          >
             <Spinner color="primary" />
           </DashboardCardTemplate>
         }

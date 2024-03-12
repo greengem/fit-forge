@@ -96,9 +96,10 @@ export async function handleUpdateUserEquipment(
   }
 }
 
-
-export async function handleCreateUserGoal(data: { exerciseId: string, goalValue: number }) {
-
+export async function handleCreateUserGoal(data: {
+  exerciseId: string;
+  goalValue: number;
+}) {
   const { userId }: { userId: string | null } = auth();
 
   if (!userId) {
@@ -110,9 +111,9 @@ export async function handleCreateUserGoal(data: { exerciseId: string, goalValue
       data: {
         userId: userId,
         exerciseId: data.exerciseId,
-        goalType: 'WEIGHT',
-        goalValue: data.goalValue
-      }
+        goalType: "WEIGHT",
+        goalValue: data.goalValue,
+      },
     });
 
     revalidatePath("/dashboard");
@@ -123,7 +124,6 @@ export async function handleCreateUserGoal(data: { exerciseId: string, goalValue
 }
 
 export async function handleDeleteUserGoal(id: string) {
-  
   const { userId }: { userId: string | null } = auth();
 
   if (!userId) {
@@ -133,8 +133,8 @@ export async function handleDeleteUserGoal(id: string) {
   try {
     await prisma.userGoal.delete({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
 
     revalidatePath("/dashboard");

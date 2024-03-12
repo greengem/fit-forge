@@ -24,7 +24,7 @@ export default async function DashboardGoals() {
     throw new Error("You must be signed in to view this page.");
   }
 
-const goals: GoalWithProgress[] = await prisma.userGoal.findMany({
+  const goals: GoalWithProgress[] = await prisma.userGoal.findMany({
     where: {
       userId,
     },
@@ -37,7 +37,7 @@ const goals: GoalWithProgress[] = await prisma.userGoal.findMany({
       },
     },
   });
-  
+
   for (const goal of goals) {
     const workoutLogs = await prisma.workoutLog.findMany({
       where: {
@@ -59,16 +59,25 @@ const goals: GoalWithProgress[] = await prisma.userGoal.findMany({
         },
       },
     });
-  
+
     let bestValue = 0;
     for (const workoutLog of workoutLogs) {
       for (const exercise of workoutLog.exercises) {
         for (const set of exercise.sets) {
-          if (goal.goalType === GoalType.WEIGHT && (set.weight ?? 0) > bestValue) {
+          if (
+            goal.goalType === GoalType.WEIGHT &&
+            (set.weight ?? 0) > bestValue
+          ) {
             bestValue = set.weight ?? 0;
-          } else if (goal.goalType === GoalType.REPS && (set.reps ?? 0) > bestValue) {
+          } else if (
+            goal.goalType === GoalType.REPS &&
+            (set.reps ?? 0) > bestValue
+          ) {
             bestValue = set.reps ?? 0;
-          } else if (goal.goalType === GoalType.DURATION && (set.exerciseDuration ?? 0) > bestValue) {
+          } else if (
+            goal.goalType === GoalType.DURATION &&
+            (set.exerciseDuration ?? 0) > bestValue
+          ) {
             bestValue = set.exerciseDuration ?? 0;
           }
         }
@@ -81,32 +90,38 @@ const goals: GoalWithProgress[] = await prisma.userGoal.findMany({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 mb-3">
-      
       {goals.map((goal, index) => (
-        <DashboardGoalTemplate 
-          key={goal.id} 
-          title={`Goal ${index + 1}`} 
-          icon={<IconTarget 
-          className="text-danger" />} 
+        <DashboardGoalTemplate
+          key={goal.id}
+          title={`Goal ${index + 1}`}
+          icon={<IconTarget className="text-danger" />}
           showSettings
           id={goal.id}
         >
           <div className="text-sm truncate mb-3">{goal.Exercise.name}</div>
           <div className="flex justify-between mb-3">
-            <div className="text-sm">Best: <span className="text-danger">{goal.bestValue}</span></div>
-            <div className="text-sm">Target: <span className="text-primary">{goal.goalValue}</span></div>
+            <div className="text-sm">
+              Best: <span className="text-danger">{goal.bestValue}</span>
+            </div>
+            <div className="text-sm">
+              Target: <span className="text-primary">{goal.goalValue}</span>
+            </div>
           </div>
           <Progress value={(goal.progress || 0) * 100} />
         </DashboardGoalTemplate>
       ))}
 
       {goals.length < 4 && (
-        <DashboardGoalTemplate title="Add New Goal" icon={<IconTarget className="text-danger" />}>
-          <p className="text-sm mb-3 truncate">Select a favorite exercise to track</p>
+        <DashboardGoalTemplate
+          title="Add New Goal"
+          icon={<IconTarget className="text-danger" />}
+        >
+          <p className="text-sm mb-3 truncate">
+            Select a favorite exercise to track
+          </p>
           <CreateDashboardGoal />
         </DashboardGoalTemplate>
       )}
-
     </div>
   );
 }
