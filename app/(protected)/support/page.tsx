@@ -37,7 +37,7 @@ export default function Support() {
       <PageHeading title="Support" />
       <p className="text-zinc-500 mb-5">
         We&apos;re here to help! You can find answers to common questions about
-        Tracktive below. If you can&apos;t find what you&apos;re looking for,
+        FitForge below. If you can&apos;t find what you&apos;re looking for,
         you can contact our support team.
       </p>
 

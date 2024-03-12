@@ -66,7 +66,7 @@ export default function Home() {
             </h1>
             <p className="text-lg text-zinc-500 mb-5">
               Your ultimate fitness companion. Stay on track, stay active with
-              Tracktive.
+              FitForge.
             </p>
             <div className="flex gap-3">
               <Button
@@ -84,7 +84,7 @@ export default function Home() {
           <div className="hidden lg:block">
             <Image
               src="/images/screenshots/ss_exercise.webp"
-              alt="Screenshot of Tracktive"
+              alt="Screenshot of exercises page"
               width={1436}
               height={957}
               className="w-full h-auto rounded-xl shadow-xl"
