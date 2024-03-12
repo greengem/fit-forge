@@ -18,9 +18,9 @@ export function generateViewport() {
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Tracktive: Log, Analyze, and Optimize Your Workouts",
+  title: "FitForge: Log, Analyze, and Optimize Your Workouts",
   description:
-    "Take Control of Your Fitness Goals with Tracktive. The intuitive workout tracking web app designed to optimize your gym sessions and improve your results.",
+    "Take Control of Your Fitness Goals with FitForge. The intuitive workout tracking web app designed to optimize your gym sessions and improve your results.",
 };
 
 export default async function RootLayout({
