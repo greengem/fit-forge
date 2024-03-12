@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs";
 import { UserGoal, GoalType } from "@prisma/client";
 import { Progress } from "@nextui-org/progress";
 import CreateDashboardGoal from "./CreateDashboardGoal";
+import Link from "next/link";
 
 type ExerciseWithIdAndName = {
   id: string;
@@ -94,7 +95,7 @@ export default async function DashboardGoals() {
               Target: <span className="text-primary">{goal.goalValue}</span>
             </div>
           </div>
-          <Progress value={(goal.progress || 0) * 100} />
+          <Progress aria-label="Goal Progress" value={(goal.progress || 0) * 100} />
         </DashboardGoalTemplate>
       ))}
 
@@ -103,8 +104,8 @@ export default async function DashboardGoals() {
           title="Add New Goal"
           icon={<IconTarget className="text-danger" />}
         >
-          <p className="text-sm mb-3 truncate">
-            Select a favorite exercise to track
+          <p className="text-sm mb-3 truncate text-zinc-500">
+            Select a <Link href="/exercises" className="text-primary">favorite exercise</Link> to track
           </p>
           <CreateDashboardGoal />
         </DashboardGoalTemplate>
