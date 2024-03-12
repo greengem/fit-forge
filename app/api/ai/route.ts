@@ -1,70 +1,71 @@
-import { experimental_AssistantResponse } from "ai";
-import OpenAI from "openai";
 
-interface MessageContentText {
-  type: "text";
-  text: {
-    value: string;
-    annotations?: any[];
-  };
-}
+// import { experimental_AssistantResponse } from "ai";
+// import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || "",
-});
+// interface MessageContentText {
+//   type: "text";
+//   text: {
+//     value: string;
+//     annotations?: any[];
+//   };
+// }
 
-export const runtime = "edge";
+// const openai = new OpenAI({
+//   apiKey: process.env.OPENAI_API_KEY || "",
+// });
 
-export async function POST(req: Request) {
-  const input: {
-    threadId: string | null;
-    message: string;
-  } = await req.json();
+// export const runtime = "edge";
 
-  const threadId = input.threadId ?? (await openai.beta.threads.create({})).id;
+// export async function POST(req: Request) {
+//   const input: {
+//     threadId: string | null;
+//     message: string;
+//   } = await req.json();
 
-  const createdMessage = await openai.beta.threads.messages.create(threadId, {
-    role: "user",
-    content: input.message,
-  });
+//   const threadId = input.threadId ?? (await openai.beta.threads.create({})).id;
 
-  return experimental_AssistantResponse(
-    { threadId, messageId: createdMessage.id },
-    async ({ threadId, sendMessage }) => {
-      const run = await openai.beta.threads.runs.create(threadId, {
-        assistant_id:
-          process.env.ASSISTANT_ID ??
-          (() => {
-            throw new Error("ASSISTANT_ID is not set");
-          })(),
-      });
+//   const createdMessage = await openai.beta.threads.messages.create(threadId, {
+//     role: "user",
+//     content: input.message,
+//   });
 
-      async function waitForRun(run: OpenAI.Beta.Threads.Runs.Run) {
-        while (run.status === "queued" || run.status === "in_progress") {
-          await new Promise((resolve) => setTimeout(resolve, 500));
-          run = await openai.beta.threads.runs.retrieve(threadId, run.id);
-        }
+//   return experimental_AssistantResponse(
+//     { threadId, messageId: createdMessage.id },
+//     async ({ threadId, sendMessage }) => {
+//       const run = await openai.beta.threads.runs.create(threadId, {
+//         assistant_id:
+//           process.env.ASSISTANT_ID ??
+//           (() => {
+//             throw new Error("ASSISTANT_ID is not set");
+//           })(),
+//       });
 
-        if (run.status !== "completed") {
-          throw new Error(`Run did not complete successfully: ${run.status}`);
-        }
-      }
+//       async function waitForRun(run: OpenAI.Beta.Threads.Runs.Run) {
+//         while (run.status === "queued" || run.status === "in_progress") {
+//           await new Promise((resolve) => setTimeout(resolve, 500));
+//           run = await openai.beta.threads.runs.retrieve(threadId, run.id);
+//         }
 
-      await waitForRun(run);
+//         if (run.status !== "completed") {
+//           throw new Error(`Run did not complete successfully: ${run.status}`);
+//         }
+//       }
 
-      const responseMessages = (
-        await openai.beta.threads.messages.list(threadId, { order: "asc" })
-      ).data;
+//       await waitForRun(run);
 
-      for (const message of responseMessages) {
-        sendMessage({
-          id: message.id,
-          role: "assistant",
-          content: message.content.filter(
-            (content) => content.type === "text",
-          ) as any[],
-        });
-      }
-    },
-  );
-}
+//       const responseMessages = (
+//         await openai.beta.threads.messages.list(threadId, { order: "asc" })
+//       ).data;
+
+//       for (const message of responseMessages) {
+//         sendMessage({
+//           id: message.id,
+//           role: "assistant",
+//           content: message.content.filter(
+//             (content) => content.type === "text",
+//           ) as any[],
+//         });
+//       }
+//     },
+//   );
+// }
