@@ -81,7 +81,7 @@ export default function ExerciseTable({
                     className: "hidden md:block",
                   }}
                   description={
-                    <span className="text-zinc-500">
+                    <span className="text-zinc-400">
                       {formatDisplayName(exercise.category)}
                     </span>
                   }
@@ -99,7 +99,7 @@ export default function ExerciseTable({
                       .map((muscle) => formatDisplayName(muscle))
                       .join(", ")}
                   </p>
-                  <p className="text-bold text-tiny text-zinc-500">
+                  <p className="text-bold text-tiny text-zinc-400">
                     {exercise.secondary_muscles
                       .map((muscle) => formatDisplayName(muscle))
                       .join(", ")}
