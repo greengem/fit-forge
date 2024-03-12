@@ -44,8 +44,8 @@ export default function Home() {
     <main className="min-h-dvh text-white bg-gradient-to-b from-black to-zinc-900">
       <nav className="px-3 md:px-10 py-3 mb-5 flex justify-between items-center">
         <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
-          <IconFlame className="text-primary" />{" "}
-          {process.env.NEXT_PUBLIC_BRAND_NAME}
+          <IconFlame className="text-primary" />
+          FitForge
         </h4>
       </nav>
 

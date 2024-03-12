@@ -20,7 +20,7 @@ export default function SidebarBrand() {
         </div>
         {!sidebarCollapse && (
           <div className="flex gap-3 items-center pt-[18px]">
-            <p className="text-xl">{process.env.NEXT_PUBLIC_BRAND_NAME}</p>
+            <p className="text-xl">FitForge</p>
             {/* <Chip color="primary" radius="full">Pro</Chip> */}
           </div>
         )}
