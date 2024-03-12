@@ -138,8 +138,6 @@ model UserGoal {
 
 enum GoalType {
   WEIGHT
-  REPS
-  DURATION
 }
 
 model UserEquipment {
