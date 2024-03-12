@@ -11,7 +11,6 @@ export default function ProfileActions() {
   return (
     <div>
       <Button
-        color="danger"
         variant="flat"
         onClick={() => signOut(() => router.push("/"))}
       >
