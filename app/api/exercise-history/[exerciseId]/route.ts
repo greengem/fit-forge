@@ -44,7 +44,6 @@ export async function GET(
 
     return new Response(JSON.stringify(history), { status: 200 });
   } catch (error) {
-    console.error("Error details:", error);
     return new Response(
       JSON.stringify({ error: "Error fetching exercise history" }),
       { status: 500 },

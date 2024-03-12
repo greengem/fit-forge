@@ -61,7 +61,6 @@ export async function handleSaveWorkout(data: WorkoutData) {
 
     return { success: true, message: "Workout Saved" };
   } catch (e) {
-    console.error(e);
     return { success: false, message: "Failed to save workout" };
   }
 }
@@ -105,7 +104,6 @@ export async function handleUpdateWorkout(id: string, data: WorkoutData) {
 
     return { success: true, message: "Workout Updated" };
   } catch (e) {
-    console.error(e);
     return { success: false, message: "Failed to update workout" };
   }
 }

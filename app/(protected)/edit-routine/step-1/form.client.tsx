@@ -31,7 +31,6 @@ export default function NewRoutineFormStepOneClient({
     }
     const response = await handleCreateRoutineStepOne(formData, routineId);
     if (response.success) {
-      console.log("Created routine ID:", response.newRoutineId);
       router.push(`/edit-routine/step-2?id=${response.newRoutineId}`);
     } else {
       toast.error(response.message);

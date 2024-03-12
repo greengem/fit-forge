@@ -75,7 +75,7 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
     } else if (key === "edit") {
       router.push("/activity/" + activity.id);
     } else if (key === "share") {
-      console.log("share");
+      //console.log("share");
     }
   };
 

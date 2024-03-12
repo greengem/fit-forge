@@ -31,8 +31,6 @@ export default function ProfileDetails({
       lastName: inputLastName,
     };
 
-    console.log(data);
-
     const response = await handleUpdateUserDetails(data);
     if (response.success) {
       toast.success("User info updated");

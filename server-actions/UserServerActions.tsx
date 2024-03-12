@@ -99,7 +99,6 @@ export async function handleUpdateUserEquipment(
 
 export async function handleCreateUserGoal(data: { exerciseId: string, goalValue: number }) {
 
-  console.log(data);
   const { userId }: { userId: string | null } = auth();
 
   if (!userId) {
@@ -124,7 +123,7 @@ export async function handleCreateUserGoal(data: { exerciseId: string, goalValue
 }
 
 export async function handleDeleteUserGoal(id: string) {
-  console.log(id);
+  
   const { userId }: { userId: string | null } = auth();
 
   if (!userId) {

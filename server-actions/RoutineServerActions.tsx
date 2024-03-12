@@ -57,7 +57,6 @@ export async function handleCreateRoutine(data: any) {
 
     return { success: true, message: "Routine created successfully" };
   } catch (e) {
-    console.error(e);
     return { success: false, message: "Failed to create routine" };
   }
 }
@@ -106,7 +105,6 @@ export async function handleEditRoutine(data: any) {
 
     return { success: true, message: "Routine edited successfully" };
   } catch (e) {
-    console.error(e);
     return { success: false, message: "Failed to edit routine" };
   }
 }
@@ -152,7 +150,6 @@ export async function handleCreateRoutineStepOne(
       newRoutineId: routine.id,
     };
   } catch (e) {
-    console.error(e);
     return { success: false, message: "Failed to create routine" };
   }
 }
@@ -193,7 +190,6 @@ export async function handleAddExerciseToRoutine({
 
     return { success: true, message: "Exercise added to routine successfully" };
   } catch (e) {
-    console.error(e);
     return { success: false, message: "Failed to create routine" };
   }
 }
@@ -226,7 +222,6 @@ export async function handleRemoveExerciseFromRoutine({
       message: "Exercise removed from routine successfully",
     };
   } catch (e) {
-    console.error(e);
     return {
       success: false,
       message: "Failed to remove exercise from routine",
