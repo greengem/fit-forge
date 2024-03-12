@@ -26,6 +26,7 @@ export function ThemeSwitcher() {
           isSelected={isDarkMode}
           size="lg"
           color="primary"
+          aria-label="Toggle theme"
           thumbIcon={({ isSelected, className }) =>
             isSelected ? (
               <MoonIcon className={className} />
