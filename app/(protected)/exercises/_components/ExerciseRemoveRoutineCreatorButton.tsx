@@ -30,7 +30,7 @@ export default function ExerciseRemoveRoutineCreatorButton({
   };
 
   return (
-    <Button isIconOnly onClick={handleClick}>
+    <Button isIconOnly onClick={handleClick} aria-label="Remove Exercise from routine">
       <IconMinus className="text-danger" size={20} />
     </Button>
   );

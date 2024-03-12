@@ -118,6 +118,7 @@ export default function ExerciseTable({
                 <ButtonGroup size="sm" variant="flat">
                   <ExerciseInfoButton exercise={exercise} />
                   <Button
+                    aria-label="Toggle favourite"
                     isIconOnly
                     onClick={() => handleToggleFavouriteExercise(exercise.id)}
                   >

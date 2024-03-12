@@ -31,7 +31,7 @@ export default function ExerciseAddToRoutineButton({
   };
 
   return (
-    <Button isIconOnly onClick={handleClick}>
+    <Button isIconOnly onClick={handleClick} aria-label="Add exercise to routine">
       <IconPlus className="hover:text-primary" size={20} />
     </Button>
   );

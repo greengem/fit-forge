@@ -54,7 +54,7 @@ export default function ExerciseFilters({
       <div className="flex gap-3 mb-3">
         <ExerciseSearch />
         <ExerciseFilterPerPage />
-        <Button isIconOnly size="lg" variant="flat" onClick={toggleFilters}>
+        <Button isIconOnly size="lg" variant="flat" onClick={toggleFilters} aria-label="Toggle Filters">
           {showFilters ? <IconFilterOff /> : <IconFilter />}
         </Button>
       </div>

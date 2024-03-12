@@ -18,7 +18,7 @@ export default function ExerciseInfoButton({
   };
 
   return (
-    <Button isIconOnly onPress={handleClick}>
+    <Button isIconOnly onPress={handleClick} aria-label="Show exercise information">
       <IconInfoCircle className="hover:text-primary" size={20} />
     </Button>
   );
