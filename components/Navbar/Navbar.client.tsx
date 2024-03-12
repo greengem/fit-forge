@@ -7,7 +7,6 @@ import {
   IconJumpRope,
   IconBook,
   IconActivity,
-  IconBarbell,
   IconFlame,
 } from "@tabler/icons-react";
 import NavbarUser from "./NavbarUser";
@@ -45,12 +44,6 @@ export default function MobileNavbarClient({
           </NavbarItem>
         ))}
       </NavbarContent>
-
-      {/* <NavbarContent justify="end">
-        <NavbarItem>
-          <ThemeSwitcher />
-        </NavbarItem>
-      </NavbarContent> */}
 
       <NavbarContent justify="end">
         <NavbarItem>

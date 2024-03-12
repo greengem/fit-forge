@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
+import clsx from "clsx";
 import { useTheme } from "next-themes";
 import { useSidebarToggleContext } from "@/contexts/SidebarToggleContext";
-import { Switch } from "@nextui-org/switch";
-import { MoonIcon } from "./MoonIcon";
-import { SunIcon } from "./SunIcon";
+import { IconDeviceDesktop, IconMoonStars, IconSunHigh } from "@tabler/icons-react";
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -17,27 +16,35 @@ export function ThemeSwitcher() {
 
   if (!mounted) return null;
 
-  const isDarkMode = theme === "dark";
-
   return (
     <>
       {!sidebarCollapse && (
-        <Switch
-          isSelected={isDarkMode}
-          size="lg"
-          color="primary"
-          aria-label="Toggle theme"
-          thumbIcon={({ isSelected, className }) =>
-            isSelected ? (
-              <MoonIcon className={className} />
-            ) : (
-              <SunIcon className={className} />
-            )
-          }
-          onChange={() => {
-            setTheme(isDarkMode ? "light" : "dark");
-          }}
-        ></Switch>
+        <div className="flex">
+          <button 
+            onClick={() => setTheme('light')} 
+            className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
+              'text-primary': theme === 'light'
+            })}
+          >
+            <IconSunHigh />
+          </button>
+          <button 
+            onClick={() => setTheme('dark')} 
+            className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
+              'text-primary': theme === 'dark'
+            })}
+          >
+            <IconMoonStars />
+          </button>
+          <button 
+            onClick={() => setTheme('system')} 
+            className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
+              'text-primary': theme === 'system'
+            })}
+          >
+            <IconDeviceDesktop />
+          </button>
+        </div>
       )}
     </>
   );
