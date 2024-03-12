@@ -6,13 +6,11 @@ export async function GET(
   { params }: { params: { exerciseId: string } },
 ) {
   try {
-    const { userId }: { userId: string | null } = await auth();
+    const { userId }: { userId: string | null } = auth();
     const { exerciseId } = params;
 
     if (!userId) {
-      return new Response(JSON.stringify({ error: "User not authenticated" }), {
-        status: 401,
-      });
+      throw new Error("You must be signed in to view this page.");
     }
 
     const history = await prisma.workoutLog.findMany({
