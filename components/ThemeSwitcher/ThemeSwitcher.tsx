@@ -21,6 +21,7 @@ export function ThemeSwitcher() {
       {!sidebarCollapse && (
         <div className="flex">
           <button 
+            aria-label="Light theme"
             onClick={() => setTheme('light')} 
             className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
               'text-primary': theme === 'light'
@@ -29,6 +30,7 @@ export function ThemeSwitcher() {
             <IconSunHigh />
           </button>
           <button 
+            aria-label="Dark theme"
             onClick={() => setTheme('dark')} 
             className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
               'text-primary': theme === 'dark'
@@ -37,6 +39,7 @@ export function ThemeSwitcher() {
             <IconMoonStars />
           </button>
           <button 
+            aria-label="System theme"
             onClick={() => setTheme('system')} 
             className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
               'text-primary': theme === 'system'

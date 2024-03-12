@@ -7,6 +7,7 @@ import ProfileEquipment from "./_components/ProfileEquipment";
 import ProfileActions from "./_components/ProfileActions";
 import ProfileMeasurements from "./_components/ProfileMeasurements";
 import ProfileDetails from "./_components/ProfileDetails";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
 
 export default async function ProfilePage() {
   const user = await currentUser();
@@ -47,6 +48,8 @@ export default async function ProfilePage() {
     <>
       <ProfileHero userImage={userImage} username={username} />
       {userMeasurements && <ProfileStats userMeasurements={userMeasurements} />}
+
+      <div className="flex justify-center py-2"><ThemeSwitcher /></div>
 
       <ProfileDetails
         username={username}
