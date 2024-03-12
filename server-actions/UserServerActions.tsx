@@ -95,3 +95,52 @@ export async function handleUpdateUserEquipment(
     return { success: false, message: "Failed to update user equipment" };
   }
 }
+
+
+export async function handleCreateUserGoal(data: { exerciseId: string, goalValue: number }) {
+
+  console.log(data);
+  const { userId }: { userId: string | null } = auth();
+
+  if (!userId) {
+    throw new Error("You must be signed in to view this page.");
+  }
+
+  try {
+    await prisma.userGoal.create({
+      data: {
+        userId: userId,
+        exerciseId: data.exerciseId,
+        goalType: 'WEIGHT',
+        goalValue: data.goalValue
+      }
+    });
+
+    revalidatePath("/dashboard");
+    return { success: true, message: "New goal created" };
+  } catch (e) {
+    return { success: false, message: "Failed to add goal" };
+  }
+}
+
+export async function handleDeleteUserGoal(id: string) {
+  console.log(id);
+  const { userId }: { userId: string | null } = auth();
+
+  if (!userId) {
+    throw new Error("You must be signed in to view this page.");
+  }
+
+  try {
+    await prisma.userGoal.delete({
+      where: {
+        id: id
+      }
+    });
+
+    revalidatePath("/dashboard");
+    return { success: true, message: "Goal deleted" };
+  } catch (e) {
+    return { success: false, message: "Failed to delete goal" };
+  }
+}
