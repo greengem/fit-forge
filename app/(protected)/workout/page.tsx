@@ -73,7 +73,7 @@ export default async function WorkoutPage() {
   return (
     <>
       <PageHeading title="Start Workout" />
-      <h4 className="font-semibold text-2xl mb-3">Your Routines</h4>
+      <h2 className="font-semibold text-2xl mb-3">Your Routines</h2>
       <RoutineCards routines={userRoutines} isSystem={false} />
       <div>
         <Button
@@ -86,7 +86,7 @@ export default async function WorkoutPage() {
         </Button>
       </div>
 
-      <h4 className="font-semibold text-2xl mb-3 mt-10">System Routines</h4>
+      <h3 className="font-semibold text-2xl mb-3 mt-10">System Routines</h3>
       <RoutineCards routines={systemRoutines} isSystem={true} />
     </>
   );

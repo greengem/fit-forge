@@ -15,7 +15,7 @@ export default function DeleteDashboardGoal({ id }: { id: string }) {
   };
 
   return (
-    <button onClick={handleClick} disabled={isPending}>
+    <button onClick={handleClick} disabled={isPending} aria-label="Delete goal">
       <IconX className="text-zinc-500" />
     </button>
   );

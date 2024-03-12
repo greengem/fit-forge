@@ -59,11 +59,11 @@ export default function DashboardLinks() {
               >
                 {link.title}
               </p>
-              <h4
+              <p
                 className={clsx("font-medium text-lg", link.descriptionColour)}
               >
                 {link.description}
-              </h4>
+              </p>
             </CardHeader>
             <Image
               alt="Card background"

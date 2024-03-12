@@ -71,7 +71,7 @@ export default function RoutineCard({
         <div className="flex flex-col flex-grow">
           <p className="text-md leading-5">{routine.name}</p>
           {!isSystem && (
-            <p className="text-xs text-default-500 leading-5">
+            <p className="text-xs text-zinc-400 leading-5">
               Updated: {format(new Date(routine.updatedAt), "MM/dd/yyyy")}
             </p>
           )}

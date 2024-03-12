@@ -83,7 +83,7 @@ export default function CreateDashboardGoal() {
                 size="sm"
                 endContent={
                   <div className="pointer-events-none flex items-center">
-                    <span className="text-default-400 text-small">kg</span>
+                    <span className="text-zinc-400 text-small">kg</span>
                   </div>
                 }
               />

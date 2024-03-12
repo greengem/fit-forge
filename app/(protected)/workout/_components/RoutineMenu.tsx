@@ -44,7 +44,7 @@ export default function RoutineMenu({ routineId }: { routineId: string }) {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <button className="shrink-0">
+        <button className="shrink-0" aria-label="Routine actions">
           <IconMenu2 className="text-primary" size={22} />
         </button>
       </DropdownTrigger>
