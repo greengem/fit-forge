@@ -41,12 +41,11 @@ export default async function ProfilePage() {
     },
   });
 
-  const equipment = equipmentObjects.map((obj) => obj.equipmentType);
+  const equipment = equipmentObjects.map((obj: { equipmentType: string }) => obj.equipmentType);
 
   return (
     <>
       <ProfileHero userImage={userImage} username={username} />
-
       {userMeasurements && <ProfileStats userMeasurements={userMeasurements} />}
 
       <ProfileDetails
