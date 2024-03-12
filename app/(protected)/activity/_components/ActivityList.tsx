@@ -84,7 +84,7 @@ export default async function ActivityList() {
                     </div>
                     <ActivityMenu activity={activity} />
                   </div>
-                  <p className="text-sm text-zinc-500 leading-5">
+                  <p className="text-sm text-zinc-400 leading-5">
                     {activity.WorkoutPlan.name}
                   </p>
                 </CardHeader>

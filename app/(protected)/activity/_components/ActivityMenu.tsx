@@ -83,7 +83,7 @@ export default function ActivityMenu({ activity }: { activity: Activity }) {
     <Dropdown>
       <DropdownTrigger>
         <button className="shrink-0">
-          <IconMenu2 className="text-primary" size={22} />
+          <IconMenu2 className="text-primary" size={22} aria-label="Activity actions" />
         </button>
       </DropdownTrigger>
       <DropdownMenu
