@@ -69,7 +69,7 @@ export default function RoutineMenu({ routineId }: { routineId: string }) {
           className="text-danger"
           color="danger"
         >
-          Delete Activity
+          Delete Routine
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
