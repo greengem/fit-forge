@@ -3,51 +3,15 @@
 @tailwind utilities;
 
 html.dark {
-  background-color: rgb(17, 17, 19);
+  /* background-color: rgb(17, 17, 19); */
+  background-color: #09090b;
 }
 
 html.light {
-  background-color: rgb(238, 237, 242);
+  /* background-color: rgb(238, 237, 242); */
+  background-color: #f4f4f5;
 }
 
 nav [data-active="true"] a {
   color: #a6ff00;
-}
-
-.dashboard-chart {
-  height: 300px;
-}
-
-.hero-container {
-  background-color: rgb(17, 17, 19);
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.dark .group-dark-bg-1 {
-  background-color: rgb(24, 24, 27);
-}
-
-.light .group-light-bg-1 {
-  background-color: white;
-}
-
-@layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
 }
