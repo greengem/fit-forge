@@ -16,37 +16,28 @@ export function ThemeSwitcher() {
 
   if (!mounted) return null;
 
+  const themes = [
+    { name: 'light', icon: <IconSunHigh size={20} />, label: 'Light theme' },
+    { name: 'dark', icon: <IconMoonStars size={20} />, label: 'Dark theme' },
+    { name: 'system', icon: <IconDeviceDesktop size={20} />, label: 'System theme' },
+  ];
+
   return (
     <>
       {!sidebarCollapse && (
-        <div className="flex">
-          <button 
-            aria-label="Light theme"
-            onClick={() => setTheme('light')} 
-            className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
-              'text-primary': theme === 'light'
-            })}
-          >
-            <IconSunHigh />
-          </button>
-          <button 
-            aria-label="Dark theme"
-            onClick={() => setTheme('dark')} 
-            className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
-              'text-primary': theme === 'dark'
-            })}
-          >
-            <IconMoonStars />
-          </button>
-          <button 
-            aria-label="System theme"
-            onClick={() => setTheme('system')} 
-            className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
-              'text-primary': theme === 'system'
-            })}
-          >
-            <IconDeviceDesktop />
-          </button>
+        <div className="flex gap-1">
+          {themes.map(({ name, icon, label }) => (
+            <button 
+              key={name}
+              aria-label={label}
+              onClick={() => setTheme(name)} 
+              className={clsx("dark:hover:bg-zinc-800 hover:bg-zinc-200 p-2 rounded-full", {
+                'text-black dark:text-primary bg-primary dark:bg-zinc-800': theme === name
+              })}
+            >
+              {icon}
+            </button>
+          ))}
         </div>
       )}
     </>
