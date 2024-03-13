@@ -104,7 +104,7 @@ export default async function DashboardGoals() {
           title="Add New Goal"
           icon={<IconTarget className="text-danger" />}
         >
-          <p className="text-sm mb-3 truncate text-zinc-600 dark:text-zinc-400">
+          <p className="text-sm mb-3 leading-none text-zinc-600 dark:text-zinc-400">
             Select a <Link href="/exercises" className="text-danger dark:text-primary">favorite exercise</Link> to track
           </p>
           <CreateDashboardGoal />

@@ -12,7 +12,7 @@ function CustomCard({
   return (
     <Card shadow="none" className="shadow-md">
       <CardHeader className="text-xl pb-0">{title}</CardHeader>
-      <CardBody className="text-zinc-300 text-sm">{children}</CardBody>
+      <CardBody className="dark:text-zinc-600 text-zinc-400 text-sm">{children}</CardBody>
     </Card>
   );
 }
@@ -35,7 +35,7 @@ export default function Support() {
   return (
     <>
       <PageHeading title="Support" />
-      <p className="text-zinc-500 mb-5">
+      <p className="dark:text-zinc-600 text-zinc-400 mb-5">
         We&apos;re here to help! You can find answers to common questions about
         FitForge below. If you can&apos;t find what you&apos;re looking for,
         you can contact our support team.

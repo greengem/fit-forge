@@ -12,7 +12,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <NextUIProvider className="flex flex-col grow">
       <NextThemesProvider
         attribute="class"
-        defaultTheme="system"
+        defaultTheme="dark"
         themes={["light", "dark"]}
       >
         <WorkoutControlsProvider>
