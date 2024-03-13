@@ -72,10 +72,9 @@ export default async function WorkoutPage() {
 
   return (
     <>
+    <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
       <PageHeading title="Start Workout" />
-      <h2 className="font-semibold text-2xl mb-3">Your Routines</h2>
-      <RoutineCards routines={userRoutines} isSystem={false} />
-      <div>
+
         <Button
           as={Link}
           href="/edit-routine/step-1"
@@ -86,7 +85,10 @@ export default async function WorkoutPage() {
         </Button>
       </div>
 
-      <h3 className="font-semibold text-2xl mb-3 mt-10">System Routines</h3>
+      <h2 className="font-semibold text-xl md:text-2xl mb-3">Your Routines</h2>
+      <RoutineCards routines={userRoutines} isSystem={false} />
+
+      <h3 className="font-semibold text-xl md:text-2xl mb-3 mt-10">Example Routines</h3>
       <RoutineCards routines={systemRoutines} isSystem={true} />
     </>
   );

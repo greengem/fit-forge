@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ShareImageServerAction } from "@/server-actions/ShareImageServerAction";
-import { Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
 import Image from "next/image";
 
 export default function ActivityShareImage() {

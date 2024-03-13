@@ -20,7 +20,7 @@ export default function DashboardCards() {
         fallback={
           <DashboardCardTemplate
             title="Weekly Workouts"
-            icon={<IconCalendarWeek className="text-danger" />}
+            icon={<IconCalendarWeek className="text-zinc-400" />}
           >
             <Spinner color="primary" />
           </DashboardCardTemplate>
