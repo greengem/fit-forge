@@ -15,3 +15,16 @@ html.light {
 nav [data-active="true"] a {
   color: #a6ff00;
 }
+
+.dark path.recharts-rectangle{
+  fill: #a6ff00;
+}
+
+.dark path.recharts-curve.recharts-area-area
+{
+  fill: #a6ff00;
+}
+
+.dark path.recharts-curve.recharts-line-curve{
+  stroke: #a6ff00;
+}

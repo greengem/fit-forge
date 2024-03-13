@@ -116,7 +116,7 @@ export default async function DashboardRecentActivity() {
             })}
           </div>
           <div className="flex justify-center">
-            <Button color="primary" variant="flat" as={Link} href="/activity">
+            <Button as={Link} href="/activity">
               View all activity
             </Button>
           </div>

@@ -41,7 +41,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-dvh text-white bg-gradient-to-b from-black to-zinc-900">
+    <main className="min-h-dvh bg-white dark:bg-zinc-900">
       <nav className="px-3 md:px-10 py-3 mb-5 flex justify-between items-center">
         <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
           <IconFlame className="text-primary" />
@@ -98,7 +98,7 @@ export default function Home() {
           {cardData.map((card, index) => (
             <Card
               key={index}
-              className="text-zinc-200 bg-zinc-900/50 backdrop-blur-md shadow-xl"
+              className="text-zinc-800 dark:text-zinc-200 bg-zinc-100/50 dark:bg-zinc-900/50 backdrop-blur-md shadow-xl"
               shadow="none"
             >
               <CardHeader className="font-bold gap-3">

@@ -51,7 +51,7 @@ export default function DashboardChartWorkoutFrequencyClient({
           margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
           aria-label="Workouts Bar Chart"
         >
-          <Bar dataKey="workouts" fill="#A6FF00" />
+          <Bar dataKey="workouts" fill="#000000" />
           <XAxis dataKey="period" tick={{ fontSize: "10px" }} />
           <Tooltip content={<CustomTooltip />} cursor={false} />
         </BarChart>
