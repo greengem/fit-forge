@@ -49,7 +49,10 @@ export default function ExerciseTable({
   return (
     <Table
       aria-label="Exercises Table"
-      className="mb-3 shadow-md"
+      className="mb-3"
+      classNames={{
+        wrapper: "shadow-md",
+      }}
       shadow="none"
       isCompact
     >
