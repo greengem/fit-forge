@@ -4,12 +4,12 @@
 
 html.dark {
   /* background-color: rgb(17, 17, 19); */
-  background-color: #09090b;
+  background-color: #18181b;
 }
 
 html.light {
   /* background-color: rgb(238, 237, 242); */
-  background-color: #f4f4f5;
+  background-color: #ffffff;
 }
 
 nav [data-active="true"] a {

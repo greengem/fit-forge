@@ -28,7 +28,7 @@ export default function MobileNavbarClient({
   const pathname = usePathname();
 
   return (
-    <Navbar className="bg-content1 block md:hidden shadow-md">
+    <Navbar className="bg-white dark:bg-zinc-900 block md:hidden shadow-md">
 
       <NavbarContent justify="start">
         <NavbarItem>
