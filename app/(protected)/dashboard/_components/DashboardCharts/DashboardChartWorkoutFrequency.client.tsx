@@ -8,6 +8,7 @@ import {
   TooltipProps,
   CartesianGrid,
 } from "recharts";
+import ChartMockDataMessage from "./ChartMockDataMessage";
 
 type WorkoutFrequencyData = {
   period: string;
@@ -35,20 +36,26 @@ function CustomTooltip({
 
 export default function DashboardChartWorkoutFrequencyClient({
   data,
+  isUsingMockData,
 }: {
   data: WorkoutFrequencyData[];
+  isUsingMockData?: boolean;
 }) {
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart
-        data={data}
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-        aria-label="Workouts Bar Chart"
-      >
-        <Bar dataKey="workouts" fill="#A6FF00" />
-        <XAxis dataKey="period" tick={{ fontSize: "10px" }} />
-        <Tooltip content={<CustomTooltip />} cursor={false} />
-      </BarChart>
-    </ResponsiveContainer>
+    <>
+      {isUsingMockData && (<ChartMockDataMessage />)}
+
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          data={data}
+          margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+          aria-label="Workouts Bar Chart"
+        >
+          <Bar dataKey="workouts" fill="#A6FF00" />
+          <XAxis dataKey="period" tick={{ fontSize: "10px" }} />
+          <Tooltip content={<CustomTooltip />} cursor={false} />
+        </BarChart>
+      </ResponsiveContainer>
+    </>
   );
 }

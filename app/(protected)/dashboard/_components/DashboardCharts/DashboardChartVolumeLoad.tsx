@@ -12,6 +12,19 @@ type WorkoutVolumeLoadData = {
   totalVolumeLoad: number;
 };
 
+const mockData: WorkoutVolumeLoadData[] = [
+  { period: '01-01-2024', totalVolumeLoad: 100 },
+  { period: '02-01-2024', totalVolumeLoad: 140 },
+  { period: '03-01-2024', totalVolumeLoad: 120 },
+  { period: '04-01-2024', totalVolumeLoad: 160 },
+  { period: '05-01-2024', totalVolumeLoad: 150 },
+  { period: '06-01-2024', totalVolumeLoad: 170 },
+  { period: '07-01-2024', totalVolumeLoad: 160 },
+  { period: '08-01-2024', totalVolumeLoad: 180 },
+  { period: '09-01-2024', totalVolumeLoad: 170 },
+  { period: '10-01-2024', totalVolumeLoad: 200 },
+];
+
 export default async function DashboardChartVolumeLoad({
   dateRange = "1W",
 }: {
@@ -43,6 +56,10 @@ export default async function DashboardChartVolumeLoad({
       },
     },
   });
+
+  if (workoutLogs.length === 0) {
+    return <DashboardChartVolumeLoadClient data={mockData} isUsingMockData />;
+  }
 
   let lastKnownVolumeLoad = 0;
 

@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
   TooltipProps,
 } from "recharts";
+import ChartMockDataMessage from "./ChartMockDataMessage";
 
 type WorkoutData = {
   period: string;
@@ -34,26 +35,32 @@ function CustomTooltip({
 
 export default function DashboardChartProgressOverTimeClient({
   data,
+  isUsingMockData,
 }: {
   data: WorkoutData[];
+  isUsingMockData?: boolean;
 }) {
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <AreaChart
-        data={data}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-        aria-label="Progress Over Time Area Chart"
-      >
-        <Area
-          type="monotone"
-          dataKey="totalWeight"
-          stroke="#A6FF00"
-          fill="#A6FF00"
-          aria-label="Total Weight Area"
-        />
-        <XAxis dataKey="period" tick={{ fontSize: "10px" }} />
-        <Tooltip content={<CustomTooltip />} />
-      </AreaChart>
-    </ResponsiveContainer>
+    <>
+      {isUsingMockData && (<ChartMockDataMessage />)}
+
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart
+          data={data}
+          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+          aria-label="Progress Over Time Area Chart"
+        >
+          <Area
+            type="monotone"
+            dataKey="totalWeight"
+            stroke="#A6FF00"
+            fill="#A6FF00"
+            aria-label="Total Weight Area"
+          />
+          <XAxis dataKey="period" tick={{ fontSize: "10px" }} />
+          <Tooltip content={<CustomTooltip />} />
+        </AreaChart>
+      </ResponsiveContainer>
+    </>
   );
 }

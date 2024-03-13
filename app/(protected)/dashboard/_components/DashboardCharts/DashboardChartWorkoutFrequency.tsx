@@ -13,17 +13,16 @@ type WorkoutFrequencyData = {
 };
 
 const mockData: WorkoutFrequencyData[] = [
-  { period: '01-01-2022', workouts: 1 },
-  { period: '02-01-2022', workouts: 3 },
-  { period: '03-01-2022', workouts: 2 },
-  { period: '04-01-2022', workouts: 4 },
-  { period: '04-01-2022', workouts: 3 },
-  { period: '04-01-2022', workouts: 5 },
-  { period: '04-01-2022', workouts: 4 },
-  { period: '04-01-2022', workouts: 6 },
-  { period: '04-01-2022', workouts: 5 },
-  { period: '04-01-2022', workouts: 7 },
-  // Add more mock data as needed
+  { period: '01-01-2024', workouts: 1 },
+  { period: '02-01-2024', workouts: 3 },
+  { period: '03-01-2024', workouts: 2 },
+  { period: '04-01-2024', workouts: 4 },
+  { period: '05-01-2024', workouts: 3 },
+  { period: '06-01-2024', workouts: 5 },
+  { period: '07-01-2024', workouts: 4 },
+  { period: '08-01-2024', workouts: 6 },
+  { period: '09-01-2024', workouts: 5 },
+  { period: '10-01-2024', workouts: 7 },
 ];
 
 export default async function DashboardChartWorkoutFrequency({
@@ -57,7 +56,7 @@ export default async function DashboardChartWorkoutFrequency({
 
   if (workoutLogs.length === 0) {
     // Return mock data if no records
-    return <DashboardChartWorkoutFrequencyClient data={mockData} />;
+    return <DashboardChartWorkoutFrequencyClient data={mockData} isUsingMockData />;
   }
 
   const workoutsPerInterval = intervals.map(

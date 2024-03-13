@@ -12,6 +12,22 @@ type WorkoutData = {
   totalWeight: number;
 };
 
+// Mock data
+const mockData: WorkoutData[] = [
+  { period: '01-01-2024', totalWeight: 100 },
+  { period: '02-01-2024', totalWeight: 140 },
+  { period: '03-01-2024', totalWeight: 120 },
+  { period: '04-01-2024', totalWeight: 160 },
+  { period: '05-01-2024', totalWeight: 150 },
+  { period: '06-01-2024', totalWeight: 170 },
+  { period: '07-01-2024', totalWeight: 160 },
+  { period: '08-01-2024', totalWeight: 180 },
+  { period: '09-01-2024', totalWeight: 170 },
+  { period: '10-01-2024', totalWeight: 190 },
+
+  // Add more mock data as needed
+];
+
 export default async function DashboardChartProgressOverTime({
   dateRange = "1W",
 }: {
@@ -55,6 +71,10 @@ export default async function DashboardChartProgressOverTime({
       date: "asc",
     },
   });
+
+  if (workoutLogs.length === 0) {
+    return <DashboardChartProgressOverTimeClient data={mockData} isUsingMockData />;
+  }
 
   let cumulativeTotalWeight = 0;
 
