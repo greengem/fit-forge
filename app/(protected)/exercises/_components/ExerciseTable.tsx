@@ -70,7 +70,7 @@ export default function ExerciseTable({
             <TableRow key={exercise.id}>
               <TableCell
                 className={clsx("capitalize", {
-                  "bg-zinc-700/20 text-primary": isHighlighted,
+                  "bg-zinc-300/20 dark:bg-zinc-700/20 text-black dark:text-primary": isHighlighted,
                   "rounded-tl-lg": isHighlighted && index === 0,
                 })}
               >
@@ -81,7 +81,7 @@ export default function ExerciseTable({
                     className: "hidden md:block",
                   }}
                   description={
-                    <span className="text-zinc-400">
+                    <span className="text-zinc-600 dark:text-zinc-400">
                       {formatDisplayName(exercise.category)}
                     </span>
                   }
@@ -90,7 +90,7 @@ export default function ExerciseTable({
               </TableCell>
               <TableCell
                 className={clsx("capitalize hidden lg:table-cell", {
-                  "bg-zinc-700/20 text-primary": isHighlighted,
+                  "bg-zinc-300/20 dark:bg-zinc-700/20 text-black dark:text-primary": isHighlighted,
                 })}
               >
                 <div className="flex flex-col">
@@ -99,7 +99,7 @@ export default function ExerciseTable({
                       .map((muscle) => formatDisplayName(muscle))
                       .join(", ")}
                   </p>
-                  <p className="text-bold text-tiny text-zinc-400">
+                  <p className="text-bold text-tiny text-zinc-600 dark:text-zinc-400">
                     {exercise.secondary_muscles
                       .map((muscle) => formatDisplayName(muscle))
                       .join(", ")}
@@ -110,7 +110,7 @@ export default function ExerciseTable({
                 className={clsx(
                   "flex h-full justify-end items-center h-[61px]",
                   {
-                    "bg-zinc-700/20 text-primary": isHighlighted,
+                    "bg-zinc-300/20 dark:bg-zinc-700/20": isHighlighted,
                     "rounded-tr-lg": isHighlighted && index === 0,
                   },
                 )}

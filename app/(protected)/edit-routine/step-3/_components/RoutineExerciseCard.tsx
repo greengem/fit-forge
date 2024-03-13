@@ -121,6 +121,7 @@ export default function RoutineExerciseCard({
         <div className="flex justify-between">
           <ButtonGroup size="sm">
             <Button
+              aria-label="Move up"
               isIconOnly
               onPress={() => moveUp(index)}
               isDisabled={index === 0}
@@ -128,6 +129,7 @@ export default function RoutineExerciseCard({
               <IconArrowUp size={18} />
             </Button>
             <Button
+              aria-label="Move down"
               isIconOnly
               onPress={() => moveDown(index)}
               isDisabled={index === totalExercises - 1}
@@ -136,6 +138,7 @@ export default function RoutineExerciseCard({
             </Button>
           </ButtonGroup>
           <Button
+            aria-label="Delete exercise"
             color="danger"
             isIconOnly
             size="sm"

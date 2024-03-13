@@ -12,10 +12,10 @@ import {
 import NavbarUser from "./NavbarUser";
 
 const NAV_CONTENT_ITEMS = [
-  { label: <IconDashboard />, href: "/dashboard" },
-  { label: <IconActivity />, href: "/activity" },
-  { label: <IconJumpRope />, href: "/workout" },
-  { label: <IconBook />, href: "/exercises" },
+  { icon: <IconDashboard />, href: "/dashboard", label: "Dashboard" },
+  { icon: <IconActivity />, href: "/activity", label: "Activity Log"},
+  { icon: <IconJumpRope />, href: "/workout", label: "Start Workout"},
+  { icon: <IconBook />, href: "/exercises", label: "Exercises"},
 ];
 
 export default function MobileNavbarClient({
@@ -29,18 +29,19 @@ export default function MobileNavbarClient({
 
   return (
     <Navbar className="bg-content1 block md:hidden shadow-md">
+
       <NavbarContent justify="start">
-        <Link href="/" className="text-white">
-          <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
+        <NavbarItem>
+          <Link href="/" className="text-lg font-semibold tracking-tight" aria-label="Home Page">
             <IconFlame className="text-primary" />
-          </h4>
-        </Link>
+          </Link>
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="gap-5" justify="center">
         {NAV_CONTENT_ITEMS.map((item) => (
           <NavbarItem key={item.href} isActive={pathname === item.href}>
-            <Link href={item.href}>{item.label}</Link>
+            <Link href={item.href} aria-label={item.label}>{item.icon}</Link>
           </NavbarItem>
         ))}
       </NavbarContent>

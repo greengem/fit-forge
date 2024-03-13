@@ -14,7 +14,7 @@ export default function DashboardCardTemplate({
         {icon}
         {title}
       </CardHeader>
-      <CardBody className="px-3 text-4xl pt-0 text-primary">
+      <CardBody className="px-3 text-4xl pt-0 text-black dark:text-primary">
         {children}
       </CardBody>
     </Card>

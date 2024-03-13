@@ -92,7 +92,7 @@ export default async function DashboardGoals() {
               Best: <span className="text-danger">{goal.bestValue}</span>
             </div>
             <div className="text-sm">
-              Target: <span className="text-primary">{goal.goalValue}</span>
+              Target: <span className="text-black dark:text-primary">{goal.goalValue}</span>
             </div>
           </div>
           <Progress aria-label="Goal Progress" value={(goal.progress || 0) * 100} />
@@ -104,8 +104,8 @@ export default async function DashboardGoals() {
           title="Add New Goal"
           icon={<IconTarget className="text-danger" />}
         >
-          <p className="text-sm mb-3 truncate text-zinc-400">
-            Select a <Link href="/exercises" className="text-primary">favorite exercise</Link> to track
+          <p className="text-sm mb-3 truncate text-zinc-600 dark:text-zinc-400">
+            Select a <Link href="/exercises" className="text-danger dark:text-primary">favorite exercise</Link> to track
           </p>
           <CreateDashboardGoal />
         </DashboardGoalTemplate>

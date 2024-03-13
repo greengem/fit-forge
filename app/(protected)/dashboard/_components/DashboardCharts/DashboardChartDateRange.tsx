@@ -52,7 +52,7 @@ export default function DashboardChartDateRange({
       maxValue={50}
       minValue={10}
       className="w-44"
-      classNames={{ mark: "text-xs text-zinc-400" }}
+      classNames={{ mark: "text-xs text-zinc-600 dark:text-zinc-400" }}
       marks={[
         { value: 10, label: "3D" },
         { value: 20, label: "1W" },

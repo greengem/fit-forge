@@ -3,5 +3,5 @@ type PageHeadingProps = {
 };
 
 export default function PageHeading({ title }: PageHeadingProps) {
-  return <h1 className="text-4xl mb-6 font-semibold">{title}</h1>;
+  return <h1 className="text-2xl md:text-4xl mb-6 font-semibold">{title}</h1>;
 }

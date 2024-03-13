@@ -39,7 +39,7 @@ export default async function NewRoutineFormStepTwo({
   return (
     <>
       <PageHeading title="New Routine - Step 3" />
-      <p className="mb-3 text-zinc-500 text-sm">
+      <p className="mb-3 text-zinc-600 dark:text-zinc-400 text-sm">
         You&apos;re almost there! Now, select how you want to track each
         exercise: by repetitions or duration. Then, arrange the exercises in
         your preferred order. For each exercise, specify the number of reps or

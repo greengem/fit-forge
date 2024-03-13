@@ -111,7 +111,7 @@ export default async function ActivityList() {
       ) : (
         <p>
           No workouts have been completed.{" "}
-          <Link className="text-primary" href="/workout">
+          <Link className="text-danger dark:text-primary" href="/workout">
             Click here to start one
           </Link>
           .

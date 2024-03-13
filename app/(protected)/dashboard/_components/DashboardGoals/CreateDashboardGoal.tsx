@@ -53,8 +53,8 @@ export default function CreateDashboardGoal() {
       offset={10}
     >
       <PopoverTrigger>
-        <Button size="sm" variant="flat" className="absolute bottom-5 left-3">
-          <IconTargetArrow size={20} className="text-primary" /> Set Goal
+        <Button size="sm" className="absolute bottom-5 left-3">
+          <IconTargetArrow size={20} className="text-black dark:text-primary" /> Set Goal
         </Button>
       </PopoverTrigger>
       <PopoverContent>

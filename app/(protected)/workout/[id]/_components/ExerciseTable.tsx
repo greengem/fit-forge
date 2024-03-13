@@ -88,7 +88,7 @@ export default function ExerciseTable({
                 label="Weight"
                 placeholder="0"
                 defaultValue={set.weight !== null ? String(set.weight) : ""}
-                endContent={<span className="text-zinc-500">kg</span>}
+                endContent={<span className="text-zinc-600 dark:text-zinc-400">kg</span>}
                 onInput={(e) => {
                   const value = e.currentTarget.value;
                   if (!/^(\d*\.?\d{0,2}|\.\d{0,2})$/.test(value)) {
@@ -111,7 +111,7 @@ export default function ExerciseTable({
                     set.duration !== null ? String(set.duration) : ""
                   }
                   placeholder="0"
-                  endContent={<span className="text-zinc-500">s</span>}
+                  endContent={<span className="text-zinc-600 dark:text-zinc-400">s</span>}
                   onInput={(e) => {
                     const value = e.currentTarget.value;
                     if (!/^\d*$/.test(value)) {
@@ -159,6 +159,7 @@ export default function ExerciseTable({
                 size="lg"
                 color={set.completed ? "primary" : "danger"}
                 isSelected={set.completed}
+                aria-label="Complete Set"
                 onValueChange={(isSelected) =>
                   handleCompleteSet(
                     index,

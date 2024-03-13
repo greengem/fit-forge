@@ -96,7 +96,7 @@ function SubMenuTitle({ title }: { title: string }) {
 
   return (
     !sidebarCollapse && (
-      <li className="uppercase text-xs text-zinc-400 font-semibold mb-1 mt-4 px-2">
+      <li className="uppercase text-xs text-zinc-600 dark:text-zinc-400 font-semibold mb-1 mt-4 px-2">
         {title}
       </li>
     )

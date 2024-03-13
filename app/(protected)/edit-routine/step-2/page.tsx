@@ -68,7 +68,7 @@ export default async function NewRoutineFormStepTwo({
   return (
     <>
       <PageHeading title="New Routine - Step 2" />
-      <p className="text-zinc-500 mb-3 text-sm">
+      <p className="text-zinc-600 dark:text-zinc-400 mb-3 text-sm">
         Choose Exercises: Use search and filters to find exercises. Click
         &apos;i&apos; for details, star to favorite, and plus to add to your
         routine.

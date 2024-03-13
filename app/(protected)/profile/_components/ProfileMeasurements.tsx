@@ -85,7 +85,7 @@ export default function ProfileMeasurements({
           onChange={(e) => setAge(e.target.value)}
         />
 
-        <p className="text-sm text-zinc-400">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
           Your data is secure with us. We only use your information to enhance
           your user experience and never share it with third parties.
         </p>
