@@ -78,7 +78,7 @@ export default async function DashboardRecentActivity() {
                 <Card key={activity.id} shadow="none" className="shadow-md">
                   <CardHeader className="flex gap-3 px-5 pt-4">
                     <div className="flex flex-col flex-grow">
-                      <p className="text-md text-primary leading-5">
+                      <p className="text-md text-black dark:text-primary leading-5">
                         {activity.WorkoutPlan.name}
                       </p>
                       <p className="text-xs text-default-500 leading-5">

@@ -348,7 +348,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
           <Card shadow="none" className="shadow-md" key={exercise.exerciseId}>
             <CardHeader className="text-lg px-5">
               <div className="flex gap-2 items-center mb-3">
-                <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">
+                <span className="bg-zinc-100 dark:bg-zinc-800 text-black rounded-full text-sm flex justify-center items-center h-8 w-8">
                   {index + 1}
                 </span>
                 <p className="text-lg">{exercise.exerciseName}</p>
