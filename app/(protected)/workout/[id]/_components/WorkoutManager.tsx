@@ -15,6 +15,7 @@ import { useWorkoutData } from "@/contexts/WorkoutDataContext";
 import ExerciseTable from "./ExerciseTable";
 import StatusBar from "./StatusBar";
 import { handleSaveWorkout } from "@/server-actions/WorkoutServerActions";
+import ExerciseOrderIndicator from "@/components/Generic/ExerciseOrderIndicator";
 
 interface Exercise {
   id: string;
@@ -348,9 +349,7 @@ export default function WorkoutManager({ workout }: { workout: Workout }) {
           <Card shadow="none" className="shadow-md" key={exercise.exerciseId}>
             <CardHeader className="text-lg px-5">
               <div className="flex gap-2 items-center mb-3">
-                <span className="bg-zinc-100 dark:bg-zinc-800 text-black dark:text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">
-                  {index + 1}
-                </span>
+                <ExerciseOrderIndicator position={index} />
                 <p className="text-lg">{exercise.exerciseName}</p>
               </div>
             </CardHeader>

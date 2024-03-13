@@ -29,6 +29,7 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { handleUpdateWorkout } from "@/server-actions/WorkoutServerActions";
+import ExerciseOrderIndicator from "@/components/Generic/ExerciseOrderIndicator";
 
 type ExerciseSet = {
   weight: number | null;
@@ -226,9 +227,7 @@ export default function EditWorkout({ workout }: { workout: Workout }) {
           <Card key={exerciseIndex} shadow="none" className="shadow-md">
             <CardHeader className="text-lg px-3">
               <div className="flex gap-2 items-center mb-3">
-                <span className="bg-zinc-800 text-primary rounded-full text-sm flex justify-center items-center h-8 w-8">
-                  {exerciseIndex + 1}
-                </span>
+                <ExerciseOrderIndicator position={exerciseIndex} />
                 <p className="text-lg">{exercise.Exercise.name}</p>
               </div>
             </CardHeader>
