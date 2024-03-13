@@ -28,7 +28,7 @@ export default function DashboardCharts({
       <DashboardChartCard
         icon={<IconChartBar className="text-danger" />}
         title="Frequency"
-        colSpan="col-span-2"
+        colSpan="col-span-2 lg:col-span-4 xl:col-span-2"
         chartId={1}
       >
         <Suspense fallback={<div>Loading Chart...</div>}>

@@ -11,7 +11,7 @@ export default function DashboardLinks() {
       description: "Browse Exercises",
       image: "02.webp",
       href: "/exercises",
-      titleColour: "text-white/60",
+      titleColour: "text-white",
       descriptionColour: "text-primary",
     },
     {
@@ -19,7 +19,7 @@ export default function DashboardLinks() {
       description: "Create a Routine",
       image: "21.webp",
       href: "edit-routine/step-1",
-      titleColour: "text-white/60",
+      titleColour: "text-white",
       descriptionColour: "text-primary",
     },
     {
@@ -27,7 +27,7 @@ export default function DashboardLinks() {
       description: "Start a Workout",
       image: "e.webp",
       href: "/workout",
-      titleColour: "text-white/60",
+      titleColour: "text-white",
       descriptionColour: "text-primary",
     },
     {
@@ -35,7 +35,7 @@ export default function DashboardLinks() {
       description: "View Activity",
       image: "22.webp",
       href: "/activity",
-      titleColour: "text-white/60",
+      titleColour: "text-white",
       descriptionColour: "text-primary",
     },
   ];
@@ -46,7 +46,7 @@ export default function DashboardLinks() {
         <Link key={index} href={link.href}>
           <Card
             key={index}
-            className="w-full aspect-square 2xl:aspect-video shadow-md"
+            className="w-full aspect-square xl:aspect-video shadow-md"
             isPressable
             shadow="none"
           >
@@ -60,14 +60,14 @@ export default function DashboardLinks() {
                 {link.title}
               </p>
               <p
-                className={clsx("font-medium text-lg", link.descriptionColour)}
+                className={clsx("font-medium text-xl", link.descriptionColour)}
               >
                 {link.description}
               </p>
             </CardHeader>
             <Image
               alt="Card background"
-              className="z-0 w-full h-full object-cover brightness-50 grayscale"
+              className="z-0 w-full h-full object-cover dark:brightness-50 grayscale"
               src={`/card-images/${link.image}`}
               width={640}
               height={640}
