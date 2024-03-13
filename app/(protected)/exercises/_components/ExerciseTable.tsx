@@ -17,6 +17,7 @@ import { Exercise } from "@prisma/client";
 import ExerciseAddToRoutineButton from "./ExerciseAddToRoutineButton";
 import ExerciseAddToRoutineCreatorButton from "./ExerciseAddToRoutineCreatorButton";
 import ExerciseRemoveRoutineCreatorButton from "./ExerciseRemoveRoutineCreatorButton";
+import ExerciseFavButton from "./ExerciseFavButton";
 
 interface UserRoutine {
   id: string;
@@ -120,17 +121,10 @@ export default function ExerciseTable({
               >
                 <ButtonGroup size="sm" variant="flat">
                   <ExerciseInfoButton exercise={exercise} />
-                  <Button
-                    aria-label="Toggle favourite"
-                    isIconOnly
-                    onClick={() => handleToggleFavouriteExercise(exercise.id)}
-                  >
-                    {favouriteExercises.has(exercise.id) ? (
-                      <IconStarFilled className="text-primary" size={20} />
-                    ) : (
-                      <IconStar className="hover:text-primary" size={20} />
-                    )}
-                  </Button>
+                  <ExerciseFavButton 
+                    exerciseId={exercise.id}
+                    isFavourite={favouriteExercises.has(exercise.id)} 
+                  />
                   {isHighlighted ? (
                     <ExerciseRemoveRoutineCreatorButton
                       exerciseId={exercise.id}
