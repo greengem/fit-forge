@@ -41,7 +41,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-dvh bg-white dark:bg-zinc-900">
+    <main className="min-h-dvh bg-gradient-to-b from-white to-zinc-200 dark:from-zinc-900 dark:to-zinc-950">
       <nav className="px-3 md:px-10 py-3 mb-5 flex justify-between items-center">
         <h4 className="flex items-center text-lg gap-2 font-semibold tracking-tight">
           <IconFlame className="text-primary" />
